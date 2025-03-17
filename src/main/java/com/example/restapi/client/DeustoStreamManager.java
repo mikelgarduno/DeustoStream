@@ -75,8 +75,6 @@ public class DeustoStreamManager {
                     String nombre = scanner.nextLine();
                     System.out.print("Enter apellido: ");
                     String apellido = scanner.nextLine();
-                    System.out.print("Enter fecha nacimiento: ");
-                    String fechaNac = scanner.nextLine();
                     System.out.print("Enter correo: ");
                     String correo = scanner.nextLine();
                     System.out.print("Enter contraseña: ");
@@ -84,7 +82,6 @@ public class DeustoStreamManager {
                     Usuario user = new Usuario();
                     user.setNombre(nombre);
                     user.setApellido(apellido);
-                    user.setFechaNac(fechaNac);
                     user.setCorreo(correo);
                     user.setContrasenya(contrasenya);
                     manager.registerUser(user);
@@ -95,7 +92,6 @@ public class DeustoStreamManager {
                         System.out.println("ID: " + u.getId());
                         System.out.println("Nombre: " + u.getNombre());
                         System.out.println("Apellido: " + u.getApellido());
-                        System.out.println("Fecha Nacimiento: " + u.getFechaNac());
                         System.out.println("Correo: " + u.getCorreo());
                         System.out.println("---------------------------");
                     }

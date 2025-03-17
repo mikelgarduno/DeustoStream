@@ -24,9 +24,6 @@ public class Usuario {
     private String apellido;
 
     @Column(nullable = false)
-    private String fechaNac;
-
-    @Column(nullable = false)
     private String correo;
 
     @Column(nullable = false)
@@ -37,10 +34,9 @@ public class Usuario {
     }
 
     // All-argument constructor (optional, for convenience)
-    public Usuario(String nombre, String apellido, String fechaNac, String correo, String contrasenya) {
+    public Usuario(String nombre, String apellido, String correo, String contrasenya) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.fechaNac = fechaNac;
         this.correo = correo;
         this.contrasenya = contrasenya;
     }
@@ -70,14 +66,6 @@ public class Usuario {
         this.apellido = apellido;
     }
 
-    public String getFechaNac() {
-        return fechaNac;
-    }
-
-    public void setFechaNac(String fechaNac) {
-        this.fechaNac = fechaNac;
-    }
-
     public String getCorreo() {
         return correo;
     }
@@ -96,7 +84,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNac=" + fechaNac + ", correo=" + correo + ", contrasenya=" + contrasenya + "]";
+        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", contrasenya=" + contrasenya + "]";
     }
 
     @Override

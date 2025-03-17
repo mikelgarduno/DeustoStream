@@ -35,7 +35,6 @@ public class DeustoStreamService {
             Usuario usuario = optionalUsuario.get();
             usuario.setNombre(usuarioDetalles.getNombre());
             usuario.setApellido(usuarioDetalles.getApellido());
-            usuario.setFechaNac(usuarioDetalles.getFechaNac());
             usuario.setCorreo(usuarioDetalles.getCorreo());
             usuario.setContrasenya(usuarioDetalles.getContrasenya());
             return usuarioRepository.save(usuario);

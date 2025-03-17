@@ -4,96 +4,110 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Book Management</title>
+    <title>Deusto Stream: Registro de Usuarios</title>
     <script>
-        async function fetchBooks() {
-            const response = await fetch('/api/books');
-            const books = await response.json();
-            let tableContent = books.map(book => 
-                `<tr id="row-${book.id}">
-                    <td>${book.id}</td>
-                    <td id="title-cell-${book.id}">${book.title}</td>
-                    <td id="author-cell-${book.id}">${book.author}</td>
-                    <td id="actions-${book.id}">
-                        <button onclick="enableEdit(${book.id}, '${book.title}', '${book.author}')">Update</button>
-                        <button onclick="deleteBook(${book.id})">Delete</button>
+        async function fetchUsuarios() {
+            const response = await fetch('/api/registro');
+            const usuarios = await response.json();
+            let tableContent = usuarios.map(usuario => 
+                `<tr id="row-${usuario.id}">
+                    <td>${usuario.id}</td>
+                    <td id="nombre-cell-${usuario.id}">${usuario.nombre}</td>
+                    <td id="apellido-cell-${usuario.id}">${usuario.apellido}</td>
+                    <td id="correo-cell-${usuario.id}">${usuario.correo}</td>
+                    <td id="contrasenya-cell-${usuario.id}">${usuario.contrasenya}</td>
+                    <td id="actions-${usuario.id}">
+                        <button onclick="enableEdit(${usuario.id}, '${usuario.nombre}', '${usuario.apellido}', '${usuario.correo}', '${usuario.contrasenya}')">Update</button>
+                        <button onclick="deleteUsuario(${usuario.id})">Delete</button>
                     </td>
                 </tr>`
             ).join('');
-            document.getElementById('bookTable').innerHTML = tableContent;
+            document.getElementById('usuarioTable').innerHTML = tableContent;
         }
 
-        async function addBook() {
-            const title = document.getElementById('title').value;
-            const author = document.getElementById('author').value;
+        async function addUsuario() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const correo = document.getElementById('correo').value;
+            const contrasenya = document.getElementById('contrasenya').value;
 
-            await fetch('/api/books', {
+            await fetch('/api/registro', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, author })
+                body: JSON.stringify({ nombre, apellido, correo, contrasenya })
             });
 
-            document.getElementById('title').value = "";
-            document.getElementById('author').value = "";
-            fetchBooks();
+            document.getElementById('nombre').value = "";
+            document.getElementById('apellido').value = "";
+            document.getElementById('correo').value = "";
+            document.getElementById('contrasenya').value = "";
+            fetchUsuarios();
         }
 
-        function enableEdit(id, title, author) {
+        function enableEdit(id, nombre, apellido, correo, contrasenya) {
             document.getElementById(`row-${id}`).innerHTML = `
                 <td>${id}</td>
-                <td><input type="text" id="edit-title-${id}" value="${title}"></td>
-                <td><input type="text" id="edit-author-${id}" value="${author}"></td>
+                <td><input type="text" id="edit-nombre-${id}" value="${nombre}"></td>
+                <td><input type="text" id="edit-apellido-${id}" value="${apellido}"></td>
+                <td><input type="text" id="edit-correo-${id}" value="${correo}"></td>
+                <td><input type="text" id="edit-contrasenya-${id}" value="${contrasenya}"></td>
                 <td>
                     <button onclick="confirmUpdate(${id})">Confirm</button>
-                    <button onclick="fetchBooks()">Cancel</button>
+                    <button onclick="fetchUsuarios()">Cancel</button>
                 </td>
             `;
         }
 
         async function confirmUpdate(id) {
-            const title = document.getElementById(`edit-title-${id}`).value;
-            const author = document.getElementById(`edit-author-${id}`).value;
+            const nombre = document.getElementById(`edit-nombre-${id}`).value;
+            const apellido = document.getElementById(`edit-apellido-${id}`).value;
+            const correo = document.getElementById(`edit-correo-${id}`).value;
+            const contrasenya = document.getElementById(`edit-contrasenya-${id}`).value;
 
-            await fetch(`/api/books/${id}`, {
+            await fetch(`/api/registro/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title, author })
+                body: JSON.stringify({ nombre, apellido, correo })
             });
 
-            fetchBooks();
+            fetchUsuarios();
         }
 
-        async function deleteBook(id) {
-            await fetch(`/api/books/${id}`, {
+        async function deleteUsuario(id) {
+            await fetch(`/api/registro/${id}`, {
                 method: 'DELETE'
             });
 
-            fetchBooks();
+            fetchUsuarios();
         }
 
-        window.onload = fetchBooks;
+        window.onload = fetchUsuarios;
     </script>
 </head>
 <body>
-    <h2>Book Management</h2>
+    <h2>Gestión de Usuarios</h2>
 
-    <form onsubmit="event.preventDefault(); addBook();">
-        <input type="text" id="title" placeholder="Title" required>
-        <input type="text" id="author" placeholder="Author" required>
-        <button type="submit">Add Book</button>
+    <form onsubmit="event.preventDefault(); addUsuario();">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="apellido" placeholder="Apellido" required>
+        <input type="email" id="correo" placeholder="Correo" required>
+        <input type="password" id="contrasenya" placeholder="Contraseña" required>
+        <button type="submit">Añadir Usuario</button>
     </form>
 
-    <h3>Book List</h3>
+    <h3>Lista de Usuarios</h3>
     <table border="1">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Actions</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Contrasenya</th>
+                <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="bookTable"></tbody>
+        <tbody id="usuarioTable"></tbody>
     </table>
 </body>
 </html>
