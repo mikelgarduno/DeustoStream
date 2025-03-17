@@ -1,4 +1,4 @@
-package com.example.restapi.model;
+/*package com.example.restapi.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -57,4 +57,4 @@ public class Book {
     public String getIsbn() {
         return isbn;
     }
-}
+}*/

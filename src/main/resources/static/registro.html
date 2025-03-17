@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Deusto Stream: Registro de Usuarios</title>
+    <script>
+        async function fetchUsuarios() {
+            const response = await fetch('/api/registro');
+            const usuarios = await response.json();
+            let tableContent = usuarios.map(usuario => 
+                `<tr id="row-${usuario.id}">
+                    <td>${usuario.id}</td>
+                    <td id="nombre-cell-${usuario.id}">${usuario.nombre}</td>
+                    <td id="apellido-cell-${usuario.id}">${usuario.apellido}</td>
+                    <td id="correo-cell-${usuario.id}">${usuario.correo}</td>
+                    <td id="actions-${usuario.id}">
+                        <button onclick="enableEdit(${usuario.id}, '${usuario.nombre}', '${usuario.apellido}', '${usuario.correo}')">Update</button>
+                        <button onclick="deleteUsuario(${usuario.id})">Delete</button>
+                    </td>
+                </tr>`
+            ).join('');
+            document.getElementById('usuarioTable').innerHTML = tableContent;
+        }
+
+        async function addUsuario() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const correo = document.getElementById('correo').value;
+            const contrasenya = document.getElementById('contrasenya').value;
+
+            await fetch('/api/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, apellido, correo, contrasenya })
+            });
+
+            document.getElementById('nombre').value = "";
+            document.getElementById('apellido').value = "";
+            document.getElementById('correo').value = "";
+            document.getElementById('contrasenya').value = "";
+            fetchUsuarios();
+        }
+
+        function enableEdit(id, nombre, apellido, correo) {
+            document.getElementById(`row-${id}`).innerHTML = `
+                <td>${id}</td>
+                <td><input type="text" id="edit-nombre-${id}" value="${nombre}"></td>
+                <td><input type="text" id="edit-apellido-${id}" value="${apellido}"></td>
+                <td><input type="text" id="edit-correo-${id}" value="${correo}"></td>
+                <td>
+                    <button onclick="confirmUpdate(${id})">Confirm</button>
+                    <button onclick="fetchUsuarios()">Cancel</button>
+                </td>
+            `;
+        }
+
+        async function confirmUpdate(id) {
+            const nombre = document.getElementById(`edit-nombre-${id}`).value;
+            const apellido = document.getElementById(`edit-apellido-${id}`).value;
+            const correo = document.getElementById(`edit-correo-${id}`).value;
+
+            await fetch(`/api/registro/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, apellido, correo })
+            });
+
+            fetchUsuarios();
+        }
+
+        async function deleteUsuario(id) {
+            await fetch(`/api/registro/${id}`, {
+                method: 'DELETE'
+            });
+
+            fetchUsuarios();
+        }
+
+        window.onload = fetchUsuarios;
+    </script>
+</head>
+<body>
+    <h2>Gestión de Usuarios</h2>
+
+    <form onsubmit="event.preventDefault(); addUsuario();">
+        <input type="text" id="nombre" placeholder="Nombre" required>
+        <input type="text" id="apellido" placeholder="Apellido" required>
+        <input type="email" id="correo" placeholder="Correo" required>
+        <input type="password" id="contrasenya" placeholder="Contraseña" required>
+        <button type="submit">Añadir Usuario</button>
+    </form>
+
+    <h3>Lista de Usuarios</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="usuarioTable"></tbody>
+    </table>
+</body>
+</html>
