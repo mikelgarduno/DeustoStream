@@ -2,6 +2,7 @@ package com.example.restapi.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,8 +19,7 @@ public class Pelicula {
     @Column(nullable = false)
     private String titulo;
 
-    @Enumerated
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Generos genero;
 
     @Column(nullable = false)
@@ -27,6 +27,9 @@ public class Pelicula {
 
     @Column(nullable = false)
     private int anio;
+
+    @Column(nullable = false)
+    private String sinopsis;
 
     // No-argument constructor
     public Pelicula() {
@@ -79,6 +82,14 @@ public class Pelicula {
 
     public void setAnio(int anio) {
         this.anio = anio;
+    }
+
+    public String getSinopsis() {
+        return sinopsis;
+    }
+
+    public void setSinopsis(String sinopsis) {
+        this.sinopsis = sinopsis;
     }
 
     @Override
