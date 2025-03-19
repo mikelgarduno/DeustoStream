@@ -1,6 +1,8 @@
 package com.example.restapi.service;
 
+import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Usuario;
+import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,12 @@ import java.util.Optional;
 @Service
 public class DeustoStreamService {
     private final UsuarioRepository usuarioRepository;
+    private final PeliculaRepository peliculaRepository;
 
     @Autowired
-    public DeustoStreamService(UsuarioRepository usuarioRepository) {
+    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.peliculaRepository = peliculaRepository;
     }
 
     public List<Usuario> getAllUsuarios() {
@@ -50,4 +54,14 @@ public class DeustoStreamService {
             throw new RuntimeException("Usuario not found with id: " + id);
         }
     }
+
+    public List<Pelicula> getAllPeliculas() {
+        return peliculaRepository.findAll();
+    }
+    public Optional<Pelicula> getPeliculaById(Long id) {
+        return peliculaRepository.findById(id);
+    }
+
+    
+
 }
