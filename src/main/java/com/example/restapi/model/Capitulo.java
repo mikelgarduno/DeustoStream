@@ -12,8 +12,8 @@ public class Capitulo {
     private int duracion; // en minutos
 
     @ManyToOne
-    @JoinColumn(name = "temporada_id")
-    private Temporada temporada;
+    @JoinColumn(name = "serie_id")
+    private Series serie;
 
     public Capitulo() {
     }
@@ -47,12 +47,12 @@ public class Capitulo {
         this.duracion = duracion;
     }
 
-    public Temporada getTemporada() {
-        return temporada;
+    public Series getSerie() {
+        return serie;
     }
 
-    public void setTemporada(Temporada temporada) {
-        this.temporada = temporada;
+    public void setSerie(Series serie) {
+        this.serie = serie;
     }
 
     @Override

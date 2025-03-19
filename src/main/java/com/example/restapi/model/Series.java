@@ -1,6 +1,8 @@
 package com.example.restapi.model;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,18 +20,23 @@ public class Series {
     @Enumerated(EnumType.STRING)
     private Generos genero;
 
-    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Temporada> temporadas;
+    //@OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Temporada> temporadas;
+
+    @OneToMany(mappedBy = "temporada", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Capitulo> capitulos;
 
     // Constructor vacío (necesario para JPA)
     public Series() {
     }
 
     // Constructor con parámetros
-    public Series(String titulo, int anio, List<Temporada> temporadas) {
+    public Series(String titulo, int anio, String descripcion, Generos genero, List<Capitulo> capitulos) {
         this.titulo = titulo;
         this.anio = anio;
-        this.temporadas = temporadas;
+        this.descripcion = descripcion;
+        this.genero = genero;
+        this.capitulos = capitulos != null ? capitulos : new ArrayList<>();
     }
 
     // Getters y Setters
@@ -57,14 +64,6 @@ public class Series {
         this.anio = anio;
     }
 
-    public List<Temporada> getTemporadas() {
-        return temporadas;
-    }
-
-    public void setTemporadas(List<Temporada> temporadas) {
-        this.temporadas = temporadas;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -81,13 +80,22 @@ public class Series {
         this.genero = genero;
     }
 
+    public List<Capitulo> getCapitulos() {
+        return capitulos;
+    }
+
+    public void setCapitulos(List<Capitulo> capitulos) {
+        this.capitulos = capitulos;
+    }
+
     @Override
     public String toString() {
         return "Series{" +
                 "id=" + id +
                 ", titulo='" + titulo + '\'' +
                 ", anio=" + anio +
-                ", temporadas=" + temporadas +
+                ", descripcion='" + descripcion + '\'' +
+                ", genero=" + genero +
                 '}';
     }
 
@@ -99,11 +107,12 @@ public class Series {
         return anio == series.anio &&
                 Objects.equals(id, series.id) &&
                 Objects.equals(titulo, series.titulo) &&
-                Objects.equals(temporadas, series.temporadas);
+                Objects.equals(descripcion, series.descripcion) &&
+                genero == series.genero;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, titulo, anio, temporadas);
+        return Objects.hash(id, titulo, anio, descripcion, genero);
     }
 }
