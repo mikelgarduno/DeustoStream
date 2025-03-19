@@ -1,8 +1,10 @@
 package com.example.restapi.service;
 
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.PeliculaRepository;
+import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,13 @@ import java.util.Optional;
 public class DeustoStreamService {
     private final UsuarioRepository usuarioRepository;
     private final PeliculaRepository peliculaRepository;
+    private final SerieRepository serieRepository;
 
     @Autowired
-    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository) {
+    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository, SerieRepository serieRepository) {
         this.usuarioRepository = usuarioRepository;
         this.peliculaRepository = peliculaRepository;
+        this.serieRepository = serieRepository;
     }
 
     public List<Usuario> getAllUsuarios() {
@@ -55,13 +59,78 @@ public class DeustoStreamService {
         }
     }
 
+    // Métodos para Películas
     public List<Pelicula> getAllPeliculas() {
         return peliculaRepository.findAll();
     }
+
     public Optional<Pelicula> getPeliculaById(Long id) {
         return peliculaRepository.findById(id);
     }
 
-    
+    public Pelicula createPelicula(Pelicula pelicula) {
+        return peliculaRepository.save(pelicula);
+    }
+
+    public Pelicula updatePelicula(Long id, Pelicula peliculaDetalles) {
+        Optional<Pelicula> optionalPelicula = peliculaRepository.findById(id);
+        if (optionalPelicula.isPresent()) {
+            Pelicula pelicula = optionalPelicula.get();
+            pelicula.setTitulo(peliculaDetalles.getTitulo());
+            pelicula.setAnio(peliculaDetalles.getAnio());
+            pelicula.setSinopsis(peliculaDetalles.getSinopsis());
+            pelicula.setGenero(peliculaDetalles.getGenero());
+            return peliculaRepository.save(pelicula);
+        } else {
+            throw new RuntimeException("Pelicula not found");
+        }
+    }
+
+    public void deletePelicula(Long id) {
+        if (peliculaRepository.existsById(id)) {
+            peliculaRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Pelicula not found with id: " + id);
+        }
+    }
+
+
+    // Métodos para Series
+    public List<Series> getAllSeries() {
+        return serieRepository.findAll();
+    }
+
+    public Optional<Series> getSeriesById(Long id) {
+        return serieRepository.findById(id);
+    }
+
+    public Series createSeries(Series series) {
+        return serieRepository.save(series);
+    }
+
+    public Series updateSeries(Long id, Series seriesDetalles) {
+        Optional<Series> optionalSeries = serieRepository.findById(id);
+        if (optionalSeries.isPresent()) {
+            Series series = optionalSeries.get();
+            series.setTitulo(seriesDetalles.getTitulo());
+            series.setAnio(seriesDetalles.getAnio());
+            series.setDescripcion(seriesDetalles.getDescripcion());
+            series.setGenero(seriesDetalles.getGenero());
+            return serieRepository.save(series);
+        } else {
+            throw new RuntimeException("Series not found");
+        }
+    }
+
+    public void deleteSeries(Long id) {
+        if (serieRepository.existsById(id)) {
+            serieRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Series not found with id: " + id);
+        }
+    }
+
+
+
 
 }

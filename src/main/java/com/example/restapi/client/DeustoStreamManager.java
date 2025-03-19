@@ -6,16 +6,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 
 public class DeustoStreamManager {
 
-    private String USER_CONTROLLER_URL_TEMPLATE = "http://%s:%s/api/registro";
+    private String BASE_URL_TEMPLATE  = "http://%s:%s/api/";
     private final String USER_CONTROLLER_URL;
+    private final String PELICULA_CONTROLLER_URL;
+    private final String SERIES_CONTROLLER_URL;
     private final RestTemplate restTemplate;
 
     public DeustoStreamManager(String hostname, String port) {
-        USER_CONTROLLER_URL = String.format(USER_CONTROLLER_URL_TEMPLATE, hostname, port);
+        USER_CONTROLLER_URL = String.format(BASE_URL_TEMPLATE + "registro", hostname, port);
+        PELICULA_CONTROLLER_URL = String.format(BASE_URL_TEMPLATE + "peliculas", hostname, port);
+        SERIES_CONTROLLER_URL = String.format(BASE_URL_TEMPLATE + "series", hostname, port);
         this.restTemplate = new RestTemplate();
     }
 
@@ -49,64 +55,61 @@ public class DeustoStreamManager {
         }
     }
 
-    public static void main(String[] args) {
-        if (args.length != 2) {
-            System.exit(0);
+    // Métodos para Películas
+    public void addPelicula(Pelicula pelicula) {
+        ResponseEntity<Void> response = restTemplate.postForEntity(PELICULA_CONTROLLER_URL, pelicula, Void.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            System.out.println("Pelicula added successfully.");
+        } else {
+            System.out.println("Failed to add pelicula. Status code: " + response.getStatusCode());
         }
+    }
 
-        String hostname = args[0];
-        String port = args[1];
+    public List<Pelicula> getAllPeliculas() {
+        ResponseEntity<Pelicula[]> response = restTemplate.getForEntity(PELICULA_CONTROLLER_URL, Pelicula[].class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return List.of(response.getBody());
+        } else {
+            System.out.println("Failed to retrieve peliculas. Status code: " + response.getStatusCode());
+            return List.of();
+        }
+    }
 
-        DeustoStreamManager manager = new DeustoStreamManager(hostname, port);
-        java.util.Scanner scanner = new java.util.Scanner(System.in);
+    public void deletePelicula(Long peliculaId) {
+        try {
+            restTemplate.delete(PELICULA_CONTROLLER_URL + "/" + peliculaId);
+            System.out.println("Pelicula deleted successfully.");
+        } catch (RestClientException e) {
+            System.out.println("Failed to delete pelicula. " + e.getMessage());
+        }
+    }
 
-        while (true) {
-            System.out.println("1. Register User");
-            System.out.println("2. List All Users");
-            System.out.println("3. Delete User");
-            System.out.println("4. Exit");
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+    // Métodos para Series
+    public void addSeries(Series series) {
+        ResponseEntity<Void> response = restTemplate.postForEntity(SERIES_CONTROLLER_URL, series, Void.class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            System.out.println("Series added successfully.");
+        } else {
+            System.out.println("Failed to add series. Status code: " + response.getStatusCode());
+        }
+    }
 
-            switch (choice) {
-                case 1:
-                    System.out.print("Enter nombre: ");
-                    String nombre = scanner.nextLine();
-                    System.out.print("Enter apellido: ");
-                    String apellido = scanner.nextLine();
-                    System.out.print("Enter correo: ");
-                    String correo = scanner.nextLine();
-                    System.out.print("Enter contraseña: ");
-                    String contrasenya = scanner.nextLine();
-                    Usuario user = new Usuario();
-                    user.setNombre(nombre);
-                    user.setApellido(apellido);
-                    user.setCorreo(correo);
-                    user.setContrasenya(contrasenya);
-                    manager.registerUser(user);
-                    break;
-                case 2:
-                    List<Usuario> users = manager.getAllUsers();
-                    for (Usuario u : users) {
-                        System.out.println("ID: " + u.getId());
-                        System.out.println("Nombre: " + u.getNombre());
-                        System.out.println("Apellido: " + u.getApellido());
-                        System.out.println("Correo: " + u.getCorreo());
-                        System.out.println("---------------------------");
-                    }
-                    break;
-                case 3:
-                    System.out.print("Enter user ID to delete: ");
-                    Long userId = scanner.nextLong();
-                    manager.deleteUser(userId);
-                    break;
-                case 4:
-                    scanner.close();
-                    System.exit(0);
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
+    public List<Series> getAllSeries() {
+        ResponseEntity<Series[]> response = restTemplate.getForEntity(SERIES_CONTROLLER_URL, Series[].class);
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return List.of(response.getBody());
+        } else {
+            System.out.println("Failed to retrieve series. Status code: " + response.getStatusCode());
+            return List.of();
+        }
+    }
+
+    public void deleteSeries(Long seriesId) {
+        try {
+            restTemplate.delete(SERIES_CONTROLLER_URL + "/" + seriesId);
+            System.out.println("Series deleted successfully.");
+        } catch (RestClientException e) {
+            System.out.println("Failed to delete series. " + e.getMessage());
         }
     }
 }
