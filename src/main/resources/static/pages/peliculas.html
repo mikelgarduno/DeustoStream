@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <title>Gestión de Películas</title>
+
+    <!-- Aquí va el código JS específico para películas -->
+    <script>
+        // Función para obtener las películas desde el backend y mostrarlas
+        async function fetchPeliculas() {
+            const response = await fetch('/api/peliculas');
+            const peliculas = await response.json();
+            let tableContent = peliculas.map(pelicula =>
+                `<tr id="row-${pelicula.id}">
+                    <td>${pelicula.id}</td>
+                    <td id="titulo-cell-${pelicula.id}">${pelicula.titulo}</td>
+                    <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
+                    <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
+                    <td id="descripcion-cell-${pelicula.id}">${pelicula.descripcion}</td>
+                    <td id="actions-${pelicula.id}">
+                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.descripcion}')">Update</button>
+                        <button onclick="deletePelicula(${pelicula.id})">Delete</button>
+                    </td>
+                </tr>`
+            ).join('');
+            document.getElementById('peliculaTable').innerHTML = tableContent;
+        }
+
+        // Función para obtener los géneros del backend y actualizar el select
+        async function fetchGeneros() {
+            const response = await fetch('/api/generos');
+            const generos = await response.json();
+            console.log(generos);  // Verifica que los géneros están llegando correctamente
+
+            let generoOptions = generos.map(genero =>
+                `<option value="${genero}">${genero.replace(/_/g, ' ')}</option>`
+            ).join('');
+            document.getElementById('genero').innerHTML = generoOptions;
+        }
+
+
+        // Función para añadir una nueva película
+        async function addPelicula() {
+            const titulo = document.getElementById('titulo').value;
+            const anio = document.getElementById('anio').value;
+            const genero = document.getElementById('genero').value;
+            const descripcion = document.getElementById('descripcion').value;
+
+            await fetch('/api/peliculas', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo, anio, genero, descripcion })
+            });
+
+            // Limpiar los campos después de añadir la película
+            document.getElementById('titulo').value = "";
+            document.getElementById('anio').value = "";
+            document.getElementById('genero').value = "";
+            document.getElementById('descripcion').value = "";
+            fetchPeliculas();
+        }
+
+        // Función para habilitar la edición de una película
+        function enableEdit(id, titulo, anio, genero, descripcion) {
+            document.getElementById(`row-${id}`).innerHTML = `
+                <td>${id}</td>
+                <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
+                <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
+                <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
+                <td><input type="text" id="edit-descripcion-${id}" value="${descripcion}"></td>
+                <td>
+                    <button onclick="confirmUpdate(${id})">Confirm</button>
+                    <button onclick="fetchPeliculas()">Cancel</button>
+                </td>
+            `;
+        }
+
+        // Función para confirmar la actualización de una película
+        async function confirmUpdate(id) {
+            const titulo = document.getElementById(`edit-titulo-${id}`).value;
+            const anio = document.getElementById(`edit-anio-${id}`).value;
+            const genero = document.getElementById(`edit-genero-${id}`).value;
+            const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
+
+            await fetch(`/api/peliculas/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo, anio, genero, descripcion })
+            });
+
+            fetchPeliculas();
+        }
+
+        // Función para eliminar una película
+        async function deletePelicula(id) {
+            await fetch(`/api/peliculas/${id}`, { method: 'DELETE' });
+            fetchPeliculas();
+        }
+
+        // Cargar las películas y géneros cuando se carga la página
+        window.onload = () => {
+            fetchPeliculas();
+            fetchGeneros();  // Cargar los géneros
+        };
+    </script>
+</head>
+
+<body>
+    <h2>Gestión de Películas</h2>
+
+    <form onsubmit="event.preventDefault(); addPelicula();">
+        <input type="text" id="titulo" placeholder="Título" required>
+        <input type="number" id="anio" placeholder="Año" required>
+
+        <!-- Aquí cambiamos el input por un select para el género -->
+        <select id="genero" required>
+            <!-- Las opciones de género se llenarán dinámicamente con JavaScript -->
+        </select>
+
+        <textarea id="descripcion" placeholder="Descripción" required></textarea>
+        <button type="submit">Añadir Película</button>
+    </form>
+
+    <h3>Lista de Películas</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Año</th>
+                <th>Género</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="peliculaTable"></tbody>
+    </table>
+
+    <a href="../index.html">Volver al inicio</a>
+</body>
+
+</html>

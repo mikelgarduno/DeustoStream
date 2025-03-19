@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles.css">
+    <title>Gestión de Series</title>
+
+    <script>
+        async function fetchSeries() {
+            const response = await fetch('/api/series');
+            const series = await response.json();
+            let tableContent = series.map(serie => 
+                `<tr id="row-${serie.id}">
+                    <td>${serie.id}</td>
+                    <td id="titulo-cell-${serie.id}">${serie.titulo}</td>
+                    <td id="anio-cell-${serie.id}">${serie.anio}</td>
+                    <td id="genero-cell-${serie.id}">${serie.genero}</td>
+                    <td id="descripcion-cell-${serie.id}">${serie.descripcion}</td>
+                    <td id="actions-${serie.id}">
+                        <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}')">Update</button>
+                        <button onclick="deleteSerie(${serie.id})">Delete</button>
+                    </td>
+                </tr>`
+            ).join('');
+            document.getElementById('serieTable').innerHTML = tableContent;
+        }
+
+        async function fetchGeneros() {
+            const response = await fetch('/api/generos');
+            const generos = await response.json();
+            const generoSelect = document.getElementById('genero');
+            generos.forEach(genero => {
+                const option = document.createElement('option');
+                option.value = genero;
+                option.textContent = genero;
+                generoSelect.appendChild(option);
+            });
+        }
+
+        async function addSerie() {
+            const titulo = document.getElementById('titulo').value;
+            const anio = document.getElementById('anio').value;
+            const genero = document.getElementById('genero').value;
+            const descripcion = document.getElementById('descripcion').value;
+
+            await fetch('/api/series', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo, anio, genero, descripcion })
+            });
+
+            document.getElementById('titulo').value = "";
+            document.getElementById('anio').value = "";
+            document.getElementById('genero').value = "";
+            document.getElementById('descripcion').value = "";
+            fetchSeries();
+        }
+
+        function enableEdit(id, titulo, anio, genero, descripcion) {
+            document.getElementById(`row-${id}`).innerHTML = `
+                <td>${id}</td>
+                <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
+                <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
+                <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
+                <td><input type="text" id="edit-descripcion-${id}" value="${descripcion}"></td>
+                <td>
+                    <button onclick="confirmUpdate(${id})">Confirm</button>
+                    <button onclick="fetchSeries()">Cancel</button>
+                </td>
+            `;
+        }
+
+        async function confirmUpdate(id) {
+            const titulo = document.getElementById(`edit-titulo-${id}`).value;
+            const anio = document.getElementById(`edit-anio-${id}`).value;
+            const genero = document.getElementById(`edit-genero-${id}`).value;
+            const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
+
+            await fetch(`/api/series/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ titulo, anio, genero, descripcion })
+            });
+
+            fetchSeries();
+        }
+
+        async function deleteSerie(id) {
+            await fetch(`/api/series/${id}`, { method: 'DELETE' });
+            fetchSeries();
+        }
+
+        window.onload = function() {
+            fetchSeries();
+            fetchGeneros();  // Cargar los géneros al cargar la página
+        };
+    </script>
+</head>
+<body>
+    <h2>Gestión de Series</h2>
+
+    <form onsubmit="event.preventDefault(); addSerie();">
+        <input type="text" id="titulo" placeholder="Título" required>
+        <input type="number" id="anio" placeholder="Año" required>
+        <select id="genero" required>
+            <!-- Los géneros se agregarán dinámicamente aquí -->
+        </select>
+        <textarea id="descripcion" placeholder="Descripción" required></textarea>
+        <button type="submit">Añadir Serie</button>
+    </form>
+
+    <h3>Lista de Series</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Año</th>
+                <th>Género</th>
+                <th>Descripción</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="serieTable"></tbody>
+    </table>
+
+    <a href="../index.html">Volver al inicio</a>
+</body>
+</html>
