@@ -5,11 +5,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restapi.model.Generos;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@Tag(name = "Generos Controller", description = "API de géneros")
 public class GenerosController {
 
     @GetMapping("/api/generos")

@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles.css">
     <title>Gestión de Películas</title>
 
-    <!-- Aquí va el código JS específico para películas -->
     <script>
         // Función para obtener las películas desde el backend y mostrarlas
         async function fetchPeliculas() {
@@ -19,9 +18,9 @@
                     <td id="titulo-cell-${pelicula.id}">${pelicula.titulo}</td>
                     <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
                     <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
-                    <td id="descripcion-cell-${pelicula.id}">${pelicula.descripcion}</td>
+                    <td id="sinopsis-cell-${pelicula.id}">${pelicula.sinopsis}</td>
                     <td id="actions-${pelicula.id}">
-                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.descripcion}')">Update</button>
+                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}')">Update</button>
                         <button onclick="deletePelicula(${pelicula.id})">Delete</button>
                     </td>
                 </tr>`
@@ -33,33 +32,33 @@
         async function fetchGeneros() {
             const response = await fetch('/api/generos');
             const generos = await response.json();
-            console.log(generos);  // Verifica que los géneros están llegando correctamente
-
-            let generoOptions = generos.map(genero =>
-                `<option value="${genero}">${genero.replace(/_/g, ' ')}</option>`
-            ).join('');
-            document.getElementById('genero').innerHTML = generoOptions;
+            const generoSelect = document.getElementById('genero');
+            generos.forEach(genero => {
+                const option = document.createElement('option');
+                option.value = genero;
+                option.textContent = genero;
+                generoSelect.appendChild(option);
+            });
         }
-
 
         // Función para añadir una nueva película
         async function addPelicula() {
             const titulo = document.getElementById('titulo').value;
             const anio = document.getElementById('anio').value;
             const genero = document.getElementById('genero').value;
-            const descripcion = document.getElementById('descripcion').value;
+            const sinopsis = document.getElementById('sinopsis').value;
 
             await fetch('/api/peliculas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, descripcion })
+                body: JSON.stringify({ titulo, anio, genero, sinopsis })
             });
 
             // Limpiar los campos después de añadir la película
             document.getElementById('titulo').value = "";
             document.getElementById('anio').value = "";
             document.getElementById('genero').value = "";
-            document.getElementById('descripcion').value = "";
+            document.getElementById('sinopsis').value = "";
             fetchPeliculas();
         }
 
@@ -85,7 +84,7 @@
             const genero = document.getElementById(`edit-genero-${id}`).value;
             const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
 
-            await fetch(`/api/peliculas/${id}`, {
+            await fetch(`/api/series/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ titulo, anio, genero, descripcion })
@@ -120,7 +119,7 @@
             <!-- Las opciones de género se llenarán dinámicamente con JavaScript -->
         </select>
 
-        <textarea id="descripcion" placeholder="Descripción" required></textarea>
+        <textarea id="sinopsis" placeholder="Sinopsis" required></textarea>
         <button type="submit">Añadir Película</button>
     </form>
 
@@ -132,14 +131,14 @@
                 <th>Título</th>
                 <th>Año</th>
                 <th>Género</th>
-                <th>Descripción</th>
+                <th>Sinopsis</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody id="peliculaTable"></tbody>
     </table>
 
-    <a href="../index.html">Volver al inicio</a>
+    <a href="/">Volver al inicio</a>
 </body>
 
 </html>

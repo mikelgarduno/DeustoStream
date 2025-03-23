@@ -23,7 +23,7 @@ public class Series {
     //@OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
     //private List<Temporada> temporadas;
 
-    @OneToMany(mappedBy = "temporada", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Capitulo> capitulos;
 
     // Constructor vacío (necesario para JPA)
