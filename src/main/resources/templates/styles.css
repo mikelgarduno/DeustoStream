@@ -1,0 +1,122 @@
+/* General styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #141414; /* Fondo oscuro estilo Netflix */
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Estilo del título */
+h1 {
+    margin-top: 20px;
+    font-size: 32px;
+}
+
+/* Estilo de la gestión de películas */
+h2 {
+    color: #ddd;
+    margin-bottom: 10px;
+}
+
+form {
+    margin-bottom: 20px;
+    background: #222;
+    padding: 15px;
+    display: inline-block;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+input[type="text"], input[type="number"], select, textarea {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #e50914; /* Rojo Netflix */
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 5px;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #b20710;
+}
+
+/* Table styling */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: #222;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #444;
+}
+
+th {
+    background-color: #e50914;
+    color: white;
+}
+
+td {
+    text-align: center;
+}
+
+td input {
+    width: 90%;
+}
+
+/* 🎬 Catálogo estilo Netflix */
+.catalogo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.pelicula {
+    width: 200px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    text-align: center;
+}
+
+.poster {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.poster:hover {
+    transform: scale(1.05);
+}
+
+.pelicula h2 {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.pelicula p {
+    font-size: 14px;
+    color: #bbb;
+}

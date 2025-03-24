@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo - DeustoStream</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+    <h1>🎬 Catálogo DeustoStream</h1>
+
+    <div class="catalogo">
+        <!-- Sección de Películas -->
+        <div class="pelicula" th:each="pelicula : ${peliculas}">
+            <!-- <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">-->
+            <h2 th:text="${pelicula.titulo}"></h2>
+            <p th:text="${pelicula.genero}"></p>
+        </div>
+
+        <!-- Sección de Series -->
+        <div class="pelicula" th:each="serie : ${series}">
+            <!-- <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de serie">-->
+            <h2 th:text="${serie.titulo}"></h2>
+            <p th:text="${serie.genero}"></p>
+        </div>
+    </div>
+
+</body>
+</html>

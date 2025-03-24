@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <title>Deusto Stream</title>
+</head>
+<body>
+    <h1>Bienvenido a Deusto Stream</h1>
+    <nav>
+        <ul>
+            <li><a th:href="@{/usuarios}">Gestión de Usuarios</a></li>
+            <li><a th:href="@{/peliculas}">Gestión de Películas</a></li>
+            <li><a th:href="@{/series}">Gestión de Series</a></li>
+        </ul>
+    </nav>
+</body>
+</html>

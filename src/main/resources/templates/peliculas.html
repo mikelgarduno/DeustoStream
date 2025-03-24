@@ -84,7 +84,7 @@
             const genero = document.getElementById(`edit-genero-${id}`).value;
             const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
 
-            await fetch(`/api/series/${id}`, {
+            await fetch(`/api/peliculas/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ titulo, anio, genero, descripcion })
