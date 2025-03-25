@@ -37,7 +37,7 @@ public class DeustoStreamController {
         return usuario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("registro")
     public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) {
         try {
             Usuario createdUsuario = deustoStreamService.createUsuario(usuario);
