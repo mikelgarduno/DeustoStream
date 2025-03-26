@@ -17,6 +17,19 @@ public class WebController {
     @Autowired
     private DeustoStreamService deustoStreamService;
 
+    @GetMapping("/")
+    public String mostrarIndex() {
+        return "index"; // Muestra la página principal con las opciones de login/registro
+    }
+
+    @GetMapping("/admin")
+    public String mostrarPanelAdmin(Model model) {
+        model.addAttribute("peliculas", deustoStreamService.getAllPeliculas());
+        model.addAttribute("series", deustoStreamService.getAllSeries());
+        model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
+        return "panelAdmin"; // Redirige a un panel de administración
+    }
+
     @GetMapping("/peliculas")
     public String mostrarPeliculas(Model model) {
         List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();

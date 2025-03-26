@@ -1,19 +1,33 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">>
-    <title>Deusto Stream</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}">
+    <title>Deusto Stream - Bienvenido</title>
 </head>
+
 <body>
-    <h1>Bienvenido a Deusto Stream</h1>
-    <nav>
-        <ul>
-            <li><a th:href="@{/usuarios}">Gestión de Usuarios</a></li>
-            <li><a th:href="@{/peliculas}">Gestión de Películas</a></li>
-            <li><a th:href="@{/series}">Gestión de Series</a></li>
-        </ul>
-    </nav>
+    <div class="container">
+        <header>
+            <h1>Bienvenido a Deusto Stream</h1>
+        </header>
+
+        <section class="auth-options">
+            <h2>Disfruta de las mejores películas y series</h2>
+            <p>Accede a nuestra plataforma para gestionar y disfrutar de tu contenido favorito.</p>
+
+            <div class="buttons">
+                <a th:href="@{/login}" class="btn">Iniciar Sesión</a>
+                <a th:href="@{/registro}" class="btn btn-secondary">Registrarse</a>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 Deusto Stream. Todos los derechos reservados.</p>
+        </footer>
+    </div>
 </body>
+
 </html>
