@@ -6,22 +6,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpSession;// AGREGADO
 
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
+import com.example.restapi.model.Usuario; //AGRAGADO
 import com.example.restapi.service.DeustoStreamService;
+import com.example.restapi.service.AuthService; //AGREGADO
 
 @Controller
 public class WebController {
 
     @Autowired
     private DeustoStreamService deustoStreamService;
+    @Autowired // AGREGADO
+    private AuthService authService; // AGREGADO
 
     @GetMapping("/")
     public String mostrarIndex() {
         return "index"; // Muestra la página principal con las opciones de login/registro
     }
+
+    @GetMapping("/login") // AGREGADO INICIO
+    public String mostrarFormularioLogin() {
+        return "login";
+    }
+
+    @PostMapping("/login")
+    public String procesarLogin(@RequestParam String correo,
+            @RequestParam String contrasenya,
+            HttpSession session,
+            Model model) {
+
+        return authService.login(correo, contrasenya)
+                .map(usuario -> {
+                    session.setAttribute("usuario", usuario);
+                    return "redirect:" + authService.obtenerRedireccion(usuario);
+                })
+                .orElseGet(() -> {
+                    model.addAttribute("error", "Correo o contraseña incorrectas");
+                    return "login";
+                });
+    }
+
+    @GetMapping("/logout")
+    public String cerrarSesion(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
+    } // AGREGADO FIN
 
     @GetMapping("/admin")
     public String mostrarPanelAdmin(Model model) {
@@ -31,10 +68,20 @@ public class WebController {
         return "panelAdmin"; // Redirige a un panel de administración
     }
 
-    @GetMapping("/registro")
-    public String mostrarFormularioRegistro(Model model) {
+    @GetMapping("/registro") // AGREGADO INICIO
+    public String mostrarFormularioRegistro() {
         return "registro";
     }
+
+    @PostMapping("/registro")
+    public String procesarRegistro(@ModelAttribute Usuario nuevoUsuario, Model model) {
+        if (authService.register(nuevoUsuario)) {
+            return "redirect:/login";
+        } else {
+            model.addAttribute("error", "El correo ya está registrado.");
+            return "registro";
+        }
+    } // AGREGADO FIN
 
     @GetMapping("/peliculas")
     public String mostrarPeliculas(Model model) {
@@ -54,6 +101,7 @@ public class WebController {
         model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
         return "usuarios";
     }
+
     @GetMapping("/catalogo")
     public String mostrarCatalogo(Model model) {
         List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();
@@ -65,15 +113,15 @@ public class WebController {
         return "catalogo"; // Mapea a catalogo.html en /templates/
     }
 
-    //ver detalle de la pelicula
+    // ver detalle de la pelicula
     @GetMapping("/pelicula/{id}")
     public String mostrarDetallePelicula(@PathVariable Long id, Model model) {
-    Pelicula pelicula = deustoStreamService.getPeliculaById(id)
-            .orElseThrow(() -> new RuntimeException("Película no encontrada"));
+        Pelicula pelicula = deustoStreamService.getPeliculaById(id)
+                .orElseThrow(() -> new RuntimeException("Película no encontrada"));
 
-    model.addAttribute("pelicula", pelicula);
-    
-    return "detallePelicula"; 
-}
+        model.addAttribute("pelicula", pelicula);
+
+        return "detallePelicula";
+    }
 
 }

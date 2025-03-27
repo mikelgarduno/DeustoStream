@@ -1,7 +1,8 @@
 /* General styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #141414; /* Fondo oscuro estilo Netflix */
+    background-color: #141414;
+    /* Fondo oscuro estilo Netflix */
     color: white;
     margin: 0;
     padding: 0;
@@ -29,7 +30,10 @@ form {
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
 }
 
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"],
+input[type="number"],
+select,
+textarea {
     padding: 8px;
     margin: 5px;
     border: 1px solid #ccc;
@@ -39,7 +43,8 @@ input[type="text"], input[type="number"], select, textarea {
 
 button {
     padding: 8px 12px;
-    background-color: #e50914; /* Rojo Netflix */
+    background-color: #e50914;
+    /* Rojo Netflix */
     color: white;
     border: none;
     cursor: pointer;
@@ -64,7 +69,8 @@ table {
     overflow: hidden;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     border: 1px solid #444;
 }
@@ -119,4 +125,25 @@ td input {
 .pelicula p {
     font-size: 14px;
     color: #bbb;
+}
+
+/* login form */
+
+.login-form {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* registro form */
+.registro-form {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
