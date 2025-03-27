@@ -31,6 +31,11 @@ public class WebController {
         return "panelAdmin"; // Redirige a un panel de administración
     }
 
+    @GetMapping("/registro")
+    public String mostrarFormularioRegistro(Model model) {
+        return "registro";
+    }
+
     @GetMapping("/peliculas")
     public String mostrarPeliculas(Model model) {
         List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();

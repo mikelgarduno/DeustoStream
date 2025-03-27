@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deusto Stream: Registro de Usuarios</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="registro.css">
+</head>
+<body>
+    <div class="container">
+        <div class="registration-container">
+            <h2 class="text-center mb-4">Registro en Deusto Stream</h2>
+            
+            <form onsubmit="event.preventDefault(); addUsuario();" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="nombre" placeholder="Nombre" required>
+                    <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="apellido" placeholder="Apellido" required>
+                    <div class="invalid-feedback">Por favor, ingresa tu apellido.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="correo" placeholder="Correo electrónico" required>
+                    <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="contrasenya" placeholder="Contraseña" required minlength="6">
+                    <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Crear cuenta</button>
+            </form>
+            
+            <a href="/" class="back-link">Volver al inicio</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Form validation script
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                var forms = document.getElementsByClassName('needs-validation');
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        async function addUsuario() {
+            const nombre = document.getElementById('nombre').value;
+            const apellido = document.getElementById('apellido').value;
+            const correo = document.getElementById('correo').value;
+            const contrasenya = document.getElementById('contrasenya').value;
+
+            await fetch('/api/registro', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre, apellido, correo, contrasenya })
+            });
+            
+            document.getElementById('nombre').value = "";
+            document.getElementById('apellido').value = "";
+            document.getElementById('correo').value = "";
+            document.getElementById('contrasenya').value = "";
+            fetchUsuarios();
+        }
+    </script>
+</body>
+</html>
