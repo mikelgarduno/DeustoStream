@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - DeustoStream</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        form {
+            display: inline-block;
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 250px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #800080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        a {
+            color: #b39ddb;
+        }
+    </style>
+</head>
+<body>
+    <h2>Registro de Usuario</h2>
+    <form action="/registro" method="post" th:object="${usuario}">
+        <input type="text" name="nombre" placeholder="Nombre" required><br>
+        <input type="text" name="apellido" placeholder="Apellido" required><br>
+        <input type="email" name="correo" placeholder="Correo" required><br>
+        <input type="password" name="contrasenya" placeholder="Contraseña" required><br>
+        <button type="submit">Registrarse</button>
+    </form>
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+    <p>¿Ya tienes cuenta? <a href="/login">Inicia sesión</a></p>
+</body>
+</html>
