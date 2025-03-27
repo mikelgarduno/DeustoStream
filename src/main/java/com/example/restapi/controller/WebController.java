@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
@@ -28,6 +29,11 @@ public class WebController {
         model.addAttribute("series", deustoStreamService.getAllSeries());
         model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
         return "panelAdmin"; // Redirige a un panel de administración
+    }
+
+    @GetMapping("/registro")
+    public String mostrarFormularioRegistro(Model model) {
+        return "registro";
     }
 
     @GetMapping("/peliculas")
@@ -58,4 +64,16 @@ public class WebController {
 
         return "catalogo"; // Mapea a catalogo.html en /templates/
     }
+
+    //ver detalle de la pelicula
+    @GetMapping("/pelicula/{id}")
+    public String mostrarDetallePelicula(@PathVariable Long id, Model model) {
+    Pelicula pelicula = deustoStreamService.getPeliculaById(id)
+            .orElseThrow(() -> new RuntimeException("Película no encontrada"));
+
+    model.addAttribute("pelicula", pelicula);
+    
+    return "detallePelicula"; 
+}
+
 }
