@@ -37,7 +37,7 @@ public class Series {
         this.descripcion = descripcion;
         this.genero = genero;
         this.capitulos = capitulos != null ? capitulos : new ArrayList<>();
-        this.imagenUrl = ""; // Inicializar imagenUrl
+        this.imagenUrl = imagenUrl; // Inicializar imagenUrl
     }
 
     // Getters y Setters
