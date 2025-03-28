@@ -103,14 +103,12 @@ public class WebController {
     }
 
     @GetMapping("/catalogo")
-    public String mostrarCatalogo(Model model) {
+    public String catalogo(Model model) {
         List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();
         List<Series> series = deustoStreamService.getAllSeries();
-
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
-
-        return "catalogo"; // Mapea a catalogo.html en /templates/
+        return "catalogo"; // Asegúrate de que este es el nombre del archivo HTML en templates
     }
 
     // ver detalle de la pelicula

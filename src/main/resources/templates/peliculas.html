@@ -25,8 +25,9 @@
                     <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
                     <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
                     <td id="sinopsis-cell-${pelicula.id}">${pelicula.sinopsis}</td>
+                    <td><img src="${pelicula.imagenUrl}" alt="Póster" width="100"></td>  <!-- NUEVA COLUMNA -->
                     <td id="actions-${pelicula.id}">
-                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}')">Update</button>
+                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.imagenUrl}')">Update</button>
                         <button onclick="deletePelicula(${pelicula.id})">Delete</button>
                     </td>
                 </tr>`
@@ -54,11 +55,12 @@
             const anio = document.getElementById('anio').value;
             const genero = document.getElementById('genero').value;
             const sinopsis = document.getElementById('sinopsis').value;
+            const imagenUrl = document.getElementById('imagenUrl').value;  // NUEVO
 
             await fetch('/api/peliculas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, sinopsis })
+                body: JSON.stringify({ titulo, anio, genero, sinopsis, imagenUrl })  // INCLUIR imagenUrl
             });
 
             // Limpiar los campos después de añadir la película
@@ -66,17 +68,19 @@
             document.getElementById('anio').value = "";
             document.getElementById('genero').value = "";
             document.getElementById('sinopsis').value = "";
+            document.getElementById('imagenUrl').value = "";  
             fetchPeliculas();
         }
 
         // Función para habilitar la edición de una película
-        function enableEdit(id, titulo, anio, genero, descripcion) {
+        function enableEdit(id, titulo, anio, genero, descripcion, imagenUrl) {
             document.getElementById(`row-${id}`).innerHTML = `
                 <td>${id}</td>
                 <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
                 <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
                 <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
                 <td><input type="text" id="edit-descripcion-${id}" value="${descripcion}"></td>
+                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td> 
                 <td>
                     <button onclick="confirmUpdate(${id})">Confirm</button>
                     <button onclick="fetchPeliculas()">Cancel</button>
@@ -90,11 +94,13 @@
             const anio = document.getElementById(`edit-anio-${id}`).value;
             const genero = document.getElementById(`edit-genero-${id}`).value;
             const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
+            const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value; // NUEVO
+
 
             await fetch(`/api/peliculas/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, descripcion })
+                body: JSON.stringify({ titulo, anio, genero, descripcion, imagenUrl }) // INCLUIR imagenUrl
             });
 
             fetchPeliculas();
@@ -116,9 +122,9 @@
 
 <body>
     <nav>
-        <a href="/usuarios">Gestion Usuarios</a>
-        <a href="/peliculas">Gestion Películas</a>
-        <a href="/series">Gestion Series</a>
+        <a th:href="@{/usuarios}" href="/usuarios">Gestion de Usuarios</a>
+        <a th:href="@{/peliculas}" href="/peliculas">Gestion Películas</a>
+        <a th:href="@{/series}" href="/series">Gestion Series</a>
     </nav>
     <h2>Gestión de Películas</h2>
 
@@ -132,6 +138,7 @@
         </select>
 
         <textarea id="sinopsis" placeholder="Sinopsis" required></textarea>
+        <input type="text" id="imagenUrl" placeholder="URL de la imagen" required>
         <button type="submit">Añadir Película</button>
     </form>
 
@@ -144,6 +151,7 @@
                 <th>Año</th>
                 <th>Género</th>
                 <th>Sinopsis</th>
+                <th>Imagen</th>
                 <th>Acciones</th>
             </tr>
         </thead>

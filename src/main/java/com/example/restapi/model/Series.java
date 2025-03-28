@@ -20,23 +20,24 @@ public class Series {
     @Enumerated(EnumType.STRING)
     private Generos genero;
 
-    //@OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Temporada> temporadas;
-
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Capitulo> capitulos;
+
+    @Column(nullable = false)
+    private String imagenUrl; // Nueva propiedad
 
     // Constructor vacío (necesario para JPA)
     public Series() {
     }
 
     // Constructor con parámetros
-    public Series(String titulo, int anio, String descripcion, Generos genero, List<Capitulo> capitulos) {
+    public Series(String titulo, int anio, String descripcion, Generos genero, List<Capitulo> capitulos, String imagenUrl) {
         this.titulo = titulo;
         this.anio = anio;
         this.descripcion = descripcion;
         this.genero = genero;
         this.capitulos = capitulos != null ? capitulos : new ArrayList<>();
+        this.imagenUrl = ""; // Inicializar imagenUrl
     }
 
     // Getters y Setters
@@ -86,6 +87,14 @@ public class Series {
 
     public void setCapitulos(List<Capitulo> capitulos) {
         this.capitulos = capitulos;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     @Override
