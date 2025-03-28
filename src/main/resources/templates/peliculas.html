@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+
     <title>Gestión de Películas</title>
 
     <script>
@@ -114,6 +115,11 @@
 </head>
 
 <body>
+    <nav>
+        <a href="/usuarios">Gestion Usuarios</a>
+        <a href="/peliculas">Gestion Películas</a>
+        <a href="/series">Gestion Series</a>
+    </nav>
     <h2>Gestión de Películas</h2>
 
     <form onsubmit="event.preventDefault(); addPelicula();">
