@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de la Serie - DeustoStream</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/detalles.css">
+<body>
+
+    <h1>Detalles de la Serie</h1>
+
+    <div class="serie-detalle">
+        <div class="detalle-info">
+            <h2 th:text="${serie.titulo}"></h2>
+            <p><strong>Año:</strong> <span th:text="${serie.anio}"></span></p>
+            <p><strong>Género:</strong> <span th:text="${serie.genero}"></span></p>
+            <p><strong>Descripción:</strong> <span th:text="${serie.descripcion}"></span></p>
+        </div>
+        <div class="detalle-imagen">
+            <!-- Puedes agregar una imagen de la serie si la tienes -->
+            <!-- <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de la serie"> -->
+        </div>
+    </div>
+
+    <h3>Capítulos</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Duración (minutos)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="capitulo : ${serie.capitulos}">
+                <td th:text="${capitulo.id}"></td>
+                <td th:text="${capitulo.titulo}"></td>
+                <td th:text="${capitulo.duracion}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/series" class="btn-volver">Volver al listado de series</a>
+
+</body>
+</html>
