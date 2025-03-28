@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Catálogo - DeustoStream</title>
-    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+    <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css">
 </head>
-<body>
 
-    <h1>🎬 Catálogo DeustoStream</h1>
+<body>
+    <header>
+        <h1>Catalogo de DeustoStream</h1>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+    </header>
 
     <div class="catalogo">
         <!-- Sección de Películas -->
         <h2>🎥 Películas</h2>
         <div class="contenedor-peliculas">
             <div class="pelicula" th:each="pelicula : ${peliculas}">
-                <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
-                <h3 th:text="${pelicula.titulo}"></h3>
-                <p th:text="${pelicula.genero}"></p>
+                <!-- Enlace a la página de detalles de la película -->
+                <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">
+                    <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
+                    <h3 th:text="${pelicula.titulo}"></h3>
+                    <p th:text="${pelicula.genero}"></p>
+                </a>
             </div>
         </div>
 
@@ -32,4 +39,5 @@
     </div>
 
 </body>
+
 </html>
