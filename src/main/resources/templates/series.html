@@ -8,23 +8,23 @@
 
     <script>
         async function fetchSeries() {
-            const response = await fetch('/api/series');
-            const series = await response.json();
-            let tableContent = series.map(serie => 
-                `<tr id="row-${serie.id}">
-                    <td>${serie.id}</td>
-                    <td id="titulo-cell-${serie.id}">${serie.titulo}</td>
-                    <td id="anio-cell-${serie.id}">${serie.anio}</td>
-                    <td id="genero-cell-${serie.id}">${serie.genero}</td>
-                    <td id="descripcion-cell-${serie.id}">${serie.descripcion}</td>
-                    <td id="actions-${serie.id}">
-                        <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}')">Update</button>
-                        <button onclick="deleteSerie(${serie.id})">Delete</button>
-                    </td>
-                </tr>`
-            ).join('');
-            document.getElementById('serieTable').innerHTML = tableContent;
-        }
+        const response = await fetch('/api/series');
+        const series = await response.json();
+        let tableContent = series.map(serie => 
+            `<tr id="row-${serie.id}" style="cursor: pointer;">
+                <td onclick="window.location='/serie/${serie.id}'">${serie.id}</td>
+                <td id="titulo-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.titulo}</td>
+                <td id="anio-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.anio}</td>
+                <td id="genero-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.genero}</td>
+                <td id="descripcion-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.descripcion}</td>
+                <td id="actions-${serie.id}">
+                    <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}')">Update</button>
+                    <button onclick="deleteSerie(${serie.id})">Delete</button>
+                </td>
+            </tr>`
+        ).join('');
+        document.getElementById('serieTable').innerHTML = tableContent;
+    }
 
         async function fetchGeneros() {
             const response = await fetch('/api/generos');
