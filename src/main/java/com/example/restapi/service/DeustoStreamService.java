@@ -139,12 +139,25 @@ public class DeustoStreamService {
     }
 
     public void deleteSeries(Long id) {
-        if (serieRepository.existsById(id)) {
-            serieRepository.deleteById(id);
+        Optional<Series> optionalSeries = serieRepository.findById(id);
+        if (optionalSeries.isPresent()) {
+            Series series = optionalSeries.get();
+            // Eliminar la relación en listaMeGustaSeries de los usuarios
+            List<Usuario> usuarios = usuarioRepository.findAll();
+            for (Usuario usuario : usuarios) {
+                if (usuario.getListaMeGustaSeries().contains(series)) {
+                    usuario.getListaMeGustaSeries().remove(series);
+                    usuarioRepository.save(usuario);
+                }
+            }
+            serieRepository.delete(series);
         } else {
             throw new RuntimeException("Series not found with id: " + id);
         }
     }
+
+   
+
 
     public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
