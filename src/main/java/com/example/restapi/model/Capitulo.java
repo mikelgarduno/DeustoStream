@@ -1,5 +1,7 @@
 package com.example.restapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Capitulo {
 
     @ManyToOne
     @JoinColumn(name = "serie_id")
+    @JsonBackReference 
     private Series serie;
 
     public Capitulo() {

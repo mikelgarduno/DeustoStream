@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Detalles de la Película</title>
-</head>
+    <meta charset="UTF-8">
+    <title>Detalles de la Película - DeustoStream</title>
+    <link rel="stylesheet" href="/styles.css"> 
+    <link rel="stylesheet" href="/detalles.css"> 
 <body>
 
-<h1>Detalles de la Película</h1>
+    <h1>Detalles de la Película</h1>
 
-<div>
-    <h2 th:text="${pelicula.titulo}"></h2>
-    <p><strong>Año:</strong> <span th:text="${pelicula.anio}"></span></p>
-    <p><strong>Género:</strong> <span th:text="${pelicula.genero}"></span></p>
-    <p><strong>Duración:</strong> <span th:text="${pelicula.duracion}"></span> minutos</p>
-    <p><strong>Sinopsis:</strong> <span th:text="${pelicula.sinopsis}"></span></p>
-</div>
+    <div class="pelicula-detalle">
+        <div class="detalle-info">
+            <h2 th:text="${pelicula.titulo}"></h2>
+            <p><strong>Año:</strong> <span th:text="${pelicula.anio}"></span></p>
+            <p><strong>Género:</strong> <span th:text="${pelicula.genero}"></span></p>
+            <p><strong>Duración:</strong> <span th:text="${pelicula.duracion}"></span> minutos</p>
+            <p><strong>Sinopsis:</strong> <span th:text="${pelicula.sinopsis}"></span></p>
+        </div>
+        <!--<div class="detalle-imagen">
+        </div> -->
+    </div>
 
 <a href="/catalogo">Volver al listado de películas</a>
 
 </body>
 </html>
-

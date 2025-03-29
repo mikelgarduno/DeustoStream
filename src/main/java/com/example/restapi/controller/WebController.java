@@ -122,4 +122,15 @@ public class WebController {
         return "detallePelicula";
     }
 
+    //ver detalle de las series
+    @GetMapping("/serie/{id}")
+    public String mostrarDetalleSerie(@PathVariable Long id, Model model) {
+        Series serie = deustoStreamService.getSeriesById(id)
+                .orElseThrow(() -> new RuntimeException("Serie no encontrada"));
+
+        model.addAttribute("serie", serie);
+        
+        return "detalleSerie"; 
+    }
+
 }

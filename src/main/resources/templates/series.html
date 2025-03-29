@@ -12,12 +12,13 @@
             const response = await fetch('/api/series');
             const series = await response.json();
             let tableContent = series.map(serie => 
-                `<tr id="row-${serie.id}">
-                    <td>${serie.id}</td>
-                    <td id="titulo-cell-${serie.id}">${serie.titulo}</td>
-                    <td id="anio-cell-${serie.id}">${serie.anio}</td>
-                    <td id="genero-cell-${serie.id}">${serie.genero}</td>
-                    <td id="descripcion-cell-${serie.id}">${serie.descripcion}</td>
+                `<tr id="row-${serie.id}" style="cursor: pointer;">
+                    <td onclick="window.location='/serie/${serie.id}'">${serie.id}</td>
+                    <td id="titulo-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.titulo}</td>
+                    <td id="anio-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.anio}</td>
+                    <td id="genero-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.genero}</td>
+                    <td id="descripcion-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.descripcion}</td>
+                    <td id="capitulos-cell-${serie.id}"" onclick="window.location='/serie/${serie.id}'">${serie.numeroCapitulos}</td> <!-- Mostrar número de capítulos -->
                     <td><img src="${serie.imagenUrl}" alt="Póster" width="100"></td>  <!-- NUEVA COLUMNA -->
                     <td id="actions-${serie.id}">
                         <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}', '${serie.imagenUrl}')">Update</button>
@@ -27,6 +28,7 @@
             ).join('');
             document.getElementById('serieTable').innerHTML = tableContent;
         }
+
 
         async function fetchGeneros() {
             const response = await fetch('/api/generos');
@@ -41,25 +43,29 @@
         }
 
         async function addSerie() {
-            const titulo = document.getElementById('titulo').value;
-            const anio = document.getElementById('anio').value;
-            const genero = document.getElementById('genero').value;
-            const descripcion = document.getElementById('descripcion').value;
-            const imagenUrl = document.getElementById('imagenUrl').value;  // NUEVO
+    const titulo = document.getElementById('titulo').value;
+    const anio = document.getElementById('anio').value;
+    const genero = document.getElementById('genero').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const numeroCapitulos = document.getElementById('numeroCapitulos').value; // Capturamos el número de capítulos
+    const imagenUrl = document.getElementById('imagenUrl').value;  // NUEVO
 
-            await fetch('/api/series', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, descripcion, imagenUrl })  // INCLUIR imagenUrl
-            });
+    await fetch('/api/series', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ titulo, anio, genero, descripcion, numeroCapitulos, imagenUrl })
+    });
 
-            document.getElementById('titulo').value = "";
-            document.getElementById('anio').value = "";
-            document.getElementById('genero').value = "";
-            document.getElementById('descripcion').value = "";
-            document.getElementById('imagenUrl').value = "";  // NUEVO
-            fetchSeries();
-        }
+
+    document.getElementById('titulo').value = "";
+    document.getElementById('anio').value = "";
+    document.getElementById('genero').value = "";
+    document.getElementById('descripcion').value = "";
+    document.getElementById('numeroCapitulos').value = "";  
+    document.getElementById('imagenUrl').value = "";  // NUEVO
+
+    fetchSeries();
+}
 
         function enableEdit(id, titulo, anio, genero, descripcion, imagenUrl) {
             document.getElementById(`row-${id}`).innerHTML = `
@@ -119,9 +125,14 @@
             <!-- Los géneros se agregarán dinámicamente aquí -->
         </select>
         <textarea id="descripcion" placeholder="Descripción" required></textarea>
+    
+        <!-- Campo para ingresar el número total de capítulos -->
+        <input type="number" id="numeroCapitulos" placeholder="Número de capítulos" min="1" required>
+    
         <input type="text" id="imagenUrl" placeholder="URL de la imagen" required>
         <button type="submit">Añadir Serie</button>
     </form>
+    
 
     <h3>Lista de Series</h3>
     <table border="1">
@@ -132,6 +143,7 @@
                 <th>Año</th>
                 <th>Género</th>
                 <th>Descripción</th>
+                <th>Total Capítulos</th>
                 <th>Imagen</th>
                 <th>Acciones</th>
             </tr>

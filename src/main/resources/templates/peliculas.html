@@ -13,7 +13,14 @@
         async function fetchPeliculas() {
             const response = await fetch('/api/peliculas');
             const peliculas = await response.json();
+
             let tableContent = peliculas.map(pelicula =>
+                /*`<tr id="row-${pelicula.id}" style="cursor: pointer;">
+                    <td onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.id}</td>
+                    <td id="titulo-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.titulo}</td>
+                    <td id="anio-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.anio}</td>
+                    <td id="genero-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.genero}</td>
+                    <td id="sinopsis-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.sinopsis}</td> */
                 `<tr id="row-${pelicula.id}">
                     <td>${pelicula.id}</td>
                     <!-- Cambiamos esta celda para que el nombre sea un enlace -->

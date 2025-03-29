@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #141414;
+    color: white;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.detalle-info, .detalle-imagen {
+    margin: 0 auto;
+}
+
+.pelicula-detalle, .serie-detalle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.pelicula-detalle .detalle-info, .serie-detalle .detalle-info {
+    width: 60%;
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+    text-align: left;
+    color: white;
+}
+
+
+.pelicula-detalle .detalle-info h2, .serie-detalle .detalle-info h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #e50914; 
+}
+
+.pelicula-detalle .detalle-info p, .serie-detalle .detalle-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+/* Detalles de la imagen 
+.pelicula-detalle .detalle-imagen, .serie-detalle .detalle-imagen {
+    width: 30%;
+    text-align: center;
+}*/
+
+/* Botón de volver */
+.btn-volver {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e50914;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-volver:hover {
+    background-color: #b20710;
+}

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Series {
 
@@ -17,10 +19,13 @@ public class Series {
     private int anio;
     private String descripcion;
 
+    private int numeroCapitulos; 
+
     @Enumerated(EnumType.STRING)
     private Generos genero;
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference 
     private List<Capitulo> capitulos;
 
     @ManyToMany(mappedBy = "listaMeGustaSeries")
@@ -92,6 +97,14 @@ public class Series {
         this.capitulos = capitulos;
     }
 
+     public int getNumeroCapitulos() {
+        return numeroCapitulos;
+    }
+
+    public void setNumeroCapitulos(int numeroCapitulos) {
+        this.numeroCapitulos = numeroCapitulos;
+    }
+    
     public String getImagenUrl() {
         return imagenUrl;
     }
