@@ -83,7 +83,7 @@ public class WebController {
         }
     } // AGREGADO FIN
 
-    @GetMapping("/peliculas")
+    /*@GetMapping("/peliculas")
     public String mostrarPeliculas(Model model) {
         List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();
         model.addAttribute("peliculas", peliculas);
@@ -101,6 +101,7 @@ public class WebController {
         model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
         return "usuarios";
     }
+    */
 
     @GetMapping("/catalogo")
     public String catalogo(Model model) {
