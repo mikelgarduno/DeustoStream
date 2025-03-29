@@ -1,0 +1,52 @@
+body {
+  background-color: #141414;
+  color: #fff;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+.registration-container {
+  background-color: rgba(0,0,0,0.75);
+  border-radius: 4px;
+  padding: 60px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  margin: 0 auto;
+}
+.form-control {
+  background-color: #424242;
+  border: none;
+  color: #fff;
+  margin-bottom: 16px;
+}
+.form-control:focus {
+  background-color: #605e5e;
+  border-color: #e50914;
+  box-shadow: none;
+  color: #fff;
+}
+.btn-primary {
+  background-color: #e50914;
+  border: none;
+  width: 100%;
+  padding: 12px;
+  margin-top: 24px;
+}
+.btn-primary:hover {
+  background-color: #f6121d;
+}
+.back-link {
+  color: #757575;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+}
+.back-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}

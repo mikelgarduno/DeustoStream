@@ -7,7 +7,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "peliculas")
@@ -31,23 +34,32 @@ public class Pelicula {
     @Column(nullable = false)
     private String sinopsis;
 
+    @Column(nullable = false)
+    private String imagenUrl; // Nueva propiedad
+
+    @ManyToMany(mappedBy = "listaMeGustaPeliculas")
+    private List<Usuario> usuarios; // Relación ManyToMany con Usuario
+
     // No-argument constructor
     public Pelicula() {
     }
 
     // All-argument constructor (optional, for convenience)
-    public Pelicula(String titulo, String director, Generos genero, int duracion, int anio) {
+    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {
         this.titulo = titulo;
         this.genero = genero;
         this.duracion = duracion;
         this.anio = anio;
+        this.sinopsis = sinopsis;
+        this.imagenUrl = imagenUrl;
     }
+    
 
     // Getters and setters
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -90,6 +102,14 @@ public class Pelicula {
 
     public void setSinopsis(String sinopsis) {
         this.sinopsis = sinopsis;
+    }
+
+    public String getImagenUrl() {
+        return imagenUrl;
+    }
+
+    public void setImagenUrl(String imagenUrl) {
+        this.imagenUrl = imagenUrl;
     }
 
     @Override

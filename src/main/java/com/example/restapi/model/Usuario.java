@@ -1,13 +1,20 @@
 package com.example.restapi.model;
 
+import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import com.example.restapi.model.Usuario;
 
 @Entity
 @Table(name = "usuarios") 
@@ -28,6 +35,22 @@ public class Usuario {
 
     @Column(nullable = false)
     private String contrasenya;
+
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_series",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "serie_id")
+    )
+    private List<Series> listaMeGustaSeries; // Relación ManyToMany con Series
+
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_peliculas",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "pelicula_id")
+    )
+    private List<Pelicula> listaMeGustaPeliculas; // Relación ManyToMany con Peliculas
 
     // No-argument constructor
     public Usuario() {
@@ -80,6 +103,22 @@ public class Usuario {
 
     public void setContrasenya(String contrasenya) {
         this.contrasenya = contrasenya;
+    }
+
+    public List<Series> getListaMeGustaSeries() {
+        return listaMeGustaSeries;
+    }
+
+    public void setListaMeGustaSeries(List<Series> listaMeGustaSeries) {
+        this.listaMeGustaSeries = listaMeGustaSeries;
+    }
+
+    public List<Pelicula> getListaMeGustaPeliculas() {
+        return listaMeGustaPeliculas;
+    }
+
+    public void setListaMeGustaPeliculas(List<Pelicula> listaMeGustaPeliculas) {
+        this.listaMeGustaPeliculas = listaMeGustaPeliculas;
     }
 
     @Override

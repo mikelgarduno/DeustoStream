@@ -1,29 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Catálogo - DeustoStream</title>
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css">
 </head>
-<body>
 
-    <h1>🎬 Catálogo DeustoStream</h1>
+<body>
+    <header>
+        <h1>Catalogo de DeustoStream</h1>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+    </header>
 
     <div class="catalogo">
         <!-- Sección de Películas -->
-        <div class="pelicula" th:each="pelicula : ${peliculas}">
-            <!-- <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">-->
-            <h2 th:text="${pelicula.titulo}"></h2>
-            <p th:text="${pelicula.genero}"></p>
+        <h2>🎥 Películas</h2>
+        <div class="contenedor-peliculas">
+            <div class="pelicula" th:each="pelicula : ${peliculas}">
+                <!-- Enlace a la página de detalles de la película -->
+                <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">
+                    <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
+                    <h3 th:text="${pelicula.titulo}"></h3>
+                    <p th:text="${pelicula.genero}"></p>
+                </a>
+            </div>
         </div>
 
         <!-- Sección de Series -->
-        <div class="pelicula" th:each="serie : ${series}">
-            <!-- <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de serie">-->
-            <h2 th:text="${serie.titulo}"></h2>
-            <p th:text="${serie.genero}"></p>
+        <h2>📺 Series</h2>
+        <div class="contenedor-series">
+            <div class="serie" th:each="serie : ${series}">
+            <a th:href="@{/serie/{id}(id=${serie.id})}">
+                <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de serie">
+                <h3 th:text="${serie.titulo}"></h3>
+                <p th:text="${serie.genero}"></p>
+            </a>
+            </div>
         </div>
     </div>
 
 </body>
+
 </html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - DeustoStream</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+</head>
+
+<body>
+    <h2>Iniciar Sesión</h2>
+    <form action="/login" method="post" class="login-form">
+        <input type="email" name="correo" placeholder="Correo" required><br>
+        <input type="password" name="contrasenya" placeholder="Contraseña" required><br>
+        <button type="submit">Entrar</button>
+    </form>
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+    <p>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
+</body>
+

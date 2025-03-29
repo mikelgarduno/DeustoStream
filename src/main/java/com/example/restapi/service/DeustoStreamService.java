@@ -80,6 +80,7 @@ public class DeustoStreamService {
             pelicula.setAnio(peliculaDetalles.getAnio());
             pelicula.setSinopsis(peliculaDetalles.getSinopsis());
             pelicula.setGenero(peliculaDetalles.getGenero());
+            pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());
             return peliculaRepository.save(pelicula);
         } else {
             throw new RuntimeException("Pelicula not found");
@@ -116,6 +117,7 @@ public class DeustoStreamService {
             series.setAnio(seriesDetalles.getAnio());
             series.setDescripcion(seriesDetalles.getDescripcion());
             series.setGenero(seriesDetalles.getGenero());
+            series.setImagenUrl(seriesDetalles.getImagenUrl());
             return serieRepository.save(series);
         } else {
             throw new RuntimeException("Series not found");

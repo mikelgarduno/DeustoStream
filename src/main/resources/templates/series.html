@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+
     <title>Gestión de Series</title>
 
     <script>
@@ -18,8 +19,9 @@
                     <td id="genero-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.genero}</td>
                     <td id="descripcion-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.descripcion}</td>
                     <td id="capitulos-cell-${serie.id}"" onclick="window.location='/serie/${serie.id}'">${serie.numeroCapitulos}</td> <!-- Mostrar número de capítulos -->
+                    <td><img src="${serie.imagenUrl}" alt="Póster" width="100"></td>  <!-- NUEVA COLUMNA -->
                     <td id="actions-${serie.id}">
-                        <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}')">Update</button>
+                        <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}', '${serie.imagenUrl}')">Update</button>
                         <button onclick="deleteSerie(${serie.id})">Delete</button>
                     </td>
                 </tr>`
@@ -46,11 +48,12 @@
     const genero = document.getElementById('genero').value;
     const descripcion = document.getElementById('descripcion').value;
     const numeroCapitulos = document.getElementById('numeroCapitulos').value; // Capturamos el número de capítulos
+    const imagenUrl = document.getElementById('imagenUrl').value;  // NUEVO
 
     await fetch('/api/series', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ titulo, anio, genero, descripcion, numeroCapitulos })
+        body: JSON.stringify({ titulo, anio, genero, descripcion, numeroCapitulos, imagenUrl })
     });
 
 
@@ -59,17 +62,19 @@
     document.getElementById('genero').value = "";
     document.getElementById('descripcion').value = "";
     document.getElementById('numeroCapitulos').value = "";  
+    document.getElementById('imagenUrl').value = "";  // NUEVO
 
     fetchSeries();
 }
 
-        function enableEdit(id, titulo, anio, genero, descripcion) {
+        function enableEdit(id, titulo, anio, genero, descripcion, imagenUrl) {
             document.getElementById(`row-${id}`).innerHTML = `
                 <td>${id}</td>
                 <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
                 <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
                 <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
                 <td><input type="text" id="edit-descripcion-${id}" value="${descripcion}"></td>
+                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td>  <!-- NUEVO -->
                 <td>
                     <button onclick="confirmUpdate(${id})">Confirm</button>
                     <button onclick="fetchSeries()">Cancel</button>
@@ -82,11 +87,12 @@
             const anio = document.getElementById(`edit-anio-${id}`).value;
             const genero = document.getElementById(`edit-genero-${id}`).value;
             const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
+            const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value; // NUEVO
 
             await fetch(`/api/series/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, descripcion })
+                body: JSON.stringify({ titulo, anio, genero, descripcion, imagenUrl })  // INCLUIR imagenUrl
             });
 
             fetchSeries();
@@ -104,6 +110,12 @@
     </script>
 </head>
 <body>
+    <nav>
+        <a th:href="@{/usuarios}" href="/usuarios">Gestion de Usuarios</a>
+        <a th:href="@{/peliculas}" href="/peliculas">Gestion Películas</a>
+        <a th:href="@{/series}" href="/series">Gestion Series</a>
+
+    </nav>
     <h2>Gestión de Series</h2>
 
     <form onsubmit="event.preventDefault(); addSerie();">
@@ -117,6 +129,7 @@
         <!-- Campo para ingresar el número total de capítulos -->
         <input type="number" id="numeroCapitulos" placeholder="Número de capítulos" min="1" required>
     
+        <input type="text" id="imagenUrl" placeholder="URL de la imagen" required>
         <button type="submit">Añadir Serie</button>
     </form>
     
@@ -131,6 +144,7 @@
                 <th>Género</th>
                 <th>Descripción</th>
                 <th>Total Capítulos</th>
+                <th>Imagen</th>
                 <th>Acciones</th>
             </tr>
         </thead>

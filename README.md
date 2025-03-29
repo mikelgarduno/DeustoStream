@@ -2,60 +2,77 @@
 
 ## 🌟 Descripción del Proyecto
 
-DeustoStream es una plataforma de streaming innovadora que te permite disfrutar de tu contenido favorito de una manera intuitiva y personalizada. Diseñada para ofrecer una experiencia de entretenimiento única, nuestra aplicación combina una interfaz amigable con funcionalidades avanzadas.
+DeustoStream es una plataforma de streaming diseñada para ofrecer una experiencia de entretenimiento intuitiva y personalizada. Los usuarios pueden explorar un amplio catálogo de series y películas, gestionar listas de favoritos y disfrutar de recomendaciones basadas en sus preferencias.
 
-## ✨ Características Principales
+## 📦 Tecnologías Utilizadas
 
-### 🔍 Exploración de Contenido
-- **Catálogo Completo**: Navega por una amplia selección de series y películas
-- **Filtros Inteligentes**: 
-  - Filtra por categorías 
-  - Distingue entre series y películas
-  - Descubre contenido relacionado (como películas de la misma trilogía)
+- **Backend:** Java con Spring Boot  
+- **Base de Datos:** MySQL  
+- **Frameworks y Librerías:** Spring Boot, JPA/Hibernate, Thymeleaf  
+- **Gestor de Dependencias:** Maven  
 
-### 👤 Perfil de Usuario
-- **Registro y Autenticación Flexible**:
-  - Registro tradicional
-  - Inicio de sesión con QR
-  - Recuperación de contraseña
-- **Perfiles Personalizados**: 
-  - Mini perfiles para recomendaciones personalizadas
-  - Lista de favoritos
+## 🚀 Configuración y Ejecución del Proyecto
 
-### 🌈 Experiencia de Visualización
-- Selección detallada de películas
-- Elección de episodios específicos
-- Sistema de valoración de contenido
+### 1️⃣ Configurar la Base de Datos MySQL
 
-### 💳 Suscripción
-- Planes mensuales y anuales
-- Cancelación cuando lo desees
+Antes de ejecutar el proyecto, es necesario crear la base de datos y configurar el usuario. Puedes hacer esto ejecutando el script `dbsetup.sql`, que crea un usuario y una base de datos llamada `restapidb`:
 
-## 🛠 Funcionalidades de Administración
-- Gestión completa de catálogo:
-  - Añadir nuevas series/películas
-  - Editar contenido existente
-  - Eliminar contenido
-- Panel de administración de usuarios
-  - Visualizar detalles de usuarios registrados
-  - Modificar información de usuarios
+```sh
+mysql -u root -p < src/main/resources/dbsetup.sql
+```
 
-## 🚀 Próximamente
-- Algoritmos de recomendación más avanzados
-- Integración con más servicios
-- Mejoras en la experiencia de usuario
+El script `dbsetup.sql` realiza las siguientes acciones:
 
-## 📦 Tecnologías
-*(Especificar las tecnologías que se utilizarán)*
-- Frontend: SpringBoot
-- Backend: Java
-- Base de Datos: SQL
+```sql
+DROP USER IF EXISTS 'spq'@'%';
+CREATE USER IF NOT EXISTS 'spq'@'%' IDENTIFIED BY 'spq';
 
-## 🤝 Contribuciones
-¡Las contribuciones son bienvenidas! Por favor, lee nuestras pautas de contribución antes de comenzar.
+DROP SCHEMA IF EXISTS restapidb;
+CREATE SCHEMA restapidb;
 
-## 📄 Licencia
-*(Especificar la licencia del proyecto)*
+GRANT ALL ON restapidb.* TO 'spq'@'%';
+FLUSH PRIVILEGES;
+```
+
+Esto asegura que el usuario `spq` tenga acceso a la base de datos `restapidb`.
+
+### 2️⃣ Configurar el Proyecto
+
+Asegúrate de que todas las dependencias están instaladas antes de ejecutar la aplicación. Para ello, ejecuta:
+
+```sh
+mvn compile
+```
+
+Esto descargará todas las dependencias necesarias y verificará que el código compile correctamente.
+
+### 3️⃣ Ejecutar la Aplicación
+
+Para iniciar la aplicación, usa el siguiente comando:
+
+```sh
+mvn spring-boot:run
+```
+
+Si todo está correctamente configurado, el servidor se iniciará y estará disponible en `http://localhost:8080/`.
+
+### 4️⃣ Detener la Aplicación
+
+Para detener la aplicación, presiona `Ctrl + C` en la terminal donde se está ejecutando.
+
+### 5️⃣ Empaquetar la Aplicación
+
+Si deseas generar un archivo `.jar` ejecutable, usa:
+
+```sh
+mvn package
+```
+
+Luego, puedes ejecutar la aplicación con:
+
+```sh
+java -jar target/deustostream-0.0.1-SNAPSHOT.jar
+```
 
 ---
 

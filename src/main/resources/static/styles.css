@@ -1,12 +1,32 @@
 /* General styling */
 body {
     font-family: Arial, sans-serif;
-    background-color: #141414; /* Fondo oscuro estilo Netflix */
+    background-color: #141414;
     color: white;
     margin: 0;
     padding: 0;
     text-align: center;
 }
+
+/* Header */
+header {
+    background-color: #222;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 32px;
+    margin: 0;
+    color: #fff;
+    display: inline-block;
+    margin-left: 20px;
+}
+
 
 /* Estilo del título */
 h1 {
@@ -14,9 +34,10 @@ h1 {
     font-size: 32px;
 }
 
-/* Estilo de la gestión de películas */
+
 h2 {
     color: #ddd;
+    margin-top: 100px; /* Para que no se oculte bajo el header */
     margin-bottom: 10px;
 }
 
@@ -29,7 +50,10 @@ form {
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
 }
 
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"],
+input[type="number"],
+select,
+textarea {
     padding: 8px;
     margin: 5px;
     border: 1px solid #ccc;
@@ -39,7 +63,8 @@ input[type="text"], input[type="number"], select, textarea {
 
 button {
     padding: 8px 12px;
-    background-color: #e50914; /* Rojo Netflix */
+    background-color: #e50914;
+    /* Rojo Netflix */
     color: white;
     border: none;
     cursor: pointer;
@@ -86,37 +111,116 @@ td input {
 .catalogo {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-evenly;
     gap: 20px;
     padding: 20px;
+    margin-top: 150px; /* Para no chocar con el header */
 }
 
-.pelicula {
+/* Contenedor de Películas y Series */
+.contenedor-peliculas, .contenedor-series {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+
+.pelicula, .serie {
     width: 200px;
     background-color: #222;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
     text-align: center;
-}
-
-.poster {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+    cursor: pointer;
     transition: transform 0.3s ease;
 }
 
-.poster:hover {
+.pelicula:hover, .serie:hover {
     transform: scale(1.05);
 }
 
-.pelicula h2 {
+
+.poster {
+    width: 100%;
+    height: 300px; /* Tamaño consistente para las imágenes */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.pelicula h2, .serie h2  {
     font-size: 16px;
     margin-top: 5px;
 }
 
-.pelicula p {
+.pelicula h3, .serie h3 {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+
+.pelicula p, .serie p {
     font-size: 14px;
     color: #bbb;
+}
+
+/* login form */
+
+.login-form {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* registro form */
+.registro-form {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Sección de Películas */
+#peliculas {
+    margin-bottom: 30px;
+}
+
+/* Sección de Series */
+#series {
+    margin-top: 50px;
+}
+
+/* Botón de cerrar sesión */
+.logout-btn {
+    background-color: #e50914;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    transition: background 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: #b20710;
+}
+
+/* Estilo para los enlaces dentro de las películas y series */
+a {
+    text-decoration: none;  /* Elimina el subrayado */
+    color: inherit;  /* Hereda el color del texto del contenedor, en este caso blanco */
+}
+
+/* Estilo adicional cuando el enlace se pasa por encima */
+a:hover {
+    transform: scale(1.05);  /* Efecto de escala cuando el usuario pasa el cursor sobre el enlace */
 }
