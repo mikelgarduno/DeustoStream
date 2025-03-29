@@ -17,7 +17,7 @@
                     <td id="anio-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.anio}</td>
                     <td id="genero-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.genero}</td>
                     <td id="descripcion-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.descripcion}</td>
-                    <td id="capitulos-cell-${serie.id}">${serie.numeroCapitulos}</td> <!-- Mostrar número de capítulos -->
+                    <td id="capitulos-cell-${serie.id}"" onclick="window.location='/serie/${serie.id}'">${serie.numeroCapitulos}</td> <!-- Mostrar número de capítulos -->
                     <td id="actions-${serie.id}">
                         <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}')">Update</button>
                         <button onclick="deleteSerie(${serie.id})">Delete</button>
