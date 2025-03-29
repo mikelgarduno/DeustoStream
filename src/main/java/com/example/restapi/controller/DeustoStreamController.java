@@ -215,4 +215,23 @@ public class DeustoStreamController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @Operation (summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Película añadida a favoritos"),
+            @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
+    })
+    @PostMapping("/usuarios/{usuarioId}/peliculas/{peliculaId}")
+    public ResponseEntity<Usuario> addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId) {
+        Optional<Usuario> usuario = deustoStreamService.getUsuarioById(usuarioId);
+        Optional<Pelicula> pelicula = deustoStreamService.getPeliculaById(peliculaId);
+
+        if (usuario.isPresent() && pelicula.isPresent()) {
+            deustoStreamService.addPeliculaToFavoritos(usuario.get().getId(), pelicula.get().getId());
+            return ResponseEntity.ok(usuario.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

@@ -133,7 +133,20 @@ public class DeustoStreamService {
         }
     }
 
+public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId) {
+    Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
+    Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
+
+    if (optionalUsuario.isPresent() && optionalPelicula.isPresent()) {
+        Usuario usuario = optionalUsuario.get();
+        Pelicula pelicula = optionalPelicula.get();
+
+        usuario.getListaMeGustaPeliculas().add(pelicula);
+        usuarioRepository.save(usuario);
+    } else {
+        throw new RuntimeException("Usuario or Pelicula not found");
+    }
 
 
-
+}
 }

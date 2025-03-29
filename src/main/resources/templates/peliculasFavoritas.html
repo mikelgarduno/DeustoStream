@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Favoritos - DeustoStream</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <h1>Lista de favoritos de DeustoStream</h1>
+        <button class="logout-btn" onclick="window.location.href='/catalogo'">Volver a catálogo</button>
+    </header>
+
+    <div class="catalogo">
+        <!-- Sección de Películas -->
+        <h2>🎥 Películas</h2>
+        <div class="contenedor-peliculas">
+            <div class="pelicula" th:each="pelicula : ${peliculasFavoritas}">
+                <!-- Enlace a la página de detalles de la película -->
+                <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">
+                    <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
+                    <h3 th:text="${pelicula.titulo}"></h3>
+                    <p th:text="${pelicula.genero}"></p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
