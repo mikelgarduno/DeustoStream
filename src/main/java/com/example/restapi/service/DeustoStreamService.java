@@ -78,6 +78,7 @@ public class DeustoStreamService {
             Pelicula pelicula = optionalPelicula.get();
             pelicula.setTitulo(peliculaDetalles.getTitulo());
             pelicula.setAnio(peliculaDetalles.getAnio());
+            pelicula.setDuracion(peliculaDetalles.getDuracion());
             pelicula.setSinopsis(peliculaDetalles.getSinopsis());
             pelicula.setGenero(peliculaDetalles.getGenero());
             pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());

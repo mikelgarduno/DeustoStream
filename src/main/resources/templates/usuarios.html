@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
     <title>Deusto Stream Admin: Usuarios</title>
     <script>
         async function fetchUsuarios() {
             const response = await fetch('/api/registro');
             const usuarios = await response.json();
-            let tableContent = usuarios.map(usuario => 
+            let tableContent = usuarios.map(usuario =>
                 `<tr id="row-${usuario.id}">
                     <td>${usuario.id}</td>
                     <td id="nombre-cell-${usuario.id}">${usuario.nombre}</td>
@@ -84,12 +86,13 @@
         window.onload = fetchUsuarios;
     </script>
 </head>
+
 <body>
-    <nav>
-        <a href="/usuarios">Gestion Usuarios</a>
-        <a href="/peliculas">Gestion Películas</a>
-        <a href="/series">Gestion Series</a>
-    </nav>
+    <div id="gestion-links">
+        <a th:href="@{/usuarios}" href="/usuarios">Gestión de Usuarios</a>
+        <a th:href="@{/peliculas}" href="/peliculas">Gestión Películas</a>
+        <a th:href="@{/series}" href="/series">Gestión Series</a>
+    </div>
     <h2>Gestión de Usuarios</h2>
 
     <form onsubmit="event.preventDefault(); addUsuario();">
@@ -116,4 +119,5 @@
     </table>
     <a href="/">Volver al inicio</a>
 </body>
+
 </html>

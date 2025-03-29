@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <title>Gestión de Series</title>
 
@@ -110,12 +111,11 @@
     </script>
 </head>
 <body>
-    <nav>
-        <a th:href="@{/usuarios}" href="/usuarios">Gestion de Usuarios</a>
-        <a th:href="@{/peliculas}" href="/peliculas">Gestion Películas</a>
-        <a th:href="@{/series}" href="/series">Gestion Series</a>
-
-    </nav>
+    <div id="gestion-links">
+        <a th:href="@{/usuarios}" href="/usuarios">Gestión de Usuarios</a>
+        <a th:href="@{/peliculas}" href="/peliculas">Gestión Películas</a>
+        <a th:href="@{/series}" href="/series">Gestión Series</a>
+    </div>
     <h2>Gestión de Series</h2>
 
     <form onsubmit="event.preventDefault(); addSerie();">
