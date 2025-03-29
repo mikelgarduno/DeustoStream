@@ -5,6 +5,7 @@
     <title>Detalles de la Serie - DeustoStream</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/detalles.css">
+</head>
 <body>
 
     <h1>Detalles de la Serie</h1>
@@ -16,10 +17,8 @@
             <p><strong>Género:</strong> <span th:text="${serie.genero}"></span></p>
             <p><strong>Descripción:</strong> <span th:text="${serie.descripcion}"></span></p>
         </div>
-        <div class="detalle-imagen">
-            <!-- Puedes agregar una imagen de la serie si la tienes -->
-            <!-- <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de la serie"> -->
-        </div>
+        <!--<div class="detalle-imagen">
+        </div>-->
     </div>
 
     <h3>Capítulos</h3>
@@ -32,7 +31,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="capitulo : ${serie.capitulos}">
+            <!-- Aquí se llenarán los capítulos dinámicamente -->
+            <tr th:each="capitulo : ${serie.capitulos}" onclick="verCapitulo('${capitulo.titulo}')">
                 <td th:text="${capitulo.id}"></td>
                 <td th:text="${capitulo.titulo}"></td>
                 <td th:text="${capitulo.duracion}"></td>
@@ -41,6 +41,13 @@
     </table>
 
     <a href="/series" class="btn-volver">Volver al listado de series</a>
+
+    <script>
+        // Función para mostrar el mensaje cuando se hace clic en un capítulo
+        function verCapitulo() {
+            alert('Estás viendo el capítulo'); // Simple mensaje de alerta
+        }
+    </script>
 
 </body>
 </html>
