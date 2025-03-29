@@ -17,27 +17,31 @@
 
     <div class="catalogo">
         <!-- Sección de Películas -->
-        <h2>🎥 Películas</h2>
-        <div class="contenedor-peliculas">
-            <div class="pelicula" th:each="pelicula : ${peliculas}">
-                <!-- Enlace a la página de detalles de la película -->
-                <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">
-                    <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
-                    <h3 th:text="${pelicula.titulo}"></h3>
-                    <p th:text="${pelicula.genero}"></p>
-                </a>
+        <div class="seccion">
+            <h2>🎥 Películas</h2>
+            <div class="contenedor-peliculas">
+                <div class="pelicula" th:each="pelicula : ${peliculas}">
+                    <!-- Enlace a la página de detalles de la película -->
+                    <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">
+                        <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
+                        <h3 th:text="${pelicula.titulo}"></h3>
+                        <p th:text="${pelicula.genero}"></p>
+                    </a>
+                </div>
             </div>
         </div>
 
         <!-- Sección de Series -->
-        <h2>📺 Series</h2>
-        <div class="contenedor-series">
-            <div class="serie" th:each="serie : ${series}">
-            <a th:href="@{/serie/{id}(id=${serie.id})}">
-                <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de serie">
-                <h3 th:text="${serie.titulo}"></h3>
-                <p th:text="${serie.genero}"></p>
-            </a>
+        <div class="seccion">
+            <h2>📺 Series</h2>
+            <div class="contenedor-series">
+                <div class="serie" th:each="serie : ${series}">
+                    <a th:href="@{/serie/{id}(id=${serie.id})}">
+                        <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de serie">
+                        <h3 th:text="${serie.titulo}"></h3>
+                        <p th:text="${serie.genero}"></p>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

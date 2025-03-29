@@ -42,6 +42,19 @@ h2 {
     color: #ddd;
     margin-top: 100px; /* Para que no se oculte bajo el header */
     margin-bottom: 10px;
+    position: relative;
+
+}
+
+h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 50px;
+    height: 2px;
+    background-color: #e50914;
+    margin-top: 5px;
 }
 
 form {
@@ -128,6 +141,13 @@ td input {
     gap: 20px;
     padding: 20px;
     margin-top: 150px; /* Para no chocar con el header */
+}
+
+.seccion {
+    width: 100%; /* Asegura que cada sección ocupe el 100% del ancho */
+    display: flex;
+    flex-direction: column; /* Los elementos van en columna (título + lista) */
+    align-items: center; /* Centra los elementos */
 }
 
 /* Contenedor de Películas y Series */

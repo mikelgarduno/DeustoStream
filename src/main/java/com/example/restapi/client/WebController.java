@@ -1,4 +1,4 @@
-package com.example.restapi.controller;
+package com.example.restapi.client;
 
 import java.util.List;
 
