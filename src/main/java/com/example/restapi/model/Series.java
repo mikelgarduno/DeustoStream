@@ -103,6 +103,8 @@ public class Series {
 
     public void setNumeroCapitulos(int numeroCapitulos) {
         this.numeroCapitulos = numeroCapitulos;
+    }
+    
     public String getImagenUrl() {
         return imagenUrl;
     }
