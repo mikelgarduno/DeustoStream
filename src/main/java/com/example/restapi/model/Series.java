@@ -23,6 +23,9 @@ public class Series {
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Capitulo> capitulos;
 
+    @ManyToMany(mappedBy = "listaMeGustaSeries")
+    private List<Usuario> usuarios; // Relación ManyToMany con Usuario
+
     @Column(nullable = false)
     private String imagenUrl; // Nueva propiedad
 
@@ -95,6 +98,14 @@ public class Series {
 
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 
     @Override

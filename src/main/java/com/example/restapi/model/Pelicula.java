@@ -7,7 +7,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "peliculas")
@@ -33,6 +36,9 @@ public class Pelicula {
 
     @Column(nullable = false)
     private String imagenUrl; // Nueva propiedad
+
+    @ManyToMany(mappedBy = "listaMeGustaPeliculas")
+    private List<Usuario> usuarios; // Relación ManyToMany con Usuario
 
     // No-argument constructor
     public Pelicula() {
