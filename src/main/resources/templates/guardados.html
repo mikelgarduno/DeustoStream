@@ -27,6 +27,17 @@
                 </a>
             </div>
         </div>
+        <h2>📺 Series</h2>
+        <div class="contenedor-series">
+            <div class="serie" th:each="serie : ${seriesFavoritas}">
+            <!-- Enlace a la página de detalles de la serie -->
+            <a th:href="@{/serie/{id}(id=${serie.id})}">
+                <img class="poster" th:src="${serie.imagenUrl}" alt="Póster de serie">
+                <h3 th:text="${serie.titulo}"></h3>
+                <p th:text="${serie.genero}"></p>
+            </a>
+            </div>
+        </div>
     </div>
 
 </body>

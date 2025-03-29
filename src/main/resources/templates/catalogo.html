@@ -15,8 +15,13 @@
                 method: 'POST',
                 credentials: 'same-origin' // Asegura enviar las cookies de sesión
             });
+        }
+        async function guardarSerieFavoritos(idSerie, idUsuario) {
 
-            alert("Película añadida a favoritos");
+            await fetch(`/api/usuarios/${idUsuario}/series/${idSerie}`, {
+                method: 'POST',
+                credentials: 'same-origin' // Asegura enviar las cookies de sesión
+            });
         }
     </script>
 
@@ -26,7 +31,7 @@
     <header>
         <h1>Catalogo de DeustoStream</h1>
         <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
-        <button class="favoritos-btn" onclick="window.location.href='/peliculasFavoritas'">Ver favoritos</button>
+        <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
     </header>
 
     <div class="catalogo">
@@ -43,8 +48,7 @@
                     </a>
                     <!-- Botón para añadir a favoritos -->
                     <button class="favoritos-btn"
-                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">Añadir a
-                        Favoritos</button>
+                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">❤️ Guardar</button>
                 </div>
             </div>
         </div>
@@ -59,6 +63,8 @@
                         <h3 th:text="${serie.titulo}"></h3>
                         <p th:text="${serie.genero}"></p>
                     </a>
+                    <button class="favoritos-btn"
+                        th:onclick="'guardarSerieFavoritos(' + ${serie.id} + ', ' + ${usuario.id} + ')'">❤️ Guardar</button>
                 </div>
             </div>
         </div>

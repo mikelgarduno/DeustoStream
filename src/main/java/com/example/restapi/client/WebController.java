@@ -181,15 +181,16 @@ public class WebController {
     }
 
     //Ver lista de peliculas favoritas
-    @GetMapping("/peliculasFavoritas")
-    public String mostrarPeliculasFavoritas(Model model, HttpSession session) {
+    @GetMapping("/guardados")
+    public String mostrarGuardados(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
             model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
+            model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
         } else {
             model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
         }
-        return "peliculasFavoritas"; // Retorna el nombre del archivo HTML en /resources/templates/
+        return "guardados"; // Retorna el nombre del archivo HTML en /resources/templates/
     }
 
 }

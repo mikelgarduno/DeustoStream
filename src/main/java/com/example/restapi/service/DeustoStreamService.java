@@ -22,7 +22,8 @@ public class DeustoStreamService {
     private final SerieRepository serieRepository;
 
     @Autowired
-    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository, SerieRepository serieRepository) {
+    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
+            SerieRepository serieRepository) {
         this.usuarioRepository = usuarioRepository;
         this.peliculaRepository = peliculaRepository;
         this.serieRepository = serieRepository;
@@ -87,26 +88,27 @@ public class DeustoStreamService {
             pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());
             return peliculaRepository.save(pelicula);
         } else {
-            throw new RuntimeException("Pelicula not found");}
+            throw new RuntimeException("Pelicula not found");
         }
+    }
 
-        public void deletePelicula(Long id) {
-            Optional<Pelicula> optionalPelicula = peliculaRepository.findById(id);
-            if (optionalPelicula.isPresent()) {
-                Pelicula pelicula = optionalPelicula.get();
-                // Eliminar la relación en listaMeGustaPeliculas de los usuarios
-                List<Usuario> usuarios = usuarioRepository.findAll();
-                for (Usuario usuario : usuarios) {
-                    if (usuario.getListaMeGustaPeliculas().contains(pelicula)) {
-                        usuario.getListaMeGustaPeliculas().remove(pelicula);
-                        usuarioRepository.save(usuario);
-                    }
+    public void deletePelicula(Long id) {
+        Optional<Pelicula> optionalPelicula = peliculaRepository.findById(id);
+        if (optionalPelicula.isPresent()) {
+            Pelicula pelicula = optionalPelicula.get();
+            // Eliminar la relación en listaMeGustaPeliculas de los usuarios
+            List<Usuario> usuarios = usuarioRepository.findAll();
+            for (Usuario usuario : usuarios) {
+                if (usuario.getListaMeGustaPeliculas().contains(pelicula)) {
+                    usuario.getListaMeGustaPeliculas().remove(pelicula);
+                    usuarioRepository.save(usuario);
                 }
-                peliculaRepository.delete(pelicula);
-            } else {
-                throw new RuntimeException("Pelicula not found with id: " + id);
             }
+            peliculaRepository.delete(pelicula);
+        } else {
+            throw new RuntimeException("Pelicula not found with id: " + id);
         }
+    }
 
     // Métodos para Series
     public List<Series> getAllSeries() {
@@ -144,24 +146,54 @@ public class DeustoStreamService {
         }
     }
 
-public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
-    Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
-    Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
+    public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
+        Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
 
-    if (optionalUsuario.isPresent() && optionalPelicula.isPresent()) {
-        Usuario usuario = optionalUsuario.get();
-        Pelicula pelicula = optionalPelicula.get();
+        if (optionalUsuario.isPresent() && optionalPelicula.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            Pelicula pelicula = optionalPelicula.get();
 
-        usuario.getListaMeGustaPeliculas().add(pelicula);
-        usuarioRepository.save(usuario);
+            if(usuario.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
+                // Si la película ya está en la lista de favoritos, eliminarla
+                usuario.getListaMeGustaPeliculas().remove(pelicula);
+            }else {
+                // Añadir la película a la lista de favoritos del usuario
+                usuario.getListaMeGustaPeliculas().add(pelicula);
+            }
+            usuarioRepository.save(usuario);
 
-        // Actualizar la sesión si es necesario
-        session.setAttribute("usuario", usuario);
-        
-    } else {
-        throw new RuntimeException("Usuario or Pelicula not found");
+            // Actualizar la sesión si es necesario
+            session.setAttribute("usuario", usuario);
+
+        } else {
+            throw new RuntimeException("Usuario or Pelicula not found");
+        }
     }
 
+    public void addSerieToFavoritos(Long usuarioId, Long serieId, HttpSession session) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
+        Optional<Series> optionalSerie = serieRepository.findById(serieId);
 
-}
+        if (optionalUsuario.isPresent() && optionalSerie.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            Series serie = optionalSerie.get();
+
+            if(usuario.getListaMeGustaSeries().contains(optionalSerie.get())) {
+                // Si la serie ya está en la lista de favoritos, eliminarla
+                usuario.getListaMeGustaSeries().remove(serie);
+            }else {
+                // Añadir la serie a la lista de favoritos del usuario
+                usuario.getListaMeGustaSeries().add(serie);
+            }
+            usuarioRepository.save(usuario);
+
+            // Actualizar la sesión si es necesario
+            session.setAttribute("usuario", usuario);
+
+        } else {
+            throw new RuntimeException("Usuario or Serie not found");
+        }
+
+    }
 }
