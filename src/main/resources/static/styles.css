@@ -268,3 +268,20 @@ a{
     font-weight: bold;
     color: #fff;
 }
+
+#favoritos-btn {
+    background-color: #e50914;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    transition: background 0.3s ease;
+}
+#favoritos-btn:hover {
+    background-color: #b20710;
+}

@@ -150,10 +150,12 @@ public class WebController {
     public String catalogo(Model model, HttpSession session) {
         List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();
         List<Series> series = deustoStreamService.getAllSeries();
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
-
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
+        model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
         model.addAttribute("usuario", usuario);
         return "catalogo"; // Asegúrate de que este es el nombre del archivo HTML en templates
     }

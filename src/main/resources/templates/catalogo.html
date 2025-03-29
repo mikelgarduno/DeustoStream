@@ -15,6 +15,7 @@
                 method: 'POST',
                 credentials: 'same-origin' // Asegura enviar las cookies de sesión
             });
+            
         }
         async function guardarSerieFavoritos(idSerie, idUsuario) {
 
@@ -47,8 +48,15 @@
                         <p th:text="${pelicula.genero}"></p>
                     </a>
                     <!-- Botón para añadir a favoritos -->
-                    <button class="favoritos-btn"
-                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">❤️ Guardar</button>
+                    <button class="favoritos-btn" th:if="${#lists.contains(peliculasFavoritas, pelicula)}"
+                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">
+                        ❤️ Borrar
+                    </button>
+
+                    <button class="favoritos-btn" th:if="${!#lists.contains(peliculasFavoritas, pelicula)}"
+                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">
+                        ❤️ Guardar
+                    </button>
                 </div>
             </div>
         </div>
@@ -63,8 +71,16 @@
                         <h3 th:text="${serie.titulo}"></h3>
                         <p th:text="${serie.genero}"></p>
                     </a>
-                    <button class="favoritos-btn"
-                        th:onclick="'guardarSerieFavoritos(' + ${serie.id} + ', ' + ${usuario.id} + ')'">❤️ Guardar</button>
+                    <!-- Botón para añadir a favoritos -->
+                    <button class="favoritos-btn" th:if="${#lists.contains(seriesFavoritas, serie)}"
+                        th:onclick="'guardarSerieFavoritos(' + ${serie.id} + ', ' + ${usuario.id} + ')'">
+                        ❤️ Borrar
+                    </button>
+
+                    <button class="favoritos-btn" th:if="${!#lists.contains(seriesFavoritas, serie)}"
+                        th:onclick="'guardarSerieFavoritos(' + ${serie.id} + ', ' + ${usuario.id} + ')'">
+                        ❤️ Guardar
+                    </button>
                 </div>
             </div>
         </div>
