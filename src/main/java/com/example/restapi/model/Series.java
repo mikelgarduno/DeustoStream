@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Series {
 
@@ -17,6 +19,8 @@ public class Series {
     private int anio;
     private String descripcion;
 
+    private int numeroCapitulos; 
+
     @Enumerated(EnumType.STRING)
     private Generos genero;
 
@@ -24,6 +28,7 @@ public class Series {
     //private List<Temporada> temporadas;
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference 
     private List<Capitulo> capitulos;
 
     // Constructor vacío (necesario para JPA)
@@ -86,6 +91,14 @@ public class Series {
 
     public void setCapitulos(List<Capitulo> capitulos) {
         this.capitulos = capitulos;
+    }
+
+     public int getNumeroCapitulos() {
+        return numeroCapitulos;
+    }
+
+    public void setNumeroCapitulos(int numeroCapitulos) {
+        this.numeroCapitulos = numeroCapitulos;
     }
 
     @Override
