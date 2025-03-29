@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -222,12 +223,13 @@ public class DeustoStreamController {
             @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
     })
     @PostMapping("/usuarios/{usuarioId}/peliculas/{peliculaId}")
-    public ResponseEntity<Usuario> addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId) {
+    public ResponseEntity<Usuario> addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId, HttpSession session) {
         Optional<Usuario> usuario = deustoStreamService.getUsuarioById(usuarioId);
         Optional<Pelicula> pelicula = deustoStreamService.getPeliculaById(peliculaId);
 
         if (usuario.isPresent() && pelicula.isPresent()) {
-            deustoStreamService.addPeliculaToFavoritos(usuario.get().getId(), pelicula.get().getId());
+            deustoStreamService.addPeliculaToFavoritos(usuario.get().getId(), pelicula.get().getId(), session);
+            
             return ResponseEntity.ok(usuario.get());
         } else {
             return ResponseEntity.notFound().build();

@@ -6,6 +6,9 @@ import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -84,18 +87,26 @@ public class DeustoStreamService {
             pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());
             return peliculaRepository.save(pelicula);
         } else {
-            throw new RuntimeException("Pelicula not found");
+            throw new RuntimeException("Pelicula not found");}
         }
-    }
 
-    public void deletePelicula(Long id) {
-        if (peliculaRepository.existsById(id)) {
-            peliculaRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Pelicula not found with id: " + id);
+        public void deletePelicula(Long id) {
+            Optional<Pelicula> optionalPelicula = peliculaRepository.findById(id);
+            if (optionalPelicula.isPresent()) {
+                Pelicula pelicula = optionalPelicula.get();
+                // Eliminar la relación en listaMeGustaPeliculas de los usuarios
+                List<Usuario> usuarios = usuarioRepository.findAll();
+                for (Usuario usuario : usuarios) {
+                    if (usuario.getListaMeGustaPeliculas().contains(pelicula)) {
+                        usuario.getListaMeGustaPeliculas().remove(pelicula);
+                        usuarioRepository.save(usuario);
+                    }
+                }
+                peliculaRepository.delete(pelicula);
+            } else {
+                throw new RuntimeException("Pelicula not found with id: " + id);
+            }
         }
-    }
-
 
     // Métodos para Series
     public List<Series> getAllSeries() {
@@ -133,7 +144,7 @@ public class DeustoStreamService {
         }
     }
 
-public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId) {
+public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
     Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
     Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
 
@@ -143,6 +154,10 @@ public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId) {
 
         usuario.getListaMeGustaPeliculas().add(pelicula);
         usuarioRepository.save(usuario);
+
+        // Actualizar la sesión si es necesario
+        session.setAttribute("usuario", usuario);
+        
     } else {
         throw new RuntimeException("Usuario or Pelicula not found");
     }

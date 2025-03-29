@@ -5,7 +5,21 @@
     <meta charset="UTF-8">
     <title>Catálogo - DeustoStream</title>
     <link rel="stylesheet" th:href="@{/styles.css}" href="/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <script>
+        async function guardarPeliculaFavoritos(idPelicula, idUsuario) {
+
+            await fetch(`/api/usuarios/${idUsuario}/peliculas/${idPelicula}`, {
+                method: 'POST',
+                credentials: 'same-origin' // Asegura enviar las cookies de sesión
+            });
+
+            alert("Película añadida a favoritos");
+        }
+    </script>
+
 </head>
 
 <body>
@@ -27,6 +41,10 @@
                         <h3 th:text="${pelicula.titulo}"></h3>
                         <p th:text="${pelicula.genero}"></p>
                     </a>
+                    <!-- Botón para añadir a favoritos -->
+                    <button class="favoritos-btn"
+                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">Añadir a
+                        Favoritos</button>
                 </div>
             </div>
         </div>

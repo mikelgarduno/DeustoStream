@@ -37,7 +37,7 @@ public class Usuario {
     @Column(nullable = false)
     private String contrasenya;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "usuario_series",
         joinColumns = @JoinColumn(name = "usuario_id"),
@@ -45,11 +45,11 @@ public class Usuario {
     )
     private List<Series> listaMeGustaSeries; // Relación ManyToMany con Series
 
-    @ManyToMany (fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "usuario_peliculas",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "pelicula_id")
+        joinColumns = @JoinColumn(name = "usuario_id", nullable = false),
+        inverseJoinColumns = @JoinColumn(name = "pelicula_id", nullable = false)
     )
     private List<Pelicula> listaMeGustaPeliculas; // Relación ManyToMany con Peliculas
 
@@ -138,8 +138,15 @@ public class Usuario {
             correo.equals(usuario.correo);
         }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(correo, nombre);
+    @Override
+    public int hashCode() {
+        return Objects.hash(correo, nombre);
+    }
+    
+    // Helper method to remove association with a Pelicula before deleting it.
+    public void removePelicula(Pelicula pelicula) {
+        if (listaMeGustaPeliculas != null) {
+            listaMeGustaPeliculas.remove(pelicula);
         }
+    }
 }
