@@ -2,6 +2,8 @@ package com.example.restapi.client;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,10 @@ import com.example.restapi.service.AuthService; //AGREGADO
 
 @Controller
 public class WebController {
+
+     // Logger para registrar mensajes
+    private static final Logger logger = LoggerFactory.getLogger(WebController.class);
+
 
     @Autowired
     private DeustoStreamService deustoStreamService;
@@ -68,6 +74,11 @@ public class WebController {
         return "panelAdmin"; // Redirige a un panel de administración
     }
 
+    @GetMapping("/acceso-denegado")
+    public String accesoDenegado() {
+        return "accesoDenegado"; // Devuelve la vista de acceso denegado
+    }
+
     @GetMapping("/registro") // AGREGADO INICIO
     public String mostrarFormularioRegistro() {
         return "registro";
@@ -83,25 +94,57 @@ public class WebController {
         }
     } // AGREGADO FIN
 
-    /*@GetMapping("/peliculas")
-    public String mostrarPeliculas(Model model) {
-        List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();
-        model.addAttribute("peliculas", peliculas);
-        return "peliculas"; // Retorna el nombre del archivo HTML en /resources/templates/
+    @GetMapping("/peliculas")
+    public String mostrarPeliculas(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        
+        if (usuario != null && usuario.getCorreo() != null) {
+            logger.info("Correo del usuario: {}", usuario.getCorreo());
+            
+            if (usuario.getCorreo().endsWith("@deustostream.es")) {
+                model.addAttribute("peliculas", deustoStreamService.getAllPeliculas());
+                return "peliculas"; 
+            }
+        }
+        
+        logger.warn("Acceso denegado a /peliculas");
+        return "redirect:/acceso-denegado"; 
     }
 
-    @GetMapping("/series")
-    public String mostrarSeries(Model model) {
-        model.addAttribute("series", deustoStreamService.getAllSeries());
-        return "series";
+   @GetMapping("/series")
+    public String mostrarSeries(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        
+        if (usuario != null && usuario.getCorreo() != null) {
+            logger.info("Correo del usuario: {}", usuario.getCorreo());
+            
+            if (usuario.getCorreo().endsWith("@deustostream.es")) {
+                model.addAttribute("series", deustoStreamService.getAllSeries());
+                return "series"; 
+            }
+        }
+        
+        logger.warn("Acceso denegado a /series");
+        return "redirect:/acceso-denegado"; 
     }
 
     @GetMapping("/usuarios")
-    public String mostrarUsuarios(Model model) {
-        model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
-        return "usuarios";
+    public String mostrarUsuarios(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        
+        if (usuario != null && usuario.getCorreo() != null) {
+            logger.info("Correo del usuario: {}", usuario.getCorreo());
+            
+            if (usuario.getCorreo().endsWith("@deustostream.es")) {
+                model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
+                return "usuarios"; 
+            }
+        }
+        
+        logger.warn("Acceso denegado a /usuarios");
+        return "redirect:/acceso-denegado"; 
     }
-    */
+    
 
     @GetMapping("/catalogo")
     public String catalogo(Model model) {

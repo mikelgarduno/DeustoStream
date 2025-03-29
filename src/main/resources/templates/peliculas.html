@@ -135,12 +135,14 @@
 </head>
 
 <body>
+    <h2>Gestión de Películas</h2>
     <div id="gestion-links">
         <a th:href="@{/usuarios}" href="/usuarios">Gestión de Usuarios</a>
         <a th:href="@{/peliculas}" href="/peliculas">Gestión Películas</a>
         <a th:href="@{/series}" href="/series">Gestión Series</a>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
     </div>
-    <h2>Gestión de Películas</h2>
+    
 
     <form onsubmit="event.preventDefault(); addPelicula();">
         <input type="text" id="titulo" placeholder="Título" required>

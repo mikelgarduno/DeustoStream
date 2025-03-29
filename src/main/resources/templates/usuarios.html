@@ -88,12 +88,13 @@
 </head>
 
 <body>
+    <h2>Gestión de Usuarios</h2>
     <div id="gestion-links">
         <a th:href="@{/usuarios}" href="/usuarios">Gestión de Usuarios</a>
         <a th:href="@{/peliculas}" href="/peliculas">Gestión Películas</a>
         <a th:href="@{/series}" href="/series">Gestión Series</a>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
     </div>
-    <h2>Gestión de Usuarios</h2>
 
     <form onsubmit="event.preventDefault(); addUsuario();">
         <input type="text" id="nombre" placeholder="Nombre" required>
