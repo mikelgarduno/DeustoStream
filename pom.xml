@@ -92,7 +92,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>com.example.restapi.client.BookManager</mainClass>
+					<mainClass>com.example.restapi.client.WebController</mainClass>
 					<arguments>
 						<argument>${server.hostname}</argument>
 						<argument>${server.port}</argument>

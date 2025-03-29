@@ -21,8 +21,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         //permite libre acceso a estas rutas:
         boolean accesolibre = uri.equals("/login") ||
                                 uri.equals("/registro") ||
-                                uri.startsWith("/css") || uri.startsWith("/js") ||
-                                uri.startsWith("/images");
+                                uri.startsWith("/css/") || uri.startsWith("/js/") ||
+                                uri.startsWith("/images/") || 
+                                uri.startsWith("/index") ||   uri.startsWith("/styles.css");
 
         if (isLoggedIn || accesolibre) {
             return true;
