@@ -1,5 +1,6 @@
 package com.example.restapi.controller;
 
+import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -149,7 +151,7 @@ public class DeustoStreamController {
         return series.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Crear una nueva serie", description = "Añade una serie a la base de datos")
+    @Operation(summary = "Crear una nueva serie con capítulos", description = "Crea una nueva serie y genera los capítulos asociados")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Serie creada"),
             @ApiResponse(responseCode = "400", description = "Error al crear serie")
@@ -157,12 +159,29 @@ public class DeustoStreamController {
     @PostMapping("/series")
     public ResponseEntity<Series> createSeries(@RequestBody Series series) {
         try {
+            // Crear capítulos si el número de capítulos es mayor a 0
+            if (series.getNumeroCapitulos() > 0) {
+                List<Capitulo> capitulos = new ArrayList<>();
+                for (int i = 0; i < series.getNumeroCapitulos(); i++) {
+                    Capitulo capitulo = new Capitulo();
+                    capitulo.setTitulo("Capítulo " + (i + 1) + " de " + series.getTitulo()); 
+                    capitulo.setDuracion(30);  // Duración por defecto
+                    capitulo.setSerie(series); 
+                    capitulos.add(capitulo);
+                }
+                series.setCapitulos(capitulos); 
+            }
+
             Series createdSeries = deustoStreamService.createSeries(series);
-            return ResponseEntity.ok(createdSeries);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdSeries);
+    
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
+    
+
 
     @Operation(summary = "Actualizar una serie", description = "Modifica los datos de una serie existente")
     @ApiResponses({
