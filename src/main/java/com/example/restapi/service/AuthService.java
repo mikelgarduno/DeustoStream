@@ -45,7 +45,7 @@ public class AuthService {
         String correo = usuario.getCorreo().toLowerCase();
 
         if (correo.endsWith("@deustostream.es")) {
-            return "/usuarios";
+            return "/admin/usuarios";
         } else {
             return "/catalogo";
         }

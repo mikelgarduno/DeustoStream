@@ -8,12 +8,12 @@
 </head>
 <body>
     <h1>Bienvenido a Deusto Stream</h1>
-    <nav>
-        <ul>
-            <li><a th:href="@{/usuarios}">Gestión de Usuarios</a></li>
-            <li><a th:href="@{/peliculas}">Gestión de Películas</a></li>
-            <li><a th:href="@{/series}">Gestión de Series</a></li>
-        </ul>
-    </nav>
+    <div id="gestion-links">
+        <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
+        <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
+        <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+    </div>
+
 </body>
 </html>

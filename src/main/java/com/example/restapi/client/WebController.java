@@ -94,7 +94,7 @@ public class WebController {
         }
     } // AGREGADO FIN
 
-    @GetMapping("/peliculas")
+    @GetMapping("admin/peliculas")
     public String mostrarPeliculas(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         
@@ -111,7 +111,7 @@ public class WebController {
         return "redirect:/acceso-denegado"; 
     }
 
-   @GetMapping("/series")
+   @GetMapping("admin/series")
     public String mostrarSeries(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         
@@ -128,7 +128,7 @@ public class WebController {
         return "redirect:/acceso-denegado"; 
     }
 
-    @GetMapping("/usuarios")
+    @GetMapping("admin/usuarios")
     public String mostrarUsuarios(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         
