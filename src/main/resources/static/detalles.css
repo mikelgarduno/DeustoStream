@@ -11,7 +11,8 @@ body {
     margin: 0 auto;
 }
 
-.pelicula-detalle, .serie-detalle {
+/* Contenedor de la sección de detalles */
+.serie-detalle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,6 +22,18 @@ body {
     margin: 0 auto;
 }
 
+/* Estilos para el contenedor de la imagen */
+.detalle-imagen {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Ajuste de la imagen para que se adapte a diferentes tamaños */
+.detalle-imagen img.serie-img {
+    max-width: 300px;  /* Puedes ajustar este valor según tus necesidades */
+    width: 100%;
+    height: auto;
+}
 
 .pelicula-detalle .detalle-info, .serie-detalle .detalle-info {
     width: 60%;
@@ -32,7 +45,6 @@ body {
     color: white;
 }
 
-
 .pelicula-detalle .detalle-info h2, .serie-detalle .detalle-info h2 {
     font-size: 28px;
     margin-bottom: 20px;
@@ -43,12 +55,6 @@ body {
     font-size: 18px;
     margin-bottom: 10px;
 }
-
-/* Detalles de la imagen 
-.pelicula-detalle .detalle-imagen, .serie-detalle .detalle-imagen {
-    width: 30%;
-    text-align: center;
-}*/
 
 /* Botón de volver */
 .btn-volver {
