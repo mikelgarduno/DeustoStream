@@ -5,9 +5,15 @@
     <title>Detalles de la Película - DeustoStream</title>
     <link rel="stylesheet" href="/styles.css"> 
     <link rel="stylesheet" href="/detalles.css"> 
+</head>
 <body>
 
     <h1>Detalles de la Película</h1>
+
+    <!-- Contenedor para mostrar la imagen de la película -->
+    <div class="detalle-imagen">
+        <img th:src="${pelicula.imagenUrl}" alt="Imagen de la película" class="pelicula-img">
+    </div>
 
     <div class="pelicula-detalle">
         <div class="detalle-info">
@@ -17,11 +23,9 @@
             <p><strong>Duración:</strong> <span th:text="${pelicula.duracion}"></span> minutos</p>
             <p><strong>Sinopsis:</strong> <span th:text="${pelicula.sinopsis}"></span></p>
         </div>
-        <!--<div class="detalle-imagen">
-        </div> -->
     </div>
 
-<a href="/catalogo">Volver al listado de películas</a>
+    <a href="/catalogo" class="btn-volver">Volver al listado de películas</a>
 
 </body>
 </html>

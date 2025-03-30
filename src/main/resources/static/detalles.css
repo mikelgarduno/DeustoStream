@@ -11,8 +11,8 @@ body {
     margin: 0 auto;
 }
 
-/* Contenedor de la sección de detalles */
-.serie-detalle {
+/* Contenedor de la sección de detalles para series y películas */
+.serie-detalle, .pelicula-detalle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -29,7 +29,8 @@ body {
 }
 
 /* Ajuste de la imagen para que se adapte a diferentes tamaños */
-.detalle-imagen img.serie-img {
+.detalle-imagen img.serie-img,
+.detalle-imagen img.pelicula-img {
     max-width: 300px;  /* Puedes ajustar este valor según tus necesidades */
     width: 100%;
     height: auto;

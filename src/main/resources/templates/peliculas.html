@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
-
     <title>Gestión de Películas</title>
-
     <script>
         // Función para obtener las películas desde el backend y mostrarlas
         async function fetchPeliculas() {
@@ -15,27 +12,20 @@
             const peliculas = await response.json();
 
             let tableContent = peliculas.map(pelicula =>
-                /*`<tr id="row-${pelicula.id}" style="cursor: pointer;">
-                    <td onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.id}</td>
-                    <td id="titulo-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.titulo}</td>
-                    <td id="anio-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.anio}</td>
-                    <td id="genero-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.genero}</td>
-                    <td id="sinopsis-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.sinopsis}</td> */
-                `<tr id="row-${pelicula.id}">
+                `<tr id="row-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'" style="cursor: pointer;">
                     <td>${pelicula.id}</td>
-                    <!-- Cambiamos esta celda para que el nombre sea un enlace -->
                     <td id="titulo-cell-${pelicula.id}">
-                        <a th:href="@{/pelicula/{id}(id=${pelicula.id})}" href="/pelicula/${pelicula.id}">
+                        <a th:href="@{/pelicula/{id}(id=${pelicula.id})}" href="/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
                             ${pelicula.titulo}
                         </a>
                     </td>
                     <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
                     <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
                     <td id="sinopsis-cell-${pelicula.id}">${pelicula.sinopsis}</td>
-                    <td><img src="${pelicula.imagenUrl}" alt="Póster" width="100"></td>  <!-- NUEVA COLUMNA -->
+                    <td><img src="${pelicula.imagenUrl}" alt="Póster" width="100"></td>
                     <td id="actions-${pelicula.id}">
-                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.imagenUrl}')">Update</button>
-                        <button onclick="deletePelicula(${pelicula.id})">Delete</button>
+                        <button onclick="event.stopPropagation(); enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.imagenUrl}')">Update</button>
+                        <button onclick="event.stopPropagation(); deletePelicula(${pelicula.id})">Delete</button>
                     </td>
                 </tr>`
             ).join('');
@@ -67,7 +57,7 @@
             await fetch('/api/peliculas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, sinopsis, imagenUrl })  // INCLUIR imagenUrl
+                body: JSON.stringify({ titulo, anio, genero, sinopsis, imagenUrl })
             });
 
             // Limpiar los campos después de añadir la película
@@ -80,17 +70,17 @@
         }
 
         // Función para habilitar la edición de una película
-        function enableEdit(id, titulo, anio, genero, descripcion, imagenUrl) {
+        function enableEdit(id, titulo, anio, genero, sinopsis, imagenUrl) {
             document.getElementById(`row-${id}`).innerHTML = `
                 <td>${id}</td>
                 <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
                 <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
                 <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
-                <td><input type="text" id="edit-descripcion-${id}" value="${descripcion}"></td>
-                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td> 
+                <td><input type="text" id="edit-sinopsis-${id}" value="${sinopsis}"></td>
+                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td>
                 <td>
-                    <button onclick="confirmUpdate(${id})">Confirm</button>
-                    <button onclick="fetchPeliculas()">Cancel</button>
+                    <button onclick="event.stopPropagation(); confirmUpdate(${id})">Confirm</button>
+                    <button onclick="event.stopPropagation(); fetchPeliculas()">Cancel</button>
                 </td>
             `;
         }
@@ -100,14 +90,13 @@
             const titulo = document.getElementById(`edit-titulo-${id}`).value;
             const anio = document.getElementById(`edit-anio-${id}`).value;
             const genero = document.getElementById(`edit-genero-${id}`).value;
-            const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
+            const sinopsis = document.getElementById(`edit-sinopsis-${id}`).value;
             const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value; // NUEVO
-
 
             await fetch(`/api/peliculas/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, descripcion, imagenUrl }) // INCLUIR imagenUrl
+                body: JSON.stringify({ titulo, anio, genero, sinopsis, imagenUrl })
             });
 
             fetchPeliculas();
@@ -122,11 +111,10 @@
         // Cargar las películas y géneros cuando se carga la página
         window.onload = () => {
             fetchPeliculas();
-            fetchGeneros();  // Cargar los géneros
+            fetchGeneros();
         };
     </script>
 </head>
-
 <body>
     <nav>
         <a th:href="@{/usuarios}" href="/usuarios">Gestion de Usuarios</a>
@@ -139,7 +127,7 @@
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="number" id="anio" placeholder="Año" required>
 
-        <!-- Aquí cambiamos el input por un select para el género -->
+        
         <select id="genero" required>
             <!-- Las opciones de género se llenarán dinámicamente con JavaScript -->
         </select>
@@ -167,5 +155,4 @@
 
     <a href="/">Volver al inicio</a>
 </body>
-
 </html>
