@@ -223,8 +223,18 @@ public class DeustoStreamService {
     }
     
     public Capitulo createCapitulo(Capitulo capitulo) {
-        return capituloRepository.save(capitulo);
+        Capitulo nuevo = capituloRepository.save(capitulo);
+    
+        Series serie = capitulo.getSerie();
+        if (serie != null) {
+            int cantidad = capituloRepository.countBySerieId(serie.getId());
+            serie.setNumeroCapitulos(cantidad);
+            serieRepository.save(serie);
+        }
+    
+        return nuevo;
     }
+    
     
     public Capitulo updateCapitulo(Long id, Capitulo detalles) {
         Optional<Capitulo> optional = capituloRepository.findById(id);
