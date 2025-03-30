@@ -3,12 +3,16 @@ package com.example.restapi.config;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Generos;
+import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
+import com.example.restapi.repository.UsuarioRepository;
 import java.util.Collections;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 
 
 
@@ -22,11 +26,37 @@ public class inicializarDatos implements CommandLineRunner {
     @Autowired
     private SerieRepository serieRepository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+
     @Override
     public void run(String... args) throws Exception {
         // Vaciar las tablas antes de inicializar datos
+        usuarioRepository.deleteAll();
         peliculaRepository.deleteAll();
         serieRepository.deleteAll();
+
+        // Inicializar usuarios de prueba
+        Usuario usu1 = new Usuario(
+                
+                "qw", 
+                "qw",
+                "qw@deustostream.es",
+                "qw"
+        );
+
+        Usuario usu2 = new Usuario(
+                
+                "qw", 
+                "qw",
+                "qw@gmail.com",
+                "qw"
+        );
+
+        usuarioRepository.save(usu1);
+        usuarioRepository.save(usu2);
+
 
         // Inicializar películas de prueba
         Pelicula pelicula1 = new Pelicula(
