@@ -13,7 +13,7 @@ DeustoStream es una plataforma de streaming diseñada para ofrecer una experienc
 
 ## 🚀 Configuración y Ejecución del Proyecto
 
-### 1️⃣ Configurar la Base de Datos MySQL
+### 1⃣ Configurar la Base de Datos MySQL
 
 Antes de ejecutar el proyecto, es necesario crear la base de datos y configurar el usuario. Puedes hacer esto ejecutando el script `dbsetup.sql`, que crea un usuario y una base de datos llamada `restapidb`:
 
@@ -36,7 +36,7 @@ FLUSH PRIVILEGES;
 
 Esto asegura que el usuario `spq` tenga acceso a la base de datos `restapidb`.
 
-### 2️⃣ Configurar el Proyecto
+### 2⃣ Configurar el Proyecto
 
 Asegúrate de que todas las dependencias están instaladas antes de ejecutar la aplicación. Para ello, ejecuta:
 
@@ -46,7 +46,7 @@ mvn compile
 
 Esto descargará todas las dependencias necesarias y verificará que el código compile correctamente.
 
-### 3️⃣ Ejecutar la Aplicación
+### 3⃣ Ejecutar la Aplicación
 
 Para iniciar la aplicación, usa el siguiente comando:
 
@@ -56,11 +56,19 @@ mvn spring-boot:run
 
 Si todo está correctamente configurado, el servidor se iniciará y estará disponible en `http://localhost:8080/`.
 
-### 4️⃣ Detener la Aplicación
+### 4⃣ Acceso a la Aplicación
+
+- **Ventana de acceso inicial:** [http://localhost:8080](http://localhost:8080)
+- **Usuarios normales:** [http://localhost:8080/catalogo](http://localhost:8080/catalogo)
+- **Administración:** [http://localhost:8080/admin/usuarios](http://localhost:8080/admin/usuarios)
+
+Los usuarios registrados con un correo `@deustostream.es` tienen acceso a la administración. Los demás usuarios solo pueden acceder al catálogo.
+
+### 5⃣ Detener la Aplicación
 
 Para detener la aplicación, presiona `Ctrl + C` en la terminal donde se está ejecutando.
 
-### 5️⃣ Empaquetar la Aplicación
+### 6⃣ Empaquetar la Aplicación
 
 Si deseas generar un archivo `.jar` ejecutable, usa:
 
