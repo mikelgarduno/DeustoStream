@@ -173,13 +173,21 @@ public class WebController {
 
     //ver detalle de las series
     @GetMapping("/serie/{id}")
-    public String mostrarDetalleSerie(@PathVariable Long id, Model model) {
+    public String mostrarDetalleSerieUsuario(@PathVariable Long id, Model model) {
         Series serie = deustoStreamService.getSeriesById(id)
                 .orElseThrow(() -> new RuntimeException("Serie no encontrada"));
-
+    
         model.addAttribute("serie", serie);
-        
-        return "detalleSerie"; 
+        return "detalleSerie";
+    }
+    
+    @GetMapping("/admin/serie/{id}")
+    public String mostrarDetalleSerieAdmin(@PathVariable Long id, Model model) {
+        Series serie = deustoStreamService.getSeriesById(id)
+                .orElseThrow(() -> new RuntimeException("Serie no encontrada"));
+    
+        model.addAttribute("serie", serie);
+        return "detalleSerieAdmin";
     }
 
     //Ver lista de peliculas favoritas

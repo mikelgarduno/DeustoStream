@@ -1,8 +1,10 @@
 package com.example.restapi.service;
 
+import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
+import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
@@ -20,13 +22,14 @@ public class DeustoStreamService {
     private final UsuarioRepository usuarioRepository;
     private final PeliculaRepository peliculaRepository;
     private final SerieRepository serieRepository;
+    private final CapituloRepository capituloRepository;
 
     @Autowired
-    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
-            SerieRepository serieRepository) {
+    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository, SerieRepository serieRepository, CapituloRepository capituloRepository) {
         this.usuarioRepository = usuarioRepository;
         this.peliculaRepository = peliculaRepository;
         this.serieRepository = serieRepository;
+        this.capituloRepository = capituloRepository;
     }
 
     public List<Usuario> getAllUsuarios() {
@@ -158,7 +161,7 @@ public class DeustoStreamService {
 
    
 
-
+// Métodos para inicializar datos
     public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
         Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
@@ -208,5 +211,43 @@ public class DeustoStreamService {
             throw new RuntimeException("Usuario or Serie not found");
         }
 
+    }
+
+    // Métodos para capítulos
+    public List<Capitulo> getAllCapitulos() {
+        return capituloRepository.findAll();
+    }
+    
+    public Optional<Capitulo> getCapituloById(Long id) {
+        return capituloRepository.findById(id);
+    }
+    
+    public Capitulo createCapitulo(Capitulo capitulo) {
+        return capituloRepository.save(capitulo);
+    }
+    
+    public Capitulo updateCapitulo(Long id, Capitulo detalles) {
+        Optional<Capitulo> optional = capituloRepository.findById(id);
+        if (optional.isPresent()) {
+            Capitulo cap = optional.get();
+            cap.setDuracion(detalles.getDuracion());
+    
+            // actualizar el título si se pasa uno nuevo no vacío
+            if (detalles.getTitulo() != null && !detalles.getTitulo().trim().isEmpty()) {
+                cap.setTitulo(detalles.getTitulo());
+            }
+    
+            return capituloRepository.save(cap);
+        } else {
+            throw new RuntimeException("Capítulo no encontrado");
+        }
+    }
+    
+    public void deleteCapitulo(Long id) {
+        if (capituloRepository.existsById(id)) {
+            capituloRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Capítulo no encontrado con id: " + id);
+        }
     }
 }

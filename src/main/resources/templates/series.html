@@ -8,26 +8,42 @@
 
     <title>Gestión de Series</title>
 
+  
+    
     <script>
         async function fetchSeries() {
-            const response = await fetch('/api/series');
-            const series = await response.json();
-            let tableContent = series.map(serie => 
-                `<tr id="row-${serie.id}" style="cursor: pointer;">
-                    <td onclick="window.location='/serie/${serie.id}'">${serie.id}</td>
-                    <td id="titulo-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.titulo}</td>
-                    <td id="anio-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.anio}</td>
-                    <td id="genero-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.genero}</td>
-                    <td id="descripcion-cell-${serie.id}" onclick="window.location='/serie/${serie.id}'">${serie.descripcion}</td>
-                    <td id="capitulos-cell-${serie.id}"" onclick="window.location='/serie/${serie.id}'">${serie.numeroCapitulos}</td> <!-- Mostrar número de capítulos -->
-                    <td><img src="${serie.imagenUrl}" alt="Póster" width="100"></td>  <!-- NUEVA COLUMNA -->
-                    <td id="actions-${serie.id}">
-                        <button onclick="enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}', '${serie.imagenUrl}')">Update</button>
-                        <button onclick="deleteSerie(${serie.id})">Delete</button>
-                    </td>
-                </tr>`
-            ).join('');
-            document.getElementById('serieTable').innerHTML = tableContent;
+        const response = await fetch('/api/series');
+        const series = await response.json();
+
+        let tableContent = series.map(serie => `
+            <tr id="row-${serie.id}"
+                style="cursor: pointer;"
+                onclick="redirigirDetalle(${serie.id})">
+
+            <td>${serie.id}</td>
+            <td>${serie.titulo}</td>
+            <td>${serie.anio}</td>
+            <td>${serie.genero}</td>
+            <td>${serie.descripcion}</td>
+            <td>${serie.numeroCapitulos}</td>
+            <td><img src="${serie.imagenUrl}" alt="Póster" width="100"></td>
+
+            <!-- Columna de acciones -->
+            <td onclick="event.stopPropagation()" style="cursor: auto;">
+                <button
+                onclick="event.stopPropagation(); enableEdit(${serie.id}, '${serie.titulo}', '${serie.anio}', '${serie.genero}', '${serie.descripcion}', '${serie.numeroCapitulos}', '${serie.imagenUrl}');">
+                Update
+                </button>
+                <button
+                onclick="event.stopPropagation(); deleteSerie(${serie.id});">
+                Delete
+                </button>
+            </td>
+
+            </tr>
+        `).join('');
+
+        document.getElementById('serieTable').innerHTML = tableContent;
         }
 
 
@@ -68,36 +84,72 @@
     fetchSeries();
 }
 
-        function enableEdit(id, titulo, anio, genero, descripcion, imagenUrl) {
-            document.getElementById(`row-${id}`).innerHTML = `
+
+        function redirigirDetalle(id) {
+            window.location = '/admin/serie/' + id;
+        }
+
+        function enableEdit(id, titulo, anio, genero, descripcion, numeroCapitulos, imagenUrl) {
+            const row = document.getElementById(`row-${id}`);
+            row.onclickBackup = row.getAttribute("onclick"); // guardamos el onclick original
+            row.removeAttribute("onclick"); // lo quitamos
+            
+            row.innerHTML = `
                 <td>${id}</td>
                 <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
                 <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
                 <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
                 <td><input type="text" id="edit-descripcion-${id}" value="${descripcion}"></td>
-                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td>  <!-- NUEVO -->
-                <td>
-                    <button onclick="confirmUpdate(${id})">Confirm</button>
-                    <button onclick="fetchSeries()">Cancel</button>
+                <td>${numeroCapitulos}</td>
+                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td>
+                <td onclick="event.stopPropagation()">
+                    <button onclick="event.stopPropagation(); confirmUpdate(${id})">Confirm</button>
+                    <button onclick="event.stopPropagation(); cancelEdit(${id})">Cancel</button>
                 </td>
             `;
         }
 
-        async function confirmUpdate(id) {
-            const titulo = document.getElementById(`edit-titulo-${id}`).value;
-            const anio = document.getElementById(`edit-anio-${id}`).value;
-            const genero = document.getElementById(`edit-genero-${id}`).value;
-            const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
-            const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value; // NUEVO
-
-            await fetch(`/api/series/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, descripcion, imagenUrl })  // INCLUIR imagenUrl
-            });
-
-            fetchSeries();
+        function cancelEdit(id) {
+            const row = document.getElementById(`row-${id}`);
+            // restaurar onclick original si lo guardamos
+            if (row.onclickBackup) {
+                row.setAttribute("onclick", row.onclickBackup);
+                delete row.onclickBackup;
+            }
+            fetchSeries(); // recarga la tabla
         }
+
+
+
+
+        async function confirmUpdate(id) {
+        const titulo = document.getElementById(`edit-titulo-${id}`).value;
+        const anio = document.getElementById(`edit-anio-${id}`).value;
+        const genero = document.getElementById(`edit-genero-${id}`).value;
+        const descripcion = document.getElementById(`edit-descripcion-${id}`).value;
+        const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value;
+
+        console.log("Enviando actualización:", { titulo, anio, genero, descripcion, imagenUrl });
+
+        const response = await fetch(`/api/series/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ titulo, anio, genero, descripcion, imagenUrl })
+        });
+
+        if (!response.ok) {
+            alert("Error al actualizar la serie");
+            return;
+        }
+
+        const row = document.getElementById(`row-${id}`);
+        if (row.onclickBackup) {
+            row.setAttribute("onclick", row.onclickBackup);
+            delete row.onclickBackup;
+        }
+
+        fetchSeries(); // recarga la tabla
+    }
 
         async function deleteSerie(id) {
             await fetch(`/api/series/${id}`, { method: 'DELETE' });

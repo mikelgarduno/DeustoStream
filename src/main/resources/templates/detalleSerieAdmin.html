@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de la Serie - Admin</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/detalles.css">
+    <script>
+        function verCapitulo(titulo) {
+            alert("Estás viendo el capítulo: " + titulo);
+        }
+
+        function actualizarCapitulo(id) {
+                const titulo = document.getElementById(`titulo-${id}`).value;
+                const duracion = document.getElementById(`duracion-${id}`).value;
+        
+                fetch(`/api/capitulos/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ titulo, duracion })
+                })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Capítulo actualizado correctamente");
+                        location.reload();
+                    } else {
+                        alert("Error al actualizar el capítulo");
+                    }
+                });
+            }
+
+        function eliminarCapitulo(id, event) {
+            event.stopPropagation();
+            if (confirm("¿Eliminar este capítulo?")) {
+                fetch('/api/capitulos/' + id, { method: 'DELETE' })
+                .then(res => {
+                    if (res.ok) location.reload();
+                    else alert("Error al eliminar el capítulo");
+                });
+            }
+        }
+
+        function anadirCapitulo(serieId) {
+            fetch('/api/series/' + serieId + '/capitulos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ duracion: 30 }) 
+            }).then(res => {
+                if (res.ok) {
+                    alert("Capítulo añadido");
+                    location.reload();
+                } else {
+                    alert("Error al añadir capítulo");
+                }
+            });
+}
+    </script>
+</head>
+<body>
+    <h1>Detalles de la Serie (Admin)</h1>
+
+    <div class="detalle-imagen">
+        <img th:src="${serie.imagenUrl}" alt="Imagen de la serie" class="serie-img">
+    </div>
+
+    <div class="serie-detalle">
+        <div class="detalle-info">
+            <h2 th:text="${serie.titulo}"></h2>
+            <p><strong>Año:</strong> <span th:text="${serie.anio}"></span></p>
+            <p><strong>Género:</strong> <span th:text="${serie.genero}"></span></p>
+            <p><strong>Descripción:</strong> <span th:text="${serie.descripcion}"></span></p>
+        </div>
+    </div>
+
+    <h3>Capítulos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Duración</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="capitulo : ${serie.capitulos}" th:id="'cap-row-' + ${capitulo.id}" th:data-id="${capitulo.id}">
+                    <td th:text="${capitulo.id}"></td>
+                    <td>
+                        <input type="text" th:id="'titulo-' + ${capitulo.id}" th:value="${capitulo.titulo}" />
+                    </td>
+                    <td>
+                        <input type="number" th:id="'duracion-' + ${capitulo.id}" th:value="${capitulo.duracion}" /> min
+                    </td>
+                    <td>
+                        <button class="btn-volver" 
+                                th:onclick="'actualizarCapitulo(' + ${capitulo.id} + ')'">
+                            Guardar
+                        </button>
+                        <button class="btn-volver" 
+                                th:onclick="'eliminarCapitulo(' + ${capitulo.id} + ', event)'">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    <!-- Botones debajo de la tabla -->
+    <div style="margin-top: 20px;">
+        <button class="btn-volver" th:onclick="'anadirCapitulo(' + ${serie.id} + ')'">Añadir capítulo</button>
+        <a href="/series" class="btn-volver">Volver</a>
+    </div>
+</html>

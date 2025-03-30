@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
+
 @Component
 public class inicializarDatos implements CommandLineRunner {
 
@@ -33,6 +35,26 @@ public class inicializarDatos implements CommandLineRunner {
                 usuarioRepository.deleteAll(); 
                 peliculaRepository.deleteAll();
                 serieRepository.deleteAll();
+
+                // Inicializar usuarios de prueba
+                Usuario usu1 = new Usuario(
+                        
+                        "qw", 
+                        "qw",
+                        "qw@deustostream.es",
+                        "qw"
+                );
+
+                Usuario usu2 = new Usuario(
+                        
+                        "qw", 
+                        "qw",
+                        "qw@gmail.com",
+                        "qw"
+                );
+
+                usuarioRepository.save(usu1);
+                usuarioRepository.save(usu2);
 
                 // Inicializar películas de prueba
                 Pelicula pelicula1 = new Pelicula(
