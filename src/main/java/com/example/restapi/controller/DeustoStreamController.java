@@ -215,4 +215,52 @@ public class DeustoStreamController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    
+    // Endpoints para Capítulos    
+
+    @Operation(summary = "Actualizar un capítulo", description = "Modifica la duración y título de un capítulo")
+    @PutMapping("/capitulos/{id}")
+    public ResponseEntity<Capitulo> updateCapitulo(@PathVariable Long id, @RequestBody Capitulo capituloDetails) {
+        try {
+            Capitulo actualizado = deustoStreamService.updateCapitulo(id, capituloDetails);
+            return ResponseEntity.ok(actualizado);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    @Operation(summary = "Eliminar un capítulo", description = "Elimina un capítulo por su ID")
+    @DeleteMapping("/capitulos/{id}")
+    public ResponseEntity<Void> deleteCapitulo(@PathVariable Long id) {
+        Optional<Capitulo> cap = deustoStreamService.getCapituloById(id);
+        if (cap.isPresent()) {
+            deustoStreamService.deleteCapitulo(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    @Operation(summary = "Añadir un capítulo a una serie", description = "Crea un nuevo capítulo vacío (30 min por defecto) para la serie")
+    @PostMapping("/series/{serieId}/capitulos")
+    public ResponseEntity<Capitulo> addCapitulo(@PathVariable Long serieId, @RequestBody Capitulo capitulo) {
+        Optional<Series> optionalSerie = deustoStreamService.getSeriesById(serieId);
+        if (optionalSerie.isPresent()) {
+            Series serie = optionalSerie.get();
+            capitulo.setSerie(serie);
+            if (capitulo.getTitulo() == null || capitulo.getTitulo().trim().isEmpty()) {
+                int numero = (serie.getCapitulos() == null) ? 1 : serie.getCapitulos().size() + 1;
+                capitulo.setTitulo("Capítulo " + numero + " de " + serie.getTitulo());
+            }
+            if (capitulo.getDuracion() == 0) {
+                capitulo.setDuracion(30);
+            }
+            Capitulo nuevo = deustoStreamService.createCapitulo(capitulo);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

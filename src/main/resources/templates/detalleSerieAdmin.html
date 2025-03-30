@@ -10,20 +10,24 @@
             alert("Estás viendo el capítulo: " + titulo);
         }
 
-        function editarCapitulo(id, duracionActual, event) {
-            event.stopPropagation();
-            const nuevaDuracion = prompt("Nueva duración en minutos:", duracionActual);
-            if (nuevaDuracion) {
-                fetch('/api/capitulos/' + id, {
+        function actualizarCapitulo(id) {
+                const titulo = document.getElementById(`titulo-${id}`).value;
+                const duracion = document.getElementById(`duracion-${id}`).value;
+        
+                fetch(`/api/capitulos/${id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ duracion: parseInt(nuevaDuracion) })
-                }).then(res => {
-                    if (res.ok) location.reload();
-                    else alert("Error al actualizar el capítulo");
+                    body: JSON.stringify({ titulo, duracion })
+                })
+                .then(res => {
+                    if (res.ok) {
+                        alert("Capítulo actualizado correctamente");
+                        location.reload();
+                    } else {
+                        alert("Error al actualizar el capítulo");
+                    }
                 });
             }
-        }
 
         function eliminarCapitulo(id, event) {
             event.stopPropagation();
@@ -40,12 +44,16 @@
             fetch('/api/series/' + serieId + '/capitulos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ duracion: 30 })
+                body: JSON.stringify({ duracion: 30 }) 
             }).then(res => {
-                if (res.ok) location.reload();
-                else alert("Error al añadir capítulo");
+                if (res.ok) {
+                    alert("Capítulo añadido");
+                    location.reload();
+                } else {
+                    alert("Error al añadir capítulo");
+                }
             });
-        }
+}
     </script>
 </head>
 <body>
@@ -65,55 +73,41 @@
     </div>
 
     <h3>Capítulos</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Duración</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="capitulo : ${serie.capitulos}" th:id="'cap-row-' + ${capitulo.id}" th:data-id="${capitulo.id}">
-                <td th:text="${capitulo.id}"></td>
-                <td>
-                    <input type="text" th:id="'titulo-' + ${capitulo.id}" th:value="${capitulo.titulo}" />
-                </td>
-                <td>
-                    <input type="number" th:id="'duracion-' + ${capitulo.id}" th:value="${capitulo.duracion}" /> min
-                </td>
-                <td>
-                    <button class="btn-volver" 
-                            th:onclick="'actualizarCapitulo(' + ${capitulo.id} + ')'">
-                        Guardar
-                    </button>
-                    <button class="btn-volver" 
-                            th:onclick="'eliminarCapitulo(' + ${capitulo.id} + ', event)'">
-                        Eliminar
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-        <script>
-            function actualizarCapitulo(id) {
-                const titulo = document.getElementById(`titulo-${id}`).value;
-                const duracion = document.getElementById(`duracion-${id}`).value;
-        
-                fetch(`/api/capitulos/${id}`, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ titulo, duracion })
-                })
-                .then(res => {
-                    if (res.ok) {
-                        alert("Capítulo actualizado correctamente");
-                        location.reload();
-                    } else {
-                        alert("Error al actualizar el capítulo");
-                    }
-                });
-            }
-        </script>
-                
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Duración</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="capitulo : ${serie.capitulos}" th:id="'cap-row-' + ${capitulo.id}" th:data-id="${capitulo.id}">
+                    <td th:text="${capitulo.id}"></td>
+                    <td>
+                        <input type="text" th:id="'titulo-' + ${capitulo.id}" th:value="${capitulo.titulo}" />
+                    </td>
+                    <td>
+                        <input type="number" th:id="'duracion-' + ${capitulo.id}" th:value="${capitulo.duracion}" /> min
+                    </td>
+                    <td>
+                        <button class="btn-volver" 
+                                th:onclick="'actualizarCapitulo(' + ${capitulo.id} + ')'">
+                            Guardar
+                        </button>
+                        <button class="btn-volver" 
+                                th:onclick="'eliminarCapitulo(' + ${capitulo.id} + ', event)'">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    <!-- Botones debajo de la tabla -->
+    <div style="margin-top: 20px;">
+        <button class="btn-volver" th:onclick="'anadirCapitulo(' + ${serie.id} + ')'">Añadir capítulo</button>
+        <a href="/series" class="btn-volver">Volver</a>
+    </div>
 </html>
