@@ -178,7 +178,7 @@ public class inicializarDatos implements CommandLineRunner {
                                 "Las aventuras y desventuras de una familia amarilla en la ciudad de Springfield.",
                                 Generos.ANIMACION,
                                 Collections.emptyList(),
-                                "https://pics.filmaffinity.com/the_simpsons-296607477-large.jpg"
+                                "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1491519331i/28549904.jpg"
                 );
 
                 serieRepository.save(serie1);
