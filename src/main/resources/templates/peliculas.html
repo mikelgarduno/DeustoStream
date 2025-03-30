@@ -10,32 +10,34 @@
     <script>
         // Función para obtener las películas desde el backend y mostrarlas
         async function fetchPeliculas() {
-            const response = await fetch('/api/peliculas');
-            const peliculas = await response.json();
+        const response = await fetch('/api/peliculas');
+        const peliculas = await response.json();
 
-            let tableContent = peliculas.map(pelicula =>
-                `<tr id="row-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'" style="cursor: pointer;">
-                    <td>${pelicula.id}</td>
-                    <td id="titulo-cell-${pelicula.id}">
-                        <a th:href="@{/pelicula/{id}(id=${pelicula.id})}" href="/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
-                            ${pelicula.titulo}
-                        </a>
-                    </td>
-                    <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
-                    <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
-                    <td id="sinopsis-cell-${pelicula.id}">${pelicula.sinopsis}</td>
-                    <td id="duracion-cell-${pelicula.id}">${pelicula.duracion}</td> <!-- NUEVO -->
-                    <td><img src="${pelicula.imagenUrl}" alt="Póster" width="100"></td>  <!-- NUEVA COLUMNA -->
-                    <td id="actions-${pelicula.id}">
-                        <button onclick="enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.duracion}', '${pelicula.imagenUrl}')">Update</button>
+        let tableContent = peliculas.map(pelicula =>
+            `<tr id="row-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'" style="cursor: pointer;">
+                <td>${pelicula.id}</td>
+                <td id="titulo-cell-${pelicula.id}">
+                    <a href="/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
+                        ${pelicula.titulo}
+                    </a>
+                </td>
+                <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
+                <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
+                <td id="sinopsis-cell-${pelicula.id}">${pelicula.sinopsis}</td>
+                <td id="duracion-cell-${pelicula.id}">${pelicula.duracion}</td>
+                <td>
+                    <img src="${pelicula.imagenUrl}" alt="Póster" width="100" onclick="event.stopPropagation();">
+                </td>
+                <td id="actions-${pelicula.id}">
+                    <button onclick="event.stopPropagation(); enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.duracion}', '${pelicula.imagenUrl}')">Update</button>
+                    <button onclick="event.stopPropagation(); deletePelicula(${pelicula.id})">Delete</button>
+                </td>
+            </tr>`
+        ).join('');
 
-                        <button onclick="deletePelicula(${pelicula.id})">Delete</button>
-                    </td>
-                </tr>`
-            ).join('');
+        document.getElementById('peliculaTable').innerHTML = tableContent;
+    }
 
-            document.getElementById('peliculaTable').innerHTML = tableContent;
-        }
 
         // Función para obtener los géneros del backend y actualizar el select
         async function fetchGeneros() {
