@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
 
     <title>Gestión de Películas</title>
-
     <script>
         // Función para obtener las películas desde el backend y mostrarlas
         async function fetchPeliculas() {
@@ -16,17 +14,10 @@
             const peliculas = await response.json();
 
             let tableContent = peliculas.map(pelicula =>
-                /*`<tr id="row-${pelicula.id}" style="cursor: pointer;">
-                    <td onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.id}</td>
-                    <td id="titulo-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.titulo}</td>
-                    <td id="anio-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.anio}</td>
-                    <td id="genero-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.genero}</td>
-                    <td id="sinopsis-cell-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'">${pelicula.sinopsis}</td> */
-                `<tr id="row-${pelicula.id}">
+                `<tr id="row-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'" style="cursor: pointer;">
                     <td>${pelicula.id}</td>
-                    <!-- Cambiamos esta celda para que el nombre sea un enlace -->
                     <td id="titulo-cell-${pelicula.id}">
-                        <a th:href="@{/pelicula/{id}(id=${pelicula.id})}" href="/pelicula/${pelicula.id}">
+                        <a th:href="@{/pelicula/{id}(id=${pelicula.id})}" href="/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
                             ${pelicula.titulo}
                         </a>
                     </td>
@@ -95,8 +86,8 @@
                 <td><input type="text" id="edit-duracion-${id}" value="${duracion}"></td> <!-- NUEVO -->
                 <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td> 
                 <td>
-                    <button onclick="confirmUpdate(${id})">Confirm</button>
-                    <button onclick="fetchPeliculas()">Cancel</button>
+                    <button onclick="event.stopPropagation(); confirmUpdate(${id})">Confirm</button>
+                    <button onclick="event.stopPropagation(); fetchPeliculas()">Cancel</button>
                 </td>
             `;
         }
@@ -109,7 +100,6 @@
             const sinopsis = document.getElementById(`edit-sinopsis-${id}`).value;
             const duracion = document.getElementById(`edit-duracion-${id}`).value; // NUEVO
             const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value; // NUEVO
-
 
             await fetch(`/api/peliculas/${id}`, {
                 method: 'PUT',
@@ -129,11 +119,10 @@
         // Cargar las películas y géneros cuando se carga la página
         window.onload = () => {
             fetchPeliculas();
-            fetchGeneros();  // Cargar los géneros
+            fetchGeneros();
         };
     </script>
 </head>
-
 <body>
     <h2>Gestión de Películas</h2>
     <div id="gestion-links">
@@ -148,7 +137,7 @@
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="number" id="anio" placeholder="Año" required>
 
-        <!-- Aquí cambiamos el input por un select para el género -->
+        
         <select id="genero" required>
             <!-- Las opciones de género se llenarán dinámicamente con JavaScript -->
         </select>
@@ -178,5 +167,4 @@
 
     <a href="/">Volver al inicio</a>
 </body>
-
 </html>

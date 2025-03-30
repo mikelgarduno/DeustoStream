@@ -11,6 +11,11 @@
 
     <h1>Detalles de la Serie</h1>
 
+    <!-- Contenedor de imagen: se muestra la imagen de la serie encima de la tabla de capítulos -->
+    <div class="detalle-imagen">
+        <img th:src="${serie.imagenUrl}" alt="Imagen de la serie" class="serie-img">
+    </div>
+
     <div class="serie-detalle">
         <div class="detalle-info">
             <h2 th:text="${serie.titulo}"></h2>
@@ -18,8 +23,6 @@
             <p><strong>Género:</strong> <span th:text="${serie.genero}"></span></p>
             <p><strong>Descripción:</strong> <span th:text="${serie.descripcion}"></span></p>
         </div>
-        <!--<div class="detalle-imagen">
-        </div>-->
     </div>
 
     <h3>Capítulos</h3>
@@ -32,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Aquí se llenarán los capítulos dinámicamente -->
+            <!-- Se listan los capítulos de la serie -->
             <tr th:each="capitulo : ${serie.capitulos}" onclick="verCapitulo('${capitulo.titulo}')">
                 <td th:text="${capitulo.id}"></td>
                 <td th:text="${capitulo.titulo}"></td>
@@ -44,9 +47,9 @@
     <a href="/catalogo" class="btn-volver">Volver al listado de series</a>
 
     <script>
-        // Función para mostrar el mensaje cuando se hace clic en un capítulo
+        // Función para mostrar el mensaje al hacer clic en un capítulo
         function verCapitulo() {
-            alert('Estás viendo el capítulo'); // Simple mensaje de alerta
+            alert('Estás viendo el capítulo');
         }
     </script>
 
