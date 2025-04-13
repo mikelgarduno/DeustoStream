@@ -25,6 +25,7 @@ import com.example.restapi.model.Series;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.service.DeustoStreamService;
 
 @ExtendWith(MockitoExtension.class)
 public class DeustoStreamServiceTest {
