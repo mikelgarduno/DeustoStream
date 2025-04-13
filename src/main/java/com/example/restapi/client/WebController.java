@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpSession;// AGREGADO
+import jakarta.servlet.http.HttpSession;
 
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
-import com.example.restapi.model.Usuario; //AGRAGADO
+import com.example.restapi.model.Usuario;
 import com.example.restapi.service.DeustoStreamService;
-import com.example.restapi.service.AuthService; //AGREGADO
+import com.example.restapi.service.AuthService;
 
 @Controller
 public class WebController {
 
-     // Logger para registrar mensajes
+    // Logger para registrar mensajes
     private static final Logger logger = LoggerFactory.getLogger(WebController.class);
-
 
     @Autowired
     private DeustoStreamService deustoStreamService;
@@ -97,54 +96,53 @@ public class WebController {
     @GetMapping("admin/peliculas")
     public String mostrarPeliculas(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        
+
         if (usuario != null && usuario.getCorreo() != null) {
             logger.info("Correo del usuario: {}", usuario.getCorreo());
-            
+
             if (usuario.getCorreo().endsWith("@deustostream.es")) {
                 model.addAttribute("peliculas", deustoStreamService.getAllPeliculas());
-                return "peliculas"; 
+                return "peliculas";
             }
         }
-        
+
         logger.warn("Acceso denegado a /peliculas");
-        return "redirect:/acceso-denegado"; 
+        return "redirect:/acceso-denegado";
     }
 
-   @GetMapping("admin/series")
+    @GetMapping("admin/series")
     public String mostrarSeries(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        
+
         if (usuario != null && usuario.getCorreo() != null) {
             logger.info("Correo del usuario: {}", usuario.getCorreo());
-            
+
             if (usuario.getCorreo().endsWith("@deustostream.es")) {
                 model.addAttribute("series", deustoStreamService.getAllSeries());
-                return "series"; 
+                return "series";
             }
         }
-        
+
         logger.warn("Acceso denegado a /series");
-        return "redirect:/acceso-denegado"; 
+        return "redirect:/acceso-denegado";
     }
 
     @GetMapping("admin/usuarios")
     public String mostrarUsuarios(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        
+
         if (usuario != null && usuario.getCorreo() != null) {
             logger.info("Correo del usuario: {}", usuario.getCorreo());
-            
+
             if (usuario.getCorreo().endsWith("@deustostream.es")) {
                 model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
-                return "usuarios"; 
+                return "usuarios";
             }
         }
-        
+
         logger.warn("Acceso denegado a /usuarios");
-        return "redirect:/acceso-denegado"; 
+        return "redirect:/acceso-denegado";
     }
-    
 
     @GetMapping("/catalogo")
     public String catalogo(Model model, HttpSession session) {
@@ -171,26 +169,26 @@ public class WebController {
         return "detallePelicula";
     }
 
-    //ver detalle de las series
+    // ver detalle de las series
     @GetMapping("/serie/{id}")
     public String mostrarDetalleSerieUsuario(@PathVariable Long id, Model model) {
         Series serie = deustoStreamService.getSeriesById(id)
                 .orElseThrow(() -> new RuntimeException("Serie no encontrada"));
-    
+
         model.addAttribute("serie", serie);
         return "detalleSerie";
     }
-    
+
     @GetMapping("/admin/serie/{id}")
     public String mostrarDetalleSerieAdmin(@PathVariable Long id, Model model) {
         Series serie = deustoStreamService.getSeriesById(id)
                 .orElseThrow(() -> new RuntimeException("Serie no encontrada"));
-    
+
         model.addAttribute("serie", serie);
         return "detalleSerieAdmin";
     }
 
-    //Ver lista de peliculas favoritas
+    // Ver lista de peliculas favoritas
     @GetMapping("/guardados")
     public String mostrarGuardados(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");

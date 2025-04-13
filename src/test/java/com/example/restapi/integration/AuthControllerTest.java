@@ -1,4 +1,4 @@
-package com.example.restapi.controller;
+package com.example.restapi.integration;
 
 import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.UsuarioRepository;
