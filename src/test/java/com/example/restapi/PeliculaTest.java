@@ -40,5 +40,12 @@ public class PeliculaTest {
         assertNotNull(pelicula.getSinopsis());
         assertNotNull(pelicula.getImagenUrl());
     }
+    @Test
+    void testEquals() {
+        Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        assertTrue(pelicula1.equals(pelicula2));
+        assertTrue(pelicula2.equals(pelicula1));
+    }
 
 }

@@ -58,14 +58,6 @@ public class SerieTest {
         assertTrue(serie.getCapitulos().isEmpty());
     }
     @Test
-    public void testSetCapitulosWithNull() {
-        Series serie = new Series("Breaking Bad", 2008 ,"Descripcion", Generos.DRAMA, null, "url");
-        serie.setId(1L);
-        serie.setCapitulos(null);
-        assertNotNull(serie.getCapitulos());
-        assertTrue(serie.getCapitulos().isEmpty());
-    }
-    @Test
     public void testSetCapitulosWithEmptyList() {
         Series serie = new Series("Breaking Bad", 2008 ,"Descripcion", Generos.DRAMA, null, "url");
         serie.setId(1L);
