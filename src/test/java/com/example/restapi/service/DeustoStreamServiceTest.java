@@ -15,11 +15,9 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
@@ -99,8 +97,7 @@ public class DeustoStreamServiceTest {
     @Test
     void testCreatePelicula() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
-        // Mock the behavior of the repository to return the pelicula when save is
-        // called
+        // Mock the behavior of the repository to return the pelicula when save is called
         when(peliculaRepository.save(pelicula)).thenReturn(pelicula);
 
         Pelicula result = deustoStreamService.createPelicula(pelicula);
@@ -112,6 +109,15 @@ public class DeustoStreamServiceTest {
         assertEquals(2010, result.getAnio());
         assertEquals("Un sueño dentro de otro", result.getSinopsis());
         assertEquals("url", result.getImagenUrl());
+    }
+
+    @Test
+    void testCreatePelicula_InvalidData() {
+        Pelicula pelicula = new Pelicula(null, Generos.ACCION, 148, -1, "Sinopsis inválida", "url");
+        // Ensure that the service throws an exception or handles invalid data
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.createPelicula(pelicula);
+        });
     }
 
     @Test

@@ -1,4 +1,4 @@
-package com.example.restapi;
+package com.example.restapi.modelos;
 
 import org.junit.jupiter.api.Test;
 

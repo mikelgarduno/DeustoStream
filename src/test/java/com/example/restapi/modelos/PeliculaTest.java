@@ -1,4 +1,4 @@
-package com.example.restapi;
+package com.example.restapi.modelos;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
