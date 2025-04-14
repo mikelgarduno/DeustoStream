@@ -44,8 +44,13 @@ public class PeliculaTest {
     void testEquals() {
         Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
         Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
-        assertTrue(pelicula1.equals(pelicula2));
-        assertTrue(pelicula2.equals(pelicula1));
+        Pelicula pelicula3 = new Pelicula("Interstellar", Generos.CIENCIA_FICCION, 169, 2014, "Exploración espacial", "url2");
+
+        assertTrue(pelicula1.equals(pelicula2)); // Same attributes
+        assertTrue(pelicula2.equals(pelicula1)); // Symmetry
+        assertTrue(pelicula1.equals(pelicula1)); // Reflexivity
+        assertTrue(!pelicula1.equals(pelicula3)); // Different attributes
+        assertTrue(!pelicula1.equals(null)); // Null comparison
     }
 
 }

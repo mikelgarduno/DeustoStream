@@ -65,4 +65,18 @@ public class SerieTest {
         assertNotNull(serie.getCapitulos());
         assertTrue(serie.getCapitulos().isEmpty());
     }
+    @Test
+    public void testEqualsAndHashCode() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie1.setId(1L);
+        Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie2.setId(1L);
+        Series serie3 = new Series("Better Call Saul", 2015, "Descripcion", Generos.DRAMA, null, "url");
+        serie3.setId(2L);
+
+        assertEquals(serie1, serie2);
+        assertNotEquals(serie1, serie3);
+        assertEquals(serie1.hashCode(), serie2.hashCode());
+        assertNotEquals(serie1.hashCode(), serie3.hashCode());
+    }
 }
