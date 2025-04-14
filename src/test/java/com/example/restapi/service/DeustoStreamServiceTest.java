@@ -13,10 +13,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.restapi.model.Generos;
@@ -25,9 +27,7 @@ import com.example.restapi.model.Series;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
-import com.example.restapi.service.DeustoStreamService;
 
-@ExtendWith(MockitoExtension.class)
 public class DeustoStreamServiceTest {
     @Mock
     private PeliculaRepository peliculaRepository;
@@ -40,6 +40,11 @@ public class DeustoStreamServiceTest {
 
     @InjectMocks
     private DeustoStreamService deustoStreamService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @Test
     void testGetPeliculaById() {
