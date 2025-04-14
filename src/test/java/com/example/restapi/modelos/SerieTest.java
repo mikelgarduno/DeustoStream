@@ -65,6 +65,15 @@ public class SerieTest {
         assertNotNull(serie.getCapitulos());
         assertTrue(serie.getCapitulos().isEmpty());
     }
+
+    @Test
+    public void setNumeroCapitulos() {
+        Series serie = new Series("Breaking Bad", 2008 ,"Descripcion", Generos.DRAMA, null, "url");
+        serie.setId(1L);
+        serie.setNumeroCapitulos(5);
+        assertEquals(5, serie.getNumeroCapitulos());
+    }
+
     @Test
     public void testEqualsAndHashCode() {
         Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
