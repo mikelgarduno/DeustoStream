@@ -1,3 +1,4 @@
+![example workflow](https://github.com/mikelgarduno/DeustoStream/actions/workflows/maven.yml/badge.svg)
 # 🎬 DeustoStream 🍿
 
 ## 🌟 Descripción del Proyecto
