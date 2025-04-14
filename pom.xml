@@ -230,7 +230,7 @@
 				<configuration>
 					<excludes>
 						<exclude>**/RestApiApplicationTests.java</exclude>
-						<exclude>**/integration/**</exclude>
+						<!-- <exclude>**/integration/**</exclude>-->
 						<exclude>**/performance/**</exclude>
 					</excludes>
 				</configuration>

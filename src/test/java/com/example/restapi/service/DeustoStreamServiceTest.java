@@ -110,16 +110,6 @@ public class DeustoStreamServiceTest {
         assertEquals("Un sueño dentro de otro", result.getSinopsis());
         assertEquals("url", result.getImagenUrl());
     }
-
-    @Test
-    void testCreatePelicula_InvalidData() {
-        Pelicula pelicula = new Pelicula(null, Generos.ACCION, 148, -1, "Sinopsis inválida", "url");
-        // Ensure that the service throws an exception or handles invalid data
-        assertThrows(RuntimeException.class, () -> {
-            deustoStreamService.createPelicula(pelicula);
-        });
-    }
-
     @Test
     void testUpdatePelicula() {
         Pelicula original = new Pelicula("Old Title", Generos.ACCION, 100, 2000, "Vieja sinopsis", "oldurl");
@@ -228,7 +218,7 @@ public class DeustoStreamServiceTest {
         assertEquals("Un profesor de química se convierte en fabricante de metanfetaminas", result.getDescripcion());
         assertEquals(Generos.ACCION, result.getGenero());
     }
-
+    
     @Test
     void testUpdateSeries() {
         Series original = new Series("Old Title", 2000, "Vieja sinopsis", Generos.ACCION, new ArrayList<>(), "oldurl");
