@@ -19,9 +19,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
+import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
@@ -35,6 +37,9 @@ public class DeustoStreamServiceTest {
 
     @Mock
     private UsuarioRepository usuarioRepository;
+
+    @Mock
+    private CapituloRepository capituloRepository;
 
     @InjectMocks
     private DeustoStreamService deustoStreamService;
@@ -258,4 +263,93 @@ public class DeustoStreamServiceTest {
         verify(seriesRepository).delete(serie);
     }
 
+    @Test
+        void testGetAllCapitulos() {
+        Capitulo c1 = new Capitulo("Cap 1", 30);
+        Capitulo c2 = new Capitulo("Cap 2", 40);
+        List<Capitulo> lista = Arrays.asList(c1, c2);
+
+        when(capituloRepository.findAll()).thenReturn(lista);
+
+        List<Capitulo> result = deustoStreamService.getAllCapitulos();
+
+        assertEquals(2, result.size());
+        assertEquals("Cap 1", result.get(0).getTitulo());
+    }
+
+    @Test
+    void testGetCapituloById() {
+        Capitulo capitulo = new Capitulo("Cap especial", 50);
+        capitulo.setId(1L);
+
+        when(capituloRepository.findById(1L)).thenReturn(Optional.of(capitulo));
+
+        Optional<Capitulo> result = deustoStreamService.getCapituloById(1L);
+
+        assertTrue(result.isPresent());
+        assertEquals("Cap especial", result.get().getTitulo());
+    }
+
+    @Test
+    void testCreateCapituloWithSerie() {
+        Series serie = new Series();
+        serie.setId(10L);
+
+        Capitulo capitulo = new Capitulo("Capitulo con serie", 45);
+        capitulo.setSerie(serie);
+
+        when(capituloRepository.save(capitulo)).thenReturn(capitulo);
+        when(capituloRepository.countBySerieId(10L)).thenReturn(1);
+
+        Capitulo result = deustoStreamService.createCapitulo(capitulo);
+
+        assertNotNull(result);
+        verify(seriesRepository).save(serie);
+        assertEquals("Capitulo con serie", result.getTitulo());
+    }
+
+    @Test
+    void testUpdateCapitulo() {
+        Capitulo existente = new Capitulo("Viejo título", 25);
+        existente.setId(1L);
+
+        Capitulo actualizado = new Capitulo("Nuevo título", 40);
+
+        when(capituloRepository.findById(1L)).thenReturn(Optional.of(existente));
+        when(capituloRepository.save(any(Capitulo.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Capitulo result = deustoStreamService.updateCapitulo(1L, actualizado);
+
+        assertEquals("Nuevo título", result.getTitulo());
+        assertEquals(40, result.getDuracion());
+    }
+
+    @Test
+    void testUpdateCapituloNotFound() {
+        Capitulo cap = new Capitulo("No existe", 60);
+
+        when(capituloRepository.findById(999L)).thenReturn(Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.updateCapitulo(999L, cap);
+        });
+    }
+
+    @Test
+    void testDeleteCapituloExists() {
+        when(capituloRepository.existsById(5L)).thenReturn(true);
+
+        deustoStreamService.deleteCapitulo(5L);
+
+        verify(capituloRepository).deleteById(5L);
+    }
+
+    @Test
+    void testDeleteCapituloNotFound() {
+        when(capituloRepository.existsById(100L)).thenReturn(false);
+
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.deleteCapitulo(100L);
+        });
+    }
 }

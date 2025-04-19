@@ -76,6 +76,9 @@ public class DeustoStreamService {
     }
 
     public Pelicula createPelicula(Pelicula pelicula) {
+        if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() <= 0) {
+            throw new RuntimeException("Datos inválidos para la película");
+        }
         return peliculaRepository.save(pelicula);
     }
 
