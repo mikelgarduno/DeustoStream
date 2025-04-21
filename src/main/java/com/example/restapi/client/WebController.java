@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 
+import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
@@ -145,17 +146,51 @@ public class WebController {
     }
 
     @GetMapping("/catalogo")
-    public String catalogo(Model model, HttpSession session) {
-        List<Pelicula> peliculas = deustoStreamService.getAllPeliculas();
-        List<Series> series = deustoStreamService.getAllSeries();
+    public String catalogo(
+        @RequestParam(value = "titulo", required = false) String titulo,
+        @RequestParam(value = "genero", required = false) Generos genero,
+            Model model, HttpSession session) {
+        List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
+        List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
         model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
         model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
         model.addAttribute("usuario", usuario);
+        model.addAttribute("generos", Generos.values()); // Importa tu enum Generos
+
         return "catalogo"; // Asegúrate de que este es el nombre del archivo HTML en templates
+    }
+
+    @GetMapping("/peliculas")
+    public String verPeliculas(Model model, HttpSession session,
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) Generos genero) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
+
+        model.addAttribute("peliculas", peliculas);
+        model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("generos", Generos.values());
+
+        return "catPeliculas"; // apunta a templates/peliculas.html
+    }
+
+    @GetMapping("/series")
+    public String verSeries(Model model, HttpSession session,
+            @RequestParam(required = false) String titulo,
+            @RequestParam(required = false) Generos genero) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
+
+        model.addAttribute("series", series);
+        model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("generos", Generos.values());
+
+        return "catSeries"; // apunta a templates/series.html
     }
 
     // ver detalle de la pelicula
