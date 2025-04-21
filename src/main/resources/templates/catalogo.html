@@ -35,6 +35,32 @@
         <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
     </header>
 
+    <nav class="navbar">
+        <a href="/catalogo">📚 Catálogo</a>
+        <a href="/peliculas">🎬 Películas</a>
+        <a href="/series">📺 Series</a>
+    </nav>
+    
+
+    <div class="filtro">
+        <h2>Filtrar por título</h2>
+        <form action="#" method="get" class="filtro-form">
+            <input type="text" name="titulo" placeholder="Buscar por título..." th:value="${param.titulo}">
+            
+            <select name="genero">
+                <option value="">-- Género --</option>
+                <option th:each="g : ${generos}"
+                        th:value="${g}"
+                        th:text="${g}"
+                        th:selected="${param.genero == g}">Género</option>
+            </select>
+        
+            <button type="submit">Filtrar</button>
+            <a th:href="@{/catalogo}" class="btn-reset">Limpiar filtros</a>
+        </form>
+    </div>
+
+
     <div class="catalogo">
         <!-- Sección de Películas -->
         <div class="seccion">
