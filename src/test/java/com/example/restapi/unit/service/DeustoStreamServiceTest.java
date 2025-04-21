@@ -1,4 +1,4 @@
-package com.example.restapi.service;
+package com.example.restapi.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -27,6 +27,7 @@ import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.service.DeustoStreamService;
 
 public class DeustoStreamServiceTest {
     @Mock
@@ -115,6 +116,29 @@ public class DeustoStreamServiceTest {
         assertEquals("Un sueño dentro de otro", result.getSinopsis());
         assertEquals("url", result.getImagenUrl());
     }
+
+    @Test
+    void testCreatePelicula_NullPelicula() {
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.createPelicula(null);
+        });
+    }
+
+    @Test
+    void testCreatePelicula_NullTitulo() {
+        Pelicula pelicula = new Pelicula(null, Generos.ACCION, 148, 2010, "Sinopsis", "url");
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.createPelicula(pelicula);
+        });
+    }
+
+    @Test
+    void testCreatePelicula_InvalidAnio() {
+        Pelicula pelicula = new Pelicula("Titulo", Generos.ACCION, 148, -1, "Sinopsis", "url");
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.createPelicula(pelicula);
+        });
+    }
     @Test
     void testUpdatePelicula() {
         Pelicula original = new Pelicula("Old Title", Generos.ACCION, 100, 2000, "Vieja sinopsis", "oldurl");
@@ -153,6 +177,18 @@ public class DeustoStreamServiceTest {
         deustoStreamService.deletePelicula(1L);
 
         verify(peliculaRepository).delete(pelicula);
+    }
+    @Test
+    void testDeletePeliculaNotFound() {
+        // Mock the behavior of the repository to return an empty Optional when findById is called
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Assert that the RuntimeException is thrown with the correct message
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.deletePelicula(1L);
+        });
+
+        assertEquals("Pelicula not found with id: 1", exception.getMessage());
     }
 
     @Test

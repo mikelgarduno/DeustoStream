@@ -104,6 +104,11 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>3.5.2</version>
+					<configuration>
+    					<includes>
+      						<include>**/unit/**</include>
+    					</includes>
+  					</configuration>
 				</plugin>
 
 				<plugin>
@@ -230,7 +235,7 @@
 				<configuration>
 					<excludes>
 						<exclude>**/RestApiApplicationTests.java</exclude>
-						<!-- <exclude>**/integration/**</exclude>-->
+						<exclude>**/integration/**</exclude>
 						<exclude>**/performance/**</exclude>
 					</excludes>
 				</configuration>

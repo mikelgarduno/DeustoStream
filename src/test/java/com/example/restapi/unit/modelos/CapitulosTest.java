@@ -1,4 +1,4 @@
-package com.example.restapi.modelos;
+package com.example.restapi.unit.modelos;
 
 import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Series;
