@@ -192,6 +192,68 @@ public class DeustoStreamServiceTest {
     }
 
     @Test
+    void testBuscarPeliculasFiltradas_TituloYGenero() {
+        Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula pelicula2 = new Pelicula("Inception 2", Generos.ACCION, 150, 2012, "Secuela", "url2");
+        List<Pelicula> peliculas = Arrays.asList(pelicula1, pelicula2);
+
+        when(peliculaRepository.findByTituloContainingIgnoreCaseAndGenero("Inception", Generos.ACCION)).thenReturn(peliculas);
+
+        List<Pelicula> result = deustoStreamService.buscarPeliculasFiltradas("Inception", Generos.ACCION);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Inception", result.get(0).getTitulo());
+        assertEquals("Inception 2", result.get(1).getTitulo());
+    }
+
+    @Test
+    void testBuscarPeliculasFiltradas_SoloTitulo() {
+        Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        List<Pelicula> peliculas = Arrays.asList(pelicula1);
+
+        when(peliculaRepository.findByTituloContainingIgnoreCase("Inception")).thenReturn(peliculas);
+
+        List<Pelicula> result = deustoStreamService.buscarPeliculasFiltradas("Inception", null);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Inception", result.get(0).getTitulo());
+    }
+
+    @Test
+    void testBuscarPeliculasFiltradas_SoloGenero() {
+        Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula pelicula2 = new Pelicula("The Matrix", Generos.ACCION, 136, 1999, "Un mundo virtual", "url2");
+        List<Pelicula> peliculas = Arrays.asList(pelicula1, pelicula2);
+
+        when(peliculaRepository.findByGenero(Generos.ACCION)).thenReturn(peliculas);
+
+        List<Pelicula> result = deustoStreamService.buscarPeliculasFiltradas(null, Generos.ACCION);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Inception", result.get(0).getTitulo());
+        assertEquals("The Matrix", result.get(1).getTitulo());
+    }
+
+    @Test
+    void testBuscarPeliculasFiltradas_SinFiltros() {
+        Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula pelicula2 = new Pelicula("The Matrix", Generos.ACCION, 136, 1999, "Un mundo virtual", "url2");
+        List<Pelicula> peliculas = Arrays.asList(pelicula1, pelicula2);
+
+        when(peliculaRepository.findAll()).thenReturn(peliculas);
+
+        List<Pelicula> result = deustoStreamService.buscarPeliculasFiltradas(null, null);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Inception", result.get(0).getTitulo());
+        assertEquals("The Matrix", result.get(1).getTitulo());
+    }
+
+    @Test
     void testGetAllSeries() {
         // Mock the behavior of the repository to return a list of series when findAll
         // is called
@@ -297,6 +359,81 @@ public class DeustoStreamServiceTest {
         deustoStreamService.deleteSeries(1L);
 
         verify(seriesRepository).delete(serie);
+    }
+
+    @Test
+    void testDeleteSeriesNotFound() {
+        // Mock the behavior of the repository to return an empty Optional when findById is called
+        when(seriesRepository.findById(1L)).thenReturn(Optional.empty());
+
+        // Assert that the RuntimeException is thrown with the correct message
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.deleteSeries(1L);
+        });
+
+        assertEquals("Series not found with id: 1", exception.getMessage());
+    }
+
+    @Test
+    void testBuscarSeriesFiltradas_TituloYGenero() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
+        Series serie2 = new Series("Breaking Bad 2", 2010, "Secuela", Generos.ACCION, new ArrayList<>(), "url2");
+        List<Series> series = Arrays.asList(serie1, serie2);
+
+        when(seriesRepository.findByTituloContainingIgnoreCaseAndGenero("Breaking Bad", Generos.ACCION)).thenReturn(series);
+
+        List<Series> result = deustoStreamService.buscarSeriesFiltradas("Breaking Bad", Generos.ACCION);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Breaking Bad", result.get(0).getTitulo());
+        assertEquals("Breaking Bad 2", result.get(1).getTitulo());
+    }
+
+    @Test
+    void testBuscarSeriesFiltradas_SoloTitulo() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
+        List<Series> series = Arrays.asList(serie1);
+
+        when(seriesRepository.findByTituloContainingIgnoreCase("Breaking Bad")).thenReturn(series);
+
+        List<Series> result = deustoStreamService.buscarSeriesFiltradas("Breaking Bad", null);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("Breaking Bad", result.get(0).getTitulo());
+    }
+
+    @Test
+    void testBuscarSeriesFiltradas_SoloGenero() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
+        Series serie2 = new Series("Game of Thrones", 2011, "Luchas por el trono de hierro en un mundo de fantasía", Generos.ACCION, new ArrayList<>(), "url2");
+        List<Series> series = Arrays.asList(serie1, serie2);
+
+        when(seriesRepository.findByGenero(Generos.ACCION)).thenReturn(series);
+
+        List<Series> result = deustoStreamService.buscarSeriesFiltradas(null, Generos.ACCION);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Breaking Bad", result.get(0).getTitulo());
+        assertEquals("Game of Thrones", result.get(1).getTitulo());
+    }
+
+    @Test
+    void testBuscarSeriesFiltradas_SinFiltros() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
+        Series serie2 = new Series("Game of Thrones", 2011, "Luchas por el trono de hierro en un mundo de fantasía", Generos.FANTASIA, new ArrayList<>(), "url2");
+        List<Series> series = Arrays.asList(serie1, serie2);
+
+        when(seriesRepository.findAll()).thenReturn(series);
+
+        List<Series> result = deustoStreamService.buscarSeriesFiltradas(null, null);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Breaking Bad", result.get(0).getTitulo());
+        assertEquals("Game of Thrones", result.get(1).getTitulo());
     }
 
     @Test
