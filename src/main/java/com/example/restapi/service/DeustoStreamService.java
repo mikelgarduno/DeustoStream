@@ -1,6 +1,7 @@
 package com.example.restapi.service;
 
 import com.example.restapi.model.Capitulo;
+import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
@@ -25,7 +26,8 @@ public class DeustoStreamService {
     private final CapituloRepository capituloRepository;
 
     @Autowired
-    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository, SerieRepository serieRepository, CapituloRepository capituloRepository) {
+    public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
+            SerieRepository serieRepository, CapituloRepository capituloRepository) {
         this.usuarioRepository = usuarioRepository;
         this.peliculaRepository = peliculaRepository;
         this.serieRepository = serieRepository;
@@ -116,6 +118,18 @@ public class DeustoStreamService {
         }
     }
 
+    public List<Pelicula> buscarPeliculasFiltradas(String titulo, Generos genero) {
+        if (titulo != null && !titulo.isEmpty() && genero != null && !genero.toString().isEmpty()) {
+            return peliculaRepository.findByTituloContainingIgnoreCaseAndGenero(titulo, genero);
+        } else if (titulo != null && !titulo.isEmpty()) {
+            return peliculaRepository.findByTituloContainingIgnoreCase(titulo);
+        } else if (genero != null && !genero.toString().isEmpty()) {
+            return peliculaRepository.findByGenero(genero);
+        } else {
+            return peliculaRepository.findAll();
+        }
+    }
+
     // Métodos para Series
     public List<Series> getAllSeries() {
         return serieRepository.findAll();
@@ -162,9 +176,19 @@ public class DeustoStreamService {
         }
     }
 
-   
+    public List<Series> buscarSeriesFiltradas(String titulo, Generos genero) {
+        if (titulo != null && !titulo.isEmpty() && genero != null && !genero.toString().isEmpty()) {
+            return serieRepository.findByTituloContainingIgnoreCaseAndGenero(titulo, genero);
+        } else if (titulo != null && !titulo.isEmpty()) {
+            return serieRepository.findByTituloContainingIgnoreCase(titulo);
+        } else if (genero != null && !genero.toString().isEmpty()) {
+            return serieRepository.findByGenero(genero);
+        } else {
+            return serieRepository.findAll();
+        }
+    }
 
-// Métodos para inicializar datos
+    // Métodos para inicializar datos
     public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
         Optional<Usuario> optionalUsuario = usuarioRepository.findById(usuarioId);
         Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
@@ -173,10 +197,10 @@ public class DeustoStreamService {
             Usuario usuario = optionalUsuario.get();
             Pelicula pelicula = optionalPelicula.get();
 
-            if(usuario.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
+            if (usuario.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
                 // Si la película ya está en la lista de favoritos, eliminarla
                 usuario.getListaMeGustaPeliculas().remove(pelicula);
-            }else {
+            } else {
                 // Añadir la película a la lista de favoritos del usuario
                 usuario.getListaMeGustaPeliculas().add(pelicula);
             }
@@ -198,10 +222,10 @@ public class DeustoStreamService {
             Usuario usuario = optionalUsuario.get();
             Series serie = optionalSerie.get();
 
-            if(usuario.getListaMeGustaSeries().contains(optionalSerie.get())) {
+            if (usuario.getListaMeGustaSeries().contains(optionalSerie.get())) {
                 // Si la serie ya está en la lista de favoritos, eliminarla
                 usuario.getListaMeGustaSeries().remove(serie);
-            }else {
+            } else {
                 // Añadir la serie a la lista de favoritos del usuario
                 usuario.getListaMeGustaSeries().add(serie);
             }
@@ -220,42 +244,41 @@ public class DeustoStreamService {
     public List<Capitulo> getAllCapitulos() {
         return capituloRepository.findAll();
     }
-    
+
     public Optional<Capitulo> getCapituloById(Long id) {
         return capituloRepository.findById(id);
     }
-    
+
     public Capitulo createCapitulo(Capitulo capitulo) {
         Capitulo nuevo = capituloRepository.save(capitulo);
-    
+
         Series serie = capitulo.getSerie();
         if (serie != null) {
             int cantidad = capituloRepository.countBySerieId(serie.getId());
             serie.setNumeroCapitulos(cantidad);
             serieRepository.save(serie);
         }
-    
+
         return nuevo;
     }
-    
-    
+
     public Capitulo updateCapitulo(Long id, Capitulo detalles) {
         Optional<Capitulo> optional = capituloRepository.findById(id);
         if (optional.isPresent()) {
             Capitulo cap = optional.get();
             cap.setDuracion(detalles.getDuracion());
-    
+
             // actualizar el título si se pasa uno nuevo no vacío
             if (detalles.getTitulo() != null && !detalles.getTitulo().trim().isEmpty()) {
                 cap.setTitulo(detalles.getTitulo());
             }
-    
+
             return capituloRepository.save(cap);
         } else {
             throw new RuntimeException("Capítulo no encontrado");
         }
     }
-    
+
     public void deleteCapitulo(Long id) {
         if (capituloRepository.existsById(id)) {
             capituloRepository.deleteById(id);
