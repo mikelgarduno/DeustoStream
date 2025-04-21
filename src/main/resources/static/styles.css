@@ -15,7 +15,7 @@ body {
 header {
     background-color: #222;
     padding: 10px 0;
-    position: fixed;
+    position: sticky;
     width: 100%;
     top: 0;
     left: 0;
@@ -40,7 +40,7 @@ h1 {
 
 h2 {
     color: #ddd;
-    margin-top: 100px; /* Para que no se oculte bajo el header */
+    margin-top: 20px; /* Para que no se oculte bajo el header */
     margin-bottom: 10px;
     position: relative;
 
@@ -140,14 +140,74 @@ td input {
     justify-content: space-evenly;
     gap: 20px;
     padding: 20px;
-    margin-top: 150px; /* Para no chocar con el header */
+    margin-top: 50px; /* Para que no se oculte bajo el header */
 }
+
+.filtro-form {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.filtro-form input,
+.filtro-form select,
+.filtro-form button,
+.filtro-form .btn-reset {
+    padding: 8px;
+    font-family: inherit;
+    font-size: 1em;
+}
+
+.btn-reset {
+    background-color: #ccc;
+    text-decoration: none;
+    color: black;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+}
+
 
 .seccion {
     width: 100%; /* Asegura que cada sección ocupe el 100% del ancho */
     display: flex;
     flex-direction: column; /* Los elementos van en columna (título + lista) */
     align-items: center; /* Centra los elementos */
+}
+
+/* Navbar styling */
+.navbar {
+    display: block;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #222;
+    padding: 10px 10px;
+    position: static;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
+    z-index: 100;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+    color: #e50914;
+}
+
+.navbar .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e50914;
+    text-decoration: none;
 }
 
 /* Contenedor de Películas y Series */

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Catálogo - DeustoStream</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <script>
+        async function guardarPeliculaFavoritos(idPelicula, idUsuario) {
+
+            await fetch(`/api/usuarios/${idUsuario}/peliculas/${idPelicula}`, {
+                method: 'POST',
+                credentials: 'same-origin' // Asegura enviar las cookies de sesión
+            });
+            
+        }
+        async function guardarSerieFavoritos(idSerie, idUsuario) {
+
+            await fetch(`/api/usuarios/${idUsuario}/series/${idSerie}`, {
+                method: 'POST',
+                credentials: 'same-origin' // Asegura enviar las cookies de sesión
+            });
+        }
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <h1>Catalogo de DeustoStream</h1>
+        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+        <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
+    </header>
+
+    <nav class="navbar">
+        <a href="/catalogo">📚 Catálogo</a>
+        <a href="/peliculas">🎬 Películas</a>
+        <a href="/series">📺 Series</a>
+    </nav>
+    
+
+    <div class="filtro">
+        <h2>Filtrar por título</h2>
+        <form action="#" method="get" class="filtro-form">
+            <input type="text" name="titulo" placeholder="Buscar por título..." th:value="${param.titulo}">
+            
+            <select name="genero">
+                <option value="">-- Género --</option>
+                <option th:each="g : ${generos}"
+                        th:value="${g}"
+                        th:text="${g}"
+                        th:selected="${param.genero == g}">Género</option>
+            </select>
+        
+            <button type="submit">Filtrar</button>
+            <a th:href="@{/catalogo}" class="btn-reset">Limpiar filtros</a>
+        </form>
+    </div>
+
+
+    <div class="catalogo">
+        <!-- Sección de Películas -->
+        <div class="seccion">
+            <h2>🎥 Películas</h2>
+            <div class="contenedor-peliculas">
+                <div class="pelicula" th:each="pelicula : ${peliculas}">
+                    <!-- Enlace a la página de detalles de la película -->
+                    <a th:href="@{/pelicula/{id}(id=${pelicula.id})}">
+                        <img class="poster" th:src="${pelicula.imagenUrl}" alt="Póster de película">
+                        <h3 th:text="${pelicula.titulo}"></h3>
+                        <p th:text="${pelicula.genero}"></p>
+                    </a>
+                    <!-- Botón para añadir a favoritos -->
+                    <button class="favoritos-btn" th:if="${#lists.contains(peliculasFavoritas, pelicula)}"
+                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">
+                        ❤️ Borrar
+                    </button>
+
+                    <button class="favoritos-btn" th:if="${!#lists.contains(peliculasFavoritas, pelicula)}"
+                        th:onclick="'guardarPeliculaFavoritos(' + ${pelicula.id} + ', ' + ${usuario.id} + ')'">
+                        ❤️ Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
