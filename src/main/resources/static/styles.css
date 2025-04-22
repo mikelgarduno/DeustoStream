@@ -1,9 +1,11 @@
-/* General styling */
-*{
+/* ==================================================
+   🧱 ESTILOS GENERALES
+================================================== */
+* {
     font-family: 'Inter', sans-serif;
 }
+
 body {
-    
     background-color: #141414;
     color: white;
     margin: 0;
@@ -11,7 +13,9 @@ body {
     text-align: center;
 }
 
-/* Header */
+/* ==================================================
+   🧭 ENCABEZADO (HEADER)
+================================================== */
 header {
     background-color: #222;
     padding: 10px 0;
@@ -30,20 +34,16 @@ header h1 {
     margin-left: 20px;
 }
 
-
-/* Estilo del título */
 h1 {
     margin-top: 20px;
     font-size: 32px;
 }
 
-
 h2 {
     color: #ddd;
-    margin-top: 20px; /* Para que no se oculte bajo el header */
     margin-bottom: 10px;
     position: relative;
-
+    margin-top: 20px;
 }
 
 h2::after {
@@ -53,10 +53,43 @@ h2::after {
     bottom: -10px;
     width: 50px;
     height: 2px;
-    background-color: #e50914;
     margin-top: 5px;
 }
 
+/* ==================================================
+   🖼️ LOGO
+================================================== */
+
+.logo-container img {
+    max-width: 50%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.logo-small {
+    height: 80px;
+    width: auto;
+}
+
+.logo-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-login img.logo-small {
+    height: 100px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+/* ==================================================
+   🧾 FORMULARIOS (Login, Registro, General)
+================================================== */
 form {
     display: flex;
     flex-wrap: wrap;
@@ -67,18 +100,19 @@ form {
     background: #222;
     box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 20px;  
-    align-items: top; /* Alinea los elementos al inicio del contenedor */
+    padding: 20px;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
     padding: 8px;
     border: 1px solid #666;
     border-radius: 4px;
     font-size: 16px;
     background-color: white;
     color: black;
-    width: 180px; /* Tamaño uniforme */
+    width: 180px;
 }
 
 textarea {
@@ -86,62 +120,141 @@ textarea {
     resize: none;
 }
 
+.login-form {
+    background-color: #222;
+    padding: 40px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 20px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
 
-button {
-    padding: 8px 12px;
+.registro-form {
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 50px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    background-color: #181818;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+/* ==================================================
+   🎯 BOTONES
+================================================== */
+button,
+.btn,
+.logout-btn,
+.favoritos-btn {
+    padding: 10px 20px;
     background-color: #e50914;
-    /* Rojo Netflix */
     color: white;
     border: none;
-    cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
-    margin-left: 5px;
+    cursor: pointer;
     transition: background 0.3s ease;
 }
 
-button:hover {
+.btn-secondary {
+    background-color: #555;
+}
+
+.btn-secondary:hover {
+    background-color: #333;
+}
+
+.btn-reset {
+    background-color: #ccc;
+    color: black;
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+button:hover,
+.btn:hover,
+.logout-btn:hover,
+.favoritos-btn:hover {
     background-color: #b20710;
 }
 
-/* Table styling */
-table {
-    width: 80%;
-    margin: 0 auto;
-    border-collapse: collapse;
-    background: #222;
-    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #444;
-}
-
-th {
-    background-color: #e50914;
-    color: white;
-}
-
-td {
-    text-align: center;
-}
-
-td input {
-    width: 90%;
-}
-
-/* 🎬 Catálogo estilo Netflix */
+/* ==================================================
+   🗂️ CATÁLOGO
+================================================== */
 .catalogo {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
     gap: 20px;
     padding: 20px;
-    margin-top: 50px; /* Para que no se oculte bajo el header */
+    margin-top: 50px;
 }
+
+.seccion {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.catalogo-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.contenedor-peliculas,
+.contenedor-series {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.pelicula,
+.serie {
+    width: 200px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.pelicula:hover,
+.serie:hover {
+    transform: scale(1.05);
+}
+
+.poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.pelicula h2, .serie h2,
+.pelicula h3, .serie h3 {
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+.pelicula p, .serie p {
+    font-size: 14px;
+    color: #bbb;
+}
+
 
 .filtro-form {
     display: flex;
@@ -160,30 +273,36 @@ td input {
     font-size: 1em;
 }
 
-.btn-reset {
-    background-color: #ccc;
-    text-decoration: none;
-    color: black;
-    border: none;
-    padding: 8px;
-    border-radius: 5px;
-}
-
-
-.seccion {
-    width: 100%; /* Asegura que cada sección ocupe el 100% del ancho */
+.main-header {
     display: flex;
-    flex-direction: column; /* Los elementos van en columna (título + lista) */
-    align-items: center; /* Centra los elementos */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111;
+    color: white;
+    flex-wrap: wrap;
+    /* se adapta a pantallas pequeñas */
 }
 
-/* Navbar styling */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right {
+    display: flex;
+    gap: 10px;
+}
+
+
+/* ==================================================
+   🧭 NAVEGACIÓN (NAVBAR)
+================================================== */
 .navbar {
     display: block;
     justify-content: space-between;
     align-items: center;
     background-color: #222;
-    padding: 10px 10px;
     position: static;
     top: 0;
     width: 100%;
@@ -210,72 +329,75 @@ td input {
     text-decoration: none;
 }
 
-/* Contenedor de Películas y Series */
-.contenedor-peliculas, .contenedor-series {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
 
-
-.pelicula, .serie {
-    width: 200px;
-    background-color: #222;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.2);
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.pelicula:hover, .serie:hover {
-    transform: scale(1.05);
-}
-
-
-.poster {
+/* ==================================================
+   🔒 LOGIN Y REGISTRO
+================================================== */
+.login-form input {
     width: 100%;
-    height: 300px; /* Tamaño consistente para las imágenes */
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.pelicula h2, .serie h2  {
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
     font-size: 16px;
-    margin-top: 5px;
 }
 
-.pelicula h3, .serie h3 {
+.login-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #e50914;
+    color: white;
+    border: none;
+    border-radius: 5px;
     font-size: 16px;
-    margin-top: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
+.login-form button:hover {
+    background-color: #b00610;
+}
 
-.pelicula p, .serie p {
+.error-msg {
+    color: #ff4c4c;
+    margin-top: 10px;
+}
+
+.registro-link {
+    margin-top: 15px;
     font-size: 14px;
-    color: #bbb;
 }
 
-/* login form */
-
-.login-form {
-    background-color: #222;
-    padding: 30px;
-    border-radius: 10px;
-    display: inline-block;
-    margin-top: 50px;
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+/* ==================================================
+   📊 TABLAS
+================================================== */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background: #222;
+    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-/* registro form */
-.registro-form {
-    background-color: #222;
-    padding: 30px;
-    border-radius: 10px;
-    display: inline-block;
-    margin-top: 50px;
-    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+th,
+td {
+    padding: 10px;
+    border: 1px solid #444;
+}
+
+th {
+    background-color: #e50914;
+    color: white;
+}
+
+td {
+    text-align: center;
+}
+
+td input {
+    width: 90%;
 }
 
 /* Sección de Películas */
@@ -288,27 +410,9 @@ td input {
     margin-top: 50px;
 }
 
-/* Botón de cerrar sesión */
-.logout-btn {
-    background-color: #e50914;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    transition: background 0.3s ease;
-}
-
-.logout-btn:hover {
-    background-color: #b20710;
-}
-
 #gestion-links a {
-    color: #e50914;  /* Rojo de Netflix */
+    color: #e50914;
+    /* Rojo de Netflix */
     text-decoration: none;
     font-weight: bold;
     font-size: 18px;
@@ -323,7 +427,7 @@ td input {
     text-decoration: none;
 }
 
-a{
+a {
     text-decoration: none;
     font-weight: bold;
     color: #fff;
@@ -341,7 +445,4 @@ a{
     right: 20px;
     top: 15px;
     transition: background 0.3s ease;
-}
-#favoritos-btn:hover {
-    background-color: #b20710;
 }
