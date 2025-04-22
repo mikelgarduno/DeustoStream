@@ -29,10 +29,17 @@
 </head>
 
 <body>
-    <header>
-        <h1>Catalogo de DeustoStream</h1>
-        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
-        <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
+    <header class="main-header">
+        <div class="header-left">
+            <a th:href="@{/catalogo}" class="logo-link">
+                <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+            </a>
+            <h1 class="catalogo-title">Catálogo de DeustoStream</h1>
+        </div>
+        <div class="header-right">
+            <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+            <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
+        </div>
     </header>
 
     <nav class="navbar">

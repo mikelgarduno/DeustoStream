@@ -7,13 +7,23 @@
 </head>
 
 <body>
-    <h2>Iniciar Sesión</h2>
-    <form action="/login" method="post" class="login-form">
-        <input type="email" name="correo" placeholder="Correo" required><br>
-        <input type="password" name="contrasenya" placeholder="Contraseña" required><br>
-        <button type="submit">Entrar</button>
-    </form>
-    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
-    <p>¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
-</body>
+    <div class="login-container">
+        <div class="logo-login">
+            <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+            <h1>DeustoStream</h1>
+        </div>
 
+        <h2>Iniciar Sesión</h2>
+
+        <form action="/login" method="post" class="login-form">
+            <input type="email" name="correo" placeholder="Correo" required>
+            <input type="password" name="contrasenya" placeholder="Contraseña" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <p th:if="${error}" th:text="${error}" class="error-msg"></p>
+
+        <p class="registro-link">¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
+    </div>
+</body>
+</html>
