@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Detalles de la Película - DeustoStream</title>
-    <link rel="stylesheet" href="/styles.css"> 
-    <link rel="stylesheet" href="/detalles.css"> 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/detalles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+
 <body>
 
     <h1>Detalles de la Película</h1>
@@ -25,7 +28,22 @@
         </div>
     </div>
 
+    <div th:if="${relacionadas != null and !relacionadas.isEmpty()}" class="seccion">
+        <h2>Más [[${pelicula.genero}]] que quizá te guste</h2>
+    
+        <div class="contenedor-peliculas">
+            <div class="pelicula" th:each="p : ${relacionadas}">
+                <a th:href="@{/pelicula/{id}(id=${p.id})}">
+                    <img class="poster" th:src="${p.imagenUrl}" alt="Póster">
+                    <h3 th:text="${p.titulo}"></h3>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+
     <a href="javascript:history.back()" class="btn-volver">Volver </a>
 
 </body>
+
 </html>
