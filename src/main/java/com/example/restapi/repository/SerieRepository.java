@@ -17,4 +17,6 @@ public interface SerieRepository extends JpaRepository<Series, Long> {
 
   // Método para buscar por género solamente
   List<Series> findByGenero(Generos genero);
+  List<Series> findTop6ByGeneroAndIdNot(Generos genero, Long id);
+  
 }

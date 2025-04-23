@@ -147,8 +147,8 @@ public class WebController {
 
     @GetMapping("/catalogo")
     public String catalogo(
-        @RequestParam(value = "titulo", required = false) String titulo,
-        @RequestParam(value = "genero", required = false) Generos genero,
+            @RequestParam(value = "titulo", required = false) String titulo,
+            @RequestParam(value = "genero", required = false) Generos genero,
             Model model, HttpSession session) {
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
         List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
@@ -193,24 +193,30 @@ public class WebController {
         return "catSeries"; // apunta a templates/series.html
     }
 
-    // ver detalle de la pelicula
     @GetMapping("/pelicula/{id}")
     public String mostrarDetallePelicula(@PathVariable Long id, Model model) {
         Pelicula pelicula = deustoStreamService.getPeliculaById(id)
                 .orElseThrow(() -> new RuntimeException("Película no encontrada"));
 
         model.addAttribute("pelicula", pelicula);
+        // ← NUEVO: lista de relacionadas
+        model.addAttribute("relacionadas",
+                deustoStreamService.getPeliculasRelacionadas(id));
 
         return "detallePelicula";
     }
 
-    // ver detalle de las series
+    // ---------------- Detalle SERIE (usuario) ------------------
     @GetMapping("/serie/{id}")
     public String mostrarDetalleSerieUsuario(@PathVariable Long id, Model model) {
         Series serie = deustoStreamService.getSeriesById(id)
                 .orElseThrow(() -> new RuntimeException("Serie no encontrada"));
 
         model.addAttribute("serie", serie);
+        // ← NUEVO
+        model.addAttribute("relacionadas",
+                deustoStreamService.getSeriesRelacionadas(id));
+
         return "detalleSerie";
     }
 

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Collections;
 
 @Service
 public class DeustoStreamService {
@@ -285,5 +286,19 @@ public class DeustoStreamService {
         } else {
             throw new RuntimeException("Capítulo no encontrado con id: " + id);
         }
+    }
+
+    // Películas relacionadas
+    public List<Pelicula> getPeliculasRelacionadas(Long peliculaId) {
+        return peliculaRepository.findById(peliculaId)
+                .map(p -> peliculaRepository.findTop6ByGeneroAndIdNot(p.getGenero(), p.getId()))
+                .orElse(Collections.emptyList());
+    }
+
+    // Series relacionadas
+    public List<Series> getSeriesRelacionadas(Long serieId) {
+        return serieRepository.findById(serieId)
+                .map(s -> serieRepository.findTop6ByGeneroAndIdNot(s.getGenero(), s.getId()))
+                .orElse(Collections.emptyList());
     }
 }
