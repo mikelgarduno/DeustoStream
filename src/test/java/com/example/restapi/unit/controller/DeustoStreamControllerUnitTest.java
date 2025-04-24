@@ -3,6 +3,7 @@ package com.example.restapi.unit.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import com.example.restapi.controller.DeustoStreamController;
+import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
@@ -196,9 +198,18 @@ public class DeustoStreamControllerUnitTest {
         assertEquals(null, response.getBody());
     }
     @Test
-    void testCreateSeries_ValidData() {
-        Series series = new Series("Stranger Things", 2016, "Ciencia ficción y misterio", Generos.CIENCIA_FICCION, null, "url3");
+    void testCreateSeries_WithCapitulos() {
+        
+       List<Capitulo> capitulos = List.of(
+            new Capitulo("Capítulo 1 de Stranger Things", 30),
+            new Capitulo("Capítulo 2 de Stranger Things", 30),
+            new Capitulo("Capítulo 3 de Stranger Things", 30)
+        );
+        
+        Series series = new Series("Stranger Things", 2016, "Ciencia ficción y misterio", Generos.CIENCIA_FICCION, capitulos, "url3");
+
         Series nuevaSeries = new Series("Stranger Things", 2016, "Ciencia ficción y misterio", Generos.CIENCIA_FICCION, null, "url3");
+        nuevaSeries.setCapitulos(capitulos);
 
         when(deustoStreamService.createSeries(series)).thenReturn(nuevaSeries);
 
@@ -206,6 +217,23 @@ public class DeustoStreamControllerUnitTest {
 
         assertEquals(201, response.getStatusCode().value());
         assertEquals("Stranger Things", response.getBody().getTitulo());
+        assertEquals(3, response.getBody().getCapitulos().size());
+        assertEquals("Capítulo 1 de Stranger Things", response.getBody().getCapitulos().get(0).getTitulo());
+    }
+
+    @Test
+    void testCreateSeries_WithoutCapitulos() {
+        Series series = new Series("Stranger Things", 2016, "Ciencia ficción y misterio", Generos.CIENCIA_FICCION, new ArrayList<>(), "url3");
+
+        Series nuevaSeries = new Series("Stranger Things", 2016, "Ciencia ficción y misterio", Generos.CIENCIA_FICCION, new ArrayList<>(), "url3");
+
+        when(deustoStreamService.createSeries(series)).thenReturn(nuevaSeries);
+
+        ResponseEntity<Series> response = deustoStreamController.createSeries(series);
+
+        assertEquals(201, response.getStatusCode().value());
+        assertEquals("Stranger Things", response.getBody().getTitulo());
+        assertEquals(0, response.getBody().getCapitulos().size());
     }
 
     @Test
