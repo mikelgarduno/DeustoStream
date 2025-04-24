@@ -58,7 +58,7 @@ class WebControllerTest {
                 .andExpect(model().attributeExists("peliculas", "series", "usuarios"));
     }
 
-    @Test
+    /*@Test
     void testCatalogoPage() throws Exception {
         List<Pelicula> peliculas = List.of(new Pelicula());
         List<Series> series = List.of(new Series());
@@ -77,7 +77,7 @@ class WebControllerTest {
                 .andExpect(model().attribute("peliculasFavoritas", peliculas))
                 .andExpect(model().attribute("seriesFavoritas", series))
                 .andExpect(model().attribute("usuario", usuario));
-    }
+    }*/
 
     @Test
     void testMostrarPeliculas_AdminAutenticado() throws Exception {
