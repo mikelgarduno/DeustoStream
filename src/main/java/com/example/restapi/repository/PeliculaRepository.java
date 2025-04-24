@@ -14,5 +14,8 @@ public interface PeliculaRepository extends JpaRepository<Pelicula, Long> {
 
     List<Pelicula> findByGenero(Generos genero);
 
+    /** Películas del mismo género excluyendo la actual*/
+    List<Pelicula> findTop6ByGeneroAndIdNot(Generos genero, Long id);
+
     List<Pelicula> findByTituloContainingIgnoreCaseAndGenero(String titulo, Generos genero);
 }

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Detalles de la Serie - DeustoStream</title>
     <link rel="stylesheet" href="/styles.css">
     <link rel="stylesheet" href="/detalles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <h1>Detalles de la Serie</h1>
@@ -44,6 +47,20 @@
         </tbody>
     </table>
 
+    <div th:if="${relacionadas != null and !relacionadas.isEmpty()}" class="seccion">
+        <h2>Más [[${serie.genero}]] que quizá te guste</h2>
+    
+        <div class="contenedor-series">
+            <div class="serie" th:each="s : ${relacionadas}">
+                <a th:href="@{/serie/{id}(id=${s.id})}">
+                    <img class="poster" th:src="${s.imagenUrl}" alt="Póster">
+                    <h3 th:text="${s.titulo}"></h3>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+
     <a href="javascript:history.back()" class="btn-volver">Volver </a>
 
     <script>
@@ -54,4 +71,5 @@
     </script>
 
 </body>
+
 </html>

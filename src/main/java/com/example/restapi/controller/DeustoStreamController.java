@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,24 +166,22 @@ public class DeustoStreamController {
                 List<Capitulo> capitulos = new ArrayList<>();
                 for (int i = 0; i < series.getNumeroCapitulos(); i++) {
                     Capitulo capitulo = new Capitulo();
-                    capitulo.setTitulo("Capítulo " + (i + 1) + " de " + series.getTitulo()); 
-                    capitulo.setDuracion(30);  // Duración por defecto
-                    capitulo.setSerie(series); 
+                    capitulo.setTitulo("Capítulo " + (i + 1) + " de " + series.getTitulo());
+                    capitulo.setDuracion(30); // Duración por defecto
+                    capitulo.setSerie(series);
                     capitulos.add(capitulo);
                 }
-                series.setCapitulos(capitulos); 
+                series.setCapitulos(capitulos);
             }
 
             Series createdSeries = deustoStreamService.createSeries(series);
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdSeries);
-    
+
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
-    
-
 
     @Operation(summary = "Actualizar una serie", description = "Modifica los datos de una serie existente")
     @ApiResponses({
@@ -217,48 +216,47 @@ public class DeustoStreamController {
         }
     }
 
-    @Operation (summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
+    @Operation(summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Película añadida a favoritos"),
             @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
     })
     @PostMapping("/usuarios/{usuarioId}/peliculas/{peliculaId}")
-    public ResponseEntity<Usuario> addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId, HttpSession session) {
+    public ResponseEntity<Usuario> addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId,
+            HttpSession session) {
         Optional<Usuario> usuario = deustoStreamService.getUsuarioById(usuarioId);
         Optional<Pelicula> pelicula = deustoStreamService.getPeliculaById(peliculaId);
 
         if (usuario.isPresent() && pelicula.isPresent()) {
             deustoStreamService.addPeliculaToFavoritos(usuario.get().getId(), pelicula.get().getId(), session);
-            
+
             return ResponseEntity.ok(usuario.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-    
-    @Operation (summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
+
+    @Operation(summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Película añadida a favoritos"),
             @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
     })
     @PostMapping("/usuarios/{usuarioId}/series/{serieId}")
-    public ResponseEntity<Usuario> addSerieToFavoritos(@PathVariable Long usuarioId, @PathVariable Long serieId, HttpSession session) {
+    public ResponseEntity<Usuario> addSerieToFavoritos(@PathVariable Long usuarioId, @PathVariable Long serieId,
+            HttpSession session) {
         Optional<Usuario> usuario = deustoStreamService.getUsuarioById(usuarioId);
         Optional<Series> serie = deustoStreamService.getSeriesById(serieId);
 
         if (usuario.isPresent() && serie.isPresent()) {
             deustoStreamService.addSerieToFavoritos(usuario.get().getId(), serie.get().getId(), session);
-            
+
             return ResponseEntity.ok(usuario.get());
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
-
-
-    
-    // Endpoints para Capítulos    
+    // Endpoints para Capítulos
 
     @Operation(summary = "Actualizar un capítulo", description = "Modifica la duración y título de un capítulo")
     @PutMapping("/capitulos/{id}")
@@ -270,7 +268,7 @@ public class DeustoStreamController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
     @Operation(summary = "Eliminar un capítulo", description = "Elimina un capítulo por su ID")
     @DeleteMapping("/capitulos/{id}")
     public ResponseEntity<Void> deleteCapitulo(@PathVariable Long id) {
@@ -302,6 +300,18 @@ public class DeustoStreamController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    // ---------- Películas relacionadas ----------
+    @GetMapping("/peliculas/{id}/relacionadas")
+    public List<Pelicula> getPeliculasRelacionadas(@PathVariable Long id) {
+        return deustoStreamService.getPeliculasRelacionadas(id);
+    }
+
+    // ---------- Series relacionadas -------------
+    @GetMapping("/series/{id}/relacionadas")
+    public List<Series> getSeriesRelacionadas(@PathVariable Long id) {
+        return deustoStreamService.getSeriesRelacionadas(id);
     }
 
 }
