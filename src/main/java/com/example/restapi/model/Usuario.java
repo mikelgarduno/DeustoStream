@@ -1,8 +1,10 @@
 package com.example.restapi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -35,21 +38,8 @@ public class Usuario {
     @Column(nullable = false)
     private String contrasenya;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "usuario_series",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "serie_id")
-    )
-    private List<Series> listaMeGustaSeries; // Relación ManyToMany con Series
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "usuario_peliculas",
-        joinColumns = @JoinColumn(name = "usuario_id", nullable = false),
-        inverseJoinColumns = @JoinColumn(name = "pelicula_id", nullable = false)
-    )
-    private List<Pelicula> listaMeGustaPeliculas; // Relación ManyToMany con Peliculas
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Perfil> perfiles = new ArrayList<>();
 
     // No-argument constructor
     public Usuario() {
@@ -61,6 +51,12 @@ public class Usuario {
         this.apellido = apellido;
         this.correo = correo;
         this.contrasenya = contrasenya;
+        this.perfiles = new ArrayList<>();
+
+        Perfil perfilBase = new Perfil();
+        perfilBase.setNombre(nombre + " " + apellido);
+        perfilBase.setUsuario(this); 
+        this.perfiles.add(perfilBase);
     }
 
     // Getters and setters
@@ -104,21 +100,26 @@ public class Usuario {
         this.contrasenya = contrasenya;
     }
 
-    public List<Series> getListaMeGustaSeries() {
-        return listaMeGustaSeries;
+    public List<Perfil> getPerfiles() {
+        return perfiles;
     }
 
-    public void setListaMeGustaSeries(List<Series> listaMeGustaSeries) {
-        this.listaMeGustaSeries = listaMeGustaSeries;
+    public void setPerfiles(List<Perfil> perfiles) {
+        this.perfiles = perfiles;
     }
 
-    public List<Pelicula> getListaMeGustaPeliculas() {
-        return listaMeGustaPeliculas;
+    public void addPerfil(Perfil perfil) {
+        perfiles.add(perfil);
+        perfil.setUsuario(this);
     }
 
-    public void setListaMeGustaPeliculas(List<Pelicula> listaMeGustaPeliculas) {
-        this.listaMeGustaPeliculas = listaMeGustaPeliculas;
+    public void removePerfil(Perfil perfil) {
+        perfiles.remove(perfil);
+        perfil.setUsuario(null);
     }
+
+
+
 
     @Override
     public String toString() {
@@ -139,12 +140,5 @@ public class Usuario {
     @Override
     public int hashCode() {
         return Objects.hash(correo, nombre);
-    }
-    
-    // Helper method to remove association with a Pelicula before deleting it.
-    public void removePelicula(Pelicula pelicula) {
-        if (listaMeGustaPeliculas != null) {
-            listaMeGustaPeliculas.remove(pelicula);
-        }
     }
 }

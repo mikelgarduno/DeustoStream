@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.service.DeustoStreamService;
@@ -153,10 +154,11 @@ public class WebController {
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
         List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
         Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
-        model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
-        model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
+        model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
+        model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         model.addAttribute("usuario", usuario);
         model.addAttribute("generos", Generos.values()); // Importa tu enum Generos
 
@@ -169,9 +171,9 @@ public class WebController {
             @RequestParam(required = false) Generos genero) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
-
+        Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
         model.addAttribute("peliculas", peliculas);
-        model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
+        model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
         model.addAttribute("usuario", usuario);
         model.addAttribute("generos", Generos.values());
 
@@ -184,9 +186,10 @@ public class WebController {
             @RequestParam(required = false) Generos genero) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
+        Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
 
         model.addAttribute("series", series);
-        model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
+        model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         model.addAttribute("usuario", usuario);
         model.addAttribute("generos", Generos.values());
 
@@ -234,8 +237,9 @@ public class WebController {
     public String mostrarGuardados(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
-            model.addAttribute("peliculasFavoritas", usuario.getListaMeGustaPeliculas());
-            model.addAttribute("seriesFavoritas", usuario.getListaMeGustaSeries());
+            Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
+            model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
+            model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         } else {
             model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
         }

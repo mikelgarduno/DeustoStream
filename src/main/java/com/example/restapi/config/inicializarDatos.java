@@ -4,9 +4,11 @@ import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.model.Generos;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.repository.PerfilRepository;
 import java.util.Collections;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -24,10 +26,14 @@ public class inicializarDatos implements CommandLineRunner {
         @Autowired
         private UsuarioRepository usuarioRepository;
 
+        @Autowired
+        private PerfilRepository perfilRepository;
+
         @Override
         public void run(String... args) throws Exception {
                 // Vaciar las tablas antes de inicializar datos
                 usuarioRepository.deleteAll(); 
+                perfilRepository.deleteAll();
                 peliculaRepository.deleteAll();
                 serieRepository.deleteAll();
 
@@ -187,7 +193,7 @@ public class inicializarDatos implements CommandLineRunner {
         // Inicializar usuarios de prueba
         Usuario usuario1 = new Usuario("nombre", "apellido", "prueba@prueba.com","1234" );
         Usuario usuario2 = new Usuario ("nombre", "apellido", "prueba@deustostream.es","1234" );
-        usuario1.setListaMeGustaPeliculas(Collections.singletonList(pelicula1));
+        //usuario1.getPerfiles().get(0).setListaMeGustaPeliculas(Collections.singletonList(pelicula1));
         
         usuarioRepository.save(usuario1);
         usuarioRepository.save(usuario2);

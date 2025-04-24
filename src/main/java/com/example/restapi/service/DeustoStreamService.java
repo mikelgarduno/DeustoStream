@@ -5,10 +5,12 @@ import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.repository.PerfilRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,6 +23,8 @@ import java.util.Collections;
 
 @Service
 public class DeustoStreamService {
+
+    private final PerfilRepository perfilRepository;
     private final UsuarioRepository usuarioRepository;
     private final PeliculaRepository peliculaRepository;
     private final SerieRepository serieRepository;
@@ -28,11 +32,12 @@ public class DeustoStreamService {
 
     @Autowired
     public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
-            SerieRepository serieRepository, CapituloRepository capituloRepository) {
+            SerieRepository serieRepository, CapituloRepository capituloRepository, PerfilRepository perfilRepository) {
         this.usuarioRepository = usuarioRepository;
         this.peliculaRepository = peliculaRepository;
         this.serieRepository = serieRepository;
         this.capituloRepository = capituloRepository;
+        this.perfilRepository = perfilRepository;
     }
 
     public List<Usuario> getAllUsuarios() {
@@ -105,12 +110,12 @@ public class DeustoStreamService {
         Optional<Pelicula> optionalPelicula = peliculaRepository.findById(id);
         if (optionalPelicula.isPresent()) {
             Pelicula pelicula = optionalPelicula.get();
-            // Eliminar la relación en listaMeGustaPeliculas de los usuarios
-            List<Usuario> usuarios = usuarioRepository.findAll();
-            for (Usuario usuario : usuarios) {
-                if (usuario.getListaMeGustaPeliculas().contains(pelicula)) {
-                    usuario.getListaMeGustaPeliculas().remove(pelicula);
-                    usuarioRepository.save(usuario);
+            // Eliminar la relación en listaMeGustaPeliculas de los perfiles
+            List<Perfil> perfiles = perfilRepository.findAll();
+            for (Perfil perfil : perfiles) {
+                if (perfil.getListaMeGustaPeliculas().contains(pelicula)) {
+                    perfil.getListaMeGustaPeliculas().remove(pelicula);
+                    perfilRepository.save(perfil);
                 }
             }
             peliculaRepository.delete(pelicula);
@@ -164,11 +169,11 @@ public class DeustoStreamService {
         if (optionalSeries.isPresent()) {
             Series series = optionalSeries.get();
             // Eliminar la relación en listaMeGustaSeries de los usuarios
-            List<Usuario> usuarios = usuarioRepository.findAll();
-            for (Usuario usuario : usuarios) {
-                if (usuario.getListaMeGustaSeries().contains(series)) {
-                    usuario.getListaMeGustaSeries().remove(series);
-                    usuarioRepository.save(usuario);
+            List<Perfil> perfiles = perfilRepository.findAll();
+            for (Perfil perfil : perfiles) {
+                if (perfil.getListaMeGustaSeries().contains(series)) {
+                    perfil.getListaMeGustaSeries().remove(series);
+                    perfilRepository.save(perfil);
                 }
             }
             serieRepository.delete(series);
@@ -198,12 +203,12 @@ public class DeustoStreamService {
             Usuario usuario = optionalUsuario.get();
             Pelicula pelicula = optionalPelicula.get();
 
-            if (usuario.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
+            if (usuario.getPerfiles().get(0).getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
                 // Si la película ya está en la lista de favoritos, eliminarla
-                usuario.getListaMeGustaPeliculas().remove(pelicula);
+                usuario.getPerfiles().get(0).getListaMeGustaPeliculas().remove(pelicula);
             } else {
                 // Añadir la película a la lista de favoritos del usuario
-                usuario.getListaMeGustaPeliculas().add(pelicula);
+                usuario.getPerfiles().get(0).getListaMeGustaPeliculas().add(pelicula);
             }
             usuarioRepository.save(usuario);
 
@@ -223,12 +228,12 @@ public class DeustoStreamService {
             Usuario usuario = optionalUsuario.get();
             Series serie = optionalSerie.get();
 
-            if (usuario.getListaMeGustaSeries().contains(optionalSerie.get())) {
+            if (usuario.getPerfiles().get(0).getListaMeGustaSeries().contains(optionalSerie.get())) {
                 // Si la serie ya está en la lista de favoritos, eliminarla
-                usuario.getListaMeGustaSeries().remove(serie);
+                usuario.getPerfiles().get(0).getListaMeGustaSeries().remove(serie);
             } else {
                 // Añadir la serie a la lista de favoritos del usuario
-                usuario.getListaMeGustaSeries().add(serie);
+                usuario.getPerfiles().get(0).getListaMeGustaSeries().add(serie);
             }
             usuarioRepository.save(usuario);
 

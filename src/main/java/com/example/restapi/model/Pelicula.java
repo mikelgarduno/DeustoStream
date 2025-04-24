@@ -37,7 +37,7 @@ public class Pelicula {
     private String imagenUrl; // Nueva propiedad
 
     @ManyToMany(mappedBy = "listaMeGustaPeliculas")
-    private List<Usuario> usuarios; // Relación ManyToMany con Usuario
+    private List<Perfil> perfiles; // Relación ManyToMany con Usuario
 
     // No-argument constructor
     public Pelicula() {

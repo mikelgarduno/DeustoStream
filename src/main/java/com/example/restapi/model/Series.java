@@ -29,7 +29,7 @@ public class Series {
     private List<Capitulo> capitulos;
 
     @ManyToMany(mappedBy = "listaMeGustaSeries")
-    private List<Usuario> usuarios; // Relación ManyToMany con Usuario
+    private List<Perfil> perfiles; // Relación ManyToMany con Usuario
 
     @Column(nullable = false)
     private String imagenUrl; // Nueva propiedad
@@ -113,12 +113,12 @@ public class Series {
         this.imagenUrl = imagenUrl;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public List<Perfil> getPerfiles() {
+        return perfiles;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setPerfil(List<Perfil> perfiles) {
+        this.perfiles = perfiles;
     }
 
     @Override
