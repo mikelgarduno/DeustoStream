@@ -304,6 +304,8 @@ button:hover,
     align-items: center;
     background-color: #222;
     position: static;
+    padding-top: 10px;
+    padding-bottom: 10px;
     top: 0;
     width: 100%;
     margin: 0 auto;
