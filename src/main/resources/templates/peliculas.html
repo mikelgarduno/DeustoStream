@@ -126,16 +126,27 @@
     </script>
 </head>
 <body>
-    <h2>Gestión de Películas</h2>
-    <div id="gestion-links">
-        <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
-        <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
-        <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
-        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
-    </div>
-    
+    <header class="main-header">
+        <div class="header-left">
+            <a th:href="@{/catalogo}" class="logo-link">
+                <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+            </a>
+            <h2 class="catalogo-title">Gestión de Películas</h2>
+        </div>
+        <nav class="header-nav">
+            <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
+            <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
+            <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
+        </nav>
+
+        <div class="header-right">
+            <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+        </div>
+    </header>
+
 
     <form onsubmit="event.preventDefault(); addPelicula();">
+        <h2>Añadir Nueva Película</h2>
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="number" id="anio" placeholder="Año" required>
 

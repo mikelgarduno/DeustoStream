@@ -244,13 +244,16 @@ button:hover,
     border-radius: 8px;
 }
 
-.pelicula h2, .serie h2,
-.pelicula h3, .serie h3 {
+.pelicula h2,
+.serie h2,
+.pelicula h3,
+.serie h3 {
     font-size: 16px;
     margin-top: 5px;
 }
 
-.pelicula p, .serie p {
+.pelicula p,
+.serie p {
     font-size: 14px;
     color: #bbb;
 }
@@ -427,3 +430,7 @@ a {
     top: 15px;
     transition: background 0.3s ease;
 }
+
+/* ==================================================
+   📊 ADMIN 
+================================================== */

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
     <title>Deusto Stream Admin: Usuarios</title>
     <script>
         async function fetchUsuarios() {
@@ -87,38 +88,61 @@
     </script>
 </head>
 
+
+</header>
+
 <body>
-    <h2>Gestión de Usuarios</h2>
-    <div id="gestion-links">
-        <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
-        <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
-        <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
-        <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
-    </div>
+    <header class="main-header">
+        <div class="header-left">
+            <a th:href="@{/catalogo}" class="logo-link">
+                <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+            </a>
+            <h2 class="catalogo-title">Gestion de Usuarios</h2>
+        </div>
+        <nav class="header-nav">
+            <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
+            <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
+            <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
+        </nav>
 
-    <form onsubmit="event.preventDefault(); addUsuario();">
-        <input type="text" id="nombre" placeholder="Nombre" required>
-        <input type="text" id="apellido" placeholder="Apellido" required>
-        <input type="email" id="correo" placeholder="Correo" required>
-        <input type="password" id="contrasenya" placeholder="Contraseña" required>
-        <button type="submit">Añadir Usuario</button>
-    </form>
+        <div class="header-right">
+            <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+        </div>
+    </header>
 
-    <h3>Lista de Usuarios</h3>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo</th>
-                <th>Contrasenya</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody id="usuarioTable"></tbody>
-    </table>
-    <a href="/admin">Volver al inicio</a>
+    <main class="container">
+        
+        <section class="form-section">
+            <h2>Crear nuevo usuario</h2>
+            <form onsubmit="event.preventDefault(); addUsuario();">
+                <input type="text" id="nombre" placeholder="Nombre" required>
+                <input type="text" id="apellido" placeholder="Apellido" required>
+                <input type="email" id="correo" placeholder="Correo" required>
+                <input type="password" id="contrasenya" placeholder="Contraseña" required>
+                <button type="submit">Añadir Usuario</button>
+            </form>
+        </section>
+
+        <section class="table-section">
+            <h2>Lista de Usuarios</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Correo</th>
+                        <th>Contrasenya</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="usuarioTable"></tbody>
+            </table>
+            <div class="back-link">
+                <a href="/admin">&larr; Volver al inicio</a>
+            </div>
+        </section>
+    </main>
 </body>
 
 </html>
