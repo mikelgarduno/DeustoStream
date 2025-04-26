@@ -69,7 +69,7 @@
             await fetch(`/api/registro/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nombre, apellido, correo })
+                body: JSON.stringify({ nombre, apellido, correo, contrasenya })
             });
 
             fetchUsuarios();
