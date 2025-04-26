@@ -14,10 +14,10 @@
         const peliculas = await response.json();
 
         let tableContent = peliculas.map(pelicula =>
-            `<tr id="row-${pelicula.id}" onclick="window.location='/pelicula/${pelicula.id}'" style="cursor: pointer;">
+            `<tr id="row-${pelicula.id}" onclick="window.location='/admin/pelicula/${pelicula.id}'" style="cursor: pointer;">
                 <td>${pelicula.id}</td>
                 <td id="titulo-cell-${pelicula.id}">
-                    <a href="/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
+                    <a href="/admin/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
                         ${pelicula.titulo}
                     </a>
                 </td>
