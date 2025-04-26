@@ -209,6 +209,19 @@ public class WebController {
         return "detallePelicula";
     }
 
+    // Detalle de película para ADMIN
+    @GetMapping("/admin/pelicula/{id}")
+    public String mostrarDetallePeliculaAdmin(@PathVariable Long id, Model model) {
+        Pelicula pelicula = deustoStreamService.getPeliculaById(id)
+                .orElseThrow(() -> new RuntimeException("Película no encontrada"));
+
+        model.addAttribute("pelicula", pelicula);
+        model.addAttribute("relacionadas",
+                deustoStreamService.getPeliculasRelacionadas(id));
+
+        return "detallePeliculaAdmin";
+    }
+
     // ---------------- Detalle SERIE (usuario) ------------------
     @GetMapping("/serie/{id}")
     public String mostrarDetalleSerieUsuario(@PathVariable Long id, Model model) {
