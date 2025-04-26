@@ -76,4 +76,5 @@ public class AuthControllerTest {
         .andExpect(view().name("registro"));
     }
 
+    
 }
