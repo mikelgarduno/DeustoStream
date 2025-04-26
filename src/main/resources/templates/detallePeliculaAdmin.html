@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles Película - Admin</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/detalles.css">
+</head>
+<body>
+
+<h1>Detalles de la Película (Admin)</h1>
+
+<div class="detalle-imagen">
+    <img th:src="${pelicula.imagenUrl}" alt="Póster" class="pelicula-img">
+</div>
+
+<div class="pelicula-detalle">
+    <div class="detalle-info">
+        <h2 th:text="${pelicula.titulo}"></h2>
+        <p><strong>Año:</strong> <span th:text="${pelicula.anio}"></span></p>
+        <p><strong>Género:</strong> <span th:text="${pelicula.genero}"></span></p>
+        <p><strong>Duración:</strong> <span th:text="${pelicula.duracion}"></span> min</p>
+        <p><strong>Sinopsis:</strong> <span th:text="${pelicula.sinopsis}"></span></p>
+    </div>
+</div>
+
+<!--  Sección relacionadas (opcional para admin) -->
+<div th:if="${relacionadas != null and !relacionadas.isEmpty()}" class="seccion">
+    <h2>Otros títulos de [[${pelicula.genero}]]</h2>
+    <div class="contenedor-peliculas">
+        <div class="pelicula" th:each="p : ${relacionadas}">
+            <a th:href="@{/admin/pelicula/{id}(id=${p.id})}">
+                <img class="poster" th:src="${p.imagenUrl}" alt="Póster">
+                <h3 th:text="${p.titulo}"></h3>
+            </a>
+        </div>
+    </div>
+</div>
+
+<a href="/admin/peliculas" class="btn-volver">Volver a gestión de películas</a>
+
+</body>
+</html>
