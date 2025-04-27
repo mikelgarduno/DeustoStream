@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil - DeustoStream</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="main-header">
+        <div class="header-left">
+            <a th:href="@{/catalogo}" class="logo-link">
+                <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+            </a>
+            <h1 class="catalogo-title">Catálogo de DeustoStream</h1>
+        </div>
+
+    
+        <div class="header-right">
+            <a href="/perfil">
+                <img th:src="@{|/images/${avatar}.jpg|}" alt="Imagen de perfil" class="perfil-img">
+            </a>
+            <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+        </div>
+
+    </header>
+
+        <div class="perfiles">
+            <div th:each="perfil : ${perfiles}" class="perfil-card">
+                <h2 th:text="${perfil.nombre}">Nombre del perfil</h2>
+                <p>Edad: <span th:text="${perfil.edad}">Edad</span></p>
+                <img th:src="@{|/images/${perfil.avatar}.jpg|}" alt="Foto de perfil" class="perfil-img">
+            </div>
+        </div>
+
+</body>
+
+</html>
