@@ -1,6 +1,7 @@
 package com.example.restapi.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,12 +23,18 @@ import org.mockito.MockitoAnnotations;
 import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
+import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
+import com.example.restapi.repository.PerfilRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
 import com.example.restapi.service.DeustoStreamService;
+
+import jakarta.servlet.http.HttpSession;
+import static org.mockito.Mockito.*;
 
 public class DeustoStreamServiceTest {
     @Mock
@@ -41,6 +48,12 @@ public class DeustoStreamServiceTest {
 
     @Mock
     private CapituloRepository capituloRepository;
+
+    @Mock
+    private PerfilRepository perfilRepository;
+
+    @Mock
+    private HttpSession session;
 
     @InjectMocks
     private DeustoStreamService deustoStreamService;
@@ -166,18 +179,43 @@ public class DeustoStreamServiceTest {
         });
     }
 
-    /*@Test
-    void testDeletePelicula() {
-        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+    @Test
+    void testDeletePelicula_Successfully() {
+        // Create a Pelicula instance
+        Pelicula pelicula = new Pelicula("Test Pelicula", Generos.CIENCIA_FICCION, 120, 2022, "Test sinopsis", "testurl");
         pelicula.setId(1L);
-        // Mock the behavior of the repository to return the pelicula when findById is
-        // called
+        
+        // Create two Perfil instances: one that has the pelicula and one that does not
+        Perfil perfilWithPelicula = new Perfil("User1", "avatar1.png");
+        perfilWithPelicula.setId(100L);
+        List<Pelicula> peliculasFavoritas = new ArrayList<>();
+        peliculasFavoritas.add(pelicula);
+        perfilWithPelicula.setListaMeGustaPeliculas(peliculasFavoritas);
+        
+        Perfil perfilWithoutPelicula = new Perfil("User2", "avatar2.png");
+        perfilWithoutPelicula.setId(101L);
+        perfilWithoutPelicula.setListaMeGustaPeliculas(new ArrayList<>());
+        
+        List<Perfil> perfiles = Arrays.asList(perfilWithPelicula, perfilWithoutPelicula);
+        
+        // Mock repository methods
         when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
-
+        when(perfilRepository.findAll()).thenReturn(perfiles);
+        
+        // Call the method under test
         deustoStreamService.deletePelicula(1L);
-
+        
+        // Verify that the pelicula was removed from the perfil that contained it
+        assertFalse(perfilWithPelicula.getListaMeGustaPeliculas().contains(pelicula));
+        verify(perfilRepository).save(perfilWithPelicula);
+        
+        // Verify that the pelicula repository's delete method was called
         verify(peliculaRepository).delete(pelicula);
-    }*/
+        
+        // Verify that perfilWithoutPelicula was not unnecessarily saved
+        verify(perfilRepository, never()).save(perfilWithoutPelicula);
+    }
+
     @Test
     void testDeletePeliculaNotFound() {
         // Mock the behavior of the repository to return an empty Optional when findById is called
@@ -349,17 +387,42 @@ public class DeustoStreamServiceTest {
         });
     }
 
-    /*@Test
-    void testDeleteSerie() {
-        Series serie = new Series("Stranger Things", 2016, "Niños vs Demogorgon", Generos.CIENCIA_FICCION,
-                new ArrayList<>(), "url5");
-        serie.setId(1L);
-        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+    @Test
+    void testDeleteSeries_Successfully() {
+        // Create a Series instance
+        Series series = new Series("Test Series", 2022, "Test Description", Generos.DRAMA, new ArrayList<>(), "testurl");
+        series.setId(1L);
 
+        // Create two Perfil instances: one that includes the series and one that does not
+        Perfil perfilWithSeries = new Perfil("User1", "avatar1.png");
+        perfilWithSeries.setId(10L);
+        List<Series> favoritosConSerie = new ArrayList<>();
+        favoritosConSerie.add(series);
+        perfilWithSeries.setListaMeGustaSeries(favoritosConSerie);
+
+        Perfil perfilWithoutSeries = new Perfil("User2", "avatar2.png");
+        perfilWithoutSeries.setId(11L);
+        perfilWithoutSeries.setListaMeGustaSeries(new ArrayList<>());
+
+        List<Perfil> perfiles = Arrays.asList(perfilWithSeries, perfilWithoutSeries);
+
+        // Mock the repository behavior
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(series));
+        when(perfilRepository.findAll()).thenReturn(perfiles);
+
+        // Call the method under test
         deustoStreamService.deleteSeries(1L);
 
-        verify(seriesRepository).delete(serie);
-    }*/
+        // Verify that for the profile containing the series, the series was removed and saved
+        assertFalse(perfilWithSeries.getListaMeGustaSeries().contains(series));
+        verify(perfilRepository).save(perfilWithSeries);
+
+        // Verify that the profile without the series was not modified
+        verify(perfilRepository, never()).save(perfilWithoutSeries);
+
+        // Verify that the series was deleted from the repository
+        verify(seriesRepository).delete(series);
+    }
 
     @Test
     void testDeleteSeriesNotFound() {
@@ -564,6 +627,181 @@ public class DeustoStreamServiceTest {
     void getSeriesRelacionadas_noExisteDevuelveVacio() {
         when(seriesRepository.findById(99L)).thenReturn(Optional.empty());
         assertTrue(deustoStreamService.getSeriesRelacionadas(99L).isEmpty());
+    }
+
+
+
+    /* --------------------------------------------------------------------- */
+    /* ------------------- Favoritos y Perfiles ---------------------------- */
+    /* --------------------------------------------------------------------- */
+
+    @Test
+    void testAddPeliculaToFavoritos_AddsSuccessfully() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        perfil.setListaMeGustaPeliculas(new ArrayList<>());
+        usuario.setPerfiles(List.of(perfil));
+
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        pelicula.setId(1L);
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+        when(session.getAttribute("perfil")).thenReturn(perfil);
+
+        deustoStreamService.addPeliculaToFavoritos(1L, 1L, session);
+
+        assertTrue(perfil.getListaMeGustaPeliculas().contains(pelicula));
+        verify(perfilRepository).save(perfil);
+    }
+
+    @Test
+    void testAddPeliculaToFavoritos_RemovesIfAlreadyExists() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        pelicula.setId(1L);
+        perfil.setListaMeGustaPeliculas(new ArrayList<>(List.of(pelicula)));
+        usuario.setPerfiles(List.of(perfil));
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+        when(session.getAttribute("perfil")).thenReturn(perfil);
+
+        deustoStreamService.addPeliculaToFavoritos(1L, 1L, session);
+
+        assertFalse(perfil.getListaMeGustaPeliculas().contains(pelicula));
+        verify(perfilRepository).save(perfil);
+    }
+
+    @Test
+    void testAddPeliculaToFavoritos_UserNotFound_ThrowsException() {
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        pelicula.setId(1L);
+        
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.addPeliculaToFavoritos(1L, 1L, session);
+        });
+        assertEquals("Usuario or Pelicula not found", exception.getMessage());
+    }
+
+    @Test
+    void testAddPeliculaToFavoritos_PeliculaNotFound_ThrowsException() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        usuario.setPerfiles(List.of(perfil));
+        
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.addPeliculaToFavoritos(1L, 1L, session);
+        });
+        assertEquals("Usuario or Pelicula not found", exception.getMessage());
+    }
+
+    @Test
+    void testAddSerieToFavoritos_AddsSuccessfully() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        perfil.setListaMeGustaSeries(new ArrayList<>());
+        usuario.setPerfiles(List.of(perfil));
+
+        Series serie = new Series("Breaking Bad", 2008, "Desc", Generos.DRAMA, null, "url");
+        serie.setId(1L);
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+        when(session.getAttribute("perfil")).thenReturn(perfil);
+
+        deustoStreamService.addSerieToFavoritos(1L, 1L, session);
+
+        assertTrue(perfil.getListaMeGustaSeries().contains(serie));
+        verify(perfilRepository).save(perfil);
+    }
+
+    @Test
+    void testAddSerieToFavoritos_RemovesIfAlreadyExists() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        Series serie = new Series("Breaking Bad", 2008, "Desc", Generos.DRAMA, null, "url");
+        serie.setId(1L);
+        perfil.setListaMeGustaSeries(new ArrayList<>(List.of(serie)));
+        usuario.setPerfiles(List.of(perfil));
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+        when(session.getAttribute("perfil")).thenReturn(perfil);
+
+        deustoStreamService.addSerieToFavoritos(1L, 1L, session);
+
+        assertFalse(perfil.getListaMeGustaSeries().contains(serie));
+        verify(perfilRepository).save(perfil);
+    }
+
+    @Test
+    void testAddSerieToFavoritos_UserNotFound_ThrowsException() {
+        Series serie = new Series("Breaking Bad", 2008, "Desc", Generos.DRAMA, null, "url");
+        serie.setId(1L);
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.addSerieToFavoritos(1L, 1L, session);
+        });
+        assertEquals("Usuario or Serie not found", exception.getMessage());
+    }
+
+    @Test
+    void testAddSerieToFavoritos_SerieNotFound_ThrowsException() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        usuario.setPerfiles(List.of(perfil));
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(seriesRepository.findById(1L)).thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.addSerieToFavoritos(1L, 1L, session);
+        });
+        assertEquals("Usuario or Serie not found", exception.getMessage());
+    }
+
+    @Test
+    void testGetPerfilById_Found() {
+        Perfil perfil = new Perfil("Pepe", "avatar1.png");
+        perfil.setId(1L);
+
+        when(perfilRepository.findById(1L)).thenReturn(Optional.of(perfil));
+
+        Optional<Perfil> result = deustoStreamService.getPerfilById(1L);
+
+        assertTrue(result.isPresent());
+        assertEquals(1L, result.get().getId());
+    }
+
+    @Test
+    void testGetPerfilById_NotFound() {
+        when(perfilRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Optional<Perfil> result = deustoStreamService.getPerfilById(1L);
+
+        assertTrue(result.isEmpty());
     }
 
 }
