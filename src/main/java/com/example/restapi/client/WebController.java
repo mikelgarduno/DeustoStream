@@ -235,6 +235,7 @@ public class WebController {
         model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         model.addAttribute("usuario", usuario);
         model.addAttribute("generos", Generos.values()); // Importa tu enum Generos
+        model.addAttribute("avatar", perfil.getAvatar());
 
         return "catalogo"; // Asegúrate de que este es el nombre del archivo HTML en templates
     }
