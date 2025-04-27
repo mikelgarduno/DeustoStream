@@ -17,9 +17,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-
 @Entity
-@Table(name = "usuarios") 
+@Table(name = "usuarios")
 public class Usuario {
 
     @Id
@@ -38,8 +37,21 @@ public class Usuario {
     @Column(nullable = false)
     private String contrasenya;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Perfil> perfiles = new ArrayList<>();
+
+    // --- CAMPOS PARA SUSCRIPCIÓN ---
+    @Column(nullable = false)
+    private boolean suscripcionActiva = false;
+
+    @Column
+    private String tipoSuscripcion; // "mensual" o "anual"
+
+    @Column
+    private java.time.LocalDate fechaInicioSuscripcion;
+
+    @Column
+    private java.time.LocalDate fechaFinSuscripcion;
 
     // No-argument constructor
     public Usuario() {
@@ -55,7 +67,7 @@ public class Usuario {
 
         Perfil perfilBase = new Perfil();
         perfilBase.setNombre(nombre + " " + apellido);
-        perfilBase.setUsuario(this); 
+        perfilBase.setUsuario(this);
         this.perfiles.add(perfilBase);
     }
 
@@ -108,6 +120,38 @@ public class Usuario {
         this.perfiles = perfiles;
     }
 
+    public boolean isSuscripcionActiva() {
+        return suscripcionActiva;
+    }
+
+    public void setSuscripcionActiva(boolean suscripcionActiva) {
+        this.suscripcionActiva = suscripcionActiva;
+    }
+
+    public String getTipoSuscripcion() {
+        return tipoSuscripcion;
+    }
+
+    public void setTipoSuscripcion(String tipoSuscripcion) {
+        this.tipoSuscripcion = tipoSuscripcion;
+    }
+
+    public java.time.LocalDate getFechaInicioSuscripcion() {
+        return fechaInicioSuscripcion;
+    }
+
+    public void setFechaInicioSuscripcion(java.time.LocalDate fechaInicioSuscripcion) {
+        this.fechaInicioSuscripcion = fechaInicioSuscripcion;
+    }
+
+    public java.time.LocalDate getFechaFinSuscripcion() {
+        return fechaFinSuscripcion;
+    }
+
+    public void setFechaFinSuscripcion(java.time.LocalDate fechaFinSuscripcion) {
+        this.fechaFinSuscripcion = fechaFinSuscripcion;
+    }
+
     public void addPerfil(Perfil perfil) {
         perfiles.add(perfil);
         perfil.setUsuario(this);
@@ -118,24 +162,23 @@ public class Usuario {
         perfil.setUsuario(null);
     }
 
-
-
-
+    
     @Override
     public String toString() {
-        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo + ", contrasenya=" + contrasenya + "]";
+        return "Usuario [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", correo=" + correo
+                + ", contrasenya=" + contrasenya + "]";
     }
 
     @Override
-        public boolean equals(Object o){
-            if (this == o)
-                return true;
-            if (o == null || getClass() != o.getClass())
-                return false;
-            Usuario usuario = (Usuario) o;
-            return nombre.equals(usuario.nombre) &&
-            correo.equals(usuario.correo);
-        }
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Usuario usuario = (Usuario) o;
+        return nombre.equals(usuario.nombre) &&
+                correo.equals(usuario.correo);
+    }
 
     @Override
     public int hashCode() {

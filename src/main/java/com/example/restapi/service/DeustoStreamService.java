@@ -60,6 +60,7 @@ public class DeustoStreamService {
             usuario.setApellido(usuarioDetalles.getApellido());
             usuario.setCorreo(usuarioDetalles.getCorreo());
             usuario.setContrasenya(usuarioDetalles.getContrasenya());
+            usuario.setTipoSuscripcion(usuarioDetalles.getTipoSuscripcion()); // Agregado
             return usuarioRepository.save(usuario);
         } else {
             throw new RuntimeException("Usuario not found");
@@ -244,6 +245,11 @@ public class DeustoStreamService {
             throw new RuntimeException("Usuario or Serie not found");
         }
 
+    }
+
+    // DeustoStreamService.java
+    public Usuario guardarUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
     }
 
     // Métodos para capítulos

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Suscripción - DeustoStream</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Tus estilos internos */
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <!-- Tu header aquí -->
+    </header>
+
+    <main class="suscripcion-main">
+        <div class="estado-suscripcion">
+            <h2>Estado de tu suscripción: 
+                <span th:if="${usuario.tipoSuscripcion == null}">No tienes suscripción</span>
+                <span th:if="${usuario.tipoSuscripcion == 'MENSUAL'}">Mensual</span>
+                <span th:if="${usuario.tipoSuscripcion == 'ANUAL'}">Anual</span>
+            </h2>
+        </div>
+
+        <div class="planes-suscripcion">
+            <!-- Plan Mensual -->
+            <div class="plan-card basic-plan">
+                <h3>Plan Mensual</h3>
+                <div class="contenido-plan">
+                    <p class="precio">9.99 €/mes</p>
+                    <ul>
+                        <li>Acceso ilimitado a películas y series.</li>
+                    </ul>
+                    <button onclick="suscribirse(this)" data-url="/api/usuarios/[[${usuario.id}]]/suscripcion/mensual">
+                        Suscribirme Mensual
+                    </button>                    
+                </div>
+            </div>
+
+            <!-- Plan Anual -->
+            <div class="plan-card standard-plan">
+                <h3>Plan Anual</h3>
+                <div class="contenido-plan">
+                    <p class="precio">99.99 €/año</p>
+                    <ul>
+                        <li>Acceso ilimitado + 2 meses gratis.</li>
+                    </ul>
+                    <button onclick="suscribirse(this)" data-url="/api/usuarios/[[${usuario.id}]]/suscripcion/anual">
+                        Suscribirme Anual
+                    </button>
+                </div>
+            </div>
+
+            <!-- Cancelar Suscripción -->
+            <div class="plan-card cancelar-plan">
+                <h3>Cancelar Suscripción</h3>
+                <div class="contenido-plan">
+                    <p class="precio">--</p>
+                    <ul>
+                        <li>Eliminar acceso premium.</li>
+                        <li>Perder beneficios.</li>
+                    </ul>
+                    <button onclick="suscribirse(this)" data-url="/api/usuarios/[[${usuario.id}]]/suscripcion/cancelar"
+                    th:disabled="${usuario.tipoSuscripcion == null}">
+                    Cancelar
+                </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function suscribirse(button) {
+            const url = button.getAttribute('data-url');
+            fetch(url, { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.reload(); // Refrescar para ver los cambios
+                    } else {
+                        alert("No se pudo procesar la solicitud. Código: " + response.status);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al suscribirse:', error);
+                });
+        }
+        </script>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package com.example.restapi.client;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,14 +87,25 @@ public class WebController {
     }
 
     @PostMapping("/registro")
-    public String procesarRegistro(@ModelAttribute Usuario nuevoUsuario, Model model) {
+    public String procesarRegistro(@ModelAttribute Usuario nuevoUsuario, HttpSession session, Model model) {
         if (authService.register(nuevoUsuario)) {
-            return "redirect:/login";
-        } else {
-            model.addAttribute("error", "El correo ya está registrado.");
-            return "registro";
+            // Buscar al usuario registrado
+            Optional<Usuario> usuarioOpt = authService.login(nuevoUsuario.getCorreo(), nuevoUsuario.getContrasenya());
+
+            if (usuarioOpt.isPresent()) {
+                Usuario usuario = usuarioOpt.get();
+                // Guardarlo en la sesión
+                session.setAttribute("usuario", usuario);
+
+                // Redireccionar según tipo
+                return "redirect:" + authService.obtenerRedireccion(usuario);
+            }
         }
-    } // AGREGADO FIN
+
+        // Si no pudo registrarse (correo ya usado)
+        model.addAttribute("error", "El correo ya está registrado.");
+        return "registro";
+    }
 
     @GetMapping("admin/peliculas")
     public String mostrarPeliculas(Model model, HttpSession session) {
@@ -129,6 +141,18 @@ public class WebController {
         return "redirect:/acceso-denegado";
     }
 
+    @GetMapping("/suscripcion")
+    public String verSuscripcion(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        
+        if (usuario != null) {
+            model.addAttribute("usuario", usuario);
+            return "suscripcion";
+        } else {
+            return "redirect:/login"; // Si no hay sesión, redirigir a login
+        }
+    }
+
     @GetMapping("admin/usuarios")
     public String mostrarUsuarios(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
@@ -159,7 +183,6 @@ public class WebController {
         model.addAttribute("series", series);
         model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
         model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
-        model.addAttribute("avatar", perfil.getAvatar());
         model.addAttribute("usuario", usuario);
         model.addAttribute("generos", Generos.values()); // Importa tu enum Generos
 
@@ -258,21 +281,6 @@ public class WebController {
             model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
         }
         return "guardados"; // Retorna el nombre del archivo HTML en /resources/templates/
-    }
-
-    // Entrar a configuración de perfil
-    @GetMapping("/perfil")
-    public String mostrarPerfil(Model model, HttpSession session) {
-        Usuario usuario = (Usuario) session.getAttribute("usuario");
-        if (usuario != null) {
-            model.addAttribute("usuario", usuario);
-            model.addAttribute("perfiles", usuario.getPerfiles());
-            model.addAttribute("avatar", usuario.getPerfiles().get(0).getAvatar()); // Importa tu enum Generos
-            return "perfil"; // Retorna el nombre del archivo HTML en /resources/templates/
-        } else {
-            model.addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
-            return "redirect:/login";
-        }
     }
 
 }

@@ -72,6 +72,46 @@ public class DeustoStreamController {
         }
     }
 
+    // ---- SUSCRIPCIÓN ----
+    @PostMapping("/usuarios/{usuarioId}/suscripcion/mensual")
+    public ResponseEntity<Usuario> suscribirseMensual(@PathVariable Long usuarioId) {
+        Optional<Usuario> usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setTipoSuscripcion("MENSUAL");
+            deustoStreamService.guardarUsuario(usuario); // <--- Usar el nuevo método guardarUsuario
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/usuarios/{usuarioId}/suscripcion/anual")
+    public ResponseEntity<Usuario> suscribirseAnual(@PathVariable Long usuarioId) {
+        Optional<Usuario> usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setTipoSuscripcion("ANUAL");
+            deustoStreamService.guardarUsuario(usuario); // <-- Usamos guardarUsuario
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/usuarios/{usuarioId}/suscripcion/cancelar")
+    public ResponseEntity<Usuario> cancelarSuscripcion(@PathVariable Long usuarioId) {
+        Optional<Usuario> usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setTipoSuscripcion(null);
+            deustoStreamService.guardarUsuario(usuario); // <-- También usamos guardarUsuario
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // Endpoints para Películas
     @Operation(summary = "Obtener todas las películas", description = "Devuelve la lista de todas las películas en la base de datos")
     @GetMapping("/peliculas")
