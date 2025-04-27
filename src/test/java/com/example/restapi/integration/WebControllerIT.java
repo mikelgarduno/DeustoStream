@@ -58,27 +58,6 @@ class WebControllerIT {
                 .andExpect(model().attributeExists("peliculas", "series", "usuarios"));
     }
 
-    /*@Test
-    void testCatalogoPage() throws Exception {
-        List<Pelicula> peliculas = List.of(new Pelicula());
-        List<Series> series = List.of(new Series());
-        Usuario usuario = new Usuario();
-        usuario.setListaMeGustaPeliculas(peliculas);
-        usuario.setListaMeGustaSeries(series);
-        when(deustoStreamService.getAllPeliculas()).thenReturn(peliculas);
-        when(deustoStreamService.getAllSeries()).thenReturn(series);
-
-        mockMvc.perform(get("/catalogo")
-                .sessionAttr("usuario", usuario))
-                .andExpect(status().isOk())
-                .andExpect(view().name("catalogo"))
-                .andExpect(model().attribute("peliculas", peliculas))
-                .andExpect(model().attribute("series", series))
-                .andExpect(model().attribute("peliculasFavoritas", peliculas))
-                .andExpect(model().attribute("seriesFavoritas", series))
-                .andExpect(model().attribute("usuario", usuario));
-    }*/
-
     @Test
     void testMostrarPeliculas_AdminAutenticado() throws Exception {
         Usuario admin = new Usuario();

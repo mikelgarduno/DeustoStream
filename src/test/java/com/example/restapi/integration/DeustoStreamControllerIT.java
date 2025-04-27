@@ -1,4 +1,4 @@
-package com.example.restapi.controller;
+package com.example.restapi.integration;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -23,6 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.example.restapi.controller.DeustoStreamController;
 import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
@@ -32,7 +33,7 @@ import com.example.restapi.service.DeustoStreamService;
 
 @WebMvcTest(DeustoStreamController.class)
 @AutoConfigureMockMvc
-public class DeustoStreamControllerTest {
+public class DeustoStreamControllerIT {
         @Autowired
         private MockMvc mockMvc;
 
