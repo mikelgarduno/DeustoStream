@@ -45,7 +45,6 @@ public class PeliculaTest {
     void testEqualsCompleteCoverage() {
         Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
         Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
-        Pelicula pelicula3 = new Pelicula("Interstellar", Generos.CIENCIA_FICCION, 169, 2014, "Exploración espacial", "url2");
         
         // Test same object reference (this == o)
         assertTrue(pelicula1.equals(pelicula1));

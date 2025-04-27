@@ -165,7 +165,7 @@ public class DeustoStreamControllerIT {
                 when(deustoStreamService.updatePelicula(eq(1L), any(Pelicula.class)))
                                 .thenThrow(new RuntimeException("Error"));
 
-                Pelicula pelicula = new Pelicula(null, Generos.ACCION, 0, 0, "desc", "img");
+                
 
                 mockMvc.perform(put("/api/peliculas/1")
                                 .sessionAttr("usuario", new Usuario()) // aquí puedes poner cualquier objeto válido
