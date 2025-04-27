@@ -201,6 +201,58 @@ public class DeustoStreamControllerUnitTest {
     }
 
     @Test
+    void testCreateSeries_NoCapitulos() {
+        Series input = new Series();
+        input.setTitulo("Stranger Things");
+        input.setNumeroCapitulos(0);
+        input.setGenero(Generos.TERROR);
+        input.setAnio(2016);
+        
+        Series output = new Series();
+        output.setTitulo("Stranger Things");
+        output.setNumeroCapitulos(0);
+        output.setGenero(Generos.TERROR);
+        output.setAnio(2016);
+        output.setCapitulos(null);
+        
+        when(deustoStreamService.createSeries(any(Series.class))).thenReturn(output);
+        
+        ResponseEntity<Series> response = deustoStreamController.createSeries(input);
+        
+        assertEquals(HttpStatus.CREATED.value(), response.getStatusCode().value());
+        assertNotNull(response.getBody());
+        assertEquals(0, response.getBody().getNumeroCapitulos());
+        assertEquals(null, response.getBody().getCapitulos());
+    }
+
+    @Test
+    void testCreateSeries_WithExistingCapitulos() {
+        Series input = new Series();
+        input.setTitulo("Dark");
+        input.setNumeroCapitulos(3);
+        List<Capitulo> existingCapitulos = List.of(
+                new Capitulo("Capítulo existente", 45));
+        input.setCapitulos(existingCapitulos);
+        
+        Series output = new Series();
+        output.setTitulo("Dark");
+        output.setNumeroCapitulos(3);
+        List<Capitulo> generatedCapitulos = List.of(
+                new Capitulo("Capítulo 1 de Dark", 30),
+                new Capitulo("Capítulo 2 de Dark", 30),
+                new Capitulo("Capítulo 3 de Dark", 30));
+        output.setCapitulos(generatedCapitulos);
+        
+        when(deustoStreamService.createSeries(any(Series.class))).thenReturn(output);
+        
+        ResponseEntity<Series> response = deustoStreamController.createSeries(input);
+        
+        assertEquals(HttpStatus.CREATED.value(), response.getStatusCode().value());
+        assertEquals(3, response.getBody().getCapitulos().size());
+        assertEquals("Capítulo 1 de Dark", response.getBody().getCapitulos().get(0).getTitulo());
+    }
+
+    @Test
     void testUpdateSeries_ValidData() {
         Series details = new Series("Updated Series", 2020, "Updated", Generos.DRAMA, null, "url");
         when(deustoStreamService.updateSeries(1L, details)).thenReturn(details);

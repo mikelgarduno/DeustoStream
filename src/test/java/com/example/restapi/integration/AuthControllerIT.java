@@ -59,8 +59,7 @@ public class AuthControllerIT {
         .param("correo","nuevo@correo.com")
         .param("contrasenya", "pass123"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/login"));
-
+        .andExpect(redirectedUrl("/catalogo"));
     }
 
     @Test

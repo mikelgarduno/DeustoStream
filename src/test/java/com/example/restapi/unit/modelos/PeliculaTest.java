@@ -1,5 +1,6 @@
 package com.example.restapi.unit.modelos;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -41,16 +42,32 @@ public class PeliculaTest {
         assertNotNull(pelicula.getImagenUrl());
     }
     @Test
-    void testEquals() {
+    void testEqualsCompleteCoverage() {
         Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
         Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
-        Pelicula pelicula3 = new Pelicula("Interstellar", Generos.CIENCIA_FICCION, 169, 2014, "Exploración espacial", "url2");
-
-        assertTrue(pelicula1.equals(pelicula2)); // Same attributes
-        assertTrue(pelicula2.equals(pelicula1)); // Symmetry
-        assertTrue(pelicula1.equals(pelicula1)); // Reflexivity
-        assertTrue(!pelicula1.equals(pelicula3)); // Different attributes
-        assertTrue(!pelicula1.equals(null)); // Null comparison
+        
+        // Test same object reference (this == o)
+        assertTrue(pelicula1.equals(pelicula1));
+        
+        // Test null comparison (o == null)
+        assertFalse(pelicula1.equals(null));
+        
+        // Test different class (getClass() != o.getClass())
+        assertFalse(pelicula1.equals(new Object()));
+        
+        // Test successful equality (all fields match)
+        assertTrue(pelicula1.equals(pelicula2));
+        
+        // Test different attributes
+        Pelicula differentTitle = new Pelicula("Different", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentGenre = new Pelicula("Inception", Generos.TERROR, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentDuration = new Pelicula("Inception", Generos.ACCION, 120, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentYear = new Pelicula("Inception", Generos.ACCION, 148, 2020, "Un sueño dentro de otro", "url");
+        
+        assertFalse(pelicula1.equals(differentTitle));
+        assertFalse(pelicula1.equals(differentGenre));
+        assertFalse(pelicula1.equals(differentDuration));
+        assertFalse(pelicula1.equals(differentYear));
     }
 
 }
