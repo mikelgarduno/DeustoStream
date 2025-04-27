@@ -30,7 +30,7 @@ import com.example.restapi.service.DeustoStreamService;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
-class DeustoStreamIntegrationTest {
+class DeustoStreamIT {
     @Autowired
     private MockMvc mockMvc;
 

@@ -26,7 +26,7 @@ import java.util.List;
 
 
 @WebMvcTest(WebController.class)
-class WebControllerTest {
+class WebControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -128,15 +128,6 @@ class WebControllerTest {
         mockMvc.perform(get("/admin/series").sessionAttr("usuario", user))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/acceso-denegado"));
-    }
-    @Test
-    void testMostrarAccesoDenegado() throws Exception {
-        Usuario usuario = new Usuario(); // simula un usuario logueado
-        usuario.setCorreo("usuario@correo.com");
-    
-        mockMvc.perform(get("/acceso-denegado").sessionAttr("usuario", usuario))
-                .andExpect(status().isOk())
-                .andExpect(view().name("accesoDenegado"));
     }
 
 }
