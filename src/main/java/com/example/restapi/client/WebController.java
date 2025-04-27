@@ -152,9 +152,57 @@ public class WebController {
     public String catalogo(
             @RequestParam(value = "titulo", required = false) String titulo,
             @RequestParam(value = "genero", required = false) Generos genero,
+            @RequestParam(value = "duracion", required = false) String duracion,
+            @RequestParam(value = "anio", required = false) String anio,
             Model model, HttpSession session) {
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
         List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
+
+        // Filtrar por duración y año si se proporcionan
+        if (duracion != null && !duracion.isEmpty()) {
+           for (int i = 0; i < peliculas.size(); i++) {
+                int duracionPelicula = peliculas.get(i).getDuracion();
+                if (duracionPelicula > Integer.parseInt(duracion)) {
+                    peliculas.remove(i);
+                    i--;
+                }
+            }
+        }
+
+        if (anio != null && !anio.isEmpty()) {
+            for (int i = 0; i < peliculas.size(); i++) {
+                int anioPelicula = peliculas.get(i).getAnio();
+                if(Integer.parseInt(anio) == 2000){
+                    if (anioPelicula <= Integer.parseInt(anio)) {
+                        peliculas.remove(i);
+                        i--;
+                    }
+                } else {
+                    if (anioPelicula > Integer.parseInt(anio)) {
+                        peliculas.remove(i);
+                        i--;
+                    }
+                }
+                
+            }
+
+            for (int i = 0; i < series.size(); i++) {
+                int anioSerie = series.get(i).getAnio();
+                if(Integer.parseInt(anio) == 2000){
+                    if (anioSerie <= Integer.parseInt(anio)) {
+                        series.remove(i);
+                        i--;
+                    }
+                } else {
+                    if (anioSerie > Integer.parseInt(anio)) {
+                        series.remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
         model.addAttribute("peliculas", peliculas);
