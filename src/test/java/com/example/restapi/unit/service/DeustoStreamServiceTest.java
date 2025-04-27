@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,6 +23,7 @@ import org.mockito.MockitoAnnotations;
 import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
@@ -525,4 +527,45 @@ public class DeustoStreamServiceTest {
             deustoStreamService.deleteCapitulo(100L);
         });
     }
+
+    @Test
+    void getPeliculasRelacionadas_devuelveLista() {
+        Pelicula peli = new Pelicula("Matrix", Generos.CIENCIA_FICCION, 136, 1999, "Neo", "img");
+        peli.setId(1L);
+
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(peli));
+        when(peliculaRepository.findTop6ByGeneroAndIdNot(peli.getGenero(), peli.getId()))
+                .thenReturn(List.of(peli));
+
+        List<Pelicula> result = deustoStreamService.getPeliculasRelacionadas(1L);
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getPeliculasRelacionadas_noExisteDevuelveVacio() {
+        when(peliculaRepository.findById(99L)).thenReturn(Optional.empty());
+        assertTrue(deustoStreamService.getPeliculasRelacionadas(99L).isEmpty());
+    }
+
+    @Test
+    void getSeriesRelacionadas_devuelveLista() {
+        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
+        serie.setId(1L);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+        when(seriesRepository.findTop6ByGeneroAndIdNot(serie.getGenero(), serie.getId()))
+                .thenReturn(List.of(serie));
+
+        List<Series> result = deustoStreamService.getSeriesRelacionadas(1L);
+
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void getSeriesRelacionadas_noExisteDevuelveVacio() {
+        when(seriesRepository.findById(99L)).thenReturn(Optional.empty());
+        assertTrue(deustoStreamService.getSeriesRelacionadas(99L).isEmpty());
+    }
+
 }
