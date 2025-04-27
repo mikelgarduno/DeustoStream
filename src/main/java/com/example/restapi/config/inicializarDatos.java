@@ -122,6 +122,68 @@ public class inicializarDatos implements CommandLineRunner {
                                 "Un hacker descubre la verdadera naturaleza de su realidad y su papel en la guerra contra sus controladores.",
                                 "https://static.posters.cz/image/1300/posters/matrix-hacker-i104636.jpg"
                 );
+
+                Pelicula pelicula9 = new Pelicula(
+                                "Avatar",
+                                Generos.AVENTURA,
+                                162,
+                                2009,
+                                "Un ex marine se infiltra en una civilización alienígena para ayudar a su especie.",
+                                "https://m.media-amazon.com/images/I/61uspTokDBL._AC_UF894,1000_QL80_.jpg"
+                );
+                Pelicula pelicula10 = new Pelicula(
+                                "Titanic",
+                                Generos.ROMANCE,
+                                195,
+                                1997,
+                                "Una joven aristócrata y un artista pobre se enamoran a bordo del infame transatlántico.",
+                                "https://m.media-amazon.com/images/I/91zGp74Qc4L.jpg"
+                );
+
+                Pelicula pelicula11 = new Pelicula(
+                                "Gladiator",
+                                Generos.ACCION,
+                                155,
+                                2000,
+                                "Un general romano es traicionado y se convierte en gladiador para vengar la muerte de su familia.",
+                                "https://i.ebayimg.com/images/g/dpkAAOSw~llgqj0q/s-l1200.jpg"
+                );
+
+                Pelicula pelicula12 = new Pelicula(
+                                "Jurassic Park",
+                                Generos.AVENTURA,
+                                127,
+                                1993,
+                                "Un parque temático con dinosaurios clonados se convierte en un caos cuando los animales escapan.",
+                                "https://i.etsystatic.com/18242346/r/il/1d6c94/4608692380/il_fullxfull.4608692380_ooro.jpg"
+                );
+
+                Pelicula pelicula13 = new Pelicula(
+                                "Inception",
+                                Generos.CIENCIA_FICCION,
+                                148,
+                                2010,
+                                "Un ladrón especializado en robar secretos de los sueños es contratado para implantar una idea en la mente de un objetivo.",
+                                "https://www.originalfilmart.com/cdn/shop/files/inception_2010_french_original_film_art_5000x.webp?v=1686692704"
+                );
+
+                Pelicula pelicula14 = new Pelicula(
+                                "The Shawshank Redemption",
+                                Generos.DRAMA,
+                                142,
+                                1994,
+                                "La historia de un banquero condenado a cadena perpetua que encuentra esperanza y amistad en prisión.",
+                                "https://m.media-amazon.com/images/I/71VNhykMgNL._AC_UF894,1000_QL80_.jpg"
+                );
+
+                Pelicula pelicula15 = new Pelicula(
+                                "The Godfather Part II",
+                                Generos.DRAMA,
+                                202,
+                                1974,
+                                "La historia de la familia Corleone continúa mientras Michael Corleone se convierte en el nuevo jefe de la mafia.",
+                                "https://i.ebayimg.com/00/s/MTYwMFgxMDY2/z/WfUAAOSw44Zj8lry/$_57.JPG?set_id=880000500F"
+                );
         
                 peliculaRepository.save(pelicula1);
                 peliculaRepository.save(pelicula2);
@@ -131,6 +193,13 @@ public class inicializarDatos implements CommandLineRunner {
                 peliculaRepository.save(pelicula6);
                 peliculaRepository.save(pelicula7);
                 peliculaRepository.save(pelicula8);
+                peliculaRepository.save(pelicula9);
+                peliculaRepository.save(pelicula10);
+                peliculaRepository.save(pelicula11);
+                peliculaRepository.save(pelicula12);
+                peliculaRepository.save(pelicula13);
+                peliculaRepository.save(pelicula14);
+                peliculaRepository.save(pelicula15);
         
                 // Inicializar series de prueba
                 Series serie1 = new Series(
