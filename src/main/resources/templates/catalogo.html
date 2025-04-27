@@ -44,6 +44,9 @@
         </nav>
 
         <div class="header-right">
+            <a href="/perfil">
+                <img th:src="@{|/images/${avatar}.jpg|}" alt="Imagen de perfil" class="perfil-img">
+            </a>
             <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
             <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
         </div>

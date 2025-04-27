@@ -159,6 +159,7 @@ public class WebController {
         model.addAttribute("series", series);
         model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
         model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
+        model.addAttribute("avatar", perfil.getAvatar());
         model.addAttribute("usuario", usuario);
         model.addAttribute("generos", Generos.values()); // Importa tu enum Generos
 
@@ -257,6 +258,21 @@ public class WebController {
             model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
         }
         return "guardados"; // Retorna el nombre del archivo HTML en /resources/templates/
+    }
+
+    // Entrar a configuración de perfil
+    @GetMapping("/perfil")
+    public String mostrarPerfil(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        if (usuario != null) {
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("perfiles", usuario.getPerfiles());
+            model.addAttribute("avatar", usuario.getPerfiles().get(0).getAvatar()); // Importa tu enum Generos
+            return "perfil"; // Retorna el nombre del archivo HTML en /resources/templates/
+        } else {
+            model.addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
+            return "redirect:/login";
+        }
     }
 
 }

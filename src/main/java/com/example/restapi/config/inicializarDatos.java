@@ -191,10 +191,24 @@ public class inicializarDatos implements CommandLineRunner {
         serieRepository.save(serie6);
 
         // Inicializar usuarios de prueba
-        Usuario usuario1 = new Usuario("nombre", "apellido", "prueba@prueba.com","1234" );
+        Usuario usuario1 = new Usuario("Esperanza", "Gracia", "prueba@prueba.com","1234" );
         Usuario usuario2 = new Usuario ("nombre", "apellido", "prueba@deustostream.es","1234" );
-        //usuario1.getPerfiles().get(0).setListaMeGustaPeliculas(Collections.singletonList(pelicula1));
-        
+        usuario1.getPerfiles().get(0).setListaMeGustaPeliculas(Collections.singletonList(pelicula1));
+        usuario1.getPerfiles().get(0).setAvatar("perfil4");
+        usuario1.getPerfiles().get(0).setEdad(24);
+
+        Perfil perfil1 = new Perfil("Hermano", "perfil1");
+        perfil1.setUsuario(usuario1);
+        perfil1.setEdad(12);
+        usuario1.getPerfiles().add(perfil1);
+
+        Perfil perfil2 = new Perfil("Ricardo Palomares", "perfil3");
+        perfil2.setUsuario(usuario1);
+        perfil2.setEdad(50);
+        usuario1.getPerfiles().add(perfil2);
+
+
+
         usuarioRepository.save(usuario1);
         usuarioRepository.save(usuario2);
 
