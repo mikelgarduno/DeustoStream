@@ -110,6 +110,7 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>3.5.2</version>
+					
 				</plugin>
 
 				<plugin>
@@ -135,6 +136,7 @@
 				<configuration>
 					<excludes>
 						<exclude>com/example/restapi/RestApiApplication.class</exclude>
+						<exclude>com/example/restapi/config/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>

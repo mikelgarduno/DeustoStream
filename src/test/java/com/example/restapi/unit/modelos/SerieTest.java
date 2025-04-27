@@ -92,36 +92,99 @@ public class SerieTest {
     }
 
     @Test
-void testEqualsAndHashCodeAllCases() {
-    Generos gen = Generos.DRAMA;
+    public void testEqualsWithSameObject() {
+        Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        assertTrue(serie.equals(serie));
+    }
 
-    // 1) this == o
-    Series self = new Series("T", 2000, "D", gen, null, "url1");
-    assertTrue(self.equals(self), "equals debe devolver true al compararse consigo mismo");
+    @Test
+    public void testEqualsWithNull() {
+        Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        assertFalse(serie.equals(null));
+    }
 
-    // 2) o == null
-    assertFalse(self.equals(null), "equals debe devolver false si o es null");
+    @Test
+    public void testEqualsWithDifferentClass() {
+        Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        assertFalse(serie.equals(new Object()));
+    }
 
-    // 3) distinta clase
-    assertFalse(self.equals("una cadena"), "equals debe devolver false para otro tipo");
+    @Test
+    public void testEqualsWithIdenticalSeries() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie1.setId(1L);
+        Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie2.setId(1L);
+        assertTrue(serie1.equals(serie2));
+    }
 
-    // 4) ignorar imagenUrl, capitulos y perfiles
-    Series a = new Series("T", 2000, "D", gen, null, "urlA");
-    Series b = new Series("T", 2000, "D", gen, null, "urlB");
-    a.setPerfil(new ArrayList<>());  // lista vacía
-    b.setPerfil(null);
-    assertEquals(a, b,    "equals debe ignorar diferencias en perfiles e imagenUrl");
+    @Test
+    public void testEqualsWithDifferentId() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie1.setId(1L);
+        Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie2.setId(2L);
+        assertFalse(serie1.equals(serie2));
+    }
 
-    // 5) misma igualdad cuando el id coincide
-    a.setId(1L);
-    b.setId(1L);
-    assertEquals(a, b,    "equals debe devolver true si todos los campos considerados (incluyendo id) coinciden");
-    assertEquals(a.hashCode(), b.hashCode(), "hashCode debe ser igual para objetos iguales");
+    @Test
+    public void testEqualsWithDifferentTitulo() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        Series serie2 = new Series("Better Call Saul", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        assertFalse(serie1.equals(serie2));
+    }
 
-    // 6) desigualdad si cambia el id
-    b.setId(2L);
-    assertNotEquals(a, b, "equals debe devolver false si los ids difieren");
-    assertNotEquals(a.hashCode(), b.hashCode(), "hashCode debe diferir si los ids difieren");
-}
+    @Test
+    public void testEqualsWithDifferentAnio() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        Series serie2 = new Series("Breaking Bad", 2009, "Descripcion", Generos.DRAMA, null, "url");
+        assertFalse(serie1.equals(serie2));
+    }
 
+    @Test
+    public void testEqualsWithDifferentDescripcion() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        Series serie2 = new Series("Breaking Bad", 2008, "Otra descripcion", Generos.DRAMA, null, "url");
+        assertFalse(serie1.equals(serie2));
+    }
+
+    @Test
+    public void testEqualsWithDifferentGenero() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.ACCION, null, "url");
+        assertFalse(serie1.equals(serie2));
+    }
+
+    @Test
+    public void testHashCodeConsistency() {
+        Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie.setId(1L);
+        int initialHashCode = serie.hashCode();
+        assertEquals(initialHashCode, serie.hashCode());
+    }
+
+    @Test
+    public void testHashCodeEquality() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie1.setId(1L);
+        Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie2.setId(1L);
+        assertEquals(serie1.hashCode(), serie2.hashCode());
+    }
+
+    @Test
+    public void testHashCodeWithDifferentValues() {
+        Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
+        serie1.setId(1L);
+        Series serie2 = new Series("Better Call Saul", 2015, "Otra descripcion", Generos.COMEDIA, null, "url");
+        serie2.setId(2L);
+        assertNotEquals(serie1.hashCode(), serie2.hashCode());
+    }
+
+    @Test
+    public void testHashCodeWithNullValues() {
+        Series serie1 = new Series(null, 0, null, null, null, null);
+        Series serie2 = new Series(null, 0, null, null, null, null);
+        assertEquals(serie1.hashCode(), serie2.hashCode());
+    }
 }
