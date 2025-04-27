@@ -332,7 +332,7 @@ public class WebControllerUnitTest {
         when(mockSession.getAttribute("usuario")).thenReturn(null);
 
         assertThrows(NullPointerException.class, () -> {
-            webController.catalogo(null, null, mockModel, mockSession);
+            webController.catalogo(null, null,null,null, mockModel, mockSession);
         });
     }
 
@@ -351,7 +351,7 @@ public class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.catalogo(null, null, mockModel, mockSession);
+        String viewName = webController.catalogo(null, null,null,null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("series", List.of());
@@ -382,7 +382,7 @@ public class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas("test", null)).thenReturn(List.of(pelicula1));
         when(deustoStreamService.buscarSeriesFiltradas("test", null)).thenReturn(List.of(serie1));
 
-        String viewName = webController.catalogo("test", null, mockModel, mockSession);
+        String viewName = webController.catalogo("test", null,null,null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of(pelicula1));
         verify(mockModel).addAttribute("series", List.of(serie1));
@@ -414,7 +414,7 @@ public class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.catalogo(null, null, mockModel, mockSession);
+        String viewName = webController.catalogo(null, null,null,null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("series", List.of());
@@ -436,7 +436,7 @@ public class WebControllerUnitTest {
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
-            webController.catalogo(null, null, mockModel, mockSession);
+            webController.catalogo(null, null,null,null, mockModel, mockSession);
         });
     }
 
