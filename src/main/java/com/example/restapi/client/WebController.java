@@ -2,6 +2,7 @@ package com.example.restapi.client;
 
 import java.util.List;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class WebController {
         return authService.login(correo, contrasenya)
                 .map(usuario -> {
                     session.setAttribute("usuario", usuario);
+                    session.setAttribute("perfil", usuario.getPerfiles().get(0)); // Obetener el primer perfil
                     return "redirect:" + authService.obtenerRedireccion(usuario);
                 })
                 .orElseGet(() -> {
@@ -154,7 +156,7 @@ public class WebController {
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
         List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
+        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
         model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
@@ -246,12 +248,12 @@ public class WebController {
         return "detalleSerieAdmin";
     }
 
-    // Ver lista de peliculas favoritas
+    // Ver lista de peliculas y series favoritas
     @GetMapping("/guardados")
     public String mostrarGuardados(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
-            Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
             model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
             model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         } else {
@@ -264,14 +266,27 @@ public class WebController {
     @GetMapping("/perfil")
     public String mostrarPerfil(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
         if (usuario != null) {
             model.addAttribute("usuario", usuario);
             model.addAttribute("perfiles", usuario.getPerfiles());
-            model.addAttribute("avatar", usuario.getPerfiles().get(0).getAvatar()); // Importa tu enum Generos
+            model.addAttribute("avatar", perfil.getAvatar()); 
             return "perfil"; // Retorna el nombre del archivo HTML en /resources/templates/
         } else {
             model.addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
             return "redirect:/login";
+        }
+    }
+
+
+    @GetMapping("/perfil/{id}")
+    public String cambiarPerfil(@PathVariable Long id, HttpSession session) {
+        Optional<Perfil> perfilSeleccionado = deustoStreamService.getPerfilById(id);
+        if (perfilSeleccionado.isPresent()) {
+            session.setAttribute("perfil", perfilSeleccionado.get());
+            return "redirect:/catalogo";
+        } else {
+            return "redirect:/acceso-denegado";
         }
     }
 

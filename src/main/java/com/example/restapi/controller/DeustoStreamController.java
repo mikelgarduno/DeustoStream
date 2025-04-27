@@ -2,6 +2,7 @@ package com.example.restapi.controller;
 
 import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.service.DeustoStreamService;
@@ -312,6 +313,18 @@ public class DeustoStreamController {
     @GetMapping("/series/{id}/relacionadas")
     public List<Series> getSeriesRelacionadas(@PathVariable Long id) {
         return deustoStreamService.getSeriesRelacionadas(id);
+    }
+
+    // ---------- Cambiar perfil -------------
+    @GetMapping("/perfil/{id}")
+    public ResponseEntity<Perfil> cambiarPerfil(@PathVariable Long id, HttpSession session) {
+        Optional<Perfil> perfilSeleccionado = deustoStreamService.getPerfilById(id);
+        if (perfilSeleccionado.isPresent()) {
+            session.setAttribute("perfil", perfilSeleccionado.get());
+            return ResponseEntity.ok(perfilSeleccionado.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

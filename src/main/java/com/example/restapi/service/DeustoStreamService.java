@@ -202,18 +202,17 @@ public class DeustoStreamService {
         if (optionalUsuario.isPresent() && optionalPelicula.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             Pelicula pelicula = optionalPelicula.get();
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
 
-            if (usuario.getPerfiles().get(0).getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
+            if (perfil.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
                 // Si la película ya está en la lista de favoritos, eliminarla
-                usuario.getPerfiles().get(0).getListaMeGustaPeliculas().remove(pelicula);
+                perfil.getListaMeGustaPeliculas().remove(pelicula);
             } else {
                 // Añadir la película a la lista de favoritos del usuario
-                usuario.getPerfiles().get(0).getListaMeGustaPeliculas().add(pelicula);
+                perfil.getListaMeGustaPeliculas().add(pelicula);
             }
-            usuarioRepository.save(usuario);
+            perfilRepository.save(perfil);
 
-            // Actualizar la sesión si es necesario
-            session.setAttribute("usuario", usuario);
 
         } else {
             throw new RuntimeException("Usuario or Pelicula not found");
@@ -227,18 +226,17 @@ public class DeustoStreamService {
         if (optionalUsuario.isPresent() && optionalSerie.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             Series serie = optionalSerie.get();
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
 
-            if (usuario.getPerfiles().get(0).getListaMeGustaSeries().contains(optionalSerie.get())) {
+            if (perfil.getListaMeGustaSeries().contains(optionalSerie.get())) {
                 // Si la serie ya está en la lista de favoritos, eliminarla
-                usuario.getPerfiles().get(0).getListaMeGustaSeries().remove(serie);
+              perfil.getListaMeGustaSeries().remove(serie);
             } else {
                 // Añadir la serie a la lista de favoritos del usuario
-                usuario.getPerfiles().get(0).getListaMeGustaSeries().add(serie);
+                perfil.getListaMeGustaSeries().add(serie);
             }
-            usuarioRepository.save(usuario);
+            perfilRepository.save(perfil);
 
-            // Actualizar la sesión si es necesario
-            session.setAttribute("usuario", usuario);
 
         } else {
             throw new RuntimeException("Usuario or Serie not found");
@@ -305,5 +303,10 @@ public class DeustoStreamService {
         return serieRepository.findById(serieId)
                 .map(s -> serieRepository.findTop6ByGeneroAndIdNot(s.getGenero(), s.getId()))
                 .orElse(Collections.emptyList());
+    }
+
+    // Obtener perfil por id
+    public Optional<Perfil> getPerfilById(Long id) {
+        return perfilRepository.findById(id);
     }
 }
