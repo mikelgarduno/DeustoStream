@@ -7,7 +7,13 @@
     <title>Deusto Stream</title>
 </head>
 <body>
-    <h1>Bienvenido a Deusto Stream</h1>
+    <header id="header-admin">
+        Panel de Administración - Deusto Stream
+    </header>
+    <div class="logo-container" style="text-align: center; margin: 20px 0;">
+        <img th:src="@{/images/logoDeustoStream.png}" alt="Imagen de portada">
+    </div>
+    
     <div id="gestion-links">
         <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
         <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>

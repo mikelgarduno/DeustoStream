@@ -1,15 +1,17 @@
 package com.example.restapi.unit.controller;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.example.restapi.service.DeustoStreamService;
 import com.example.restapi.client.WebController;
-import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.service.AuthService;
@@ -19,7 +21,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
-
 
 public class WebControllerUnitTest {
 
@@ -41,6 +42,32 @@ public class WebControllerUnitTest {
     void testMostrarIndex() {
         String viewName = webController.mostrarIndex();
         assertEquals("index", viewName, "The view name should be 'index'");
+    }
+
+    @Test
+    void testMostrarPanelAdmin() {
+        Model mockModel = mock(Model.class);
+        
+        List<Pelicula> mockPeliculas = List.of(new Pelicula());
+        List<Series> mockSeries = List.of(new Series());
+        List<Usuario> mockUsuarios = List.of(new Usuario());
+        
+        when(deustoStreamService.getAllPeliculas()).thenReturn(mockPeliculas);
+        when(deustoStreamService.getAllSeries()).thenReturn(mockSeries);
+        when(deustoStreamService.getAllUsuarios()).thenReturn(mockUsuarios);
+        
+        String viewName = webController.mostrarPanelAdmin(mockModel);
+        
+        verify(mockModel).addAttribute("peliculas", mockPeliculas);
+        verify(mockModel).addAttribute("series", mockSeries);
+        verify(mockModel).addAttribute("usuarios", mockUsuarios);
+        assertEquals("panelAdmin", viewName, "The view name should be 'panelAdmin'");
+    }
+
+    @Test
+    void testAccesoDenegado() {
+        String viewName = webController.accesoDenegado();
+        assertEquals("accesoDenegado", viewName, "The view name should be 'accesoDenegado'");
     }
 
     @Test
@@ -144,6 +171,7 @@ public class WebControllerUnitTest {
 
         assertEquals("redirect:/acceso-denegado", viewName, "The view name should be 'redirect:/acceso-denegado'");
     }
+
     @Test
     void testMostrarSeries_NoUserInSession() {
         HttpSession mockSession = mock(HttpSession.class);
@@ -295,12 +323,27 @@ public class WebControllerUnitTest {
         verify(mockModel).addAttribute("usuarios", List.of(usuario1, usuario2));
         assertEquals("usuarios", viewName, "The view name should be 'usuarios'");
     }
-/*
+
+    @Test
+    void testCatalogo_NoUserInSession() {
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> {
+            webController.catalogo(null, null, mockModel, mockSession);
+        });
+    }
+
     @Test
     void testCatalogo_ValidUserWithNoFilters() {
         Usuario mockUsuario = new Usuario();
-        mockUsuario.setListaMeGustaPeliculas(List.of());
-        mockUsuario.setListaMeGustaSeries(List.of());
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
@@ -315,19 +358,55 @@ public class WebControllerUnitTest {
         verify(mockModel).addAttribute("peliculasFavoritas", List.of());
         verify(mockModel).addAttribute("seriesFavoritas", List.of());
         verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
+        verify(mockModel).addAttribute(eq("generos"), any());
+        assertEquals("catalogo", viewName, "The view name should be 'catalogo'");
+    }
+
+    @Test
+    void testCatalogo_ValidUserWithFilters() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        Pelicula pelicula1 = new Pelicula();
+        pelicula1.setTitulo("FilteredPelicula");
+        Series serie1 = new Series();
+        serie1.setTitulo("FilteredSerie");
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(deustoStreamService.buscarPeliculasFiltradas("test", null)).thenReturn(List.of(pelicula1));
+        when(deustoStreamService.buscarSeriesFiltradas("test", null)).thenReturn(List.of(serie1));
+
+        String viewName = webController.catalogo("test", null, mockModel, mockSession);
+
+        verify(mockModel).addAttribute("peliculas", List.of(pelicula1));
+        verify(mockModel).addAttribute("series", List.of(serie1));
+        verify(mockModel).addAttribute("peliculasFavoritas", List.of());
+        verify(mockModel).addAttribute("seriesFavoritas", List.of());
+        verify(mockModel).addAttribute("usuario", mockUsuario);
+        verify(mockModel).addAttribute(eq("generos"), any());
         assertEquals("catalogo", viewName, "The view name should be 'catalogo'");
     }
 
     @Test
     void testCatalogo_ValidUserWithFavorites() {
         Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+
         Pelicula favoritePelicula = new Pelicula();
         favoritePelicula.setTitulo("FavoritePelicula");
         Series favoriteSerie = new Series();
         favoriteSerie.setTitulo("FavoriteSerie");
-        mockUsuario.setListaMeGustaPeliculas(List.of(favoritePelicula));
-        mockUsuario.setListaMeGustaSeries(List.of(favoriteSerie));
+
+        mockPerfil.setListaMeGustaPeliculas(List.of(favoritePelicula));
+        mockPerfil.setListaMeGustaSeries(List.of(favoriteSerie));
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
@@ -342,14 +421,44 @@ public class WebControllerUnitTest {
         verify(mockModel).addAttribute("peliculasFavoritas", List.of(favoritePelicula));
         verify(mockModel).addAttribute("seriesFavoritas", List.of(favoriteSerie));
         verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
+        verify(mockModel).addAttribute(eq("generos"), any());
         assertEquals("catalogo", viewName, "The view name should be 'catalogo'");
     }
 
     @Test
-    void testVerPeliculas_ValidUserWithNoFilters() {
+    void testCatalogo_UserWithNoProfiles() {
         Usuario mockUsuario = new Usuario();
-        mockUsuario.setListaMeGustaPeliculas(List.of());
+        mockUsuario.setPerfiles(List.of());
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            webController.catalogo(null, null, mockModel, mockSession);
+        });
+    }
+
+    @Test
+    void testVerPeliculas_NoUserInSession() {
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> {
+            webController.verPeliculas(mockModel, mockSession, null, null);
+        });
+    }
+
+    @Test
+    void testVerPeliculas_ValidUserNoFilters() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
@@ -361,59 +470,54 @@ public class WebControllerUnitTest {
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("peliculasFavoritas", List.of());
         verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
-        assertEquals("catPeliculas", viewName, "The view name should be 'catPeliculas'");
+        verify(mockModel).addAttribute(eq("generos"), any());
+        assertEquals("catPeliculas", viewName);
     }
 
     @Test
     void testVerPeliculas_ValidUserWithFilters() {
         Usuario mockUsuario = new Usuario();
-        mockUsuario.setListaMeGustaPeliculas(List.of());
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
-        Pelicula pelicula1 = new Pelicula();
-        pelicula1.setTitulo("FilteredPelicula1");
-        Pelicula pelicula2 = new Pelicula();
-        pelicula2.setTitulo("FilteredPelicula2");
+        Pelicula peliculaFiltrada = new Pelicula();
+        peliculaFiltrada.setTitulo("FilteredPelicula");
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarPeliculasFiltradas("Filtered", Generos.ACCION)).thenReturn(List.of(pelicula1, pelicula2));
+        when(deustoStreamService.buscarPeliculasFiltradas("test", null)).thenReturn(List.of(peliculaFiltrada));
 
-        String viewName = webController.verPeliculas(mockModel, mockSession, "Filtered", Generos.ACCION);
+        String viewName = webController.verPeliculas(mockModel, mockSession, "test", null);
 
-        verify(mockModel).addAttribute("peliculas", List.of(pelicula1, pelicula2));
+        verify(mockModel).addAttribute("peliculas", List.of(peliculaFiltrada));
         verify(mockModel).addAttribute("peliculasFavoritas", List.of());
         verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
-        assertEquals("catPeliculas", viewName, "The view name should be 'catPeliculas'");
+        verify(mockModel).addAttribute(eq("generos"), any());
+        assertEquals("catPeliculas", viewName);
     }
 
     @Test
-    void testVerPeliculas_ValidUserWithFavorites() {
-        Usuario mockUsuario = new Usuario();
-        Pelicula favoritePelicula = new Pelicula();
-        favoritePelicula.setTitulo("FavoritePelicula");
-        mockUsuario.setListaMeGustaPeliculas(List.of(favoritePelicula));
+    void testVerSeries_NoUserInSession() {
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
-        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
 
-        String viewName = webController.verPeliculas(mockModel, mockSession, null, null);
-
-        verify(mockModel).addAttribute("peliculas", List.of());
-        verify(mockModel).addAttribute("peliculasFavoritas", List.of(favoritePelicula));
-        verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
-        assertEquals("catPeliculas", viewName, "The view name should be 'catPeliculas'");
+        assertThrows(NullPointerException.class, () -> {
+            webController.verSeries(mockModel, mockSession, null, null);
+        });
     }
 
     @Test
-    void testVerSeries_ValidUserWithNoFilters() {
+    void testVerSeries_ValidUserNoFilters() {
         Usuario mockUsuario = new Usuario();
-        mockUsuario.setListaMeGustaSeries(List.of());
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
@@ -425,53 +529,37 @@ public class WebControllerUnitTest {
         verify(mockModel).addAttribute("series", List.of());
         verify(mockModel).addAttribute("seriesFavoritas", List.of());
         verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
-        assertEquals("catSeries", viewName, "The view name should be 'catSeries'");
+        verify(mockModel).addAttribute(eq("generos"), any());
+        assertEquals("catSeries", viewName);
     }
 
     @Test
     void testVerSeries_ValidUserWithFilters() {
         Usuario mockUsuario = new Usuario();
-        mockUsuario.setListaMeGustaSeries(List.of());
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
         HttpSession mockSession = mock(HttpSession.class);
         Model mockModel = mock(Model.class);
 
-        Series serie1 = new Series();
-        serie1.setTitulo("FilteredSerie1");
-        Series serie2 = new Series();
-        serie2.setTitulo("FilteredSerie2");
+        Series serieFiltrada = new Series();
+        serieFiltrada.setTitulo("FilteredSeries");
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarSeriesFiltradas("Filtered", Generos.COMEDIA)).thenReturn(List.of(serie1, serie2));
+        when(deustoStreamService.buscarSeriesFiltradas("test", null)).thenReturn(List.of(serieFiltrada));
 
-        String viewName = webController.verSeries(mockModel, mockSession, "Filtered", Generos.COMEDIA);
+        String viewName = webController.verSeries(mockModel, mockSession, "test", null);
 
-        verify(mockModel).addAttribute("series", List.of(serie1, serie2));
+        verify(mockModel).addAttribute("series", List.of(serieFiltrada));
         verify(mockModel).addAttribute("seriesFavoritas", List.of());
         verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
-        assertEquals("catSeries", viewName, "The view name should be 'catSeries'");
+        verify(mockModel).addAttribute(eq("generos"), any());
+        assertEquals("catSeries", viewName);
     }
 
-    @Test
-    void testVerSeries_ValidUserWithFavorites() {
-        Usuario mockUsuario = new Usuario();
-        Series favoriteSerie = new Series();
-        favoriteSerie.setTitulo("FavoriteSerie");
-        mockUsuario.setListaMeGustaSeries(List.of(favoriteSerie));
-        HttpSession mockSession = mock(HttpSession.class);
-        Model mockModel = mock(Model.class);
 
-        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.verSeries(mockModel, mockSession, null, null);
 
-        verify(mockModel).addAttribute("series", List.of());
-        verify(mockModel).addAttribute("seriesFavoritas", List.of(favoriteSerie));
-        verify(mockModel).addAttribute("usuario", mockUsuario);
-        verify(mockModel).addAttribute("generos", Generos.values());
-        assertEquals("catSeries", viewName, "The view name should be 'catSeries'");
-    }
-*/
+
 }

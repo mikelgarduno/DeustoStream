@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthControllerTest {
+public class AuthControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -76,5 +76,4 @@ public class AuthControllerTest {
         .andExpect(view().name("registro"));
     }
 
-    
 }
