@@ -6,20 +6,24 @@ import static org.mockito.Mockito.*;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.example.restapi.service.DeustoStreamService;
 import com.example.restapi.client.WebController;
+import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
 public class WebControllerUnitTest {
@@ -332,7 +336,7 @@ public class WebControllerUnitTest {
         when(mockSession.getAttribute("usuario")).thenReturn(null);
 
         assertThrows(NullPointerException.class, () -> {
-            webController.catalogo(null, null, mockModel, mockSession);
+            webController.catalogo(null, null,null,null, mockModel, mockSession);
         });
     }
 
@@ -351,7 +355,7 @@ public class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.catalogo(null, null, mockModel, mockSession);
+        String viewName = webController.catalogo(null, null,null,null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("series", List.of());
@@ -382,7 +386,7 @@ public class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas("test", null)).thenReturn(List.of(pelicula1));
         when(deustoStreamService.buscarSeriesFiltradas("test", null)).thenReturn(List.of(serie1));
 
-        String viewName = webController.catalogo("test", null, mockModel, mockSession);
+        String viewName = webController.catalogo("test", null,null,null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of(pelicula1));
         verify(mockModel).addAttribute("series", List.of(serie1));
@@ -414,7 +418,7 @@ public class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.catalogo(null, null, mockModel, mockSession);
+        String viewName = webController.catalogo(null, null,null,null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("series", List.of());
@@ -436,7 +440,7 @@ public class WebControllerUnitTest {
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
-            webController.catalogo(null, null, mockModel, mockSession);
+            webController.catalogo(null, null,null,null, mockModel, mockSession);
         });
     }
 
@@ -558,8 +562,57 @@ public class WebControllerUnitTest {
         assertEquals("catSeries", viewName);
     }
 
+        @Test
+    void mostrarDetallePelicula_usuario() {
+        Pelicula peli = new Pelicula("Matrix", Generos.CIENCIA_FICCION, 136, 1999, "Neo", "img");
+        when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.of(peli));
+        when(deustoStreamService.getPeliculasRelacionadas(1L)).thenReturn(List.of(peli));
 
+        Model model = new ExtendedModelMap();
+        String view = webController.mostrarDetallePelicula(1L, model);
 
+        assertEquals("detallePelicula", view);
+        assertSame(peli, model.getAttribute("pelicula"));
+        assertNotNull(model.getAttribute("relacionadas"));
+    }
 
+    @Test
+    void mostrarDetallePelicula_admin() {
+        Pelicula peli = new Pelicula("Matrix", Generos.CIENCIA_FICCION, 136, 1999, "Neo", "img");
+        when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.of(peli));
+        when(deustoStreamService.getPeliculasRelacionadas(1L)).thenReturn(List.of(peli));
 
+        Model model = new ExtendedModelMap();
+        String view = webController.mostrarDetallePeliculaAdmin(1L, model);
+
+        assertEquals("detallePeliculaAdmin", view);
+        assertSame(peli, model.getAttribute("pelicula"));
+        assertNotNull(model.getAttribute("relacionadas"));
+    }
+
+    @Test
+    void mostrarDetalleSerie_usuario() {
+        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
+        when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.of(serie));
+        when(deustoStreamService.getSeriesRelacionadas(1L)).thenReturn(List.of(serie));
+
+        Model model = new ExtendedModelMap();
+        String view = webController.mostrarDetalleSerieUsuario(1L, model);
+
+        assertEquals("detalleSerie", view);
+        assertSame(serie, model.getAttribute("serie"));
+        assertNotNull(model.getAttribute("relacionadas"));
+    }
+
+    @Test
+    void mostrarDetalleSerie_admin() {
+        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
+        when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.of(serie));
+
+        Model model = new ExtendedModelMap();
+        String view = webController.mostrarDetalleSerieAdmin(1L, model);
+
+        assertEquals("detalleSerieAdmin", view);
+        assertSame(serie, model.getAttribute("serie"));
+    }
 }

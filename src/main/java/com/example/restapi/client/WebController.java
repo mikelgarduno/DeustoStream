@@ -3,6 +3,7 @@ package com.example.restapi.client;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,7 @@ public class WebController {
         return authService.login(correo, contrasenya)
                 .map(usuario -> {
                     session.setAttribute("usuario", usuario);
+                    session.setAttribute("perfil", usuario.getPerfiles().get(0)); // Obetener el primer perfil
                     return "redirect:" + authService.obtenerRedireccion(usuario);
                 })
                 .orElseGet(() -> {
@@ -174,11 +176,59 @@ public class WebController {
     public String catalogo(
             @RequestParam(value = "titulo", required = false) String titulo,
             @RequestParam(value = "genero", required = false) Generos genero,
+            @RequestParam(value = "duracion", required = false) String duracion,
+            @RequestParam(value = "anio", required = false) String anio,
             Model model, HttpSession session) {
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
         List<Series> series = deustoStreamService.buscarSeriesFiltradas(titulo, genero);
+
+        // Filtrar por duración y año si se proporcionan
+        if (duracion != null && !duracion.isEmpty()) {
+           for (int i = 0; i < peliculas.size(); i++) {
+                int duracionPelicula = peliculas.get(i).getDuracion();
+                if (duracionPelicula > Integer.parseInt(duracion)) {
+                    peliculas.remove(i);
+                    i--;
+                }
+            }
+        }
+
+        if (anio != null && !anio.isEmpty()) {
+            for (int i = 0; i < peliculas.size(); i++) {
+                int anioPelicula = peliculas.get(i).getAnio();
+                if(Integer.parseInt(anio) == 2000){
+                    if (anioPelicula <= Integer.parseInt(anio)) {
+                        peliculas.remove(i);
+                        i--;
+                    }
+                } else {
+                    if (anioPelicula > Integer.parseInt(anio)) {
+                        peliculas.remove(i);
+                        i--;
+                    }
+                }
+                
+            }
+
+            for (int i = 0; i < series.size(); i++) {
+                int anioSerie = series.get(i).getAnio();
+                if(Integer.parseInt(anio) == 2000){
+                    if (anioSerie <= Integer.parseInt(anio)) {
+                        series.remove(i);
+                        i--;
+                    }
+                } else {
+                    if (anioSerie > Integer.parseInt(anio)) {
+                        series.remove(i);
+                        i--;
+                    }
+                }
+            }
+        }
+
+
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
+        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
         model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
@@ -269,18 +319,46 @@ public class WebController {
         return "detalleSerieAdmin";
     }
 
-    // Ver lista de peliculas favoritas
+    // Ver lista de peliculas y series favoritas
     @GetMapping("/guardados")
     public String mostrarGuardados(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
-            Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
             model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
             model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         } else {
             model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
         }
         return "guardados"; // Retorna el nombre del archivo HTML en /resources/templates/
+    }
+
+    // Entrar a configuración de perfil
+    @GetMapping("/perfil")
+    public String mostrarPerfil(Model model, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("usuario");
+        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
+        if (usuario != null) {
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("perfiles", usuario.getPerfiles());
+            model.addAttribute("avatar", perfil.getAvatar()); 
+            return "perfil"; // Retorna el nombre del archivo HTML en /resources/templates/
+        } else {
+            model.addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
+            return "redirect:/login";
+        }
+    }
+
+
+    @GetMapping("/perfil/{id}")
+    public String cambiarPerfil(@PathVariable Long id, HttpSession session) {
+        Optional<Perfil> perfilSeleccionado = deustoStreamService.getPerfilById(id);
+        if (perfilSeleccionado.isPresent()) {
+            session.setAttribute("perfil", perfilSeleccionado.get());
+            return "redirect:/catalogo";
+        } else {
+            return "redirect:/acceso-denegado";
+        }
     }
 
 }

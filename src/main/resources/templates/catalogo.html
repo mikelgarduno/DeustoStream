@@ -54,9 +54,19 @@
     </header>
     
     <div class="filtro">
-        <h2>Filtrar por título</h2>
         <form action="#" method="get" class="filtro-form">
             <input type="text" name="titulo" placeholder="Buscar por título..." th:value="${param.titulo}">
+            <div class="anio-filter">
+                <button type="submit" name="anio" value="2000" th:classappend="${param.anio=='2000'} ? 'selected' : ''">
+                    Nueva
+                </button>
+                <button type="submit" name="anio" value="1999" th:classappend="${param.anio=='1999'} ? 'selected' : ''">
+                    Vieja
+                </button>
+            </div>
+            <label for="duracion">Duración (min):</label>
+            <input type="range" id="duracion" name="duracion" min="60" max="250" value="250" oninput="durOutput.value = this.value">
+            <output id="durOutput">250</output>
             
             <select name="genero">
                 <option value="">-- Género --</option>

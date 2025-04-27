@@ -33,6 +33,7 @@
                 <h2 th:text="${perfil.nombre}">Nombre del perfil</h2>
                 <p>Edad: <span th:text="${perfil.edad}">Edad</span></p>
                 <img th:src="@{|/images/${perfil.avatar}.jpg|}" alt="Foto de perfil" class="perfil-img">
+                <button class="perfil-btn" th:onclick="|window.location.href='/perfil/${perfil.id}'|">Cambiar perfil</button>
             </div>
         </div>
 
