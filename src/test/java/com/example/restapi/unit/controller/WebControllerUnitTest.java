@@ -684,7 +684,7 @@ public class WebControllerUnitTest {
         assertEquals("catSeries", viewName);
     }
 
-        @Test
+    @Test
     void mostrarDetallePelicula_usuario() {
         Pelicula peli = new Pelicula("Matrix", Generos.CIENCIA_FICCION, 136, 1999, "Neo", "img");
         when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.of(peli));
@@ -713,6 +713,33 @@ public class WebControllerUnitTest {
     }
 
     @Test
+    void mostrarDetallePelicula_usuario_peliculaNoEncontrada() {
+        when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.empty());
+
+        Model model = new ExtendedModelMap();
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarDetallePelicula(1L, model);
+        });
+
+        assertEquals("Película no encontrada", exception.getMessage());
+    }
+
+    @Test
+    void mostrarDetallePelicula_admin_peliculaNoEncontrada() {
+        when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.empty());
+    
+        Model model = new ExtendedModelMap();
+    
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarDetallePeliculaAdmin(1L, model);
+        });
+    
+        assertEquals("Película no encontrada", exception.getMessage());
+    }
+    
+
+    @Test
     void mostrarDetalleSerie_usuario() {
         Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
         when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.of(serie));
@@ -727,6 +754,20 @@ public class WebControllerUnitTest {
     }
 
     @Test
+    void mostrarDetalleSerie_usuario_serieNoEncontrada() {
+        when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.empty());
+
+        Model model = new ExtendedModelMap();
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarDetalleSerieUsuario(1L, model);
+        });
+
+        assertEquals("Serie no encontrada", exception.getMessage());
+    }
+
+
+    @Test
     void mostrarDetalleSerie_admin() {
         Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
         when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.of(serie));
@@ -736,6 +777,19 @@ public class WebControllerUnitTest {
 
         assertEquals("detalleSerieAdmin", view);
         assertSame(serie, model.getAttribute("serie"));
+    }
+
+    @Test
+    void mostrarDetalleSerie_admin_serieNoEncontrada() {
+        when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.empty());
+
+        Model model = new ExtendedModelMap();
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarDetalleSerieAdmin(1L, model);
+        });
+
+        assertEquals("Serie no encontrada", exception.getMessage());
     }
 
     /* --------------------------------------------------------------------- */
@@ -836,5 +890,125 @@ public class WebControllerUnitTest {
         String viewName = webController.cambiarPerfil(1L, mockSession);
 
         assertEquals("redirect:/acceso-denegado", viewName);
+    }
+
+    @Test
+    void testProcesarRegistro_Success() {
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setCorreo("test@deustostream.es");
+        mockUsuario.setContrasenya("password");
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(authService.register(mockUsuario)).thenReturn(true);
+        when(authService.login(mockUsuario.getCorreo(), mockUsuario.getContrasenya())).thenReturn(Optional.of(mockUsuario));
+        when(authService.obtenerRedireccion(mockUsuario)).thenReturn("/catalogo");
+
+        String viewName = webController.procesarRegistro(mockUsuario, mockSession, mockModel);
+
+        verify(mockSession).setAttribute("usuario", mockUsuario);
+        assertEquals("redirect:/catalogo", viewName);
+    }
+
+    @Test
+    void testProcesarRegistro_Failure() {
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setCorreo("test@deustostream.es");
+        mockUsuario.setContrasenya("password");
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(authService.register(mockUsuario)).thenReturn(false);
+
+        String viewName = webController.procesarRegistro(mockUsuario, mockSession, mockModel);
+
+        verify(mockModel).addAttribute("error", "El correo ya está registrado.");
+        assertEquals("registro", viewName);
+    }
+
+    @Test
+    void testProcesarLogin_Success() {
+        String correo = "test@deustostream.es";
+        String contrasenya = "password";
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setCorreo(correo);
+        mockUsuario.setPerfiles(List.of(new Perfil()));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(authService.login(correo, contrasenya)).thenReturn(Optional.of(mockUsuario));
+        when(authService.obtenerRedireccion(mockUsuario)).thenReturn("/catalogo");
+
+        String viewName = webController.procesarLogin(correo, contrasenya, mockSession, mockModel);
+
+        verify(mockSession).setAttribute("usuario", mockUsuario);
+        assertEquals("redirect:/catalogo", viewName);
+    }
+
+    @Test
+    void testProcesarLogin_Failure() {
+        String correo = "test@deustostream.es";
+        String contrasenya = "wrongpassword";
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(authService.login(correo, contrasenya)).thenReturn(Optional.empty());
+
+        String viewName = webController.procesarLogin(correo, contrasenya, mockSession, mockModel);
+
+        verify(mockModel).addAttribute("error", "Correo o contraseña incorrectas");
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void testVerSuscripcion_UserLoggedIn() {
+        Usuario mockUsuario = new Usuario();
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+
+        String viewName = webController.verSuscripcion(mockModel, mockSession);
+
+        verify(mockModel).addAttribute("usuario", mockUsuario);
+        assertEquals("suscripcion", viewName);
+    }
+
+    @Test
+    void testVerSuscripcion_UserNotLoggedIn() {
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        String viewName = webController.verSuscripcion(mockModel, mockSession);
+
+        assertEquals("redirect:/login", viewName);
+    }
+
+    @Test
+    void testCerrarSesion() {
+        HttpSession mockSession = mock(HttpSession.class);
+
+        String viewName = webController.cerrarSesion(mockSession);
+
+        verify(mockSession).invalidate();
+        assertEquals("redirect:/login", viewName);
+    }
+
+    @Test
+    void testMostrarFormularioLogin() {
+        String viewName = webController.mostrarFormularioLogin();
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void testMostrarFormularioRegistro() {
+        String viewName = webController.mostrarFormularioRegistro();
+        assertEquals("registro", viewName);
     }
 }
