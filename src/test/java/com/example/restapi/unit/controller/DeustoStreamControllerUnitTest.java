@@ -21,8 +21,12 @@ import com.example.restapi.controller.DeustoStreamController;
 import com.example.restapi.model.Capitulo;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
+import com.example.restapi.model.Usuario;
 import com.example.restapi.service.DeustoStreamService;
+
+import jakarta.servlet.http.HttpSession;
 
 /**
  * Tests unitarios del {@link DeustoStreamController}.
@@ -40,6 +44,9 @@ public class DeustoStreamControllerUnitTest {
 
     @InjectMocks
     private DeustoStreamController deustoStreamController;
+
+    @Mock
+    private HttpSession session;
 
     /* --------------------------------------------------------------------- */
     /* ------------------------ PELÍCULAS ---------------------------------- */
@@ -297,5 +304,100 @@ public class DeustoStreamControllerUnitTest {
         List<Series> result = deustoStreamController.getSeriesRelacionadas(1L);
         assertEquals(1, result.size());
         assertEquals("Lost", result.get(0).getTitulo());
+    }
+
+    /* --------------------------------------------------------------------- */
+    /* ------------------- Favoritos y Perfiles ---------------------------- */
+    /* --------------------------------------------------------------------- */
+
+    @Test
+    void testAddPeliculaToFavoritos_Success() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(usuario));
+        when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.of(pelicula));
+
+        ResponseEntity<Usuario> response = deustoStreamController.addPeliculaToFavoritos(1L, 1L, null);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1L, response.getBody().getId());
+    }
+
+    @Test
+    void testAddPeliculaToFavoritos_UserNotFound() {
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Usuario> response = deustoStreamController.addPeliculaToFavoritos(1L, 1L, null);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testAddPeliculaToFavoritos_PeliculaNotFound() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(usuario));
+        when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Usuario> response = deustoStreamController.addPeliculaToFavoritos(1L, 1L, null);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testAddSerieToFavoritos_Success() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Series serie = new Series("Breaking Bad", 2008, "Desc", Generos.DRAMA, null, "url");
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(usuario));
+        when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.of(serie));
+
+        ResponseEntity<Usuario> response = deustoStreamController.addSerieToFavoritos(1L, 1L, null);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1L, response.getBody().getId());
+    }
+
+    @Test
+    void testAddSerieToFavoritos_UserNotFound() {
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Usuario> response = deustoStreamController.addSerieToFavoritos(1L, 1L, null);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testAddSerieToFavoritos_SerieNotFound() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(usuario));
+        when(deustoStreamService.getSeriesById(1L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Usuario> response = deustoStreamController.addSerieToFavoritos(1L, 1L, null);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
+    @Test
+    void testCambiarPerfil_Success() {
+        Perfil perfil = new Perfil();
+        perfil.setId(1L);
+        when(deustoStreamService.getPerfilById(1L)).thenReturn(Optional.of(perfil));
+
+        ResponseEntity<Perfil> response = deustoStreamController.cambiarPerfil(1L, session);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(1L, response.getBody().getId());
+    }
+
+    @Test
+    void testCambiarPerfil_NotFound() {
+        when(deustoStreamService.getPerfilById(1L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Perfil> response = deustoStreamController.cambiarPerfil(1L, null);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 }
