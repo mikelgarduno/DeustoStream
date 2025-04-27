@@ -1,18 +1,120 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Suscripción - DeustoStream</title>
     <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* Tus estilos internos */
+        .suscripcion-main {
+            text-align: center;
+            padding: 2rem;
+        }
+        .estado-suscripcion {
+            margin-bottom: 2rem;
+            color: white;
+        }
+        .planes-suscripcion {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .plan-card {
+            background: #fff;
+            border-radius: 1.5rem;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 5px solid;
+            color: #000;
+        }
+        .basic-plan {
+            border-color: #E50914;
+        }
+        .standard-plan {
+            border-color: #1E90FF;
+        }
+        .cancelar-plan {
+            border-color: #555;
+        }
+        .plan-card h3 {
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+        .precio {
+            font-size: 2rem;
+            color: #000;
+            margin: 1rem 0;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem;
+            text-align: left;
+        }
+        ul li {
+            margin: 0.5rem 0;
+            color: #000;
+        }
+        .plan-card form {
+            margin: 1rem;
+        }
+        .plan-card button {
+            background-color: #E50914;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 1rem auto;
+            display: block;
+        }
+        .standard-plan button {
+            background-color: #1E90FF;
+        }
+        .cancelar-plan button {
+            background-color: #555;
+        }
+        .plan-card button:disabled {
+            background-color: grey;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 
 <body>
     <header class="main-header">
-        <!-- Tu header aquí -->
+        <div class="header-left">
+            <a th:href="@{/catalogo}" class="logo-link">
+                <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+            </a>
+            <h1 class="catalogo-title">Gestión de Suscripción</h1>
+        </div>
+
+        <nav class="header-nav">
+            <a href="/catalogo">📚 Catálogo</a>
+            <a href="/peliculas">🎬 Películas</a>
+            <a href="/series">📺 Series</a>
+            <a href="/suscripcion">💳 Suscripción</a>
+        </nav>
+
+        <div class="header-right">
+            <a href="/perfil">
+                <img th:src="@{|/images/${avatar}.jpg|}" alt="Imagen de perfil" class="perfil-img">
+            </a>
+            <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+            <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
+        </div>
     </header>
 
     <main class="suscripcion-main">
@@ -33,9 +135,9 @@
                     <ul>
                         <li>Acceso ilimitado a películas y series.</li>
                     </ul>
-                    <button onclick="suscribirse(this)" data-url="/api/usuarios/[[${usuario.id}]]/suscripcion/mensual">
-                        Suscribirme Mensual
-                    </button>                    
+                    <form th:action="@{'/api/usuarios/' + ${usuario.id} + '/suscripcion/mensual'}" method="post">
+                        <button type="submit">Suscribirme Mensual</button>
+                    </form>
                 </div>
             </div>
 
@@ -47,9 +149,9 @@
                     <ul>
                         <li>Acceso ilimitado + 2 meses gratis.</li>
                     </ul>
-                    <button onclick="suscribirse(this)" data-url="/api/usuarios/[[${usuario.id}]]/suscripcion/anual">
-                        Suscribirme Anual
-                    </button>
+                    <form th:action="@{'/api/usuarios/' + ${usuario.id} + '/suscripcion/anual'}" method="post">
+                        <button type="submit">Suscribirme Anual</button>
+                    </form>
                 </div>
             </div>
 
@@ -62,31 +164,13 @@
                         <li>Eliminar acceso premium.</li>
                         <li>Perder beneficios.</li>
                     </ul>
-                    <button onclick="suscribirse(this)" data-url="/api/usuarios/[[${usuario.id}]]/suscripcion/cancelar"
-                    th:disabled="${usuario.tipoSuscripcion == null}">
-                    Cancelar
-                </button>
+                    <form th:action="@{'/api/usuarios/' + ${usuario.id} + '/suscripcion/cancelar'}" method="post">
+                        <button type="submit" th:disabled="${usuario.tipoSuscripcion == null}">Cancelar</button>
+                    </form>
                 </div>
             </div>
         </div>
     </main>
-
-    <script>
-        function suscribirse(button) {
-            const url = button.getAttribute('data-url');
-            fetch(url, { method: 'POST' })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.reload(); // Refrescar para ver los cambios
-                    } else {
-                        alert("No se pudo procesar la solicitud. Código: " + response.status);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al suscribirse:', error);
-                });
-        }
-        </script>
 
 </body>
 </html>
