@@ -397,6 +397,129 @@ public class WebControllerUnitTest {
     }
 
     @Test
+    void testCatalogo_FilterByDuration() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        Pelicula pelicula1 = new Pelicula("Short Movie", Generos.ACCION, 90, 2010, "Desc", "url");
+        Pelicula pelicula2 = new Pelicula("Long Movie", Generos.ACCION, 150, 2010, "Desc", "url");
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
+        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of()));
+
+        String viewName = webController.catalogo(null, null, "100", null, mockModel, mockSession);
+
+        verify(mockModel).addAttribute("peliculas", List.of(pelicula1));
+        verify(mockModel).addAttribute("series", List.of());
+        assertEquals("catalogo", viewName);
+    }
+
+    @Test
+    void testCatalogo_FilterByYearBefore2000() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        Pelicula pelicula1 = new Pelicula("Old Movie", Generos.ACCION, 90, 1995, "Desc", "url");
+        Pelicula pelicula2 = new Pelicula("New Movie", Generos.ACCION, 90, 2005, "Desc", "url");
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
+        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of()));
+
+        String viewName = webController.catalogo(null, null, null, "2000", mockModel, mockSession);
+
+        verify(mockModel).addAttribute("peliculas", List.of(pelicula2));
+        verify(mockModel).addAttribute("series", List.of());
+        assertEquals("catalogo", viewName);
+    }
+
+    @Test
+    void testCatalogo_FilterByYearAfter2000() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaPeliculas(List.of());
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        Pelicula pelicula1 = new Pelicula("Old Movie", Generos.ACCION, 90, 1995, "Desc", "url");
+        Pelicula pelicula2 = new Pelicula("New Movie", Generos.ACCION, 90, 2005, "Desc", "url");
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
+        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of()));
+
+        String viewName = webController.catalogo(null, null, null, "1999", mockModel, mockSession);
+
+        verify(mockModel).addAttribute("peliculas", List.of(pelicula1));
+        verify(mockModel).addAttribute("series", List.of());
+        assertEquals("catalogo", viewName);
+    }
+
+    @Test
+    void testCatalogo_FilterSeriesByYearBefore2000() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        Series serie1 = new Series("Old Series", 1995, "Desc", Generos.DRAMA, null, "url");
+        Series serie2 = new Series("New Series", 2005, "Desc", Generos.DRAMA, null, "url");
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
+        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(serie1, serie2)));
+
+        String viewName = webController.catalogo(null, null, null, "2000", mockModel, mockSession);
+
+        verify(mockModel).addAttribute("series", List.of(serie2));
+        verify(mockModel).addAttribute("peliculas", List.of());
+        assertEquals("catalogo", viewName);
+    }
+
+    @Test
+    void testCatalogo_FilterSeriesByYearAfter2000() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setListaMeGustaSeries(List.of());
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        Series serie1 = new Series("Old Series", 1995, "Desc", Generos.DRAMA, null, "url");
+        Series serie2 = new Series("New Series", 2005, "Desc", Generos.DRAMA, null, "url");
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
+        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(serie1, serie2)));
+
+        String viewName = webController.catalogo(null, null, null, "1999", mockModel, mockSession);
+
+        verify(mockModel).addAttribute("series", List.of(serie1));
+        verify(mockModel).addAttribute("peliculas", List.of());
+        assertEquals("catalogo", viewName);
+    }
+
+    @Test
     void testCatalogo_ValidUserWithFavorites() {
         Usuario mockUsuario = new Usuario();
         Perfil mockPerfil = new Perfil();
@@ -613,5 +736,105 @@ public class WebControllerUnitTest {
 
         assertEquals("detalleSerieAdmin", view);
         assertSame(serie, model.getAttribute("serie"));
+    }
+
+    /* --------------------------------------------------------------------- */
+    /* ------------------- Favoritos y Perfiles ---------------------------- */
+    /* --------------------------------------------------------------------- */
+
+    @Test
+    void testMostrarGuardados_UserLoggedIn() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        Pelicula pelicula = new Pelicula("Favorite Movie", Generos.ACCION, 120, 2010, "Desc", "url");
+        Series serie = new Series("Favorite Series", 2010, "Desc", Generos.DRAMA, null, "url");
+        mockPerfil.setListaMeGustaPeliculas(List.of(pelicula));
+        mockPerfil.setListaMeGustaSeries(List.of(serie));
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(mockSession.getAttribute("perfil")).thenReturn(mockPerfil);
+
+        String viewName = webController.mostrarGuardados(mockModel, mockSession);
+
+        verify(mockModel).addAttribute("peliculasFavoritas", List.of(pelicula));
+        verify(mockModel).addAttribute("seriesFavoritas", List.of(serie));
+        assertEquals("guardados", viewName);
+    }
+
+    @Test
+    void testMostrarGuardados_UserNotLoggedIn() {
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        String viewName = webController.mostrarGuardados(mockModel, mockSession);
+
+        verify(mockModel).addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
+        assertEquals("guardados", viewName);
+    }
+
+    @Test
+    void testMostrarPerfil_UserLoggedIn() {
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setAvatar("avatar1.png");
+        mockUsuario.setPerfiles(List.of(mockPerfil));
+
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(mockSession.getAttribute("perfil")).thenReturn(mockPerfil);
+
+        String viewName = webController.mostrarPerfil(mockModel, mockSession);
+
+        verify(mockModel).addAttribute("usuario", mockUsuario);
+        verify(mockModel).addAttribute("perfiles", mockUsuario.getPerfiles());
+        verify(mockModel).addAttribute("avatar", "avatar1.png");
+        assertEquals("perfil", viewName);
+    }
+
+    @Test
+    void testMostrarPerfil_UserNotLoggedIn() {
+        HttpSession mockSession = mock(HttpSession.class);
+        Model mockModel = mock(Model.class);
+
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        String viewName = webController.mostrarPerfil(mockModel, mockSession);
+
+        verify(mockModel).addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
+        assertEquals("redirect:/login", viewName);
+    }
+
+    @Test
+    void testCambiarPerfil_Success() {
+        Perfil mockPerfil = new Perfil();
+        mockPerfil.setId(1L);
+
+        HttpSession mockSession = mock(HttpSession.class);
+
+        when(deustoStreamService.getPerfilById(1L)).thenReturn(Optional.of(mockPerfil));
+
+        String viewName = webController.cambiarPerfil(1L, mockSession);
+
+        verify(mockSession).setAttribute("perfil", mockPerfil);
+        assertEquals("redirect:/catalogo", viewName);
+    }
+
+    @Test
+    void testCambiarPerfil_NotFound() {
+        HttpSession mockSession = mock(HttpSession.class);
+
+        when(deustoStreamService.getPerfilById(1L)).thenReturn(Optional.empty());
+
+        String viewName = webController.cambiarPerfil(1L, mockSession);
+
+        assertEquals("redirect:/acceso-denegado", viewName);
     }
 }

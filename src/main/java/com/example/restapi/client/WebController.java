@@ -338,8 +338,8 @@ public class WebController {
     @GetMapping("/perfil")
     public String mostrarPerfil(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
         if (usuario != null) {
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
             model.addAttribute("usuario", usuario);
             model.addAttribute("perfiles", usuario.getPerfiles());
             model.addAttribute("avatar", perfil.getAvatar()); 
