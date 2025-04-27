@@ -48,6 +48,139 @@ public class DeustoStreamControllerUnitTest {
     @Mock
     private HttpSession session;
 
+
+    /* --------------------------------------------------------------------- */
+    /* ------------------------ USUARIOS ----------------------------------- */
+    /* --------------------------------------------------------------------- */
+    @Test
+    void testGetAllUsuarios() {
+        Usuario usuario1 = new Usuario();
+        usuario1.setNombre("user1");
+        usuario1.setCorreo("correo@correo.es");
+        usuario1.setContrasenya("pass1");
+        Usuario usuario2 = new Usuario();
+        usuario2.setNombre("user2");
+        usuario2.setCorreo("correo1@correo.es");
+        usuario2.setContrasenya("pass2");
+        List<Usuario> usuarios = java.util.Arrays.asList(usuario1, usuario2);
+        when(deustoStreamService.getAllUsuarios()).thenReturn(usuarios);
+        List<Usuario> result = deustoStreamController.getAllUsuarios();
+        assertEquals(2, result.size());
+        assertEquals("user1", result.get(0).getNombre());
+    }
+
+    @Test
+    void testGetUsuarioById_Found() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        usuario.setNombre("Ana");
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(usuario));
+
+        ResponseEntity<Usuario> response = deustoStreamController.getusuarioById(1L);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(1L, response.getBody().getId());
+        assertEquals("Ana", response.getBody().getNombre());
+    }
+
+    @Test
+    void testGetUsuarioById_NotFound() {
+        when(deustoStreamService.getUsuarioById(2L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Usuario> response = deustoStreamController.getusuarioById(2L);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+        assertEquals(null, response.getBody());
+    }
+
+
+    @Test
+    void testCreateUsuario_ValidData() {
+        Usuario usuario = new Usuario();
+        usuario.setNombre("NuevoUsuario");
+        usuario.setCorreo("nuevo@correo.com");
+        usuario.setContrasenya("password");
+        when(deustoStreamService.createUsuario(usuario)).thenReturn(usuario);
+
+        ResponseEntity<Usuario> response = deustoStreamController.createUsuario(usuario);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("NuevoUsuario", response.getBody().getNombre());
+    }
+
+    @Test
+    void testCreateUsuario_ExceptionThrown() {
+        Usuario usuario = new Usuario();
+        usuario.setNombre("ErrorUsuario");
+        usuario.setCorreo("error@correo.com");
+        usuario.setContrasenya("password");
+        when(deustoStreamService.createUsuario(usuario)).thenThrow(new RuntimeException());
+
+        ResponseEntity<Usuario> response = deustoStreamController.createUsuario(usuario);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(null, response.getBody());
+    }
+
+    @Test
+    void testUpdateUsuario_ValidData() {
+        Usuario usuarioDetails = new Usuario();
+        usuarioDetails.setNombre("UpdatedName");
+        usuarioDetails.setCorreo("updated@correo.com");
+        usuarioDetails.setContrasenya("newpass");
+        Usuario updatedUsuario = new Usuario();
+        updatedUsuario.setId(1L);
+        updatedUsuario.setNombre("UpdatedName");
+        updatedUsuario.setCorreo("updated@correo.com");
+        updatedUsuario.setContrasenya("newpass");
+
+        when(deustoStreamService.updateUsuario(1L, usuarioDetails)).thenReturn(updatedUsuario);
+
+        ResponseEntity<Usuario> response = deustoStreamController.updateUsuario(1L, usuarioDetails);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals("UpdatedName", response.getBody().getNombre());
+        assertEquals("updated@correo.com", response.getBody().getCorreo());
+    }
+
+    @Test
+    void testUpdateUsuario_BadRequest() {
+        Usuario usuarioDetails = new Usuario();
+        usuarioDetails.setNombre("ErrorName");
+        usuarioDetails.setCorreo("error@correo.com");
+        usuarioDetails.setContrasenya("errorpass");
+
+        when(deustoStreamService.updateUsuario(2L, usuarioDetails)).thenThrow(new RuntimeException());
+
+        ResponseEntity<Usuario> response = deustoStreamController.updateUsuario(2L, usuarioDetails);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(null, response.getBody());
+    }
+
+    @Test
+    void testDeleteUsuario_Found() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(usuario));
+
+        ResponseEntity<Void> response = deustoStreamController.deleteUsuario(1L);
+
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    }
+
+    @Test
+    void testDeleteUsuario_NotFound() {
+        when(deustoStreamService.getUsuarioById(2L)).thenReturn(Optional.empty());
+
+        ResponseEntity<Void> response = deustoStreamController.deleteUsuario(2L);
+
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+    }
+
     /* --------------------------------------------------------------------- */
     /* ------------------------ PELÍCULAS ---------------------------------- */
     /* --------------------------------------------------------------------- */

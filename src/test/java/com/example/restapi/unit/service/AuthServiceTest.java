@@ -71,4 +71,90 @@ class AuthServiceTest {
 
         assertFalse(existe);
     }
+    @Mock
+    private com.example.restapi.repository.PerfilRepository perfilRepository;
+
+    @Test
+    void register_CorreoNoExistente_DeberiaRegistrarUsuarioYPerfil() {
+        Usuario nuevoUsuario = new Usuario("Nombre", "Apellido", "nuevo@ejemplo.com", "pass");
+        when(usuarioRepository.findByCorreo("nuevo@ejemplo.com")).thenReturn(Optional.empty());
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(perfilRepository.save(any(com.example.restapi.model.Perfil.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        boolean resultado = authService.register(nuevoUsuario);
+
+        assertTrue(resultado);
+        verify(usuarioRepository).findByCorreo("nuevo@ejemplo.com");
+        verify(usuarioRepository, times(2)).save(any(Usuario.class));
+        verify(perfilRepository).save(any(com.example.restapi.model.Perfil.class));
+    }
+
+    @Test
+    void register_CorreoExistente_DeberiaRetornarFalseYNoRegistrar() {
+        Usuario existente = new Usuario("Nombre", "Apellido", "existe@ejemplo.com", "pass");
+        when(usuarioRepository.findByCorreo("existe@ejemplo.com")).thenReturn(Optional.of(existente));
+
+        Usuario nuevoUsuario = new Usuario("Nombre", "Apellido", "existe@ejemplo.com", "pass");
+        boolean resultado = authService.register(nuevoUsuario);
+
+        assertFalse(resultado);
+        verify(usuarioRepository).findByCorreo("existe@ejemplo.com");
+        verify(usuarioRepository, never()).save(any(Usuario.class));
+        verify(perfilRepository, never()).save(any(com.example.restapi.model.Perfil.class));
+    }
+
+    @Test
+    void obtenerRedireccion_Admin_DeberiaRedirigirAAdmin() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("admin@deustostream.es");
+        String redireccion = authService.obtenerRedireccion(usuario);
+        assertEquals("/admin", redireccion);
+    }
+
+    @Test
+    void obtenerRedireccion_UsuarioNormal_DeberiaRedirigirACatalogo() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("user@ejemplo.com");
+        String redireccion = authService.obtenerRedireccion(usuario);
+        assertEquals("/catalogo", redireccion);
+    }
+
+    @Test
+    void obtenerRedireccion_CorreoConMayusculas_DeberiaRedirigirAAdmin() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("ADMIN@DEUSTOSTREAM.ES");
+        String redireccion = authService.obtenerRedireccion(usuario);
+        assertEquals("/admin", redireccion);
+    }
+
+    @Test
+    void obtenerRedireccion_CorreoConEspacios_DeberiaRedirigirACatalogo() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("  user@ejemplo.com  ");
+        String redireccion = authService.obtenerRedireccion(usuario);
+        assertEquals("/catalogo", redireccion);
+    }
+
+    @Test
+    void obtenerRedireccion_CorreoNulo_DeberiaLanzarNullPointerException() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo(null);
+        assertThrows(NullPointerException.class, () -> authService.obtenerRedireccion(usuario));
+    }
+
+    @Test
+    void obtenerRedireccion_CorreoVacio_DeberiaRedirigirACatalogo() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("");
+        String redireccion = authService.obtenerRedireccion(usuario);
+        assertEquals("/catalogo", redireccion);
+    }
+
+    @Test
+    void obtenerRedireccion_CorreoSoloDominioAdmin_DeberiaRedirigirAAdmin() {
+        Usuario usuario = new Usuario();
+        usuario.setCorreo("@deustostream.es");
+        String redireccion = authService.obtenerRedireccion(usuario);
+        assertEquals("/admin", redireccion);
+    }
 }
