@@ -64,6 +64,149 @@ public class DeustoStreamServiceTest {
     }
 
     @Test
+    void testGetAllUsuarios_ReturnsList() {
+        Usuario usuario1 = new Usuario();
+        usuario1.setId(1L);
+        usuario1.setNombre("Ana");
+        Usuario usuario2 = new Usuario();
+        usuario2.setId(2L);
+        usuario2.setNombre("Luis");
+        List<Usuario> usuarios = Arrays.asList(usuario1, usuario2);
+
+        when(usuarioRepository.findAll()).thenReturn(usuarios);
+
+        List<Usuario> result = deustoStreamService.getAllUsuarios();
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals("Ana", result.get(0).getNombre());
+        assertEquals("Luis", result.get(1).getNombre());
+    }
+
+    @Test
+    void testGetAllUsuarios_EmptyList() {
+        when(usuarioRepository.findAll()).thenReturn(new ArrayList<>());
+
+        List<Usuario> result = deustoStreamService.getAllUsuarios();
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testGetUsuarioById_Found() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        usuario.setNombre("Ana");
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+
+        Optional<Usuario> result = deustoStreamService.getUsuarioById(1L);
+
+        assertTrue(result.isPresent());
+        assertEquals(1L, result.get().getId());
+        assertEquals("Ana", result.get().getNombre());
+    }
+
+    @Test
+    void testGetUsuarioById_NotFound() {
+        when(usuarioRepository.findById(2L)).thenReturn(Optional.empty());
+
+        Optional<Usuario> result = deustoStreamService.getUsuarioById(2L);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testCreateUsuario_Success() {
+        Usuario usuario = new Usuario();
+        usuario.setNombre("Luis");
+
+        when(usuarioRepository.save(usuario)).thenReturn(usuario);
+
+        Usuario result = deustoStreamService.createUsuario(usuario);
+
+        assertNotNull(result);
+        assertEquals("Luis", result.getNombre());
+        verify(usuarioRepository).save(usuario);
+    }
+
+    @Test
+    void testUpdateUsuario_Success() {
+        Usuario existing = new Usuario();
+        existing.setId(1L);
+        existing.setNombre("Ana");
+        existing.setApellido("Viejo");
+        existing.setCorreo("viejo@mail.com");
+        existing.setContrasenya("oldpass");
+        existing.setTipoSuscripcion("BASICO");
+
+        Usuario detalles = new Usuario();
+        detalles.setNombre("Luis");
+        detalles.setApellido("Nuevo");
+        detalles.setCorreo("nuevo@mail.com");
+        detalles.setContrasenya("newpass");
+        detalles.setTipoSuscripcion("PREMIUM");
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(existing));
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Usuario result = deustoStreamService.updateUsuario(1L, detalles);
+
+        assertEquals("Luis", result.getNombre());
+        assertEquals("Nuevo", result.getApellido());
+        assertEquals("nuevo@mail.com", result.getCorreo());
+        assertEquals("newpass", result.getContrasenya());
+        assertEquals("PREMIUM", result.getTipoSuscripcion());
+        verify(usuarioRepository).save(existing);
+    }
+
+    @Test
+    void testUpdateUsuario_NotFound() {
+        Usuario detalles = new Usuario();
+        detalles.setNombre("Luis");
+        detalles.setApellido("Nuevo");
+        detalles.setCorreo("nuevo@mail.com");
+        detalles.setContrasenya("newpass");
+        detalles.setTipoSuscripcion("PREMIUM");
+
+        when(usuarioRepository.findById(99L)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.updateUsuario(99L, detalles);
+        });
+        assertEquals("Usuario not found", ex.getMessage());
+    }
+
+    @Test
+    void testDeleteUsuario_Successfully() {
+        // Mock usuarioRepository.existsById to return true
+        when(usuarioRepository.existsById(1L)).thenReturn(true);
+
+        // Call the method under test
+        deustoStreamService.deleteUsuario(1L);
+
+        // Verify that deleteById was called
+        verify(usuarioRepository).deleteById(1L);
+    }
+
+    @Test
+    void testDeleteUsuario_NotFound_ThrowsException() {
+        // Mock usuarioRepository.existsById to return false
+        when(usuarioRepository.existsById(2L)).thenReturn(false);
+
+        // Assert that the RuntimeException is thrown with the correct message
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.deleteUsuario(2L);
+        });
+
+        assertEquals("Usuario not found with id: 2", exception.getMessage());
+        verify(usuarioRepository, never()).deleteById(anyLong());
+    }
+
+
+
+    @Test
     void testGetPeliculaById() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
         pelicula.setId(1L);
@@ -497,6 +640,35 @@ public class DeustoStreamServiceTest {
         assertEquals(2, result.size());
         assertEquals("Breaking Bad", result.get(0).getTitulo());
         assertEquals("Game of Thrones", result.get(1).getTitulo());
+    }
+
+    @Test
+    void testGuardarUsuario_ReturnsSavedUsuario() {
+        Usuario usuario = new Usuario("Luis", "angel", "luis@mail.com", "1234");
+        usuario.setId(2L);
+
+        when(usuarioRepository.save(usuario)).thenReturn(usuario);
+
+        Usuario result = deustoStreamService.guardarUsuario(usuario);
+
+        assertNotNull(result);
+        assertEquals("Luis", result.getNombre());
+        assertEquals("luis@mail.com", result.getCorreo());
+        assertEquals("1234", result.getContrasenya());
+        assertEquals(2L, result.getId());
+        verify(usuarioRepository).save(usuario);
+    }
+
+    @Test
+    void testGuardarUsuario_NullUsuario_ThrowsException() {
+        when(usuarioRepository.save(null)).thenThrow(new RuntimeException("Usuario is null"));
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.guardarUsuario(null);
+        });
+
+        assertEquals("Usuario is null", exception.getMessage());
+        verify(usuarioRepository).save(null);
     }
 
     @Test
