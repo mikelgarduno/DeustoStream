@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.example.restapi.client.WebController;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.service.AuthService;
@@ -107,6 +108,21 @@ class WebControllerIT {
         mockMvc.perform(get("/admin/series").sessionAttr("usuario", user))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/acceso-denegado"));
+    }
+
+    @Test
+    void testMostrarPerfil_UsuarioAutenticado() throws Exception {
+        Usuario usuario = new Usuario();
+        Perfil perfil = new Perfil("Test", "avatar.png"); 
+        usuario.getPerfiles().add(perfil);
+        
+        mockMvc.perform(get("/perfil")
+                .sessionAttr("usuario", usuario))
+                .andExpect(status().isOk())
+                .andExpect(view().name("perfil"))
+                .andExpect(model().attribute("usuario", usuario))
+                .andExpect(model().attribute("perfiles", usuario.getPerfiles()))
+                .andExpect(model().attribute("avatar", "avatar.png"));
     }
 
 }
