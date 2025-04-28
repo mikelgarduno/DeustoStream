@@ -135,7 +135,7 @@
     <main class="suscripcion-main">
         <h1 class="catalogo-title">Gestión de Suscripción</h1>
         <div class="estado-suscripcion">
-            <h2>Estado de tu suscripción:
+            <h2>Estado de tu suscripción: 
                 <span th:if="${usuario.tipoSuscripcion == null}">No tienes suscripción</span>
                 <span th:if="${usuario.tipoSuscripcion == 'MENSUAL'}">Mensual</span>
                 <span th:if="${usuario.tipoSuscripcion == 'ANUAL'}">Anual</span>
@@ -247,11 +247,7 @@
                 .catch(error => console.error('Error al cancelar la suscripción:', error));
         }
 
-
-
-
     </script>
-
 
 </body>
 
