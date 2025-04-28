@@ -75,11 +75,13 @@ public class DeustoStreamController {
 
     // ---- SUSCRIPCIÓN ----
     @PostMapping("/usuarios/{usuarioId}/suscripcion/mensual")
-    public ResponseEntity<Usuario> suscribirseMensual(@PathVariable Long usuarioId) {
+    public ResponseEntity<Usuario> suscribirseMensual(@PathVariable Long usuarioId, HttpSession session) {
         Optional<Usuario> usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
             usuario.setTipoSuscripcion("MENSUAL");
+            usuario.setSuscripcionActiva(true);
+            session.setAttribute("usuario", usuario);
             deustoStreamService.guardarUsuario(usuario); // <--- Usar el nuevo método guardarUsuario
             return ResponseEntity.ok(usuario);
         } else {
@@ -88,11 +90,13 @@ public class DeustoStreamController {
     }
 
     @PostMapping("/usuarios/{usuarioId}/suscripcion/anual")
-    public ResponseEntity<Usuario> suscribirseAnual(@PathVariable Long usuarioId) {
+    public ResponseEntity<Usuario> suscribirseAnual(@PathVariable Long usuarioId, HttpSession session) {
         Optional<Usuario> usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
             usuario.setTipoSuscripcion("ANUAL");
+            usuario.setSuscripcionActiva(true);
+            session.setAttribute("usuario", usuario);
             deustoStreamService.guardarUsuario(usuario); // <-- Usamos guardarUsuario
             return ResponseEntity.ok(usuario);
         } else {
@@ -101,11 +105,13 @@ public class DeustoStreamController {
     }
 
     @PostMapping("/usuarios/{usuarioId}/suscripcion/cancelar")
-    public ResponseEntity<Usuario> cancelarSuscripcion(@PathVariable Long usuarioId) {
+    public ResponseEntity<Usuario> cancelarSuscripcion(@PathVariable Long usuarioId, HttpSession session) {
         Optional<Usuario> usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
             usuario.setTipoSuscripcion(null);
+            usuario.setSuscripcionActiva(false);
+            session.setAttribute("usuario", usuario);
             deustoStreamService.guardarUsuario(usuario); // <-- También usamos guardarUsuario
             return ResponseEntity.ok(usuario);
         } else {

@@ -146,7 +146,7 @@ public class WebController {
     @GetMapping("/suscripcion")
     public String verSuscripcion(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        
+
         if (usuario != null) {
             model.addAttribute("usuario", usuario);
             return "suscripcion";
@@ -184,7 +184,7 @@ public class WebController {
 
         // Filtrar por duración y año si se proporcionan
         if (duracion != null && !duracion.isEmpty()) {
-           for (int i = 0; i < peliculas.size(); i++) {
+            for (int i = 0; i < peliculas.size(); i++) {
                 int duracionPelicula = peliculas.get(i).getDuracion();
                 if (duracionPelicula > Integer.parseInt(duracion)) {
                     peliculas.remove(i);
@@ -196,7 +196,7 @@ public class WebController {
         if (anio != null && !anio.isEmpty()) {
             for (int i = 0; i < peliculas.size(); i++) {
                 int anioPelicula = peliculas.get(i).getAnio();
-                if(Integer.parseInt(anio) == 2000){
+                if (Integer.parseInt(anio) == 2000) {
                     if (anioPelicula <= Integer.parseInt(anio)) {
                         peliculas.remove(i);
                         i--;
@@ -207,12 +207,12 @@ public class WebController {
                         i--;
                     }
                 }
-                
+
             }
 
             for (int i = 0; i < series.size(); i++) {
                 int anioSerie = series.get(i).getAnio();
-                if(Integer.parseInt(anio) == 2000){
+                if (Integer.parseInt(anio) == 2000) {
                     if (anioSerie <= Integer.parseInt(anio)) {
                         series.remove(i);
                         i--;
@@ -226,9 +226,9 @@ public class WebController {
             }
         }
 
-
         Usuario usuario = (Usuario) session.getAttribute("usuario");
-        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
+        Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+                : usuario.getPerfiles().get(0);
         model.addAttribute("peliculas", peliculas);
         model.addAttribute("series", series);
         model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
@@ -325,7 +325,8 @@ public class WebController {
     public String mostrarGuardados(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
-            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+                    : usuario.getPerfiles().get(0);
             model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
             model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
         } else {
@@ -339,17 +340,17 @@ public class WebController {
     public String mostrarPerfil(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuario");
         if (usuario != null) {
-            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+                    : usuario.getPerfiles().get(0);
             model.addAttribute("usuario", usuario);
             model.addAttribute("perfiles", usuario.getPerfiles());
-            model.addAttribute("avatar", perfil.getAvatar()); 
+            model.addAttribute("avatar", perfil.getAvatar());
             return "perfil"; // Retorna el nombre del archivo HTML en /resources/templates/
         } else {
             model.addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
             return "redirect:/login";
         }
     }
-
 
     @GetMapping("/perfil/{id}")
     public String cambiarPerfil(@PathVariable Long id, HttpSession session) {
@@ -361,5 +362,7 @@ public class WebController {
             return "redirect:/acceso-denegado";
         }
     }
+
+    
 
 }

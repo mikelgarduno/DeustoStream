@@ -5,16 +5,19 @@
     <meta charset="UTF-8">
     <title>Suscripción - DeustoStream</title>
     <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
         .suscripcion-main {
             text-align: center;
             padding: 2rem;
         }
+
         .estado-suscripcion {
             margin-bottom: 2rem;
             color: white;
         }
+
         .planes-suscripcion {
             display: flex;
             justify-content: center;
@@ -22,11 +25,12 @@
             margin-bottom: 2rem;
             flex-wrap: wrap;
         }
+
         .plan-card {
             background: #fff;
             border-radius: 1.5rem;
             width: 250px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -34,15 +38,19 @@
             border: 5px solid;
             color: #000;
         }
+
         .basic-plan {
             border-color: #E50914;
         }
+
         .standard-plan {
             border-color: #1E90FF;
         }
+
         .cancelar-plan {
             border-color: #555;
         }
+
         .plan-card h3 {
             background-color: #000;
             color: #fff;
@@ -50,24 +58,29 @@
             padding: 1rem;
             font-size: 1.5rem;
         }
+
         .precio {
             font-size: 2rem;
             color: #000;
             margin: 1rem 0;
         }
+
         ul {
             list-style: none;
             padding: 0;
             margin: 1rem;
             text-align: left;
         }
+
         ul li {
             margin: 0.5rem 0;
             color: #000;
         }
+
         .plan-card form {
             margin: 1rem;
         }
+
         .plan-card button {
             background-color: #E50914;
             color: white;
@@ -79,12 +92,15 @@
             margin: 1rem auto;
             display: block;
         }
+
         .standard-plan button {
             background-color: #1E90FF;
         }
+
         .cancelar-plan button {
             background-color: #555;
         }
+
         .plan-card button:disabled {
             background-color: grey;
             cursor: not-allowed;
@@ -98,7 +114,6 @@
             <a th:href="@{/catalogo}" class="logo-link">
                 <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
             </a>
-            <h1 class="catalogo-title">Gestión de Suscripción</h1>
         </div>
 
         <nav class="header-nav">
@@ -110,7 +125,7 @@
 
         <div class="header-right">
             <a href="/perfil">
-                <img th:src="@{|/images/${avatar}.jpg|}" alt="Imagen de perfil" class="perfil-img">
+                <img th:src="@{|/images/${avatar}.jpg|}" alt="Foto de perfil" class="perfil-img">
             </a>
             <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
             <button class="favoritos-btn" onclick="window.location.href='/guardados'">Ver favoritos</button>
@@ -118,8 +133,9 @@
     </header>
 
     <main class="suscripcion-main">
+        <h1 class="catalogo-title">Gestión de Suscripción</h1>
         <div class="estado-suscripcion">
-            <h2>Estado de tu suscripción: 
+            <h2>Estado de tu suscripción:
                 <span th:if="${usuario.tipoSuscripcion == null}">No tienes suscripción</span>
                 <span th:if="${usuario.tipoSuscripcion == 'MENSUAL'}">Mensual</span>
                 <span th:if="${usuario.tipoSuscripcion == 'ANUAL'}">Anual</span>
@@ -165,12 +181,78 @@
                         <li>Perder beneficios.</li>
                     </ul>
                     <form th:action="@{'/api/usuarios/' + ${usuario.id} + '/suscripcion/cancelar'}" method="post">
-                        <button type="submit" th:disabled="${usuario.tipoSuscripcion == null}">Cancelar</button>
+                        <button type="submit" onclick="cancelarSuscripcion()"
+                            th:disabled="${usuario.tipoSuscripcion == null}">Cancelar</button>
                     </form>
                 </div>
             </div>
         </div>
     </main>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const forms = document.querySelectorAll('.plan-card form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', async function (event) {
+                    event.preventDefault(); // No recargamos página
+
+                    const url = form.action;
+                    try {
+                        const response = await fetch(url, {
+                            method: 'POST'
+                        });
+
+                        if (response.ok) {
+                            const usuario = await response.json();
+                            console.log("Usuario actualizado:", usuario);
+
+                            // Actualizamos el estado de suscripción
+                            const estadoSuscripcionContainer = document.querySelector('.estado-suscripcion h2');
+                            let nuevoEstado = "Estado de tu suscripción: ";
+
+                            if (usuario.tipoSuscripcion === "MENSUAL") {
+                                nuevoEstado += "Mensual";
+                            } else if (usuario.tipoSuscripcion === "ANUAL") {
+                                nuevoEstado += "Anual";
+                            } else {
+                                nuevoEstado += "No tienes suscripción";
+                            }
+
+                            estadoSuscripcionContainer.textContent = nuevoEstado;
+
+                        } else {
+                            console.error("Error en la suscripción");
+                        }
+                    } catch (error) {
+                        console.error("Error al hacer fetch:", error);
+                    }
+                });
+            });
+        });
+
+        function cancelarSuscripcion() {
+            const usuarioId =  "${usuario.id}";
+            fetch(`/api/usuarios/${usuarioId}/suscripcion/cancelar`, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Actualizar el estado en la plantilla sin recargar la página
+                    document.getElementById("estado-suscripcion").innerHTML =
+                        'Estado de tu suscripción: No tienes suscripción';
+
+                    // Actualizar el estado del botón de cancelar
+                    document.querySelector(".cancelar-plan button").disabled = true; // Deshabilitar el botón de cancelar
+                })
+                .catch(error => console.error('Error al cancelar la suscripción:', error));
+        }
+
+
+
+
+    </script>
+
 
 </body>
+
 </html>
