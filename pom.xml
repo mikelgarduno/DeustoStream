@@ -21,6 +21,8 @@
 	<properties>
 		<java.version>17</java.version>
 		<jacoco.version>0.8.12</jacoco.version>
+		<doxygen.config.file>${basedir}/src/main/resources/Doxyfile</doxygen.config.file>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
