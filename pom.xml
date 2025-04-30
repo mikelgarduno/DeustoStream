@@ -244,6 +244,68 @@
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>com.soebes.maven.plugins</groupId>
+				<artifactId>doxygen-maven-plugin</artifactId>
+				<version>1.1.0</version>
+				<executions>
+					<execution>
+						<id>generate-doxygen-site</id>
+						<phase>site</phase> <!-- important: run during site phase -->
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<configurationFile>${doxygen.config.file}</configurationFile>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+
+					<!-- Copy Maven Site content into docs/site/ -->
+					<execution>
+						<id>copy-maven-site-to-docs</id>
+						<phase>post-site</phase> <!-- After site generation -->
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/docs/site</outputDirectory> <!-- 🔥 target site folder -->
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/site</directory> <!-- source -->
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+
+					<!-- Copy Doxygen content into docs/doxygen/ -->
+					<execution>
+						<id>copy-doxygen-site-to-docs</id>
+						<phase>post-site</phase> <!-- After doxygen generation too -->
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/docs/doxygen</outputDirectory> <!-- 🔥 target doxygen folder -->
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/doxygen/html</directory> <!-- source -->
+									<filtering>false</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+
+				</executions>
+			</plugin>
+
 			<!-- Site plugin for generating reports -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
