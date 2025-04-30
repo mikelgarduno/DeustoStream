@@ -60,7 +60,7 @@ jobs:
         run: mvn -Pintegration integration-test
 
       - name: Run Performance Tests
-        run: mvn -Pperformance performance-test
+        run: mvn clean verify -Pperformance
 
       - name: Install Doxygen
         run: |
