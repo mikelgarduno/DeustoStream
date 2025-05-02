@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.service</a> &gt; <span class="el_source">AuthService.java</span></div><h1>AuthService.java</h1><pre class="source lang-java linenums">package com.example.restapi.service;
+
+import com.example.restapi.model.Perfil;
+import com.example.restapi.model.Usuario;
+import com.example.restapi.repository.PerfilRepository;
+import com.example.restapi.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.List;
+
+@Service
+<span class="fc" id="L16">public class AuthService {</span>
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PerfilRepository perfilRepository;
+
+    // valida las credenciales de un usuario
+    public Optional&lt;Usuario&gt; login(String correo, String contrasenya) {
+<span class="fc" id="L25">        Optional&lt;Usuario&gt; usuarioOpt = usuarioRepository.findByCorreo(correo);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (usuarioOpt.isPresent()) {</span>
+<span class="fc" id="L27">            Usuario usuario = usuarioOpt.get();</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">            if (usuario.getContrasenya().equals(contrasenya)) {</span>
+<span class="fc" id="L29">                return Optional.of(usuario);</span>
+            }
+        }
+<span class="fc" id="L32">        return Optional.empty();</span>
+    }
+
+    // registra un nuevo usuario si el correo no existe
+    @Transactional
+    public boolean register(Usuario nuevoUsuario) {
+<span class="fc" id="L38">        Optional&lt;Usuario&gt; existente = usuarioRepository.findByCorreo(nuevoUsuario.getCorreo());</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (existente.isPresent()) {</span>
+<span class="fc" id="L40">            return false; // correo ya registrado</span>
+        }
+
+        // Guardar el nuevo usuario primero (para generar ID)
+<span class="fc" id="L44">        nuevoUsuario = usuarioRepository.save(nuevoUsuario);</span>
+
+        // Crear el perfil básico
+<span class="fc" id="L47">        Perfil perfil = new Perfil();</span>
+<span class="fc" id="L48">        perfil.setNombre(&quot;Perfil Principal&quot;);</span>
+<span class="fc" id="L49">        perfil.setListaMeGustaPeliculas(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L50">        perfil.setListaMeGustaSeries(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L51">        perfil.setUsuario(nuevoUsuario); // Asociar el usuario</span>
+
+        // Guardar el perfil
+<span class="fc" id="L54">        perfilRepository.save(perfil);</span>
+
+        // Asignar el perfil al usuario
+<span class="fc" id="L57">        List&lt;Perfil&gt; perfiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">        perfiles.add(perfil);</span>
+<span class="fc" id="L59">        nuevoUsuario.setPerfiles(perfiles);</span>
+
+        // Actualizar el usuario con su lista de perfiles
+<span class="fc" id="L62">        usuarioRepository.save(nuevoUsuario);</span>
+
+<span class="fc" id="L64">        return true;</span>
+    }
+
+    // verifica si un correo esta registrado para recuperar la cuenta
+    public boolean existeCorreo(String correo) {
+<span class="fc" id="L69">        return usuarioRepository.findByCorreo(correo).isPresent();</span>
+    }
+
+    // redireccion segun el tipo de usuario
+    public String obtenerRedireccion(Usuario usuario) {
+
+<span class="fc" id="L75">        String correo = usuario.getCorreo().toLowerCase();</span>
+
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (correo.endsWith(&quot;@deustostream.es&quot;)) {</span>
+<span class="fc" id="L78">            return &quot;/admin&quot;;</span>
+        } else {
+<span class="fc" id="L80">            return &quot;/catalogo&quot;;</span>
+        }
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

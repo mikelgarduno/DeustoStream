@@ -1,0 +1,16 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+deustostream-api-app,com.example.restapi.config,LoginInterceptor,63,0,22,0,13,0,13,0,2,0
+deustostream-api-app,com.example.restapi.config,inicializarDatos,447,0,0,0,74,0,2,0,2,0
+deustostream-api-app,com.example.restapi.config,WebConfig,53,0,2,0,6,0,3,0,2,0
+deustostream-api-app,com.example.restapi.client,WebController,10,695,5,59,0,157,5,57,0,30
+deustostream-api-app,com.example.restapi,RestApiApplication,5,3,0,0,2,1,1,1,1,1
+deustostream-api-app,com.example.restapi.controller,DeustoStreamController,101,432,7,37,27,98,7,45,3,27
+deustostream-api-app,com.example.restapi.controller,GenerosController,0,11,0,0,0,4,0,2,0,2
+deustostream-api-app,com.example.restapi.model,Generos,0,81,0,0,0,14,0,1,0,1
+deustostream-api-app,com.example.restapi.model,Series,0,185,0,18,0,46,0,32,0,23
+deustostream-api-app,com.example.restapi.model,Pelicula,0,128,0,14,0,38,0,25,0,18
+deustostream-api-app,com.example.restapi.model,Perfil,0,179,0,16,0,38,0,28,0,20
+deustostream-api-app,com.example.restapi.model,Capitulo,0,48,0,0,0,19,0,11,0,11
+deustostream-api-app,com.example.restapi.model,Usuario,39,164,0,10,15,45,8,24,8,19
+deustostream-api-app,com.example.restapi.service,DeustoStreamService,10,685,13,71,0,148,13,60,0,31
+deustostream-api-app,com.example.restapi.service,AuthService,0,103,0,8,0,27,0,9,0,5

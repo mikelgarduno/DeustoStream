@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Perfil.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.model</a> &gt; <span class="el_source">Perfil.java</span></div><h1>Perfil.java</h1><pre class="source lang-java linenums">package com.example.restapi.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name = &quot;perfiles&quot;) 
+public class Perfil {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String nombre;
+
+    @Column
+    private String avatar;
+
+    @Column
+    private Integer edad;
+
+    @ManyToOne
+    @JoinColumn(name = &quot;usuario_id&quot;, nullable = false)
+    @JsonIgnore
+    private Usuario usuario;
+
+<span class="fc" id="L44">    @ManyToMany(fetch = FetchType.EAGER)</span>
+    @JoinTable(
+        name = &quot;perfil_series&quot;,
+        joinColumns = @JoinColumn(name = &quot;perfil_id&quot;),
+        inverseJoinColumns = @JoinColumn(name = &quot;serie_id&quot;)
+    )
+    private List&lt;Series&gt; listaMeGustaSeries = new ArrayList&lt;&gt;();
+
+<span class="fc" id="L52">    @ManyToMany(fetch = FetchType.EAGER)</span>
+    @JoinTable(
+        name = &quot;perfil_peliculas&quot;,
+        joinColumns = @JoinColumn(name = &quot;perfil_id&quot;),
+        inverseJoinColumns = @JoinColumn(name = &quot;pelicula_id&quot;)
+    )
+    private List&lt;Pelicula&gt; listaMeGustaPeliculas = new ArrayList&lt;&gt;();
+
+    // No-argument constructor
+<span class="fc" id="L61">    public Perfil() {</span>
+<span class="fc" id="L62">    }</span>
+
+    // All-argument constructor (optional, for convenience)
+<span class="fc" id="L65">    public Perfil(String nombre, String avatar) {</span>
+<span class="fc" id="L66">        this.nombre = nombre;</span>
+<span class="fc" id="L67">        this.avatar = avatar;</span>
+<span class="fc" id="L68">    }</span>
+
+    // Getters and Setters
+    public Long getId() {
+<span class="fc" id="L72">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L76">        this.id = id;</span>
+<span class="fc" id="L77">    }</span>
+
+    public String getNombre() {
+<span class="fc" id="L80">        return nombre;</span>
+    }
+
+    public void setNombre(String nombre) {
+<span class="fc" id="L84">        this.nombre = nombre;</span>
+<span class="fc" id="L85">    }</span>
+
+    public String getAvatar() {
+<span class="fc" id="L88">        return avatar;</span>
+    }
+
+    public void setAvatar(String avatar) {
+<span class="fc" id="L92">        this.avatar = avatar;</span>
+<span class="fc" id="L93">    }</span>
+
+
+    public Integer getEdad() {
+<span class="fc" id="L97">        return edad;</span>
+    }
+
+    public void setEdad(Integer edad) {
+<span class="fc" id="L101">        this.edad = edad;</span>
+<span class="fc" id="L102">    }</span>
+
+    public Usuario getUsuario() {
+<span class="fc" id="L105">        return usuario;</span>
+    }   
+
+    public void setUsuario(Usuario usuario) {
+<span class="fc" id="L109">        this.usuario = usuario;</span>
+<span class="fc" id="L110">    }</span>
+
+    public List&lt;Series&gt; getListaMeGustaSeries() {
+<span class="fc" id="L113">        return listaMeGustaSeries;</span>
+    }
+
+    public void setListaMeGustaSeries(List&lt;Series&gt; listaMeGustaSeries) {
+<span class="fc" id="L117">        this.listaMeGustaSeries = listaMeGustaSeries;</span>
+<span class="fc" id="L118">    }</span>
+
+    public List&lt;Pelicula&gt; getListaMeGustaPeliculas() {
+<span class="fc" id="L121">        return listaMeGustaPeliculas;</span>
+    }
+
+    public void setListaMeGustaPeliculas(List&lt;Pelicula&gt; listaMeGustaPeliculas) {
+<span class="fc" id="L125">        this.listaMeGustaPeliculas = listaMeGustaPeliculas;</span>
+<span class="fc" id="L126">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L130">        return &quot;Perfil [id=&quot; + id + &quot;, nombre=&quot; + nombre + &quot;, avatar=&quot; + avatar + &quot;, edad=&quot; + edad + &quot;, usuario=&quot; + usuario + &quot;]&quot;;</span>
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="fc bfc" id="L136" title="All 2 branches covered.">        if (!(o instanceof Perfil)) return false;</span>
+<span class="fc" id="L137">        Perfil perfil = (Perfil) o;</span>
+<span class="fc bfc" id="L138" title="All 10 branches covered.">        return Objects.equals(id, perfil.id) &amp;&amp; Objects.equals(nombre, perfil.nombre) &amp;&amp; Objects.equals(avatar, perfil.avatar) &amp;&amp; Objects.equals(edad, perfil.edad) &amp;&amp; Objects.equals(usuario, perfil.usuario);</span>
+    }
+
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L144">        return Objects.hash(id, nombre, avatar, edad, usuario);</span>
+    }
+
+    
+    // Helper method to remove association with a Pelicula before deleting it.
+    public void removePelicula(Pelicula pelicula) {
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (listaMeGustaPeliculas != null) {</span>
+<span class="fc" id="L151">            listaMeGustaPeliculas.remove(pelicula);</span>
+        }
+<span class="fc" id="L153">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
