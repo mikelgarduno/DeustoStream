@@ -59,9 +59,9 @@ Si todo está correctamente configurado, el servidor se iniciará y estará disp
 
 ### 4⃣ Acceso a la Aplicación
 
-- **Ventana de acceso inicial:** [http://localhost:8080](http://localhost:8080)
-- **Usuarios normales:** [http://localhost:8080/catalogo](http://localhost:8080/catalogo)
-- **Administración:** [http://localhost:8080/admin/usuarios](http://localhost:8080/admin/usuarios)
+- **Ventana incio :** [http://localhost:8080](http://localhost:8080)
+- **Acceso a catalogo:** [http://localhost:8080/catalogo](http://localhost:8080/catalogo)
+- **Administración:** [http://localhost:8080/admin](http://localhost:8080/admin)
 
 Los usuarios registrados con un correo `@deustostream.es` tienen acceso a la administración. Los demás usuarios solo pueden acceder al catálogo.
 
