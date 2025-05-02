@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Maven Site &n Peformance & Integration Tests
 
 on:
   push:
@@ -86,10 +86,13 @@ jobs:
       - name: Copy site output to docs/site and docs/doxygen folder to docs/doxygen
         run: |
           mkdir -p docs
+          rm -rf docs/site
           mkdir -p docs/site
-          mkdir -p docs/doxygen
           cp -r target/site/* docs/site/
-          cp -r target/doxygen/* docs/doxygen/
+          cp -r target/reports/* docs/site/reports/
+          rm -rf docs/doxygen
+          mkdir -p docs/doxygen
+          cp -r target/doxygen/html/* docs/doxygen/
 
       - name: Commit and push docs
         run: |
