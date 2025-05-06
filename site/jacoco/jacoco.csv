@@ -8,7 +8,7 @@ deustostream-api-app,com.example.restapi.controller,DeustoStreamController,101,4
 deustostream-api-app,com.example.restapi.controller,GenerosController,0,11,0,0,0,4,0,2,0,2
 deustostream-api-app,com.example.restapi.model,Generos,0,81,0,0,0,14,0,1,0,1
 deustostream-api-app,com.example.restapi.model,Series,0,185,0,18,0,46,0,32,0,23
-deustostream-api-app,com.example.restapi.model,Pelicula,0,128,0,14,0,38,0,25,0,18
+deustostream-api-app,com.example.restapi.model,Pelicula,26,128,0,14,1,38,1,25,1,18
 deustostream-api-app,com.example.restapi.model,Perfil,0,179,0,16,0,38,0,28,0,20
 deustostream-api-app,com.example.restapi.model,Capitulo,0,48,0,0,0,19,0,11,0,11
 deustostream-api-app,com.example.restapi.model,Usuario,39,164,0,10,15,45,8,24,8,19

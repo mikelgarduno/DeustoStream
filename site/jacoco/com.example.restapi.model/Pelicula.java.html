@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = &quot;peliculas&quot;)
@@ -40,80 +41,80 @@ public class Pelicula {
     private List&lt;Perfil&gt; perfiles; // Relación ManyToMany con Usuario
 
     // No-argument constructor
-<span class="fc" id="L43">    public Pelicula() {</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L44">    public Pelicula() {</span>
+<span class="fc" id="L45">    }</span>
 
     // All-argument constructor (optional, for convenience)
-<span class="fc" id="L47">    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {</span>
-<span class="fc" id="L48">        this.titulo = titulo;</span>
-<span class="fc" id="L49">        this.genero = genero;</span>
-<span class="fc" id="L50">        this.duracion = duracion;</span>
-<span class="fc" id="L51">        this.anio = anio;</span>
-<span class="fc" id="L52">        this.sinopsis = sinopsis;</span>
-<span class="fc" id="L53">        this.imagenUrl = imagenUrl;</span>
-<span class="fc" id="L54">    }</span>
+<span class="fc" id="L48">    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {</span>
+<span class="fc" id="L49">        this.titulo = titulo;</span>
+<span class="fc" id="L50">        this.genero = genero;</span>
+<span class="fc" id="L51">        this.duracion = duracion;</span>
+<span class="fc" id="L52">        this.anio = anio;</span>
+<span class="fc" id="L53">        this.sinopsis = sinopsis;</span>
+<span class="fc" id="L54">        this.imagenUrl = imagenUrl;</span>
+<span class="fc" id="L55">    }</span>
     
 
     // Getters and setters
     public Long getId() {
-<span class="fc" id="L59">        return id;</span>
+<span class="fc" id="L60">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L63">        this.id = id;</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L64">        this.id = id;</span>
+<span class="fc" id="L65">    }</span>
 
     public String getTitulo() {
-<span class="fc" id="L67">        return titulo;</span>
+<span class="fc" id="L68">        return titulo;</span>
     }
 
     public void setTitulo(String titulo) {
-<span class="fc" id="L71">        this.titulo = titulo;</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L72">        this.titulo = titulo;</span>
+<span class="fc" id="L73">    }</span>
 
     public Generos getGenero() {
-<span class="fc" id="L75">        return genero;</span>
+<span class="fc" id="L76">        return genero;</span>
     }
 
     public void setGenero(Generos genero) {
-<span class="fc" id="L79">        this.genero = genero;</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L80">        this.genero = genero;</span>
+<span class="fc" id="L81">    }</span>
 
     public int getDuracion() {
-<span class="fc" id="L83">        return duracion;</span>
+<span class="fc" id="L84">        return duracion;</span>
     }
 
     public void setDuracion(int duracion) {
-<span class="fc" id="L87">        this.duracion = duracion;</span>
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L88">        this.duracion = duracion;</span>
+<span class="fc" id="L89">    }</span>
 
     public int getAnio() {
-<span class="fc" id="L91">        return anio;</span>
+<span class="fc" id="L92">        return anio;</span>
     }
 
     public void setAnio(int anio) {
-<span class="fc" id="L95">        this.anio = anio;</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L96">        this.anio = anio;</span>
+<span class="fc" id="L97">    }</span>
 
     public String getSinopsis() {
-<span class="fc" id="L99">        return sinopsis;</span>
+<span class="fc" id="L100">        return sinopsis;</span>
     }
 
     public void setSinopsis(String sinopsis) {
-<span class="fc" id="L103">        this.sinopsis = sinopsis;</span>
-<span class="fc" id="L104">    }</span>
+<span class="fc" id="L104">        this.sinopsis = sinopsis;</span>
+<span class="fc" id="L105">    }</span>
 
     public String getImagenUrl() {
-<span class="fc" id="L107">        return imagenUrl;</span>
+<span class="fc" id="L108">        return imagenUrl;</span>
     }
 
     public void setImagenUrl(String imagenUrl) {
-<span class="fc" id="L111">        this.imagenUrl = imagenUrl;</span>
-<span class="fc" id="L112">    }</span>
+<span class="fc" id="L112">        this.imagenUrl = imagenUrl;</span>
+<span class="fc" id="L113">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L116">        return &quot;Pelicula{&quot; +</span>
+<span class="fc" id="L117">        return &quot;Pelicula{&quot; +</span>
                 &quot;id=&quot; + id +
                 &quot;, titulo='&quot; + titulo + '\'' +
                 &quot;, genero=&quot; + genero +
@@ -124,15 +125,22 @@ public class Pelicula {
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (this == o)</span>
-<span class="fc" id="L128">            return true;</span>
-<span class="fc bfc" id="L129" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass())</span>
-<span class="fc" id="L130">            return false;</span>
-<span class="fc" id="L131">        Pelicula pelicula = (Pelicula) o;</span>
-<span class="fc bfc" id="L132" title="All 8 branches covered.">        return titulo.equals(pelicula.titulo) &amp;&amp;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (this == o)</span>
+<span class="fc" id="L129">            return true;</span>
+<span class="fc bfc" id="L130" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass())</span>
+<span class="fc" id="L131">            return false;</span>
+<span class="fc" id="L132">        Pelicula pelicula = (Pelicula) o;</span>
+<span class="fc bfc" id="L133" title="All 8 branches covered.">        return titulo.equals(pelicula.titulo) &amp;&amp;</span>
                 genero == pelicula.genero &amp;&amp;
                 duracion == pelicula.duracion &amp;&amp;
                 anio == pelicula.anio;
     }
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L141">        return Objects.hash(titulo, genero, duracion, anio);</span>
+    }
 }
+
+
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
