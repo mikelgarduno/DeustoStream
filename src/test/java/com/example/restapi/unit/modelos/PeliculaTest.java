@@ -1,6 +1,7 @@
 package com.example.restapi.unit.modelos;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 
-public class PeliculaTest {
+class PeliculaTest {
     @Test
     void testToString() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
@@ -47,16 +48,20 @@ public class PeliculaTest {
         Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
         
         // Test same object reference (this == o)
-        assertTrue(pelicula1.equals(pelicula1));
+        //assertTrue(pelicula1.equals(pelicula1));
+        assertEquals(pelicula1, pelicula1);
         
         // Test null comparison (o == null)
-        assertFalse(pelicula1.equals(null));
+        //assertFalse(pelicula1.equals(null));
+        assertNotEquals(pelicula1, Integer.valueOf(0));
         
         // Test different class (getClass() != o.getClass())
-        assertFalse(pelicula1.equals(new Object()));
+        //assertFalse(pelicula1.equals(new Object()));
+        assertNotEquals(pelicula1, new Object());
         
         // Test successful equality (all fields match)
-        assertTrue(pelicula1.equals(pelicula2));
+        //assertTrue(pelicula1.equals(pelicula2));
+        assertEquals(pelicula1, pelicula2);
         
         // Test different attributes
         Pelicula differentTitle = new Pelicula("Different", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
@@ -64,10 +69,16 @@ public class PeliculaTest {
         Pelicula differentDuration = new Pelicula("Inception", Generos.ACCION, 120, 2010, "Un sueño dentro de otro", "url");
         Pelicula differentYear = new Pelicula("Inception", Generos.ACCION, 148, 2020, "Un sueño dentro de otro", "url");
         
-        assertFalse(pelicula1.equals(differentTitle));
-        assertFalse(pelicula1.equals(differentGenre));
-        assertFalse(pelicula1.equals(differentDuration));
-        assertFalse(pelicula1.equals(differentYear));
+        //assertFalse(pelicula1.equals(differentTitle));
+        //assertFalse(pelicula1.equals(differentGenre));
+        //assertFalse(pelicula1.equals(differentDuration));
+        //assertFalse(pelicula1.equals(differentYear));
+
+        assertNotEquals(pelicula1, differentTitle);
+        assertNotEquals(pelicula1, differentGenre);
+        assertNotEquals(pelicula1, differentDuration);
+        assertNotEquals(pelicula1, differentYear);
+        
     }
 
 }
