@@ -86,13 +86,6 @@
 			<version>2.3.0</version> <!-- Check latest version -->
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>com.github.noconnor</groupId>
-			<artifactId>junitperf</artifactId>
-			<version>1.18.0</version>
-			<scope>test</scope>
-		</dependency> -->
-
 		<dependency>
 			<groupId>com.github.noconnor</groupId>
 			<artifactId>junitperf-junit5</artifactId>

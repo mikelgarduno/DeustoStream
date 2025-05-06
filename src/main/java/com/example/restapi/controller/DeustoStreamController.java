@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +27,13 @@ import java.util.Optional;
 @Tag(name = "DeustoStream Controller", description = "API de DeustoStream")
 public class DeustoStreamController {
 
+    private final DeustoStreamService deustoStreamService;
+    private static final String USUARIO_SESSION = "usuario";
+
     @Autowired
-    private DeustoStreamService deustoStreamService;
+    public DeustoStreamController(DeustoStreamService deustoStreamService) {
+        this.deustoStreamService = deustoStreamService;
+    }
 
     @GetMapping("registro")
     public List<Usuario> getAllUsuarios() {
@@ -81,7 +85,7 @@ public class DeustoStreamController {
             Usuario usuario = usuarioOptional.get();
             usuario.setTipoSuscripcion("MENSUAL");
             usuario.setSuscripcionActiva(true);
-            session.setAttribute("usuario", usuario);
+            session.setAttribute(USUARIO_SESSION, usuario);
             deustoStreamService.guardarUsuario(usuario); // <--- Usar el nuevo método guardarUsuario
             return ResponseEntity.ok(usuario);
         } else {
@@ -96,7 +100,7 @@ public class DeustoStreamController {
             Usuario usuario = usuarioOptional.get();
             usuario.setTipoSuscripcion("ANUAL");
             usuario.setSuscripcionActiva(true);
-            session.setAttribute("usuario", usuario);
+            session.setAttribute(USUARIO_SESSION, usuario);
             deustoStreamService.guardarUsuario(usuario); // <-- Usamos guardarUsuario
             return ResponseEntity.ok(usuario);
         } else {
@@ -111,7 +115,7 @@ public class DeustoStreamController {
             Usuario usuario = usuarioOptional.get();
             usuario.setTipoSuscripcion(null);
             usuario.setSuscripcionActiva(false);
-            session.setAttribute("usuario", usuario);
+            session.setAttribute(USUARIO_SESSION, usuario);
             deustoStreamService.guardarUsuario(usuario); // <-- También usamos guardarUsuario
             return ResponseEntity.ok(usuario);
         } else {
@@ -201,10 +205,9 @@ public class DeustoStreamController {
     }
 
     @Operation(summary = "Crear una nueva serie con capítulos", description = "Crea una nueva serie y genera los capítulos asociados")
-    @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Serie creada"),
+            @ApiResponse(responseCode = "201", description = "Serie creada")
             @ApiResponse(responseCode = "400", description = "Error al crear serie")
-    })
+ 
     @PostMapping("/series")
     public ResponseEntity<Series> createSeries(@RequestBody Series series) {
         try {
@@ -231,11 +234,10 @@ public class DeustoStreamController {
     }
 
     @Operation(summary = "Actualizar una serie", description = "Modifica los datos de una serie existente")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Serie actualizada"),
-            @ApiResponse(responseCode = "400", description = "Error al actualizar serie"),
-            @ApiResponse(responseCode = "404", description = "Serie no encontrada")
-    })
+    @ApiResponse(responseCode = "200", description = "Serie actualizada")
+    @ApiResponse(responseCode = "400", description = "Error al actualizar serie")
+    @ApiResponse(responseCode = "404", description = "Serie no encontrada")
+  
 
     @PutMapping("/series/{id}")
     public ResponseEntity<Series> updateSeries(@PathVariable Long id, @RequestBody Series seriesDetails) {
@@ -248,10 +250,9 @@ public class DeustoStreamController {
     }
 
     @Operation(summary = "Eliminar una serie", description = "Elimina una serie de la base de datos si existe")
-    @ApiResponses({
-            @ApiResponse(responseCode = "204", description = "Serie eliminada"),
-            @ApiResponse(responseCode = "404", description = "Serie no encontrada")
-    })
+    @ApiResponse(responseCode = "204", description = "Serie eliminada")
+    @ApiResponse(responseCode = "404", description = "Serie no encontrada")
+
     @DeleteMapping("/series/{id}")
     public ResponseEntity<Void> deleteSeries(@PathVariable Long id) {
         Optional<Series> series = deustoStreamService.getSeriesById(id);
@@ -264,10 +265,9 @@ public class DeustoStreamController {
     }
 
     @Operation(summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Película añadida a favoritos"),
-            @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
-    })
+    @ApiResponse(responseCode = "200", description = "Película añadida a favoritos")
+    @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
+
     @PostMapping("/usuarios/{usuarioId}/peliculas/{peliculaId}")
     public ResponseEntity<Usuario> addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId,
             HttpSession session) {
@@ -284,10 +284,9 @@ public class DeustoStreamController {
     }
 
     @Operation(summary = "Añadir una película a la lista de favoritos", description = "Añade una película a la lista de favoritos de un usuario")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Película añadida a favoritos"),
-            @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
-    })
+    @ApiResponse(responseCode = "200", description = "Película añadida a favoritos")
+    @ApiResponse(responseCode = "404", description = "Usuario o película no encontrada")
+
     @PostMapping("/usuarios/{usuarioId}/series/{serieId}")
     public ResponseEntity<Usuario> addSerieToFavoritos(@PathVariable Long usuarioId, @PathVariable Long serieId,
             HttpSession session) {
