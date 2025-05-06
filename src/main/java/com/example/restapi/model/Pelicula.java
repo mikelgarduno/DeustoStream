@@ -134,4 +134,11 @@ public class Pelicula {
                 duracion == pelicula.duracion &&
                 anio == pelicula.anio;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(titulo, genero, duracion, anio);
+    }
 }
+
+
