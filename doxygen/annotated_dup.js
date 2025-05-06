@@ -53,9 +53,7 @@ var annotated_dup =
             [ "modelos", "namespacecom_1_1example_1_1restapi_1_1unit_1_1modelos.html", [
               [ "CapitulosTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_capitulos_test.html", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_capitulos_test" ],
               [ "GenerosTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_generos_test.html", null ],
-              [ "PeliculaTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_pelicula_test.html", null ],
-              [ "PerfilTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_perfil_test.html", null ],
-              [ "SerieTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_serie_test.html", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_serie_test" ]
+              [ "PerfilTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_perfil_test.html", null ]
             ] ],
             [ "service", "namespacecom_1_1example_1_1restapi_1_1unit_1_1service.html", [
               [ "DeustoStreamServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html", null ]

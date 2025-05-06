@@ -28,13 +28,11 @@ var hierarchy =
       [ "com.example.restapi.repository.UsuarioRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository.html", null ]
     ] ],
     [ "com.example.restapi.model.Pelicula", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html", null ],
-    [ "com.example.restapi.unit.modelos.PeliculaTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_pelicula_test.html", null ],
     [ "com.example.restapi.model.Perfil", "classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html", null ],
     [ "com.example.restapi.unit.modelos.PerfilTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_perfil_test.html", null ],
     [ "com.example.restapi.performance.RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ],
     [ "com.example.restapi.RestApiApplication", "classcom_1_1example_1_1restapi_1_1_rest_api_application.html", null ],
     [ "com.example.restapi.model.Series", "classcom_1_1example_1_1restapi_1_1model_1_1_series.html", null ],
-    [ "com.example.restapi.unit.modelos.SerieTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_serie_test.html", null ],
     [ "com.example.restapi.model.Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", null ],
     [ "com.example.restapi.client.WebController", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html", null ],
     [ "com.example.restapi.unit.controller.WebControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_web_controller_unit_test.html", null ],
