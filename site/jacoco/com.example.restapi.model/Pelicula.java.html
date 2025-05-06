@@ -9,12 +9,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = &quot;peliculas&quot;)
-public class Pelicula {
+public class Pelicula implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,80 +43,80 @@ public class Pelicula {
     private List&lt;Perfil&gt; perfiles; // Relación ManyToMany con Usuario
 
     // No-argument constructor
-<span class="fc" id="L44">    public Pelicula() {</span>
-<span class="fc" id="L45">    }</span>
+<span class="fc" id="L46">    public Pelicula() {</span>
+<span class="fc" id="L47">    }</span>
 
     // All-argument constructor (optional, for convenience)
-<span class="fc" id="L48">    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {</span>
-<span class="fc" id="L49">        this.titulo = titulo;</span>
-<span class="fc" id="L50">        this.genero = genero;</span>
-<span class="fc" id="L51">        this.duracion = duracion;</span>
-<span class="fc" id="L52">        this.anio = anio;</span>
-<span class="fc" id="L53">        this.sinopsis = sinopsis;</span>
-<span class="fc" id="L54">        this.imagenUrl = imagenUrl;</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L50">    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {</span>
+<span class="fc" id="L51">        this.titulo = titulo;</span>
+<span class="fc" id="L52">        this.genero = genero;</span>
+<span class="fc" id="L53">        this.duracion = duracion;</span>
+<span class="fc" id="L54">        this.anio = anio;</span>
+<span class="fc" id="L55">        this.sinopsis = sinopsis;</span>
+<span class="fc" id="L56">        this.imagenUrl = imagenUrl;</span>
+<span class="fc" id="L57">    }</span>
     
 
     // Getters and setters
     public Long getId() {
-<span class="fc" id="L60">        return id;</span>
+<span class="fc" id="L62">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L64">        this.id = id;</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L66">        this.id = id;</span>
+<span class="fc" id="L67">    }</span>
 
     public String getTitulo() {
-<span class="fc" id="L68">        return titulo;</span>
+<span class="fc" id="L70">        return titulo;</span>
     }
 
     public void setTitulo(String titulo) {
-<span class="fc" id="L72">        this.titulo = titulo;</span>
-<span class="fc" id="L73">    }</span>
+<span class="fc" id="L74">        this.titulo = titulo;</span>
+<span class="fc" id="L75">    }</span>
 
     public Generos getGenero() {
-<span class="fc" id="L76">        return genero;</span>
+<span class="fc" id="L78">        return genero;</span>
     }
 
     public void setGenero(Generos genero) {
-<span class="fc" id="L80">        this.genero = genero;</span>
-<span class="fc" id="L81">    }</span>
+<span class="fc" id="L82">        this.genero = genero;</span>
+<span class="fc" id="L83">    }</span>
 
     public int getDuracion() {
-<span class="fc" id="L84">        return duracion;</span>
+<span class="fc" id="L86">        return duracion;</span>
     }
 
     public void setDuracion(int duracion) {
-<span class="fc" id="L88">        this.duracion = duracion;</span>
-<span class="fc" id="L89">    }</span>
+<span class="fc" id="L90">        this.duracion = duracion;</span>
+<span class="fc" id="L91">    }</span>
 
     public int getAnio() {
-<span class="fc" id="L92">        return anio;</span>
+<span class="fc" id="L94">        return anio;</span>
     }
 
     public void setAnio(int anio) {
-<span class="fc" id="L96">        this.anio = anio;</span>
-<span class="fc" id="L97">    }</span>
+<span class="fc" id="L98">        this.anio = anio;</span>
+<span class="fc" id="L99">    }</span>
 
     public String getSinopsis() {
-<span class="fc" id="L100">        return sinopsis;</span>
+<span class="fc" id="L102">        return sinopsis;</span>
     }
 
     public void setSinopsis(String sinopsis) {
-<span class="fc" id="L104">        this.sinopsis = sinopsis;</span>
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L106">        this.sinopsis = sinopsis;</span>
+<span class="fc" id="L107">    }</span>
 
     public String getImagenUrl() {
-<span class="fc" id="L108">        return imagenUrl;</span>
+<span class="fc" id="L110">        return imagenUrl;</span>
     }
 
     public void setImagenUrl(String imagenUrl) {
-<span class="fc" id="L112">        this.imagenUrl = imagenUrl;</span>
-<span class="fc" id="L113">    }</span>
+<span class="fc" id="L114">        this.imagenUrl = imagenUrl;</span>
+<span class="fc" id="L115">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L117">        return &quot;Pelicula{&quot; +</span>
+<span class="fc" id="L119">        return &quot;Pelicula{&quot; +</span>
                 &quot;id=&quot; + id +
                 &quot;, titulo='&quot; + titulo + '\'' +
                 &quot;, genero=&quot; + genero +
@@ -125,12 +127,12 @@ public class Pelicula {
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (this == o)</span>
-<span class="fc" id="L129">            return true;</span>
-<span class="pc bpc" id="L130" title="1 of 4 branches missed.">        if (o == null || getClass() != o.getClass())</span>
-<span class="fc" id="L131">            return false;</span>
-<span class="fc" id="L132">        Pelicula pelicula = (Pelicula) o;</span>
-<span class="fc bfc" id="L133" title="All 8 branches covered.">        return titulo.equals(pelicula.titulo) &amp;&amp;</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">        if (this == o)</span>
+<span class="fc" id="L131">            return true;</span>
+<span class="pc bpc" id="L132" title="1 of 4 branches missed.">        if (o == null || getClass() != o.getClass())</span>
+<span class="fc" id="L133">            return false;</span>
+<span class="fc" id="L134">        Pelicula pelicula = (Pelicula) o;</span>
+<span class="fc bfc" id="L135" title="All 8 branches covered.">        return titulo.equals(pelicula.titulo) &amp;&amp;</span>
                 genero == pelicula.genero &amp;&amp;
                 duracion == pelicula.duracion &amp;&amp;
                 anio == pelicula.anio;
@@ -138,7 +140,7 @@ public class Pelicula {
 
     @Override
     public int hashCode() {
-<span class="fc" id="L141">        return Objects.hash(titulo, genero, duracion, anio);</span>
+<span class="fc" id="L143">        return Objects.hash(titulo, genero, duracion, anio);</span>
     }
 }
 
