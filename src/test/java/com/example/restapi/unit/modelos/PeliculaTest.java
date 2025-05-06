@@ -81,4 +81,23 @@ class PeliculaTest {
         
     }
 
+    @Test
+    void testHashCode() {
+        Pelicula pelicula1 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentTitle = new Pelicula("Different", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentGenre = new Pelicula("Inception", Generos.TERROR, 148, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentDuration = new Pelicula("Inception", Generos.ACCION, 120, 2010, "Un sueño dentro de otro", "url");
+        Pelicula differentYear = new Pelicula("Inception", Generos.ACCION, 148, 2020, "Un sueño dentro de otro", "url");
+
+        // Test same hashCode for equal objects
+        assertEquals(pelicula1.hashCode(), pelicula2.hashCode());
+
+        // Test different hashCode for objects with different attributes
+        assertNotEquals(pelicula1.hashCode(), differentTitle.hashCode());
+        assertNotEquals(pelicula1.hashCode(), differentGenre.hashCode());
+        assertNotEquals(pelicula1.hashCode(), differentDuration.hashCode());
+        assertNotEquals(pelicula1.hashCode(), differentYear.hashCode());
+    }
+
 }
