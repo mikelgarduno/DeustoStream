@@ -1,5 +1,6 @@
 package com.example.restapi.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +22,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "perfiles") 
-public class Perfil {
+public class Perfil  implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

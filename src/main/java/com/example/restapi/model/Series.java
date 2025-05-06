@@ -2,6 +2,7 @@ package com.example.restapi.model;
 
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Series {
+public class Series implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
