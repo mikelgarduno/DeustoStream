@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Maven Site &n Peformance & Integration Tests
+name: Maven Site & Integration Tests
 
 on:
   push:
