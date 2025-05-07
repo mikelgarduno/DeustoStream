@@ -8,7 +8,7 @@ var searchData=
   ['deustostreamcontroller_2ejava_5',['DeustoStreamController.java',['../_deusto_stream_controller_8java.html',1,'']]],
   ['deustostreamcontrollerit_2ejava_6',['DeustoStreamControllerIT.java',['../_deusto_stream_controller_i_t_8java.html',1,'']]],
   ['deustostreamcontrollerunittest_2ejava_7',['DeustoStreamControllerUnitTest.java',['../_deusto_stream_controller_unit_test_8java.html',1,'']]],
-  ['deustostreamservice_8',['deustostreamservice',['../classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html',1,'com.example.restapi.service.DeustoStreamService'],['../classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a934687fdea77328c7cb390e4a9637f3c',1,'com.example.restapi.service.DeustoStreamService.DeustoStreamService()']]],
+  ['deustostreamservice_8',['deustostreamservice',['../classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html',1,'com.example.restapi.service.DeustoStreamService'],['../classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#af43191415b874b0b962634342c085206',1,'com.example.restapi.service.DeustoStreamService.DeustoStreamService()']]],
   ['deustostreamservice_2ejava_9',['DeustoStreamService.java',['../_deusto_stream_service_8java.html',1,'']]],
   ['deustostreamservicetest_10',['DeustoStreamServiceTest',['../classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html',1,'com::example::restapi::unit::service']]],
   ['deustostreamservicetest_2ejava_11',['DeustoStreamServiceTest.java',['../_deusto_stream_service_test_8java.html',1,'']]],

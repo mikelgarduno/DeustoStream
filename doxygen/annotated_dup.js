@@ -21,7 +21,8 @@ var annotated_dup =
             [ "Pelicula", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula" ],
             [ "Perfil", "classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html", "classcom_1_1example_1_1restapi_1_1model_1_1_perfil" ],
             [ "Series", "classcom_1_1example_1_1restapi_1_1model_1_1_series.html", "classcom_1_1example_1_1restapi_1_1model_1_1_series" ],
-            [ "Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario" ]
+            [ "Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario" ],
+            [ "Valoracion", "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html", "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion" ]
           ] ],
           [ "performance", "namespacecom_1_1example_1_1restapi_1_1performance.html", [
             [ "RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ]
@@ -31,7 +32,8 @@ var annotated_dup =
             [ "PeliculaRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_pelicula_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_pelicula_repository" ],
             [ "PerfilRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_perfil_repository.html", null ],
             [ "SerieRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_serie_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_serie_repository" ],
-            [ "UsuarioRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository" ]
+            [ "UsuarioRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository" ],
+            [ "ValoracionRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_valoracion_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_valoracion_repository" ]
           ] ],
           [ "service", "namespacecom_1_1example_1_1restapi_1_1service.html", [
             [ "AuthService", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service" ],

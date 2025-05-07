@@ -38,8 +38,11 @@ public class Usuario implements Serializable {
 <span class="fc" id="L38">    @OneToMany(mappedBy = &quot;usuario&quot;, cascade = CascadeType.ALL, fetch = FetchType.EAGER)</span>
     private List&lt;Perfil&gt; perfiles = new ArrayList&lt;&gt;();
 
+    @OneToMany(mappedBy = &quot;usuario&quot;, cascade = CascadeType.ALL)
+    private List&lt;Valoracion&gt; valoraciones;
+
     // --- CAMPOS PARA SUSCRIPCIÓN ---
-<span class="fc" id="L42">    @Column(nullable = false)</span>
+<span class="fc" id="L45">    @Column(nullable = false)</span>
     private boolean suscripcionActiva = false;
 
     @Column
@@ -52,135 +55,135 @@ public class Usuario implements Serializable {
     private java.time.LocalDate fechaFinSuscripcion;
 
     // No-argument constructor
-<span class="fc" id="L55">    public Usuario() {</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L58">    public Usuario() {</span>
+<span class="fc" id="L59">    }</span>
 
     // All-argument constructor (optional, for convenience)
-<span class="fc" id="L59">    public Usuario(String nombre, String apellido, String correo, String contrasenya) {</span>
-<span class="fc" id="L60">        this.nombre = nombre;</span>
-<span class="fc" id="L61">        this.apellido = apellido;</span>
-<span class="fc" id="L62">        this.correo = correo;</span>
-<span class="fc" id="L63">        this.contrasenya = contrasenya;</span>
-<span class="fc" id="L64">        this.perfiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L62">    public Usuario(String nombre, String apellido, String correo, String contrasenya) {</span>
+<span class="fc" id="L63">        this.nombre = nombre;</span>
+<span class="fc" id="L64">        this.apellido = apellido;</span>
+<span class="fc" id="L65">        this.correo = correo;</span>
+<span class="fc" id="L66">        this.contrasenya = contrasenya;</span>
+<span class="fc" id="L67">        this.perfiles = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L66">        Perfil perfilBase = new Perfil();</span>
-<span class="fc" id="L67">        perfilBase.setNombre(nombre + &quot; &quot; + apellido);</span>
-<span class="fc" id="L68">        perfilBase.setUsuario(this);</span>
-<span class="fc" id="L69">        this.perfiles.add(perfilBase);</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L69">        Perfil perfilBase = new Perfil();</span>
+<span class="fc" id="L70">        perfilBase.setNombre(nombre + &quot; &quot; + apellido);</span>
+<span class="fc" id="L71">        perfilBase.setUsuario(this);</span>
+<span class="fc" id="L72">        this.perfiles.add(perfilBase);</span>
+<span class="fc" id="L73">    }</span>
 
     // Getters and setters
     public Long getId() {
-<span class="fc" id="L74">        return id;</span>
+<span class="fc" id="L77">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L78">        this.id = id;</span>
-<span class="fc" id="L79">    }</span>
+<span class="fc" id="L81">        this.id = id;</span>
+<span class="fc" id="L82">    }</span>
 
     public String getNombre() {
-<span class="fc" id="L82">        return nombre;</span>
+<span class="fc" id="L85">        return nombre;</span>
     }
 
     public void setNombre(String nombre) {
-<span class="fc" id="L86">        this.nombre = nombre;</span>
-<span class="fc" id="L87">    }</span>
+<span class="fc" id="L89">        this.nombre = nombre;</span>
+<span class="fc" id="L90">    }</span>
 
     public String getApellido() {
-<span class="fc" id="L90">        return apellido;</span>
+<span class="fc" id="L93">        return apellido;</span>
     }
 
     public void setApellido(String apellido) {
-<span class="fc" id="L94">        this.apellido = apellido;</span>
-<span class="fc" id="L95">    }</span>
+<span class="fc" id="L97">        this.apellido = apellido;</span>
+<span class="fc" id="L98">    }</span>
 
     public String getCorreo() {
-<span class="fc" id="L98">        return correo;</span>
+<span class="fc" id="L101">        return correo;</span>
     }
 
     public void setCorreo(String correo) {
-<span class="fc" id="L102">        this.correo = correo;</span>
-<span class="fc" id="L103">    }</span>
+<span class="fc" id="L105">        this.correo = correo;</span>
+<span class="fc" id="L106">    }</span>
 
     public String getContrasenya() {
-<span class="fc" id="L106">        return contrasenya;</span>
+<span class="fc" id="L109">        return contrasenya;</span>
     }
 
     public void setContrasenya(String contrasenya) {
-<span class="fc" id="L110">        this.contrasenya = contrasenya;</span>
-<span class="fc" id="L111">    }</span>
+<span class="fc" id="L113">        this.contrasenya = contrasenya;</span>
+<span class="fc" id="L114">    }</span>
 
     public List&lt;Perfil&gt; getPerfiles() {
-<span class="fc" id="L114">        return perfiles;</span>
+<span class="fc" id="L117">        return perfiles;</span>
     }
 
     public void setPerfiles(List&lt;Perfil&gt; perfiles) {
-<span class="fc" id="L118">        this.perfiles = perfiles;</span>
-<span class="fc" id="L119">    }</span>
+<span class="fc" id="L121">        this.perfiles = perfiles;</span>
+<span class="fc" id="L122">    }</span>
 
     public boolean isSuscripcionActiva() {
-<span class="nc" id="L122">        return suscripcionActiva;</span>
+<span class="nc" id="L125">        return suscripcionActiva;</span>
     }
 
     public void setSuscripcionActiva(boolean suscripcionActiva) {
-<span class="nc" id="L126">        this.suscripcionActiva = suscripcionActiva;</span>
-<span class="nc" id="L127">    }</span>
+<span class="nc" id="L129">        this.suscripcionActiva = suscripcionActiva;</span>
+<span class="nc" id="L130">    }</span>
 
     public String getTipoSuscripcion() {
-<span class="fc" id="L130">        return tipoSuscripcion;</span>
+<span class="fc" id="L133">        return tipoSuscripcion;</span>
     }
 
     public void setTipoSuscripcion(String tipoSuscripcion) {
-<span class="fc" id="L134">        this.tipoSuscripcion = tipoSuscripcion;</span>
-<span class="fc" id="L135">    }</span>
+<span class="fc" id="L137">        this.tipoSuscripcion = tipoSuscripcion;</span>
+<span class="fc" id="L138">    }</span>
 
     public java.time.LocalDate getFechaInicioSuscripcion() {
-<span class="nc" id="L138">        return fechaInicioSuscripcion;</span>
+<span class="nc" id="L141">        return fechaInicioSuscripcion;</span>
     }
 
     public void setFechaInicioSuscripcion(java.time.LocalDate fechaInicioSuscripcion) {
-<span class="nc" id="L142">        this.fechaInicioSuscripcion = fechaInicioSuscripcion;</span>
-<span class="nc" id="L143">    }</span>
+<span class="nc" id="L145">        this.fechaInicioSuscripcion = fechaInicioSuscripcion;</span>
+<span class="nc" id="L146">    }</span>
 
     public java.time.LocalDate getFechaFinSuscripcion() {
-<span class="nc" id="L146">        return fechaFinSuscripcion;</span>
+<span class="nc" id="L149">        return fechaFinSuscripcion;</span>
     }
 
     public void setFechaFinSuscripcion(java.time.LocalDate fechaFinSuscripcion) {
-<span class="nc" id="L150">        this.fechaFinSuscripcion = fechaFinSuscripcion;</span>
-<span class="nc" id="L151">    }</span>
+<span class="nc" id="L153">        this.fechaFinSuscripcion = fechaFinSuscripcion;</span>
+<span class="nc" id="L154">    }</span>
 
     public void addPerfil(Perfil perfil) {
-<span class="nc" id="L154">        perfiles.add(perfil);</span>
-<span class="nc" id="L155">        perfil.setUsuario(this);</span>
-<span class="nc" id="L156">    }</span>
+<span class="nc" id="L157">        perfiles.add(perfil);</span>
+<span class="nc" id="L158">        perfil.setUsuario(this);</span>
+<span class="nc" id="L159">    }</span>
 
     public void removePerfil(Perfil perfil) {
-<span class="nc" id="L159">        perfiles.remove(perfil);</span>
-<span class="nc" id="L160">        perfil.setUsuario(null);</span>
-<span class="nc" id="L161">    }</span>
+<span class="nc" id="L162">        perfiles.remove(perfil);</span>
+<span class="nc" id="L163">        perfil.setUsuario(null);</span>
+<span class="nc" id="L164">    }</span>
 
     
     @Override
     public String toString() {
-<span class="fc" id="L166">        return &quot;Usuario [id=&quot; + id + &quot;, nombre=&quot; + nombre + &quot;, apellido=&quot; + apellido + &quot;, correo=&quot; + correo</span>
+<span class="fc" id="L169">        return &quot;Usuario [id=&quot; + id + &quot;, nombre=&quot; + nombre + &quot;, apellido=&quot; + apellido + &quot;, correo=&quot; + correo</span>
                 + &quot;, contrasenya=&quot; + contrasenya + &quot;]&quot;;
     }
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (this == o)</span>
-<span class="fc" id="L173">            return true;</span>
-<span class="fc bfc" id="L174" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass())</span>
-<span class="fc" id="L175">            return false;</span>
-<span class="fc" id="L176">        Usuario usuario = (Usuario) o;</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        return nombre.equals(usuario.nombre) &amp;&amp;</span>
-<span class="fc bfc" id="L178" title="All 2 branches covered.">                correo.equals(usuario.correo);</span>
+<span class="fc bfc" id="L175" title="All 2 branches covered.">        if (this == o)</span>
+<span class="fc" id="L176">            return true;</span>
+<span class="fc bfc" id="L177" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass())</span>
+<span class="fc" id="L178">            return false;</span>
+<span class="fc" id="L179">        Usuario usuario = (Usuario) o;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        return nombre.equals(usuario.nombre) &amp;&amp;</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">                correo.equals(usuario.correo);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L183">        return Objects.hash(correo, nombre);</span>
+<span class="fc" id="L186">        return Objects.hash(correo, nombre);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

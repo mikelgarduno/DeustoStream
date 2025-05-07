@@ -279,99 +279,135 @@ public class WebController {
 <span class="fc" id="L279">        model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());</span>
 <span class="fc" id="L280">        model.addAttribute(USUARIO_STRING, usuario);</span>
 <span class="fc" id="L281">        model.addAttribute(GENEROS_STRING, Generos.values());</span>
+        
 
-<span class="fc" id="L283">        return &quot;catSeries&quot;; // apunta a templates/series.html</span>
+<span class="fc" id="L284">        return &quot;catSeries&quot;; // apunta a templates/series.html</span>
     }
 
     @GetMapping(&quot;/pelicula/{id}&quot;)
     public String mostrarDetallePelicula(@PathVariable Long id, Model model) {
-<span class="fc" id="L288">        Pelicula pelicula = deustoStreamService.getPeliculaById(id)</span>
-<span class="fc" id="L289">                .orElseThrow(() -&gt; new RuntimeException(&quot;Película no encontrada&quot;));</span>
+<span class="fc" id="L289">        Pelicula pelicula = deustoStreamService.getPeliculaById(id)</span>
+<span class="fc" id="L290">                .orElseThrow(() -&gt; new RuntimeException(&quot;Película no encontrada&quot;));</span>
 
-<span class="fc" id="L291">        model.addAttribute(PEL_STRING, pelicula);</span>
+<span class="fc" id="L292">        model.addAttribute(PEL_STRING, pelicula);</span>
         // ← NUEVO: lista de relacionadas
-<span class="fc" id="L293">        model.addAttribute(&quot;relacionadas&quot;,</span>
-<span class="fc" id="L294">                deustoStreamService.getPeliculasRelacionadas(id));</span>
+<span class="fc" id="L294">        model.addAttribute(&quot;relacionadas&quot;,</span>
+<span class="fc" id="L295">                deustoStreamService.getPeliculasRelacionadas(id));</span>
+<span class="fc" id="L296">        model.addAttribute(&quot;valoraciones&quot;, deustoStreamService.getValoracionesPelicula(id));</span>
 
-<span class="fc" id="L296">        return &quot;detallePelicula&quot;;</span>
+<span class="fc" id="L298">        return &quot;detallePelicula&quot;;</span>
     }
 
     // Detalle de película para ADMIN
     @GetMapping(&quot;/admin/pelicula/{id}&quot;)
     public String mostrarDetallePeliculaAdmin(@PathVariable Long id, Model model) {
-<span class="fc" id="L302">        Pelicula pelicula = deustoStreamService.getPeliculaById(id)</span>
-<span class="fc" id="L303">                .orElseThrow(() -&gt; new RuntimeException(&quot;Película no encontrada&quot;));</span>
+<span class="fc" id="L304">        Pelicula pelicula = deustoStreamService.getPeliculaById(id)</span>
+<span class="fc" id="L305">                .orElseThrow(() -&gt; new RuntimeException(&quot;Película no encontrada&quot;));</span>
 
-<span class="fc" id="L305">        model.addAttribute(PEL_STRING, pelicula);</span>
-<span class="fc" id="L306">        model.addAttribute(&quot;relacionadas&quot;,</span>
-<span class="fc" id="L307">                deustoStreamService.getPeliculasRelacionadas(id));</span>
+<span class="fc" id="L307">        model.addAttribute(PEL_STRING, pelicula);</span>
+<span class="fc" id="L308">        model.addAttribute(&quot;relacionadas&quot;,</span>
+<span class="fc" id="L309">                deustoStreamService.getPeliculasRelacionadas(id));</span>
 
-<span class="fc" id="L309">        return &quot;detallePeliculaAdmin&quot;;</span>
+<span class="fc" id="L311">        return &quot;detallePeliculaAdmin&quot;;</span>
     }
 
     // ---------------- Detalle SERIE (usuario) ------------------
     @GetMapping(&quot;/serie/{id}&quot;)
     public String mostrarDetalleSerieUsuario(@PathVariable Long id, Model model) {
-<span class="fc" id="L315">        Series serie = deustoStreamService.getSeriesById(id)</span>
-<span class="fc" id="L316">                .orElseThrow(() -&gt; new RuntimeException(&quot;Serie no encontrada&quot;));</span>
+<span class="fc" id="L317">        Series serie = deustoStreamService.getSeriesById(id)</span>
+<span class="fc" id="L318">                .orElseThrow(() -&gt; new RuntimeException(&quot;Serie no encontrada&quot;));</span>
 
-<span class="fc" id="L318">        model.addAttribute(&quot;serie&quot;, serie);</span>
+<span class="fc" id="L320">        model.addAttribute(&quot;serie&quot;, serie);</span>
         // ← NUEVO
-<span class="fc" id="L320">        model.addAttribute(&quot;relacionadas&quot;,</span>
-<span class="fc" id="L321">                deustoStreamService.getSeriesRelacionadas(id));</span>
+<span class="fc" id="L322">        model.addAttribute(&quot;relacionadas&quot;,</span>
+<span class="fc" id="L323">                deustoStreamService.getSeriesRelacionadas(id));</span>
 
-<span class="fc" id="L323">        return &quot;detalleSerie&quot;;</span>
+<span class="fc" id="L325">        model.addAttribute(&quot;valoraciones&quot;, deustoStreamService.getValoracionesSerie(id));</span>
+
+<span class="fc" id="L327">        return &quot;detalleSerie&quot;;</span>
     }
 
     @GetMapping(&quot;/admin/serie/{id}&quot;)
     public String mostrarDetalleSerieAdmin(@PathVariable Long id, Model model) {
-<span class="fc" id="L328">        Series serie = deustoStreamService.getSeriesById(id)</span>
-<span class="fc" id="L329">                .orElseThrow(() -&gt; new RuntimeException(&quot;Serie no encontrada&quot;));</span>
+<span class="fc" id="L332">        Series serie = deustoStreamService.getSeriesById(id)</span>
+<span class="fc" id="L333">                .orElseThrow(() -&gt; new RuntimeException(&quot;Serie no encontrada&quot;));</span>
 
-<span class="fc" id="L331">        model.addAttribute(&quot;serie&quot;, serie);</span>
-<span class="fc" id="L332">        return &quot;detalleSerieAdmin&quot;;</span>
+<span class="fc" id="L335">        model.addAttribute(&quot;serie&quot;, serie);</span>
+<span class="fc" id="L336">        return &quot;detalleSerieAdmin&quot;;</span>
     }
 
     // Ver lista de peliculas y series favoritas
     @GetMapping(&quot;/guardados&quot;)
     public String mostrarGuardados(Model model, HttpSession session) {
-<span class="fc" id="L338">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
-<span class="fc bfc" id="L339" title="All 2 branches covered.">        if (usuario != null) {</span>
-<span class="pc bpc" id="L340" title="1 of 2 branches missed.">            Perfil perfil = session.getAttribute(PERFIL_STRING) != null ? (Perfil) session.getAttribute(PERFIL_STRING)</span>
-<span class="pc" id="L341">                    : usuario.getPerfiles().get(0);</span>
-<span class="fc" id="L342">            model.addAttribute(PEL_FAV_STRING, perfil.getListaMeGustaPeliculas());</span>
-<span class="fc" id="L343">            model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());</span>
-<span class="fc" id="L344">        } else {</span>
-<span class="fc" id="L345">            model.addAttribute(&quot;error&quot;, &quot;Debes iniciar sesión para ver tus películas favoritas.&quot;);</span>
+<span class="fc" id="L342">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="fc bfc" id="L343" title="All 2 branches covered.">        if (usuario != null) {</span>
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">            Perfil perfil = session.getAttribute(PERFIL_STRING) != null ? (Perfil) session.getAttribute(PERFIL_STRING)</span>
+<span class="pc" id="L345">                    : usuario.getPerfiles().get(0);</span>
+<span class="fc" id="L346">            model.addAttribute(PEL_FAV_STRING, perfil.getListaMeGustaPeliculas());</span>
+<span class="fc" id="L347">            model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());</span>
+<span class="fc" id="L348">        } else {</span>
+<span class="fc" id="L349">            model.addAttribute(&quot;error&quot;, &quot;Debes iniciar sesión para ver tus películas favoritas.&quot;);</span>
         }
-<span class="fc" id="L347">        return &quot;guardados&quot;; // Retorna el nombre del archivo HTML en /resources/templates/</span>
+<span class="fc" id="L351">        return &quot;guardados&quot;; // Retorna el nombre del archivo HTML en /resources/templates/</span>
     }
 
     // Entrar a configuración de perfil
     @GetMapping(&quot;/perfil&quot;)
     public String mostrarPerfil(Model model, HttpSession session) {
-<span class="fc" id="L353">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
-<span class="fc bfc" id="L354" title="All 2 branches covered.">        if (usuario != null) {</span>
-<span class="fc bfc" id="L355" title="All 2 branches covered.">            Perfil perfil = session.getAttribute(PERFIL_STRING) != null ? (Perfil) session.getAttribute(PERFIL_STRING)</span>
-<span class="fc" id="L356">                    : usuario.getPerfiles().get(0);</span>
-<span class="fc" id="L357">            model.addAttribute(USUARIO_STRING, usuario);</span>
-<span class="fc" id="L358">            model.addAttribute(&quot;perfiles&quot;, usuario.getPerfiles());</span>
-<span class="fc" id="L359">            model.addAttribute(&quot;avatar&quot;, perfil.getAvatar());</span>
-<span class="fc" id="L360">            return PERFIL_STRING; // Retorna el nombre del archivo HTML en /resources/templates/</span>
+<span class="fc" id="L357">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">        if (usuario != null) {</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">            Perfil perfil = session.getAttribute(PERFIL_STRING) != null ? (Perfil) session.getAttribute(PERFIL_STRING)</span>
+<span class="fc" id="L360">                    : usuario.getPerfiles().get(0);</span>
+<span class="fc" id="L361">            model.addAttribute(USUARIO_STRING, usuario);</span>
+<span class="fc" id="L362">            model.addAttribute(&quot;perfiles&quot;, usuario.getPerfiles());</span>
+<span class="fc" id="L363">            model.addAttribute(&quot;avatar&quot;, perfil.getAvatar());</span>
+<span class="fc" id="L364">            return PERFIL_STRING; // Retorna el nombre del archivo HTML en /resources/templates/</span>
         } else {
-<span class="fc" id="L362">            model.addAttribute(&quot;error&quot;, &quot;Debes iniciar sesión para ver tu perfil.&quot;);</span>
-<span class="fc" id="L363">            return &quot;redirect:/login&quot;;</span>
+<span class="fc" id="L366">            model.addAttribute(&quot;error&quot;, &quot;Debes iniciar sesión para ver tu perfil.&quot;);</span>
+<span class="fc" id="L367">            return &quot;redirect:/login&quot;;</span>
         }
     }
 
     @GetMapping(&quot;/perfil/{id}&quot;)
     public String cambiarPerfil(@PathVariable Long id, HttpSession session) {
-<span class="fc" id="L369">        Optional&lt;Perfil&gt; perfilSeleccionado = deustoStreamService.getPerfilById(id);</span>
-<span class="fc bfc" id="L370" title="All 2 branches covered.">        if (perfilSeleccionado.isPresent()) {</span>
-<span class="fc" id="L371">            session.setAttribute(PERFIL_STRING, perfilSeleccionado.get());</span>
-<span class="fc" id="L372">            return &quot;redirect:/catalogo&quot;;</span>
+<span class="fc" id="L373">        Optional&lt;Perfil&gt; perfilSeleccionado = deustoStreamService.getPerfilById(id);</span>
+<span class="fc bfc" id="L374" title="All 2 branches covered.">        if (perfilSeleccionado.isPresent()) {</span>
+<span class="fc" id="L375">            session.setAttribute(PERFIL_STRING, perfilSeleccionado.get());</span>
+<span class="fc" id="L376">            return &quot;redirect:/catalogo&quot;;</span>
         } else {
-<span class="fc" id="L374">            return &quot;redirect:/acceso-denegado&quot;;</span>
+<span class="fc" id="L378">            return &quot;redirect:/acceso-denegado&quot;;</span>
+        }
+    }
+
+    @PostMapping(&quot;/pelicula/{id}/valorar&quot;)
+    public String valorarPelicula(
+                                @PathVariable Long id, 
+                                @RequestParam int puntuacion,
+                                @RequestParam String comentario, 
+                                HttpSession session) {
+<span class="nc" id="L388">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="nc" id="L389">        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">        if (usuario != null) {</span>
+<span class="nc" id="L391">            deustoStreamService.valorarPelicula(id, perfil, puntuacion, comentario);</span>
+<span class="nc" id="L392">            return &quot;redirect:/pelicula/&quot; + id;</span>
+        } else {
+<span class="nc" id="L394">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
+        }
+    }
+
+    @PostMapping(&quot;/serie/{id}/valorar&quot;)
+    public String valorarSerie(
+                                @PathVariable Long id, 
+                                @RequestParam int puntuacion,
+                                @RequestParam String comentario, 
+                                HttpSession session) {
+<span class="nc" id="L404">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="nc" id="L405">        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);</span>
+<span class="nc bnc" id="L406" title="All 2 branches missed.">        if (usuario != null) {</span>
+<span class="nc" id="L407">            deustoStreamService.valorarSerie(id, perfil, puntuacion, comentario);</span>
+<span class="nc" id="L408">            return &quot;redirect:/serie/&quot; + id;</span>
+        } else {
+<span class="nc" id="L410">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
         }
     }
 
