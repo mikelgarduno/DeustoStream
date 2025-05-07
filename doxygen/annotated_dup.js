@@ -15,10 +15,6 @@ var annotated_dup =
             [ "DeustoStreamController", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller" ],
             [ "GenerosController", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller" ]
           ] ],
-          [ "integration", "namespacecom_1_1example_1_1restapi_1_1integration.html", [
-            [ "AuthControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html", "classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t" ],
-            [ "DeustoStreamControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_deusto_stream_controller_i_t.html", "classcom_1_1example_1_1restapi_1_1integration_1_1_deusto_stream_controller_i_t" ]
-          ] ],
           [ "model", "namespacecom_1_1example_1_1restapi_1_1model.html", [
             [ "Capitulo", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo" ],
             [ "Generos", "enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html", "enumcom_1_1example_1_1restapi_1_1model_1_1_generos" ],
@@ -28,7 +24,7 @@ var annotated_dup =
             [ "Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario" ]
           ] ],
           [ "performance", "namespacecom_1_1example_1_1restapi_1_1performance.html", [
-            [ "RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test" ]
+            [ "RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ]
           ] ],
           [ "repository", "namespacecom_1_1example_1_1restapi_1_1repository.html", [
             [ "CapituloRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_capitulo_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_capitulo_repository" ],
@@ -42,19 +38,6 @@ var annotated_dup =
             [ "DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service" ]
           ] ],
           [ "unit", null, [
-            [ "config", "namespacecom_1_1example_1_1restapi_1_1unit_1_1config.html", [
-              [ "inicializadorDatosUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1config_1_1inicializador_datos_unit_test.html", null ]
-            ] ],
-            [ "controller", "namespacecom_1_1example_1_1restapi_1_1unit_1_1controller.html", [
-              [ "DeustoStreamControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_deusto_stream_controller_unit_test.html", null ],
-              [ "GenerosControllerTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_generos_controller_test.html", null ],
-              [ "WebControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_web_controller_unit_test.html", null ]
-            ] ],
-            [ "modelos", "namespacecom_1_1example_1_1restapi_1_1unit_1_1modelos.html", [
-              [ "CapitulosTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_capitulos_test.html", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_capitulos_test" ],
-              [ "GenerosTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_generos_test.html", null ],
-              [ "PerfilTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_perfil_test.html", null ]
-            ] ],
             [ "service", "namespacecom_1_1example_1_1restapi_1_1unit_1_1service.html", [
               [ "DeustoStreamServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html", null ]
             ] ]

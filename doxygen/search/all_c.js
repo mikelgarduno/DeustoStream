@@ -9,9 +9,8 @@ var searchData=
   ['perfil_2ejava_6',['Perfil.java',['../_perfil_8java.html',1,'']]],
   ['perfilrepository_7',['PerfilRepository',['../interfacecom_1_1example_1_1restapi_1_1repository_1_1_perfil_repository.html',1,'com::example::restapi::repository']]],
   ['perfilrepository_2ejava_8',['PerfilRepository.java',['../_perfil_repository_8java.html',1,'']]],
-  ['perfiltest_9',['PerfilTest',['../classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_perfil_test.html',1,'com::example::restapi::unit::modelos']]],
-  ['perfiltest_2ejava_10',['PerfilTest.java',['../_perfil_test_8java.html',1,'']]],
-  ['prehandle_11',['preHandle',['../classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c',1,'com::example::restapi::config::LoginInterceptor']]],
-  ['procesarlogin_12',['procesarLogin',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a11e90b70e8c293d9c3b2e07f0d1cb3ce',1,'com::example::restapi::client::WebController']]],
-  ['procesarregistro_13',['procesarRegistro',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc',1,'com::example::restapi::client::WebController']]]
+  ['perfiltest_2ejava_9',['PerfilTest.java',['../_perfil_test_8java.html',1,'']]],
+  ['prehandle_10',['preHandle',['../classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c',1,'com::example::restapi::config::LoginInterceptor']]],
+  ['procesarlogin_11',['procesarLogin',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a11e90b70e8c293d9c3b2e07f0d1cb3ce',1,'com::example::restapi::client::WebController']]],
+  ['procesarregistro_12',['procesarRegistro',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc',1,'com::example::restapi::client::WebController']]]
 ];

@@ -30,8 +30,7 @@ var searchData=
   ['setsuscripcionactiva_27',['setSuscripcionActiva',['../classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a01fa2b9677400081f17ad4317f2f627b',1,'com::example::restapi::model::Usuario']]],
   ['settiposuscripcion_28',['setTipoSuscripcion',['../classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#ad7d91f45be39110bd8bb6984b4999e4d',1,'com::example::restapi::model::Usuario']]],
   ['settitulo_29',['settitulo',['../classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html#ad06d58e7d39d74ba9d650b1c44a4707f',1,'com.example.restapi.model.Capitulo.setTitulo()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#ab9428709b3e815df4522e8dc5bffead8',1,'com.example.restapi.model.Pelicula.setTitulo()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#a627c1599be853ccb06722762f4f2a49f',1,'com.example.restapi.model.Series.setTitulo()']]],
-  ['setup_30',['setUp',['../classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#abc4e0ac08fa27c3babbba611f1bf0036',1,'com::example::restapi::integration::AuthControllerIT']]],
-  ['setusuario_31',['setUsuario',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a18d81aeb9357c97df1b2c7dae0b86e07',1,'com::example::restapi::model::Perfil']]],
-  ['suscribirseanual_32',['suscribirseAnual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#acfeb5ecf9de8f8376cf3475cce2d66a3',1,'com::example::restapi::controller::DeustoStreamController']]],
-  ['suscribirsemensual_33',['suscribirseMensual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#adfb29bc4c1f0ffee39bacb0cec126bb3',1,'com::example::restapi::controller::DeustoStreamController']]]
+  ['setusuario_30',['setUsuario',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a18d81aeb9357c97df1b2c7dae0b86e07',1,'com::example::restapi::model::Perfil']]],
+  ['suscribirseanual_31',['suscribirseAnual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#acfeb5ecf9de8f8376cf3475cce2d66a3',1,'com::example::restapi::controller::DeustoStreamController']]],
+  ['suscribirsemensual_32',['suscribirseMensual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#adfb29bc4c1f0ffee39bacb0cec126bb3',1,'com::example::restapi::controller::DeustoStreamController']]]
 ];

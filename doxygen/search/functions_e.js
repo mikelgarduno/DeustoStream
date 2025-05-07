@@ -1,7 +1,7 @@
 var searchData=
 [
   ['series_0',['series',['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#a72155068ffd5480fc3d034d52cdcd18c',1,'com.example.restapi.model.Series.Series(String titulo, int anio, String descripcion, Generos genero, List&lt; Capitulo &gt; capitulos, String imagenUrl)'],['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#a8667d19b0f4785afdee08d6ce379bb9e',1,'com.example.restapi.model.Series.Series()']]],
-  ['setanio_1',['setanio',['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a645fcf1c5872190e609e4eeac311cef3',1,'com.example.restapi.model.Pelicula.setAnio()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#a24deaef3945166fb73e8979210fea3b8',1,'com.example.restapi.model.Series.setAnio()']]],
+  ['setanio_1',['setanio',['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#a24deaef3945166fb73e8979210fea3b8',1,'com.example.restapi.model.Series.setAnio()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a645fcf1c5872190e609e4eeac311cef3',1,'com.example.restapi.model.Pelicula.setAnio()']]],
   ['setapellido_2',['setApellido',['../classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a15121752a62dd4ce15aec6ccb0415762',1,'com::example::restapi::model::Usuario']]],
   ['setavatar_3',['setAvatar',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a26bc658288809daee9b5d4aa335e15b3',1,'com::example::restapi::model::Perfil']]],
   ['setcapitulos_4',['setCapitulos',['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#aff4858ce96fdec9c6a7711e027559b6e',1,'com::example::restapi::model::Series']]],
@@ -26,8 +26,7 @@ var searchData=
   ['setsuscripcionactiva_23',['setSuscripcionActiva',['../classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a01fa2b9677400081f17ad4317f2f627b',1,'com::example::restapi::model::Usuario']]],
   ['settiposuscripcion_24',['setTipoSuscripcion',['../classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#ad7d91f45be39110bd8bb6984b4999e4d',1,'com::example::restapi::model::Usuario']]],
   ['settitulo_25',['settitulo',['../classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html#ad06d58e7d39d74ba9d650b1c44a4707f',1,'com.example.restapi.model.Capitulo.setTitulo()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#ab9428709b3e815df4522e8dc5bffead8',1,'com.example.restapi.model.Pelicula.setTitulo()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_series.html#a627c1599be853ccb06722762f4f2a49f',1,'com.example.restapi.model.Series.setTitulo()']]],
-  ['setup_26',['setUp',['../classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#abc4e0ac08fa27c3babbba611f1bf0036',1,'com::example::restapi::integration::AuthControllerIT']]],
-  ['setusuario_27',['setUsuario',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a18d81aeb9357c97df1b2c7dae0b86e07',1,'com::example::restapi::model::Perfil']]],
-  ['suscribirseanual_28',['suscribirseAnual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#acfeb5ecf9de8f8376cf3475cce2d66a3',1,'com::example::restapi::controller::DeustoStreamController']]],
-  ['suscribirsemensual_29',['suscribirseMensual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#adfb29bc4c1f0ffee39bacb0cec126bb3',1,'com::example::restapi::controller::DeustoStreamController']]]
+  ['setusuario_26',['setUsuario',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a18d81aeb9357c97df1b2c7dae0b86e07',1,'com::example::restapi::model::Perfil']]],
+  ['suscribirseanual_27',['suscribirseAnual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#acfeb5ecf9de8f8376cf3475cce2d66a3',1,'com::example::restapi::controller::DeustoStreamController']]],
+  ['suscribirsemensual_28',['suscribirseMensual',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#adfb29bc4c1f0ffee39bacb0cec126bb3',1,'com::example::restapi::controller::DeustoStreamController']]]
 ];
