@@ -35,6 +35,9 @@ public class Series implements Serializable{
     @Column(nullable = false)
     private String imagenUrl; // Nueva propiedad
 
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL)
+    private List<Valoracion> valoraciones;
+
     // Constructor vacío (necesario para JPA)
     public Series() {
     }

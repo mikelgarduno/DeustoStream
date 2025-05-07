@@ -279,6 +279,7 @@ public class WebController {
         model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());
         model.addAttribute(USUARIO_STRING, usuario);
         model.addAttribute(GENEROS_STRING, Generos.values());
+        
 
         return "catSeries"; // apunta a templates/series.html
     }
@@ -292,6 +293,7 @@ public class WebController {
         // ← NUEVO: lista de relacionadas
         model.addAttribute("relacionadas",
                 deustoStreamService.getPeliculasRelacionadas(id));
+        model.addAttribute("valoraciones", deustoStreamService.getValoracionesPelicula(id));
 
         return "detallePelicula";
     }
@@ -319,6 +321,8 @@ public class WebController {
         // ← NUEVO
         model.addAttribute("relacionadas",
                 deustoStreamService.getSeriesRelacionadas(id));
+
+        model.addAttribute("valoraciones", deustoStreamService.getValoracionesSerie(id));
 
         return "detalleSerie";
     }
@@ -372,6 +376,38 @@ public class WebController {
             return "redirect:/catalogo";
         } else {
             return "redirect:/acceso-denegado";
+        }
+    }
+
+    @PostMapping("/pelicula/{id}/valorar")
+    public String valorarPelicula(
+                                @PathVariable Long id, 
+                                @RequestParam int puntuacion,
+                                @RequestParam String comentario, 
+                                HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
+        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);
+        if (usuario != null) {
+            deustoStreamService.valorarPelicula(id, perfil, puntuacion, comentario);
+            return "redirect:/pelicula/" + id;
+        } else {
+            return "redirect:/login"; // Si no hay sesión, redirigir a login
+        }
+    }
+
+    @PostMapping("/serie/{id}/valorar")
+    public String valorarSerie(
+                                @PathVariable Long id, 
+                                @RequestParam int puntuacion,
+                                @RequestParam String comentario, 
+                                HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
+        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);
+        if (usuario != null) {
+            deustoStreamService.valorarSerie(id, perfil, puntuacion, comentario);
+            return "redirect:/serie/" + id;
+        } else {
+            return "redirect:/login"; // Si no hay sesión, redirigir a login
         }
     }
 

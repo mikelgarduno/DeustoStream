@@ -5,11 +5,13 @@ import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
+import com.example.restapi.model.Valoracion;
 import com.example.restapi.model.Perfil;
 import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.repository.ValoracionRepository;
 import com.example.restapi.repository.PerfilRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,15 +31,17 @@ public class DeustoStreamService {
     private final PeliculaRepository peliculaRepository;
     private final SerieRepository serieRepository;
     private final CapituloRepository capituloRepository;
+    private final ValoracionRepository valoracionRepository;
 
     @Autowired
     public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
-            SerieRepository serieRepository, CapituloRepository capituloRepository, PerfilRepository perfilRepository) {
+            SerieRepository serieRepository, CapituloRepository capituloRepository, PerfilRepository perfilRepository, ValoracionRepository valoracionRepository) {
         this.usuarioRepository = usuarioRepository;
         this.peliculaRepository = peliculaRepository;
         this.serieRepository = serieRepository;
         this.capituloRepository = capituloRepository;
         this.perfilRepository = perfilRepository;
+        this.valoracionRepository = valoracionRepository;
     }
 
     public List<Usuario> getAllUsuarios() {
@@ -203,7 +207,8 @@ public class DeustoStreamService {
         if (optionalUsuario.isPresent() && optionalPelicula.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             Pelicula pelicula = optionalPelicula.get();
-            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+                    : usuario.getPerfiles().get(0);
 
             if (perfil.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
                 // Si la película ya está en la lista de favoritos, eliminarla
@@ -213,7 +218,6 @@ public class DeustoStreamService {
                 perfil.getListaMeGustaPeliculas().add(pelicula);
             }
             perfilRepository.save(perfil);
-
 
         } else {
             throw new RuntimeException("Usuario or Pelicula not found");
@@ -227,17 +231,17 @@ public class DeustoStreamService {
         if (optionalUsuario.isPresent() && optionalSerie.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             Series serie = optionalSerie.get();
-            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil") : usuario.getPerfiles().get(0);
+            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+                    : usuario.getPerfiles().get(0);
 
             if (perfil.getListaMeGustaSeries().contains(optionalSerie.get())) {
                 // Si la serie ya está en la lista de favoritos, eliminarla
-              perfil.getListaMeGustaSeries().remove(serie);
+                perfil.getListaMeGustaSeries().remove(serie);
             } else {
                 // Añadir la serie a la lista de favoritos del usuario
                 perfil.getListaMeGustaSeries().add(serie);
             }
             perfilRepository.save(perfil);
-
 
         } else {
             throw new RuntimeException("Usuario or Serie not found");
@@ -315,4 +319,59 @@ public class DeustoStreamService {
     public Optional<Perfil> getPerfilById(Long id) {
         return perfilRepository.findById(id);
     }
+
+    public void valorarPelicula(Long peliculaId, Perfil perfil, int puntuacion, String comentario) {
+        Optional<Pelicula> optionalPelicula = peliculaRepository.findById(peliculaId);
+
+        if(optionalPelicula.isPresent() && perfil.getUsuario() != null) {
+            Pelicula pelicula = optionalPelicula.get();
+
+            Valoracion v = new Valoracion();
+            v.setPelicula(pelicula);
+            v.setPerfil(perfil);
+            v.setPuntuacion(puntuacion);
+            v.setComentario(comentario);
+
+            valoracionRepository.save(v);
+        }
+        else {
+            throw new RuntimeException("Pelicula or Usuario not found");
+        }
+    }
+
+    public void valorarSerie(Long idSerie, Perfil perfil, int puntuacion, String comentario) {
+        Optional<Series> optionalSerie = serieRepository.findById(idSerie);
+
+        if(optionalSerie.isPresent() && perfil.getUsuario() != null) {
+            Series serie = optionalSerie.get();
+
+            Valoracion v = new Valoracion();
+            v.setSerie(serie);
+            v.setPerfil(perfil);
+            v.setPuntuacion(puntuacion);
+            v.setComentario(comentario);
+
+            valoracionRepository.save(v);
+        }
+        else {
+            throw new RuntimeException("Serie or Usuario not found");
+        }
+    }
+    
+    public List<Valoracion> getValoracionesPelicula(Long idPelicula) {
+        Optional<Pelicula> optionalPelicula = peliculaRepository.findById(idPelicula);
+        if (optionalPelicula.isEmpty()) {
+            throw new RuntimeException("Pelicula not found with id: " + idPelicula);
+        }
+        return valoracionRepository.findByPelicula(optionalPelicula.get());
+    }
+
+    public List<Valoracion> getValoracionesSerie(Long idSerie) {
+        Optional<Series> optionalSerie = serieRepository.findById(idSerie);
+        if (optionalSerie.isEmpty()) {
+            throw new RuntimeException("Serie not found with id: " + idSerie);
+        }
+        return valoracionRepository.findBySerie(optionalSerie.get());
+    }
+
 }

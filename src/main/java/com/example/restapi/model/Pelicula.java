@@ -1,5 +1,6 @@
 package com.example.restapi.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.io.Serializable;
@@ -41,6 +43,9 @@ public class Pelicula implements Serializable {
 
     @ManyToMany(mappedBy = "listaMeGustaPeliculas")
     private List<Perfil> perfiles; // Relación ManyToMany con Usuario
+
+    @OneToMany(mappedBy = "pelicula", cascade = CascadeType.ALL)
+    private List<Valoracion> valoraciones;
 
     // No-argument constructor
     public Pelicula() {

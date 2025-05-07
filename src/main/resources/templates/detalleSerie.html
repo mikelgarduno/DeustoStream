@@ -47,9 +47,42 @@
         </tbody>
     </table>
 
+    <div class="seccion" th:if="${valoraciones != null and !valoraciones.isEmpty()}">
+        <h2>Valoraciones</h2>
+
+        <div th:each="v : ${valoraciones}" class="valoracion">
+            <p>
+                <strong th:text="${v.perfil.nombre}">Perfil</strong> valoró:
+                <span th:utext="${'★'.repeat(v.puntuacion)}" style="color: gold;"></span>
+            </p>
+            <p th:text="${v.comentario}"></p>
+        </div>
+    </div>
+    <div class="seccion">
+        <h2>Valora esta película</h2>
+
+        <form th:action="@{/serie/{id}/valorar(id=${serie.id})}" method="post" class="form-valoracion">
+            <div class="rating">
+                <input type="radio" id="star5" name="puntuacion" value="5" required><label for="star5"
+                    title="5 estrellas">★</label>
+                <input type="radio" id="star4" name="puntuacion" value="4"><label for="star4"
+                    title="4 estrellas">★</label>
+                <input type="radio" id="star3" name="puntuacion" value="3"><label for="star3"
+                    title="3 estrellas">★</label>
+                <input type="radio" id="star2" name="puntuacion" value="2"><label for="star2"
+                    title="2 estrellas">★</label>
+                <input type="radio" id="star1" name="puntuacion" value="1"><label for="star1"
+                    title="1 estrella">★</label>
+            </div>
+
+            <textarea name="comentario" placeholder="Escribe tu comentario..." required></textarea>
+            <button type="submit">Enviar valoración</button>
+        </form>
+    </div>
+
     <div th:if="${relacionadas != null and !relacionadas.isEmpty()}" class="seccion">
         <h2>Más [[${serie.genero}]] que quizá te guste</h2>
-    
+
         <div class="contenedor-series">
             <div class="serie" th:each="s : ${relacionadas}">
                 <a th:href="@{/serie/{id}(id=${s.id})}">
@@ -59,7 +92,9 @@
             </div>
         </div>
     </div>
-    
+
+
+
 
     <a href="/catalogo" class="btn-volver">Volver</a>
 

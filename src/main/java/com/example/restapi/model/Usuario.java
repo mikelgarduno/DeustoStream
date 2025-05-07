@@ -38,6 +38,9 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Perfil> perfiles = new ArrayList<>();
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Valoracion> valoraciones;
+
     // --- CAMPOS PARA SUSCRIPCIÓN ---
     @Column(nullable = false)
     private boolean suscripcionActiva = false;
