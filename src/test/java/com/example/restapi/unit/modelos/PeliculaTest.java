@@ -48,19 +48,15 @@ class PeliculaTest {
         Pelicula pelicula2 = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
         
         // Test same object reference (this == o)
-        //assertTrue(pelicula1.equals(pelicula1));
         assertEquals(pelicula1, pelicula1);
         
         // Test null comparison (o == null)
-        //assertFalse(pelicula1.equals(null));
         assertNotEquals(pelicula1, Integer.valueOf(0));
         
         // Test different class (getClass() != o.getClass())
-        //assertFalse(pelicula1.equals(new Object()));
         assertNotEquals(pelicula1, new Object());
         
         // Test successful equality (all fields match)
-        //assertTrue(pelicula1.equals(pelicula2));
         assertEquals(pelicula1, pelicula2);
         
         // Test different attributes
@@ -68,11 +64,6 @@ class PeliculaTest {
         Pelicula differentGenre = new Pelicula("Inception", Generos.TERROR, 148, 2010, "Un sueño dentro de otro", "url");
         Pelicula differentDuration = new Pelicula("Inception", Generos.ACCION, 120, 2010, "Un sueño dentro de otro", "url");
         Pelicula differentYear = new Pelicula("Inception", Generos.ACCION, 148, 2020, "Un sueño dentro de otro", "url");
-        
-        //assertFalse(pelicula1.equals(differentTitle));
-        //assertFalse(pelicula1.equals(differentGenre));
-        //assertFalse(pelicula1.equals(differentDuration));
-        //assertFalse(pelicula1.equals(differentYear));
 
         assertNotEquals(pelicula1, differentTitle);
         assertNotEquals(pelicula1, differentGenre);

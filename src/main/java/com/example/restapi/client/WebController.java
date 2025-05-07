@@ -30,10 +30,14 @@ public class WebController {
     // Logger para registrar mensajes
     private static final Logger logger = LoggerFactory.getLogger(WebController.class);
     private static final String USUARIO_STRING = "usuario";
+    private static final String USUARIOS_STRING = "usuarios";
     private static final String PERFIL_STRING = "perfil";
-
     private static final String PELICULA_STRING = "peliculas";
+    private static final String PEL_STRING = "pelicula";
+    private static final String PEL_FAV_STRING = "peliculasFavoritas";
     private static final String SERIE_STRING = "series";
+    private static final String SERIES_FAV_STRING = "seriesFavoritas";
+    private static final String GENEROS_STRING = "generos";
 
     private final DeustoStreamService deustoStreamService;
     private final AuthService authService;
@@ -82,7 +86,7 @@ public class WebController {
     public String mostrarPanelAdmin(Model model) {
         model.addAttribute(PELICULA_STRING, deustoStreamService.getAllPeliculas());
         model.addAttribute(SERIE_STRING, deustoStreamService.getAllSeries());
-        model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
+        model.addAttribute(USUARIOS_STRING, deustoStreamService.getAllUsuarios());
         return "panelAdmin"; // Redirige a un panel de administración
     }
 
@@ -171,8 +175,8 @@ public class WebController {
             logger.info("Correo del usuario: {}", usuario.getCorreo());
 
             if (usuario.getCorreo().endsWith("@deustostream.es")) {
-                model.addAttribute("usuarios", deustoStreamService.getAllUsuarios());
-                return "usuarios";
+                model.addAttribute(USUARIOS_STRING, deustoStreamService.getAllUsuarios());
+                return USUARIOS_STRING;
             }
         }
 
@@ -239,10 +243,10 @@ public class WebController {
                 : usuario.getPerfiles().get(0);
         model.addAttribute(PELICULA_STRING, peliculas);
         model.addAttribute(SERIE_STRING, series);
-        model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
-        model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
+        model.addAttribute(PEL_FAV_STRING, perfil.getListaMeGustaPeliculas());
+        model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());
         model.addAttribute(USUARIO_STRING, usuario);
-        model.addAttribute("generos", Generos.values()); // Importa tu enum Generos
+        model.addAttribute(GENEROS_STRING, Generos.values()); // Importa tu enum Generos
         model.addAttribute("avatar", perfil.getAvatar());
 
         return "catalogo"; // Asegúrate de que este es el nombre del archivo HTML en templates
@@ -256,9 +260,9 @@ public class WebController {
         List<Pelicula> peliculas = deustoStreamService.buscarPeliculasFiltradas(titulo, genero);
         Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
         model.addAttribute(PELICULA_STRING, peliculas);
-        model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
+        model.addAttribute(PEL_FAV_STRING, perfil.getListaMeGustaPeliculas());
         model.addAttribute(USUARIO_STRING, usuario);
-        model.addAttribute("generos", Generos.values());
+        model.addAttribute(GENEROS_STRING, Generos.values());
 
         return "catPeliculas"; // apunta a templates/peliculas.html
     }
@@ -272,9 +276,9 @@ public class WebController {
         Perfil perfil = usuario.getPerfiles().get(0);// Obtener el primer perfil basico del usuario
 
         model.addAttribute(SERIE_STRING, series);
-        model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
+        model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());
         model.addAttribute(USUARIO_STRING, usuario);
-        model.addAttribute("generos", Generos.values());
+        model.addAttribute(GENEROS_STRING, Generos.values());
 
         return "catSeries"; // apunta a templates/series.html
     }
@@ -284,7 +288,7 @@ public class WebController {
         Pelicula pelicula = deustoStreamService.getPeliculaById(id)
                 .orElseThrow(() -> new RuntimeException("Película no encontrada"));
 
-        model.addAttribute("pelicula", pelicula);
+        model.addAttribute(PEL_STRING, pelicula);
         // ← NUEVO: lista de relacionadas
         model.addAttribute("relacionadas",
                 deustoStreamService.getPeliculasRelacionadas(id));
@@ -298,7 +302,7 @@ public class WebController {
         Pelicula pelicula = deustoStreamService.getPeliculaById(id)
                 .orElseThrow(() -> new RuntimeException("Película no encontrada"));
 
-        model.addAttribute("pelicula", pelicula);
+        model.addAttribute(PEL_STRING, pelicula);
         model.addAttribute("relacionadas",
                 deustoStreamService.getPeliculasRelacionadas(id));
 
@@ -335,8 +339,8 @@ public class WebController {
         if (usuario != null) {
             Perfil perfil = session.getAttribute(PERFIL_STRING) != null ? (Perfil) session.getAttribute(PERFIL_STRING)
                     : usuario.getPerfiles().get(0);
-            model.addAttribute("peliculasFavoritas", perfil.getListaMeGustaPeliculas());
-            model.addAttribute("seriesFavoritas", perfil.getListaMeGustaSeries());
+            model.addAttribute(PEL_FAV_STRING, perfil.getListaMeGustaPeliculas());
+            model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());
         } else {
             model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
         }

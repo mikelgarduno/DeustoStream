@@ -1,11 +1,13 @@
 package com.example.restapi.model;
 
+import java.io.Serializable;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.*;
 
 @Entity
-public class Capitulo {
+public class Capitulo implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -15,10 +15,14 @@ import java.util.List;
 @Service
 public class AuthService {
 
+    private final UsuarioRepository usuarioRepository;
+    private final PerfilRepository perfilRepository;
+
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private PerfilRepository perfilRepository;
+    public AuthService(UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
+        this.usuarioRepository = usuarioRepository;
+        this.perfilRepository = perfilRepository;
+    }
 
     // valida las credenciales de un usuario
     public Optional<Usuario> login(String correo, String contrasenya) {
