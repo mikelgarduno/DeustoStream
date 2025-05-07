@@ -5,9 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.example.restapi.model.Generos;
-import com.example.restapi.model.Pelicula;
 import com.example.restapi.service.DeustoStreamService;
 import com.github.noconnor.junitperf.JUnitPerfInterceptor;
 import com.github.noconnor.junitperf.JUnitPerfReportingConfig;
@@ -24,7 +21,7 @@ public class RendimientoApiTest {
 
     // Configuración para generar un reporte en HTML
     @JUnitPerfTestActiveConfig
-    private final static JUnitPerfReportingConfig PERF_CONFIG = JUnitPerfReportingConfig.builder()
+    private static final JUnitPerfReportingConfig PERF_CONFIG = JUnitPerfReportingConfig.builder()
             .reportGenerator(new HtmlReportGenerator(System.getProperty("user.dir") + "/target/reports/perf-report.html"))
             .build();
 
@@ -36,21 +33,21 @@ public class RendimientoApiTest {
     @Test
     @JUnitPerfTest(threads = 10, durationMs = 10000, warmUpMs = 2000)
     @JUnitPerfTestRequirement(executionsPerSec = 50, percentiles = "95:300ms")
-    public void testGetAllPeliculasPerformance() {
+    void testGetAllPeliculasPerformance() {
         deustoStreamService.getAllPeliculas();
     }
   
     @Test
     @JUnitPerfTest(threads = 10, durationMs = 10000, warmUpMs = 2000)
     @JUnitPerfTestRequirement(executionsPerSec = 50, percentiles = "95:300ms")
-    public void testGetAllSeriesPerformance() {
+    void testGetAllSeriesPerformance() {
         deustoStreamService.getAllSeries();
     }
 
     @Test
     @JUnitPerfTest(threads = 10, durationMs = 10000, warmUpMs = 2000)
     @JUnitPerfTestRequirement(executionsPerSec = 50, percentiles = "95:300ms")
-    public void testGetAllUsuariosPerformance() {
+    void testGetAllUsuariosPerformance() {
         deustoStreamService.getAllUsuarios();
     }
 

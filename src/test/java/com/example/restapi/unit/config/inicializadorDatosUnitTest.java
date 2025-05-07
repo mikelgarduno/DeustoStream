@@ -12,7 +12,7 @@ import com.example.restapi.repository.PerfilRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
 
-public class inicializadorDatosUnitTest {
+class inicializadorDatosUnitTest {
 
     @Mock
     private PeliculaRepository peliculaRepository;

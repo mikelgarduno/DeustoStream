@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuthControllerIT {
+class AuthControllerIT {
 
     @Autowired
     private MockMvc mockMvc;
@@ -24,7 +24,7 @@ public class AuthControllerIT {
     private UsuarioRepository usuarioRepository;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         usuarioRepository.deleteAll();
 
         Usuario user = new Usuario("Test", "User","test@correo.com", "1234");
@@ -32,7 +32,7 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void loginCorrecto_redireccionaCatalogo() throws Exception {
+    void loginCorrecto_redireccionaCatalogo() throws Exception {
         mockMvc.perform(post("/login")
                 .param("correo", "test@correo.com")
                 .param("contrasenya", "1234"))
@@ -41,7 +41,7 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void loginFallido_muestraError() throws Exception {
+    void loginFallido_muestraError() throws Exception {
         mockMvc.perform(post("/login")
         .param("correo", "test@correo.com")
         .param("contrasenya", "mala"))
@@ -51,7 +51,7 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void registroNuevoUsuario_redireccionaLogin() throws Exception {
+    void registroNuevoUsuario_redireccionaLogin() throws Exception {
         mockMvc.perform(post("/registro")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("nombre","Nuevo")
@@ -63,7 +63,7 @@ public class AuthControllerIT {
     }
 
     @Test
-    public void registroFallido_correoRepetido() throws Exception {
+    void registroFallido_correoRepetido() throws Exception {
         mockMvc.perform(post("/registro")
         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
         .param("nombre", "Test")

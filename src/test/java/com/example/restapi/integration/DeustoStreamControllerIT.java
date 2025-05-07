@@ -33,7 +33,7 @@ import com.example.restapi.service.DeustoStreamService;
 
 @WebMvcTest(DeustoStreamController.class)
 @AutoConfigureMockMvc
-public class DeustoStreamControllerIT {
+class DeustoStreamControllerIT {
         @Autowired
         private MockMvc mockMvc;
 
@@ -120,7 +120,7 @@ public class DeustoStreamControllerIT {
         }
 
         @Test
-        public void testCreatePelicula_BadRequest() throws Exception {
+        void testCreatePelicula_BadRequest() throws Exception {
                 String peliculaJson = """
                                 {
                                     "titulo": null,
@@ -160,7 +160,7 @@ public class DeustoStreamControllerIT {
         }
 
         @Test
-        public void testUpdatePelicula_BadRequest() throws Exception {
+        void testUpdatePelicula_BadRequest() throws Exception {
                 // Simular excepción en el servicio
                 when(deustoStreamService.updatePelicula(eq(1L), any(Pelicula.class)))
                                 .thenThrow(new RuntimeException("Error"));
@@ -290,7 +290,7 @@ public class DeustoStreamControllerIT {
         }
 
         @Test
-        public void testUpdateSeries_BadRequest() throws Exception {
+        void testUpdateSeries_BadRequest() throws Exception {
                 // Simular excepción en el servicio
                 when(deustoStreamService.updateSeries(eq(1L), any(Series.class)))
                                 .thenThrow(new RuntimeException("Error"));

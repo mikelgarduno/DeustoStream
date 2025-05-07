@@ -37,7 +37,7 @@ import jakarta.servlet.http.HttpSession;
  * </p>
  */
 @ExtendWith(MockitoExtension.class)
-public class DeustoStreamControllerUnitTest {
+class DeustoStreamControllerUnitTest {
 
     @Mock
     private DeustoStreamService deustoStreamService;

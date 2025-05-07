@@ -7,10 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CapitulosTest {
+class CapitulosTest {
 
     @Test
-    public void testCapituloConstructor() {
+    void testCapituloConstructor() {
         Capitulo capitulo = new Capitulo("Capítulo 1", 45);
         assertNotNull(capitulo);
         assertEquals("Capítulo 1", capitulo.getTitulo());
@@ -18,7 +18,7 @@ public class CapitulosTest {
     }
 
     @Test
-    public void testGettersAndSetters() {
+    void testGettersAndSetters() {
         Capitulo capitulo = new Capitulo();
         capitulo.setId(1L);
         capitulo.setTitulo("Capítulo 2");
@@ -30,7 +30,7 @@ public class CapitulosTest {
     }
 
     @Test
-    public void testSetAndGetSerie() {
+    void testSetAndGetSerie() {
         Series serie = new Series();
         serie.setId(10L);
         Capitulo capitulo = new Capitulo("Capítulo con serie", 30);
@@ -41,7 +41,7 @@ public class CapitulosTest {
     }
 
     @Test
-    public void testToString() {
+    void testToString() {
         Capitulo capitulo = new Capitulo("Final Season", 60);
         capitulo.setId(99L);
         String result = capitulo.toString();

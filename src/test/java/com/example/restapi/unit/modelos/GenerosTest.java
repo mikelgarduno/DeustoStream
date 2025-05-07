@@ -4,7 +4,7 @@ import com.example.restapi.model.Generos;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GenerosTest {
+class GenerosTest {
 
     @Test
     void testGenerosEnumValues() {

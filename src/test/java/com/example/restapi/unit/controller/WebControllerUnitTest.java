@@ -25,7 +25,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
-public class WebControllerUnitTest {
+class WebControllerUnitTest {
 
     @Mock
     private DeustoStreamService deustoStreamService;

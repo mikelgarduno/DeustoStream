@@ -12,7 +12,7 @@ import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.model.Generos;
 
-public class PerfilTest {
+class PerfilTest {
 
     @Test
     void testToString() {

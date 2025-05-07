@@ -96,21 +96,18 @@ class SerieTest {
     @Test
     public void testEqualsWithSameObject() {
         Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
-        //assertTrue(serie.equals(serie));
         assertEquals(serie, serie);
     }
 
     @Test
     void testEqualsWithNull() {
         Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
-        //assertFalse(serie.equals(null));
         assertNotEquals(serie, (Integer) null);
     }
 
     @Test
     void testEqualsWithDifferentClass() {
         Series serie = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
-        //assertFalse(serie.equals(new Object()));
         assertNotEquals(serie, new Object());
     }
 
@@ -120,7 +117,6 @@ class SerieTest {
         serie1.setId(1L);
         Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
         serie2.setId(1L);
-        //assertTrue(serie1.equals(serie2));
         assertEquals(serie1, serie2);
     }
 
@@ -130,7 +126,6 @@ class SerieTest {
         serie1.setId(1L);
         Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
         serie2.setId(2L);
-        //assertFalse(serie1.equals(serie2));
         assertNotEquals(serie1, serie2);
     }
 
@@ -138,7 +133,6 @@ class SerieTest {
     void testEqualsWithDifferentTitulo() {
         Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
         Series serie2 = new Series("Better Call Saul", 2008, "Descripcion", Generos.DRAMA, null, "url");
-        //assertFalse(serie1.equals(serie2));
         assertNotEquals(serie1, serie2);
     }
 
@@ -146,7 +140,6 @@ class SerieTest {
     void testEqualsWithDifferentAnio() {
         Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
         Series serie2 = new Series("Breaking Bad", 2009, "Descripcion", Generos.DRAMA, null, "url");
-        //assertFalse(serie1.equals(serie2));
         assertNotEquals(serie1, serie2);
     }
 
@@ -154,7 +147,6 @@ class SerieTest {
     void testEqualsWithDifferentDescripcion() {
         Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
         Series serie2 = new Series("Breaking Bad", 2008, "Otra descripcion", Generos.DRAMA, null, "url");
-        //assertFalse(serie1.equals(serie2));
         assertNotEquals(serie1, serie2);
     }
 
@@ -162,7 +154,6 @@ class SerieTest {
     void testEqualsWithDifferentGenero() {
         Series serie1 = new Series("Breaking Bad", 2008, "Descripcion", Generos.DRAMA, null, "url");
         Series serie2 = new Series("Breaking Bad", 2008, "Descripcion", Generos.ACCION, null, "url");
-        //assertFalse(serie1.equals(serie2));
         assertNotEquals(serie1, serie2);
     }
 
@@ -193,7 +184,7 @@ class SerieTest {
     }
 
     @Test
-    public void testHashCodeWithNullValues() {
+    void testHashCodeWithNullValues() {
         Series serie1 = new Series(null, 0, null, null, null, null);
         Series serie2 = new Series(null, 0, null, null, null, null);
         assertEquals(serie1.hashCode(), serie2.hashCode());

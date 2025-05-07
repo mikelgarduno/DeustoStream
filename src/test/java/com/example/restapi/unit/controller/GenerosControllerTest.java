@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import com.example.restapi.controller.GenerosController;
 import com.example.restapi.model.Generos;
 
-public class GenerosControllerTest {
+class GenerosControllerTest {
 
     @Test
     void testGetGenerosIsNotEmpty() {
