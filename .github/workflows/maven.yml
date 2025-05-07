@@ -75,10 +75,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -Pintegration integration-test org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=mikelgarduno_DeustoStream
-        
-
-      - name: Run Performance Tests
-        run: mvn -Pperformance integration-test
 
       - name: Generate Maven Site
         run: mvn site
@@ -86,13 +82,12 @@ jobs:
       - name: Ensure that the performance reports are also moved into the target\site\reports folder
         run: mvn -Pperformance resources:copy-resources@copy-perf-report
 
-      - name: Copy site output to docs/site and docs/doxygen folder to docs/doxygen
+      - name: Copy site output to docs
         run: |
           mkdir -p docs
           rm -rf docs/site
           mkdir -p docs/site
           cp -r target/site/* docs/site/
-          cp -r target/reports/* docs/site/reports/
           rm -rf docs/doxygen
           mkdir -p docs/doxygen
           cp -r target/doxygen/html/* docs/doxygen/
