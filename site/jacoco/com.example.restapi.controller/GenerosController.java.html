@@ -9,17 +9,16 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @Tag(name = &quot;Generos Controller&quot;, description = &quot;API de géneros&quot;)
-<span class="fc" id="L16">public class GenerosController {</span>
+<span class="fc" id="L15">public class GenerosController {</span>
 
     @GetMapping(&quot;/api/generos&quot;)
     public List&lt;String&gt; getGeneros() {
-<span class="fc" id="L20">        return Arrays.stream(Generos.values())  // Convierte el enum a un stream</span>
-<span class="fc" id="L21">                     .map(Enum::name)  // Obtiene el nombre de cada valor</span>
-<span class="fc" id="L22">                     .collect(Collectors.toList());  // Lo convierte en una lista</span>
+<span class="fc" id="L19">        return Arrays.stream(Generos.values())  // Convierte el enum a un stream</span>
+<span class="fc" id="L20">                     .map(Enum::name)   // Obtiene el nombre de cada valor</span>
+<span class="fc" id="L21">                     .toList();  // Lo convierte en una lista inmodificable</span>
     }
 }
 

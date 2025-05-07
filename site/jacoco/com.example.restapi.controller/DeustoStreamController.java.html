@@ -9,7 +9,6 @@ import com.example.restapi.service.DeustoStreamService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpSession;
 
@@ -31,95 +30,95 @@ public class DeustoStreamController {
     private static final String USUARIO_SESSION = &quot;usuario&quot;;
 
     @Autowired
-<span class="fc" id="L34">    public DeustoStreamController(DeustoStreamService deustoStreamService) {</span>
-<span class="fc" id="L35">        this.deustoStreamService = deustoStreamService;</span>
-<span class="fc" id="L36">    }</span>
+<span class="fc" id="L33">    public DeustoStreamController(DeustoStreamService deustoStreamService) {</span>
+<span class="fc" id="L34">        this.deustoStreamService = deustoStreamService;</span>
+<span class="fc" id="L35">    }</span>
 
     @GetMapping(&quot;registro&quot;)
     public List&lt;Usuario&gt; getAllUsuarios() {
-<span class="fc" id="L40">        return deustoStreamService.getAllUsuarios();</span>
+<span class="fc" id="L39">        return deustoStreamService.getAllUsuarios();</span>
     }
 
     @GetMapping(&quot;registro/{id}&quot;)
     public ResponseEntity&lt;Usuario&gt; getusuarioById(@PathVariable Long id) {
-<span class="fc" id="L45">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(id);</span>
-<span class="fc" id="L46">        return usuario.map(ResponseEntity::ok).orElseGet(() -&gt; ResponseEntity.notFound().build());</span>
+<span class="fc" id="L44">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(id);</span>
+<span class="fc" id="L45">        return usuario.map(ResponseEntity::ok).orElseGet(() -&gt; ResponseEntity.notFound().build());</span>
     }
 
     @PostMapping(&quot;registro&quot;)
     public ResponseEntity&lt;Usuario&gt; createUsuario(@RequestBody Usuario usuario) {
         try {
-<span class="fc" id="L52">            Usuario createdUsuario = deustoStreamService.createUsuario(usuario);</span>
-<span class="fc" id="L53">            return ResponseEntity.ok(createdUsuario);</span>
-<span class="fc" id="L54">        } catch (Exception e) {</span>
-<span class="fc" id="L55">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L51">            Usuario createdUsuario = deustoStreamService.createUsuario(usuario);</span>
+<span class="fc" id="L52">            return ResponseEntity.ok(createdUsuario);</span>
+<span class="fc" id="L53">        } catch (Exception e) {</span>
+<span class="fc" id="L54">            return ResponseEntity.badRequest().build();</span>
         }
     }
 
     @PutMapping(&quot;registro/{id}&quot;)
     public ResponseEntity&lt;Usuario&gt; updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioDetails) {
         try {
-<span class="fc" id="L62">            Usuario updatedUsuario = deustoStreamService.updateUsuario(id, usuarioDetails);</span>
-<span class="fc" id="L63">            return ResponseEntity.ok(updatedUsuario);</span>
-<span class="fc" id="L64">        } catch (Exception e) {</span>
-<span class="fc" id="L65">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L61">            Usuario updatedUsuario = deustoStreamService.updateUsuario(id, usuarioDetails);</span>
+<span class="fc" id="L62">            return ResponseEntity.ok(updatedUsuario);</span>
+<span class="fc" id="L63">        } catch (Exception e) {</span>
+<span class="fc" id="L64">            return ResponseEntity.badRequest().build();</span>
         }
     }
 
     @DeleteMapping(&quot;registro/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteUsuario(@PathVariable Long id) {
-<span class="fc" id="L71">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(id);</span>
-<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (usuario.isPresent()) {</span>
-<span class="fc" id="L73">            deustoStreamService.deleteUsuario(id);</span>
-<span class="fc" id="L74">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L70">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(id);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (usuario.isPresent()) {</span>
+<span class="fc" id="L72">            deustoStreamService.deleteUsuario(id);</span>
+<span class="fc" id="L73">            return ResponseEntity.noContent().build();</span>
         } else {
-<span class="fc" id="L76">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L75">            return ResponseEntity.notFound().build();</span>
         }
     }
 
     // ---- SUSCRIPCIÓN ----
     @PostMapping(&quot;/usuarios/{usuarioId}/suscripcion/mensual&quot;)
     public ResponseEntity&lt;Usuario&gt; suscribirseMensual(@PathVariable Long usuarioId, HttpSession session) {
-<span class="nc" id="L83">        Optional&lt;Usuario&gt; usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);</span>
-<span class="nc bnc" id="L84" title="All 2 branches missed.">        if (usuarioOptional.isPresent()) {</span>
-<span class="nc" id="L85">            Usuario usuario = usuarioOptional.get();</span>
-<span class="nc" id="L86">            usuario.setTipoSuscripcion(&quot;MENSUAL&quot;);</span>
-<span class="nc" id="L87">            usuario.setSuscripcionActiva(true);</span>
-<span class="nc" id="L88">            session.setAttribute(USUARIO_SESSION, usuario);</span>
-<span class="nc" id="L89">            deustoStreamService.guardarUsuario(usuario); // &lt;--- Usar el nuevo método guardarUsuario</span>
-<span class="nc" id="L90">            return ResponseEntity.ok(usuario);</span>
+<span class="nc" id="L82">        Optional&lt;Usuario&gt; usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        if (usuarioOptional.isPresent()) {</span>
+<span class="nc" id="L84">            Usuario usuario = usuarioOptional.get();</span>
+<span class="nc" id="L85">            usuario.setTipoSuscripcion(&quot;MENSUAL&quot;);</span>
+<span class="nc" id="L86">            usuario.setSuscripcionActiva(true);</span>
+<span class="nc" id="L87">            session.setAttribute(USUARIO_SESSION, usuario);</span>
+<span class="nc" id="L88">            deustoStreamService.guardarUsuario(usuario); // &lt;--- Usar el nuevo método guardarUsuario</span>
+<span class="nc" id="L89">            return ResponseEntity.ok(usuario);</span>
         } else {
-<span class="nc" id="L92">            return ResponseEntity.notFound().build();</span>
+<span class="nc" id="L91">            return ResponseEntity.notFound().build();</span>
         }
     }
 
     @PostMapping(&quot;/usuarios/{usuarioId}/suscripcion/anual&quot;)
     public ResponseEntity&lt;Usuario&gt; suscribirseAnual(@PathVariable Long usuarioId, HttpSession session) {
-<span class="nc" id="L98">        Optional&lt;Usuario&gt; usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);</span>
-<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (usuarioOptional.isPresent()) {</span>
-<span class="nc" id="L100">            Usuario usuario = usuarioOptional.get();</span>
-<span class="nc" id="L101">            usuario.setTipoSuscripcion(&quot;ANUAL&quot;);</span>
-<span class="nc" id="L102">            usuario.setSuscripcionActiva(true);</span>
-<span class="nc" id="L103">            session.setAttribute(USUARIO_SESSION, usuario);</span>
-<span class="nc" id="L104">            deustoStreamService.guardarUsuario(usuario); // &lt;-- Usamos guardarUsuario</span>
-<span class="nc" id="L105">            return ResponseEntity.ok(usuario);</span>
+<span class="nc" id="L97">        Optional&lt;Usuario&gt; usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (usuarioOptional.isPresent()) {</span>
+<span class="nc" id="L99">            Usuario usuario = usuarioOptional.get();</span>
+<span class="nc" id="L100">            usuario.setTipoSuscripcion(&quot;ANUAL&quot;);</span>
+<span class="nc" id="L101">            usuario.setSuscripcionActiva(true);</span>
+<span class="nc" id="L102">            session.setAttribute(USUARIO_SESSION, usuario);</span>
+<span class="nc" id="L103">            deustoStreamService.guardarUsuario(usuario); // &lt;-- Usamos guardarUsuario</span>
+<span class="nc" id="L104">            return ResponseEntity.ok(usuario);</span>
         } else {
-<span class="nc" id="L107">            return ResponseEntity.notFound().build();</span>
+<span class="nc" id="L106">            return ResponseEntity.notFound().build();</span>
         }
     }
 
     @PostMapping(&quot;/usuarios/{usuarioId}/suscripcion/cancelar&quot;)
     public ResponseEntity&lt;Usuario&gt; cancelarSuscripcion(@PathVariable Long usuarioId, HttpSession session) {
-<span class="nc" id="L113">        Optional&lt;Usuario&gt; usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);</span>
-<span class="nc bnc" id="L114" title="All 2 branches missed.">        if (usuarioOptional.isPresent()) {</span>
-<span class="nc" id="L115">            Usuario usuario = usuarioOptional.get();</span>
-<span class="nc" id="L116">            usuario.setTipoSuscripcion(null);</span>
-<span class="nc" id="L117">            usuario.setSuscripcionActiva(false);</span>
-<span class="nc" id="L118">            session.setAttribute(USUARIO_SESSION, usuario);</span>
-<span class="nc" id="L119">            deustoStreamService.guardarUsuario(usuario); // &lt;-- También usamos guardarUsuario</span>
-<span class="nc" id="L120">            return ResponseEntity.ok(usuario);</span>
+<span class="nc" id="L112">        Optional&lt;Usuario&gt; usuarioOptional = deustoStreamService.getUsuarioById(usuarioId);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        if (usuarioOptional.isPresent()) {</span>
+<span class="nc" id="L114">            Usuario usuario = usuarioOptional.get();</span>
+<span class="nc" id="L115">            usuario.setTipoSuscripcion(null);</span>
+<span class="nc" id="L116">            usuario.setSuscripcionActiva(false);</span>
+<span class="nc" id="L117">            session.setAttribute(USUARIO_SESSION, usuario);</span>
+<span class="nc" id="L118">            deustoStreamService.guardarUsuario(usuario); // &lt;-- También usamos guardarUsuario</span>
+<span class="nc" id="L119">            return ResponseEntity.ok(usuario);</span>
         } else {
-<span class="nc" id="L122">            return ResponseEntity.notFound().build();</span>
+<span class="nc" id="L121">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -127,62 +126,56 @@ public class DeustoStreamController {
     @Operation(summary = &quot;Obtener todas las películas&quot;, description = &quot;Devuelve la lista de todas las películas en la base de datos&quot;)
     @GetMapping(&quot;/peliculas&quot;)
     public List&lt;Pelicula&gt; getAllPeliculas() {
-<span class="fc" id="L130">        return deustoStreamService.getAllPeliculas();</span>
+<span class="fc" id="L129">        return deustoStreamService.getAllPeliculas();</span>
     }
 
     @Operation(summary = &quot;Obtener una película por ID&quot;, description = &quot;Devuelve una película si existe en la base de datos&quot;)
-    @ApiResponses({
-            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Película encontrada&quot;),
-            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Película no encontrada&quot;)
-    })
+    @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Película encontrada&quot;)
+    @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Película no encontrada&quot;)
     @GetMapping(&quot;/peliculas/{id}&quot;)
     public ResponseEntity&lt;Pelicula&gt; getPeliculaById(@PathVariable Long id) {
-<span class="fc" id="L140">        Optional&lt;Pelicula&gt; pelicula = deustoStreamService.getPeliculaById(id);</span>
-<span class="fc" id="L141">        return pelicula.map(ResponseEntity::ok).orElseGet(() -&gt; ResponseEntity.notFound().build());</span>
+<span class="fc" id="L137">        Optional&lt;Pelicula&gt; pelicula = deustoStreamService.getPeliculaById(id);</span>
+<span class="fc" id="L138">        return pelicula.map(ResponseEntity::ok).orElseGet(() -&gt; ResponseEntity.notFound().build());</span>
     }
 
     @Operation(summary = &quot;Crear una nueva película&quot;, description = &quot;Añade una película a la base de datos&quot;)
-    @ApiResponses({
-            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Película creada&quot;),
-            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Error al crear película&quot;)
-    })
+    @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Película creada&quot;)
+    @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Error al crear película&quot;)
     @PostMapping(&quot;/peliculas&quot;)
     public ResponseEntity&lt;Pelicula&gt; createPelicula(@RequestBody Pelicula pelicula) {
         // Verifica si la película tiene datos válidos
-<span class="fc bfc" id="L152" title="All 6 branches covered.">        if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() &lt;= 0) {</span>
-<span class="fc" id="L153">            return ResponseEntity.badRequest().build();</span>
+<span class="fc bfc" id="L147" title="All 6 branches covered.">        if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() &lt;= 0) {</span>
+<span class="fc" id="L148">            return ResponseEntity.badRequest().build();</span>
         }
         // Guarda la película en la base de datos
-<span class="fc" id="L156">        Pelicula nuevaPelicula = deustoStreamService.createPelicula(pelicula);</span>
+<span class="fc" id="L151">        Pelicula nuevaPelicula = deustoStreamService.createPelicula(pelicula);</span>
 
         // Devuelve la película recién creada
-<span class="fc" id="L159">        return new ResponseEntity&lt;&gt;(nuevaPelicula, HttpStatus.CREATED);</span>
+<span class="fc" id="L154">        return new ResponseEntity&lt;&gt;(nuevaPelicula, HttpStatus.CREATED);</span>
     }
 
     @Operation(summary = &quot;Actualizar una película por ID&quot;)
     @PutMapping(&quot;/peliculas/{id}&quot;)
     public ResponseEntity&lt;Pelicula&gt; updatePelicula(@PathVariable Long id, @RequestBody Pelicula peliculaDetails) {
         try {
-<span class="fc" id="L166">            Pelicula updatedPelicula = deustoStreamService.updatePelicula(id, peliculaDetails);</span>
-<span class="fc" id="L167">            return ResponseEntity.ok(updatedPelicula);</span>
-<span class="fc" id="L168">        } catch (Exception e) {</span>
-<span class="fc" id="L169">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L161">            Pelicula updatedPelicula = deustoStreamService.updatePelicula(id, peliculaDetails);</span>
+<span class="fc" id="L162">            return ResponseEntity.ok(updatedPelicula);</span>
+<span class="fc" id="L163">        } catch (Exception e) {</span>
+<span class="fc" id="L164">            return ResponseEntity.badRequest().build();</span>
         }
     }
 
     @Operation(summary = &quot;Eliminar una película por ID&quot;, description = &quot;Elimina una pelicula de la base de datos &quot;)
-    @ApiResponses({
-            @ApiResponse(responseCode = &quot;204&quot;, description = &quot;Pelicula eliminada&quot;),
-            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Pelicula no encontrada&quot;)
-    })
+    @ApiResponse(responseCode = &quot;204&quot;, description = &quot;Pelicula eliminada&quot;)
+    @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Pelicula no encontrada&quot;)
     @DeleteMapping(&quot;/peliculas/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deletePelicula(@PathVariable Long id) {
-<span class="fc" id="L180">        Optional&lt;Pelicula&gt; pelicula = deustoStreamService.getPeliculaById(id);</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (pelicula.isPresent()) {</span>
-<span class="fc" id="L182">            deustoStreamService.deletePelicula(id);</span>
-<span class="fc" id="L183">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L173">        Optional&lt;Pelicula&gt; pelicula = deustoStreamService.getPeliculaById(id);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (pelicula.isPresent()) {</span>
+<span class="fc" id="L175">            deustoStreamService.deletePelicula(id);</span>
+<span class="fc" id="L176">            return ResponseEntity.noContent().build();</span>
         } else {
-<span class="fc" id="L185">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L178">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -190,46 +183,44 @@ public class DeustoStreamController {
     @Operation(summary = &quot;Obtener todas las series&quot;, description = &quot;Devuelve la lista de todas las series disponibles&quot;)
     @GetMapping(&quot;/series&quot;)
     public List&lt;Series&gt; getAllSeries() {
-<span class="fc" id="L193">        return deustoStreamService.getAllSeries();</span>
+<span class="fc" id="L186">        return deustoStreamService.getAllSeries();</span>
     }
 
     @Operation(summary = &quot;Obtener una serie por ID&quot;, description = &quot;Devuelve una serie específica si está registrada en la base de datos&quot;)
-    @ApiResponses({
-            @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Serie encontrada&quot;),
-            @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Serie no encontrada&quot;)
-    })
+    @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Serie encontrada&quot;)
+    @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Serie no encontrada&quot;)
     @GetMapping(&quot;/series/{id}&quot;)
     public ResponseEntity&lt;Series&gt; getSeriesById(@PathVariable Long id) {
-<span class="fc" id="L203">        Optional&lt;Series&gt; series = deustoStreamService.getSeriesById(id);</span>
-<span class="fc" id="L204">        return series.map(ResponseEntity::ok).orElseGet(() -&gt; ResponseEntity.notFound().build());</span>
+<span class="fc" id="L194">        Optional&lt;Series&gt; series = deustoStreamService.getSeriesById(id);</span>
+<span class="fc" id="L195">        return series.map(ResponseEntity::ok).orElseGet(() -&gt; ResponseEntity.notFound().build());</span>
     }
 
     @Operation(summary = &quot;Crear una nueva serie con capítulos&quot;, description = &quot;Crea una nueva serie y genera los capítulos asociados&quot;)
-            @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Serie creada&quot;)
-            @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Error al crear serie&quot;)
- 
+    @ApiResponse(responseCode = &quot;201&quot;, description = &quot;Serie creada&quot;)
+    @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Error al crear serie&quot;)
+
     @PostMapping(&quot;/series&quot;)
     public ResponseEntity&lt;Series&gt; createSeries(@RequestBody Series series) {
         try {
             // Crear capítulos si el número de capítulos es mayor a 0
-<span class="fc bfc" id="L215" title="All 2 branches covered.">            if (series.getNumeroCapitulos() &gt; 0) {</span>
-<span class="fc" id="L216">                List&lt;Capitulo&gt; capitulos = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">                for (int i = 0; i &lt; series.getNumeroCapitulos(); i++) {</span>
-<span class="fc" id="L218">                    Capitulo capitulo = new Capitulo();</span>
-<span class="fc" id="L219">                    capitulo.setTitulo(&quot;Capítulo &quot; + (i + 1) + &quot; de &quot; + series.getTitulo());</span>
-<span class="fc" id="L220">                    capitulo.setDuracion(30); // Duración por defecto</span>
-<span class="fc" id="L221">                    capitulo.setSerie(series);</span>
-<span class="fc" id="L222">                    capitulos.add(capitulo);</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">            if (series.getNumeroCapitulos() &gt; 0) {</span>
+<span class="fc" id="L207">                List&lt;Capitulo&gt; capitulos = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">                for (int i = 0; i &lt; series.getNumeroCapitulos(); i++) {</span>
+<span class="fc" id="L209">                    Capitulo capitulo = new Capitulo();</span>
+<span class="fc" id="L210">                    capitulo.setTitulo(&quot;Capítulo &quot; + (i + 1) + &quot; de &quot; + series.getTitulo());</span>
+<span class="fc" id="L211">                    capitulo.setDuracion(30); // Duración por defecto</span>
+<span class="fc" id="L212">                    capitulo.setSerie(series);</span>
+<span class="fc" id="L213">                    capitulos.add(capitulo);</span>
                 }
-<span class="fc" id="L224">                series.setCapitulos(capitulos);</span>
+<span class="fc" id="L215">                series.setCapitulos(capitulos);</span>
             }
 
-<span class="fc" id="L227">            Series createdSeries = deustoStreamService.createSeries(series);</span>
+<span class="fc" id="L218">            Series createdSeries = deustoStreamService.createSeries(series);</span>
 
-<span class="fc" id="L229">            return ResponseEntity.status(HttpStatus.CREATED).body(createdSeries);</span>
+<span class="fc" id="L220">            return ResponseEntity.status(HttpStatus.CREATED).body(createdSeries);</span>
 
-<span class="fc" id="L231">        } catch (Exception e) {</span>
-<span class="fc" id="L232">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L222">        } catch (Exception e) {</span>
+<span class="fc" id="L223">            return ResponseEntity.badRequest().build();</span>
         }
     }
 
@@ -237,15 +228,14 @@ public class DeustoStreamController {
     @ApiResponse(responseCode = &quot;200&quot;, description = &quot;Serie actualizada&quot;)
     @ApiResponse(responseCode = &quot;400&quot;, description = &quot;Error al actualizar serie&quot;)
     @ApiResponse(responseCode = &quot;404&quot;, description = &quot;Serie no encontrada&quot;)
-  
 
     @PutMapping(&quot;/series/{id}&quot;)
     public ResponseEntity&lt;Series&gt; updateSeries(@PathVariable Long id, @RequestBody Series seriesDetails) {
         try {
-<span class="fc" id="L245">            Series updatedSeries = deustoStreamService.updateSeries(id, seriesDetails);</span>
-<span class="fc" id="L246">            return ResponseEntity.ok(updatedSeries);</span>
-<span class="fc" id="L247">        } catch (Exception e) {</span>
-<span class="fc" id="L248">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L235">            Series updatedSeries = deustoStreamService.updateSeries(id, seriesDetails);</span>
+<span class="fc" id="L236">            return ResponseEntity.ok(updatedSeries);</span>
+<span class="fc" id="L237">        } catch (Exception e) {</span>
+<span class="fc" id="L238">            return ResponseEntity.badRequest().build();</span>
         }
     }
 
@@ -255,12 +245,12 @@ public class DeustoStreamController {
 
     @DeleteMapping(&quot;/series/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteSeries(@PathVariable Long id) {
-<span class="fc" id="L258">        Optional&lt;Series&gt; series = deustoStreamService.getSeriesById(id);</span>
-<span class="fc bfc" id="L259" title="All 2 branches covered.">        if (series.isPresent()) {</span>
-<span class="fc" id="L260">            deustoStreamService.deleteSeries(id);</span>
-<span class="fc" id="L261">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L248">        Optional&lt;Series&gt; series = deustoStreamService.getSeriesById(id);</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (series.isPresent()) {</span>
+<span class="fc" id="L250">            deustoStreamService.deleteSeries(id);</span>
+<span class="fc" id="L251">            return ResponseEntity.noContent().build();</span>
         } else {
-<span class="fc" id="L263">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L253">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -271,15 +261,15 @@ public class DeustoStreamController {
     @PostMapping(&quot;/usuarios/{usuarioId}/peliculas/{peliculaId}&quot;)
     public ResponseEntity&lt;Usuario&gt; addPeliculaToFavoritos(@PathVariable Long usuarioId, @PathVariable Long peliculaId,
             HttpSession session) {
-<span class="fc" id="L274">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(usuarioId);</span>
-<span class="fc" id="L275">        Optional&lt;Pelicula&gt; pelicula = deustoStreamService.getPeliculaById(peliculaId);</span>
+<span class="fc" id="L264">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(usuarioId);</span>
+<span class="fc" id="L265">        Optional&lt;Pelicula&gt; pelicula = deustoStreamService.getPeliculaById(peliculaId);</span>
 
-<span class="fc bfc" id="L277" title="All 4 branches covered.">        if (usuario.isPresent() &amp;&amp; pelicula.isPresent()) {</span>
-<span class="fc" id="L278">            deustoStreamService.addPeliculaToFavoritos(usuario.get().getId(), pelicula.get().getId(), session);</span>
+<span class="fc bfc" id="L267" title="All 4 branches covered.">        if (usuario.isPresent() &amp;&amp; pelicula.isPresent()) {</span>
+<span class="fc" id="L268">            deustoStreamService.addPeliculaToFavoritos(usuario.get().getId(), pelicula.get().getId(), session);</span>
 
-<span class="fc" id="L280">            return ResponseEntity.ok(usuario.get());</span>
+<span class="fc" id="L270">            return ResponseEntity.ok(usuario.get());</span>
         } else {
-<span class="fc" id="L282">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L272">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -290,15 +280,15 @@ public class DeustoStreamController {
     @PostMapping(&quot;/usuarios/{usuarioId}/series/{serieId}&quot;)
     public ResponseEntity&lt;Usuario&gt; addSerieToFavoritos(@PathVariable Long usuarioId, @PathVariable Long serieId,
             HttpSession session) {
-<span class="fc" id="L293">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(usuarioId);</span>
-<span class="fc" id="L294">        Optional&lt;Series&gt; serie = deustoStreamService.getSeriesById(serieId);</span>
+<span class="fc" id="L283">        Optional&lt;Usuario&gt; usuario = deustoStreamService.getUsuarioById(usuarioId);</span>
+<span class="fc" id="L284">        Optional&lt;Series&gt; serie = deustoStreamService.getSeriesById(serieId);</span>
 
-<span class="fc bfc" id="L296" title="All 4 branches covered.">        if (usuario.isPresent() &amp;&amp; serie.isPresent()) {</span>
-<span class="fc" id="L297">            deustoStreamService.addSerieToFavoritos(usuario.get().getId(), serie.get().getId(), session);</span>
+<span class="fc bfc" id="L286" title="All 4 branches covered.">        if (usuario.isPresent() &amp;&amp; serie.isPresent()) {</span>
+<span class="fc" id="L287">            deustoStreamService.addSerieToFavoritos(usuario.get().getId(), serie.get().getId(), session);</span>
 
-<span class="fc" id="L299">            return ResponseEntity.ok(usuario.get());</span>
+<span class="fc" id="L289">            return ResponseEntity.ok(usuario.get());</span>
         } else {
-<span class="fc" id="L301">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L291">            return ResponseEntity.notFound().build();</span>
         }
     }
 
@@ -308,67 +298,67 @@ public class DeustoStreamController {
     @PutMapping(&quot;/capitulos/{id}&quot;)
     public ResponseEntity&lt;Capitulo&gt; updateCapitulo(@PathVariable Long id, @RequestBody Capitulo capituloDetails) {
         try {
-<span class="fc" id="L311">            Capitulo actualizado = deustoStreamService.updateCapitulo(id, capituloDetails);</span>
-<span class="fc" id="L312">            return ResponseEntity.ok(actualizado);</span>
-<span class="fc" id="L313">        } catch (Exception e) {</span>
-<span class="fc" id="L314">            return ResponseEntity.badRequest().build();</span>
+<span class="fc" id="L301">            Capitulo actualizado = deustoStreamService.updateCapitulo(id, capituloDetails);</span>
+<span class="fc" id="L302">            return ResponseEntity.ok(actualizado);</span>
+<span class="fc" id="L303">        } catch (Exception e) {</span>
+<span class="fc" id="L304">            return ResponseEntity.badRequest().build();</span>
         }
     }
 
     @Operation(summary = &quot;Eliminar un capítulo&quot;, description = &quot;Elimina un capítulo por su ID&quot;)
     @DeleteMapping(&quot;/capitulos/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteCapitulo(@PathVariable Long id) {
-<span class="fc" id="L321">        Optional&lt;Capitulo&gt; cap = deustoStreamService.getCapituloById(id);</span>
-<span class="fc bfc" id="L322" title="All 2 branches covered.">        if (cap.isPresent()) {</span>
-<span class="fc" id="L323">            deustoStreamService.deleteCapitulo(id);</span>
-<span class="fc" id="L324">            return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L311">        Optional&lt;Capitulo&gt; cap = deustoStreamService.getCapituloById(id);</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (cap.isPresent()) {</span>
+<span class="fc" id="L313">            deustoStreamService.deleteCapitulo(id);</span>
+<span class="fc" id="L314">            return ResponseEntity.noContent().build();</span>
         } else {
-<span class="fc" id="L326">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L316">            return ResponseEntity.notFound().build();</span>
         }
     }
 
     @Operation(summary = &quot;Añadir un capítulo a una serie&quot;, description = &quot;Crea un nuevo capítulo vacío (30 min por defecto) para la serie&quot;)
     @PostMapping(&quot;/series/{serieId}/capitulos&quot;)
     public ResponseEntity&lt;Capitulo&gt; addCapitulo(@PathVariable Long serieId, @RequestBody Capitulo capitulo) {
-<span class="fc" id="L333">        Optional&lt;Series&gt; optionalSerie = deustoStreamService.getSeriesById(serieId);</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">        if (optionalSerie.isPresent()) {</span>
-<span class="fc" id="L335">            Series serie = optionalSerie.get();</span>
-<span class="fc" id="L336">            capitulo.setSerie(serie);</span>
-<span class="fc bfc" id="L337" title="All 4 branches covered.">            if (capitulo.getTitulo() == null || capitulo.getTitulo().trim().isEmpty()) {</span>
-<span class="pc bpc" id="L338" title="1 of 2 branches missed.">                int numero = (serie.getCapitulos() == null) ? 1 : serie.getCapitulos().size() + 1;</span>
-<span class="fc" id="L339">                capitulo.setTitulo(&quot;Capítulo &quot; + numero + &quot; de &quot; + serie.getTitulo());</span>
+<span class="fc" id="L323">        Optional&lt;Series&gt; optionalSerie = deustoStreamService.getSeriesById(serieId);</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">        if (optionalSerie.isPresent()) {</span>
+<span class="fc" id="L325">            Series serie = optionalSerie.get();</span>
+<span class="fc" id="L326">            capitulo.setSerie(serie);</span>
+<span class="fc bfc" id="L327" title="All 4 branches covered.">            if (capitulo.getTitulo() == null || capitulo.getTitulo().trim().isEmpty()) {</span>
+<span class="pc bpc" id="L328" title="1 of 2 branches missed.">                int numero = (serie.getCapitulos() == null) ? 1 : serie.getCapitulos().size() + 1;</span>
+<span class="fc" id="L329">                capitulo.setTitulo(&quot;Capítulo &quot; + numero + &quot; de &quot; + serie.getTitulo());</span>
             }
-<span class="fc bfc" id="L341" title="All 2 branches covered.">            if (capitulo.getDuracion() == 0) {</span>
-<span class="fc" id="L342">                capitulo.setDuracion(30);</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">            if (capitulo.getDuracion() == 0) {</span>
+<span class="fc" id="L332">                capitulo.setDuracion(30);</span>
             }
-<span class="fc" id="L344">            Capitulo nuevo = deustoStreamService.createCapitulo(capitulo);</span>
-<span class="fc" id="L345">            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);</span>
+<span class="fc" id="L334">            Capitulo nuevo = deustoStreamService.createCapitulo(capitulo);</span>
+<span class="fc" id="L335">            return ResponseEntity.status(HttpStatus.CREATED).body(nuevo);</span>
         } else {
-<span class="fc" id="L347">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L337">            return ResponseEntity.notFound().build();</span>
         }
     }
 
     // ---------- Películas relacionadas ----------
     @GetMapping(&quot;/peliculas/{id}/relacionadas&quot;)
     public List&lt;Pelicula&gt; getPeliculasRelacionadas(@PathVariable Long id) {
-<span class="fc" id="L354">        return deustoStreamService.getPeliculasRelacionadas(id);</span>
+<span class="fc" id="L344">        return deustoStreamService.getPeliculasRelacionadas(id);</span>
     }
 
     // ---------- Series relacionadas -------------
     @GetMapping(&quot;/series/{id}/relacionadas&quot;)
     public List&lt;Series&gt; getSeriesRelacionadas(@PathVariable Long id) {
-<span class="fc" id="L360">        return deustoStreamService.getSeriesRelacionadas(id);</span>
+<span class="fc" id="L350">        return deustoStreamService.getSeriesRelacionadas(id);</span>
     }
 
     // ---------- Cambiar perfil -------------
     @GetMapping(&quot;/perfil/{id}&quot;)
     public ResponseEntity&lt;Perfil&gt; cambiarPerfil(@PathVariable Long id, HttpSession session) {
-<span class="fc" id="L366">        Optional&lt;Perfil&gt; perfilSeleccionado = deustoStreamService.getPerfilById(id);</span>
-<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (perfilSeleccionado.isPresent()) {</span>
-<span class="fc" id="L368">            session.setAttribute(&quot;perfil&quot;, perfilSeleccionado.get());</span>
-<span class="fc" id="L369">            return ResponseEntity.ok(perfilSeleccionado.get());</span>
+<span class="fc" id="L356">        Optional&lt;Perfil&gt; perfilSeleccionado = deustoStreamService.getPerfilById(id);</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">        if (perfilSeleccionado.isPresent()) {</span>
+<span class="fc" id="L358">            session.setAttribute(&quot;perfil&quot;, perfilSeleccionado.get());</span>
+<span class="fc" id="L359">            return ResponseEntity.ok(perfilSeleccionado.get());</span>
         } else {
-<span class="fc" id="L371">            return ResponseEntity.notFound().build();</span>
+<span class="fc" id="L361">            return ResponseEntity.notFound().build();</span>
         }
     }
 

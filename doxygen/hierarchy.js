@@ -2,7 +2,6 @@ var hierarchy =
 [
     [ "com.example.restapi.integration.AuthControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html", null ],
     [ "com.example.restapi.service.AuthService", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html", null ],
-    [ "com.example.restapi.model.Capitulo", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html", null ],
     [ "com.example.restapi.unit.modelos.CapitulosTest", "classcom_1_1example_1_1restapi_1_1unit_1_1modelos_1_1_capitulos_test.html", null ],
     [ "CommandLineRunner", null, [
       [ "com.example.restapi.config.inicializarDatos", "classcom_1_1example_1_1restapi_1_1config_1_1inicializar_datos.html", null ]
@@ -31,6 +30,7 @@ var hierarchy =
     [ "com.example.restapi.performance.RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ],
     [ "com.example.restapi.RestApiApplication", "classcom_1_1example_1_1restapi_1_1_rest_api_application.html", null ],
     [ "Serializable", null, [
+      [ "com.example.restapi.model.Capitulo", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html", null ],
       [ "com.example.restapi.model.Pelicula", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html", null ],
       [ "com.example.restapi.model.Perfil", "classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html", null ],
       [ "com.example.restapi.model.Series", "classcom_1_1example_1_1restapi_1_1model_1_1_series.html", null ],
