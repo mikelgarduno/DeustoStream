@@ -2,7 +2,7 @@ var hierarchy =
 [
     [ "com.example.restapi.service.AuthService", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html", null ],
     [ "CommandLineRunner", null, [
-      [ "com.example.restapi.config.inicializarDatos", "classcom_1_1example_1_1restapi_1_1config_1_1inicializar_datos.html", null ]
+      [ "com.example.restapi.config.InicializarDatos", "classcom_1_1example_1_1restapi_1_1config_1_1_inicializar_datos.html", null ]
     ] ],
     [ "com.example.restapi.controller.DeustoStreamController", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html", null ],
     [ "com.example.restapi.service.DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html", null ],
@@ -27,9 +27,9 @@ var hierarchy =
       [ "com.example.restapi.model.Pelicula", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html", null ],
       [ "com.example.restapi.model.Perfil", "classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html", null ],
       [ "com.example.restapi.model.Series", "classcom_1_1example_1_1restapi_1_1model_1_1_series.html", null ],
-      [ "com.example.restapi.model.Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", null ]
+      [ "com.example.restapi.model.Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", null ],
+      [ "com.example.restapi.model.Valoracion", "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html", null ]
     ] ],
-    [ "com.example.restapi.model.Valoracion", "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html", null ],
     [ "com.example.restapi.client.WebController", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html", null ],
     [ "WebMvcConfigurer", null, [
       [ "com.example.restapi.config.WebConfig", "classcom_1_1example_1_1restapi_1_1config_1_1_web_config.html", null ]
