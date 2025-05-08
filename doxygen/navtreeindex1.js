@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html":[1,0,0,0,0,3,6],
+"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a062229282d098b0dbd0dba2e38876c3f":[1,0,0,0,0,3,6,14],
 "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a161d4fb083bbae93ea4335e95aee801b":[1,0,0,0,0,3,6,11],
 "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a29bcfb1e5c670b82d0449682ac4f681b":[1,0,0,0,0,3,6,0],
 "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a37e1116cd51ee63323053cf72f795c76":[1,0,0,0,0,3,6,12],
@@ -100,8 +102,8 @@ var NAVTREEINDEX1 =
 "enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html#ac6d76fda25225985fba0a4da49364ac1":[1,0,0,0,0,3,1,5],
 "enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html#afe3cac7cb53d7e20a1f51e86be7be34d":[1,0,0,0,0,3,1,8],
 "files.html":[2,0],
-"functions.html":[1,3,0,0],
 "functions.html":[1,3,0],
+"functions.html":[1,3,0,0],
 "functions_b.html":[1,3,0,1],
 "functions_c.html":[1,3,0,2],
 "functions_d.html":[1,3,0,3],
@@ -143,8 +145,6 @@ var NAVTREEINDEX1 =
 "functions_w.html":[1,3,0,18],
 "hierarchy.html":[1,2],
 "index.html":[],
-"inicializador_datos_test_8java.html":[2,0,0,1,0,0,0,0,0,2],
-"inicializador_datos_test_8java_source.html":[2,0,0,1,0,0,0,0,0,2],
 "inicializador_datos_unit_test_8java.html":[2,0,0,1,0,0,0,0,2,0,0],
 "inicializador_datos_unit_test_8java_source.html":[2,0,0,1,0,0,0,0,2,0,0],
 "interfacecom_1_1example_1_1restapi_1_1repository_1_1_capitulo_repository.html":[1,0,0,0,0,5,0],

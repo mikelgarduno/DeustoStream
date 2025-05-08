@@ -30,6 +30,8 @@ var NAVTREEINDEX0 =
 "_generos_controller_test_8java_source.html":[2,0,0,1,0,0,0,0,2,1,1],
 "_generos_test_8java.html":[2,0,0,1,0,0,0,0,2,2,1],
 "_generos_test_8java_source.html":[2,0,0,1,0,0,0,0,2,2,1],
+"_inicializador_datos_test_8java.html":[2,0,0,1,0,0,0,0,0,2],
+"_inicializador_datos_test_8java_source.html":[2,0,0,1,0,0,0,0,0,2],
 "_inicializar_datos_8java.html":[2,0,0,0,0,0,0,0,1,0],
 "_inicializar_datos_8java_source.html":[2,0,0,0,0,0,0,0,1,0],
 "_login_interceptor_8java.html":[2,0,0,0,0,0,0,0,1,1],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a9efb5a66644db61d5d6df15154315f49":[1,0,0,0,0,3,5,7],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#ad7d91f45be39110bd8bb6984b4999e4d":[1,0,0,0,0,3,5,25],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#af125f21cf3066410e1a8605a1942e59e":[1,0,0,0,0,3,5,4],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#afbbd500cafb3ff3c33b7bb489c1589f7":[1,0,0,0,0,3,5,26],
-"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html":[1,0,0,0,0,3,6],
-"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a062229282d098b0dbd0dba2e38876c3f":[1,0,0,0,0,3,6,14]
+"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#afbbd500cafb3ff3c33b7bb489c1589f7":[1,0,0,0,0,3,5,26]
 };
