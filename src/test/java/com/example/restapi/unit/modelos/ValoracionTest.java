@@ -83,7 +83,7 @@ class ValoracionTest {
 
     @Test
     void testNotEqualsDifferentClass() {
-        assertNotEquals(valoracion, "some string");
+        assertNotEquals("some string", valoracion);
     }
 
     @Test

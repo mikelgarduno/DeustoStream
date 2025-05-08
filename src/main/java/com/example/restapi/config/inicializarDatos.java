@@ -15,19 +15,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
-public class inicializarDatos implements CommandLineRunner {
+public class InicializarDatos implements CommandLineRunner {
+
+
+        private final PeliculaRepository peliculaRepository;
+        private final SerieRepository serieRepository;
+        private final UsuarioRepository usuarioRepository;
+        private final PerfilRepository perfilRepository;
 
         @Autowired
-        private PeliculaRepository peliculaRepository;
-
-        @Autowired
-        private SerieRepository serieRepository;
-        
-        @Autowired
-        private UsuarioRepository usuarioRepository;
-
-        @Autowired
-        private PerfilRepository perfilRepository;
+        public InicializarDatos(PeliculaRepository peliculaRepository, SerieRepository serieRepository, UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {
+                this.peliculaRepository = peliculaRepository;
+                this.serieRepository = serieRepository;
+                this.usuarioRepository = usuarioRepository;
+                this.perfilRepository = perfilRepository;
+        }
 
         @Override
         public void run(String... args) throws Exception {

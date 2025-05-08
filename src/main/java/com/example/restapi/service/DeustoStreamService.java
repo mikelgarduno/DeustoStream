@@ -33,6 +33,8 @@ public class DeustoStreamService {
     private final CapituloRepository capituloRepository;
     private final ValoracionRepository valoracionRepository;
 
+    private static final String PER_STRING = "perfil";
+
     @Autowired
     public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
             SerieRepository serieRepository, CapituloRepository capituloRepository, PerfilRepository perfilRepository, ValoracionRepository valoracionRepository) {
@@ -207,7 +209,7 @@ public class DeustoStreamService {
         if (optionalUsuario.isPresent() && optionalPelicula.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             Pelicula pelicula = optionalPelicula.get();
-            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+            Perfil perfil = session.getAttribute(PER_STRING) != null ? (Perfil) session.getAttribute(PER_STRING)
                     : usuario.getPerfiles().get(0);
 
             if (perfil.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {
@@ -231,7 +233,7 @@ public class DeustoStreamService {
         if (optionalUsuario.isPresent() && optionalSerie.isPresent()) {
             Usuario usuario = optionalUsuario.get();
             Series serie = optionalSerie.get();
-            Perfil perfil = session.getAttribute("perfil") != null ? (Perfil) session.getAttribute("perfil")
+            Perfil perfil = session.getAttribute(PER_STRING) != null ? (Perfil) session.getAttribute(PER_STRING)
                     : usuario.getPerfiles().get(0);
 
             if (perfil.getListaMeGustaSeries().contains(optionalSerie.get())) {

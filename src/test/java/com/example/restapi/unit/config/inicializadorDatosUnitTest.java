@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.example.restapi.config.inicializarDatos;
+import com.example.restapi.config.InicializarDatos;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.PerfilRepository;
 import com.example.restapi.repository.SerieRepository;
@@ -24,7 +24,7 @@ class inicializadorDatosUnitTest {
     private PerfilRepository perfilRepository;
 
     @InjectMocks
-    private inicializarDatos inicializarDatos;
+    private InicializarDatos inicializarDatos;
 
     @BeforeEach
     void setUp() {

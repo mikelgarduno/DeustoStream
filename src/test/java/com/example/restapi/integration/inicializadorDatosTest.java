@@ -1,6 +1,6 @@
 package com.example.restapi.integration;
 
-import com.example.restapi.config.inicializarDatos;
+import com.example.restapi.config.InicializarDatos;
 import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class inicializadorDatosTest {
+class InicializadorDatosTest {
 
     @MockitoBean
     private UsuarioRepository usuarioRepository;
@@ -31,7 +31,7 @@ class inicializadorDatosTest {
     private SerieRepository serieRepository;
 
     @Autowired
-    private inicializarDatos inicializarDatos;
+    private InicializarDatos inicializarDatos;
 
     @Test
     void testRunInicializaDatosSinErrores() throws Exception {
