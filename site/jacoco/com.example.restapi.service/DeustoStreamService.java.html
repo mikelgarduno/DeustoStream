@@ -321,57 +321,57 @@ public class DeustoStreamService {
     }
 
     public void valorarPelicula(Long peliculaId, Perfil perfil, int puntuacion, String comentario) {
-<span class="nc" id="L324">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(peliculaId);</span>
+<span class="fc" id="L324">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(peliculaId);</span>
 
-<span class="nc bnc" id="L326" title="All 4 branches missed.">        if(optionalPelicula.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
-<span class="nc" id="L327">            Pelicula pelicula = optionalPelicula.get();</span>
+<span class="fc bfc" id="L326" title="All 4 branches covered.">        if(optionalPelicula.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
+<span class="fc" id="L327">            Pelicula pelicula = optionalPelicula.get();</span>
 
-<span class="nc" id="L329">            Valoracion v = new Valoracion();</span>
-<span class="nc" id="L330">            v.setPelicula(pelicula);</span>
-<span class="nc" id="L331">            v.setPerfil(perfil);</span>
-<span class="nc" id="L332">            v.setPuntuacion(puntuacion);</span>
-<span class="nc" id="L333">            v.setComentario(comentario);</span>
+<span class="fc" id="L329">            Valoracion v = new Valoracion();</span>
+<span class="fc" id="L330">            v.setPelicula(pelicula);</span>
+<span class="fc" id="L331">            v.setPerfil(perfil);</span>
+<span class="fc" id="L332">            v.setPuntuacion(puntuacion);</span>
+<span class="fc" id="L333">            v.setComentario(comentario);</span>
 
-<span class="nc" id="L335">            valoracionRepository.save(v);</span>
-<span class="nc" id="L336">        }</span>
+<span class="fc" id="L335">            valoracionRepository.save(v);</span>
+<span class="fc" id="L336">        }</span>
         else {
-<span class="nc" id="L338">            throw new RuntimeException(&quot;Pelicula or Usuario not found&quot;);</span>
+<span class="fc" id="L338">            throw new RuntimeException(&quot;Pelicula or Usuario not found&quot;);</span>
         }
-<span class="nc" id="L340">    }</span>
+<span class="fc" id="L340">    }</span>
 
     public void valorarSerie(Long idSerie, Perfil perfil, int puntuacion, String comentario) {
-<span class="nc" id="L343">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
+<span class="fc" id="L343">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
 
-<span class="nc bnc" id="L345" title="All 4 branches missed.">        if(optionalSerie.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
-<span class="nc" id="L346">            Series serie = optionalSerie.get();</span>
+<span class="fc bfc" id="L345" title="All 4 branches covered.">        if(optionalSerie.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
+<span class="fc" id="L346">            Series serie = optionalSerie.get();</span>
 
-<span class="nc" id="L348">            Valoracion v = new Valoracion();</span>
-<span class="nc" id="L349">            v.setSerie(serie);</span>
-<span class="nc" id="L350">            v.setPerfil(perfil);</span>
-<span class="nc" id="L351">            v.setPuntuacion(puntuacion);</span>
-<span class="nc" id="L352">            v.setComentario(comentario);</span>
+<span class="fc" id="L348">            Valoracion v = new Valoracion();</span>
+<span class="fc" id="L349">            v.setSerie(serie);</span>
+<span class="fc" id="L350">            v.setPerfil(perfil);</span>
+<span class="fc" id="L351">            v.setPuntuacion(puntuacion);</span>
+<span class="fc" id="L352">            v.setComentario(comentario);</span>
 
-<span class="nc" id="L354">            valoracionRepository.save(v);</span>
-<span class="nc" id="L355">        }</span>
+<span class="fc" id="L354">            valoracionRepository.save(v);</span>
+<span class="fc" id="L355">        }</span>
         else {
-<span class="nc" id="L357">            throw new RuntimeException(&quot;Serie or Usuario not found&quot;);</span>
+<span class="fc" id="L357">            throw new RuntimeException(&quot;Serie or Usuario not found&quot;);</span>
         }
-<span class="nc" id="L359">    }</span>
+<span class="fc" id="L359">    }</span>
     
     public List&lt;Valoracion&gt; getValoracionesPelicula(Long idPelicula) {
-<span class="nc" id="L362">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(idPelicula);</span>
-<span class="nc bnc" id="L363" title="All 2 branches missed.">        if (optionalPelicula.isEmpty()) {</span>
-<span class="nc" id="L364">            throw new RuntimeException(&quot;Pelicula not found with id: &quot; + idPelicula);</span>
+<span class="fc" id="L362">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(idPelicula);</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">        if (optionalPelicula.isEmpty()) {</span>
+<span class="fc" id="L364">            throw new RuntimeException(&quot;Pelicula not found with id: &quot; + idPelicula);</span>
         }
-<span class="nc" id="L366">        return valoracionRepository.findByPelicula(optionalPelicula.get());</span>
+<span class="fc" id="L366">        return valoracionRepository.findByPelicula(optionalPelicula.get());</span>
     }
 
     public List&lt;Valoracion&gt; getValoracionesSerie(Long idSerie) {
-<span class="nc" id="L370">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
-<span class="nc bnc" id="L371" title="All 2 branches missed.">        if (optionalSerie.isEmpty()) {</span>
-<span class="nc" id="L372">            throw new RuntimeException(&quot;Serie not found with id: &quot; + idSerie);</span>
+<span class="fc" id="L370">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
+<span class="fc bfc" id="L371" title="All 2 branches covered.">        if (optionalSerie.isEmpty()) {</span>
+<span class="fc" id="L372">            throw new RuntimeException(&quot;Serie not found with id: &quot; + idSerie);</span>
         }
-<span class="nc" id="L374">        return valoracionRepository.findBySerie(optionalSerie.get());</span>
+<span class="fc" id="L374">        return valoracionRepository.findBySerie(optionalSerie.get());</span>
     }
 
 }

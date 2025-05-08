@@ -66,6 +66,8 @@ var NAVTREEINDEX0 =
 "_valoracion_8java_source.html":[2,0,0,0,0,0,0,0,3,6],
 "_valoracion_repository_8java.html":[2,0,0,0,0,0,0,0,4,5],
 "_valoracion_repository_8java_source.html":[2,0,0,0,0,0,0,0,4,5],
+"_valoracion_test_8java.html":[2,0,0,1,0,0,0,0,2,2,6],
+"_valoracion_test_8java_source.html":[2,0,0,1,0,0,0,0,2,2,6],
 "_web_config_8java.html":[2,0,0,0,0,0,0,0,1,2],
 "_web_config_8java_source.html":[2,0,0,0,0,0,0,0,1,2],
 "_web_controller_8java.html":[2,0,0,0,0,0,0,0,0,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a062229282d098b0dbd0dba2e38876c3f":[1,0,0,0,0,3,6,14],
 "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a161d4fb083bbae93ea4335e95aee801b":[1,0,0,0,0,3,6,11],
 "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a29bcfb1e5c670b82d0449682ac4f681b":[1,0,0,0,0,3,6,0],
-"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a37e1116cd51ee63323053cf72f795c76":[1,0,0,0,0,3,6,12],
-"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a5a2f850a56c2c72d14ec093bc88eafdd":[1,0,0,0,0,3,6,5],
-"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a68f73d3360d109706b482e603afb43df":[1,0,0,0,0,3,6,7]
+"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html#a37e1116cd51ee63323053cf72f795c76":[1,0,0,0,0,3,6,12]
 };

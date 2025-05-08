@@ -385,13 +385,13 @@ public class WebController {
                                 @RequestParam int puntuacion,
                                 @RequestParam String comentario, 
                                 HttpSession session) {
-<span class="nc" id="L388">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
-<span class="nc" id="L389">        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);</span>
-<span class="nc bnc" id="L390" title="All 2 branches missed.">        if (usuario != null) {</span>
-<span class="nc" id="L391">            deustoStreamService.valorarPelicula(id, perfil, puntuacion, comentario);</span>
-<span class="nc" id="L392">            return &quot;redirect:/pelicula/&quot; + id;</span>
+<span class="fc" id="L388">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="fc" id="L389">        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);</span>
+<span class="fc bfc" id="L390" title="All 2 branches covered.">        if (usuario != null) {</span>
+<span class="fc" id="L391">            deustoStreamService.valorarPelicula(id, perfil, puntuacion, comentario);</span>
+<span class="fc" id="L392">            return &quot;redirect:/pelicula/&quot; + id;</span>
         } else {
-<span class="nc" id="L394">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
+<span class="fc" id="L394">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
         }
     }
 
@@ -401,13 +401,13 @@ public class WebController {
                                 @RequestParam int puntuacion,
                                 @RequestParam String comentario, 
                                 HttpSession session) {
-<span class="nc" id="L404">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
-<span class="nc" id="L405">        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);</span>
-<span class="nc bnc" id="L406" title="All 2 branches missed.">        if (usuario != null) {</span>
-<span class="nc" id="L407">            deustoStreamService.valorarSerie(id, perfil, puntuacion, comentario);</span>
-<span class="nc" id="L408">            return &quot;redirect:/serie/&quot; + id;</span>
+<span class="fc" id="L404">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="fc" id="L405">        Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);</span>
+<span class="fc bfc" id="L406" title="All 2 branches covered.">        if (usuario != null) {</span>
+<span class="fc" id="L407">            deustoStreamService.valorarSerie(id, perfil, puntuacion, comentario);</span>
+<span class="fc" id="L408">            return &quot;redirect:/serie/&quot; + id;</span>
         } else {
-<span class="nc" id="L410">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
+<span class="fc" id="L410">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
         }
     }
 
