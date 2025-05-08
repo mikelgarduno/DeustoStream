@@ -26,11 +26,13 @@ import com.example.restapi.model.Pelicula;
 import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
+import com.example.restapi.model.Valoracion;
 import com.example.restapi.repository.CapituloRepository;
 import com.example.restapi.repository.PeliculaRepository;
 import com.example.restapi.repository.PerfilRepository;
 import com.example.restapi.repository.SerieRepository;
 import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.repository.ValoracionRepository;
 import com.example.restapi.service.DeustoStreamService;
 
 import jakarta.servlet.http.HttpSession;
@@ -51,6 +53,9 @@ public class DeustoStreamServiceTest {
 
     @Mock
     private PerfilRepository perfilRepository;
+
+    @Mock
+    private ValoracionRepository valoracionRepository;
 
     @Mock
     private HttpSession session;
@@ -975,5 +980,153 @@ public class DeustoStreamServiceTest {
 
         assertTrue(result.isEmpty());
     }
+
+    @Test
+    void testValorarPelicula_Success() {
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        pelicula.setId(1L);
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(2L);
+        perfil.setUsuario(usuario);
+
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+
+        deustoStreamService.valorarPelicula(1L, perfil, 5, "Muy buena");
+
+        verify(valoracionRepository).save(any(Valoracion.class));
+    }
+
+    @Test
+    void testValorarPelicula_PeliculaNotFound_ThrowsException() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setUsuario(usuario);
+
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.valorarPelicula(1L, perfil, 4, "Comentario");
+        });
+        assertEquals("Pelicula or Usuario not found", ex.getMessage());
+    }
+
+    @Test
+    void testValorarPelicula_PerfilSinUsuario_ThrowsException() {
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        pelicula.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setUsuario(null);
+
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.valorarPelicula(1L, perfil, 3, "Comentario");
+        });
+        assertEquals("Pelicula or Usuario not found", ex.getMessage());
+    }
+
+    @Test
+    void testValorarSerie_Success() {
+        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
+        serie.setId(1L);
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setId(2L);
+        perfil.setUsuario(usuario);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+
+        deustoStreamService.valorarSerie(1L, perfil, 4, "Muy buena serie");
+
+        verify(valoracionRepository).save(any(Valoracion.class));
+    }
+
+    @Test
+    void testValorarSerie_SerieNotFound_ThrowsException() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setUsuario(usuario);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.valorarSerie(1L, perfil, 2, "Comentario");
+        });
+        assertEquals("Serie or Usuario not found", ex.getMessage());
+    }
+
+    @Test
+    void testValorarSerie_PerfilSinUsuario_ThrowsException() {
+        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
+        serie.setId(1L);
+        Perfil perfil = new Perfil();
+        perfil.setUsuario(null);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.valorarSerie(1L, perfil, 1, "Comentario");
+        });
+        assertEquals("Serie or Usuario not found", ex.getMessage());
+    }
+
+    @Test
+    void testGetValoracionesPelicula_Success() {
+        Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
+        pelicula.setId(1L);
+        Valoracion v1 = new Valoracion();
+        Valoracion v2 = new Valoracion();
+        List<Valoracion> valoraciones = Arrays.asList(v1, v2);
+
+        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+        when(valoracionRepository.findByPelicula(pelicula)).thenReturn(valoraciones);
+
+        List<Valoracion> result = deustoStreamService.getValoracionesPelicula(1L);
+
+        assertEquals(2, result.size());
+        verify(valoracionRepository).findByPelicula(pelicula);
+    }
+
+    @Test
+    void testGetValoracionesPelicula_PeliculaNotFound_ThrowsException() {
+        when(peliculaRepository.findById(99L)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.getValoracionesPelicula(99L);
+        });
+        assertEquals("Pelicula not found with id: 99", ex.getMessage());
+    }
+
+    @Test
+    void testGetValoracionesSerie_Success() {
+        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
+        serie.setId(1L);
+        Valoracion v1 = new Valoracion();
+        List<Valoracion> valoraciones = List.of(v1);
+
+        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
+        when(valoracionRepository.findBySerie(serie)).thenReturn(valoraciones);
+
+        List<Valoracion> result = deustoStreamService.getValoracionesSerie(1L);
+
+        assertEquals(1, result.size());
+        verify(valoracionRepository).findBySerie(serie);
+    }
+
+    @Test
+    void testGetValoracionesSerie_SerieNotFound_ThrowsException() {
+        when(seriesRepository.findById(88L)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.getValoracionesSerie(88L);
+        });
+        assertEquals("Serie not found with id: 88", ex.getMessage());
+    }
+
 
 }

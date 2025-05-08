@@ -1011,4 +1011,71 @@ class WebControllerUnitTest {
         String viewName = webController.mostrarFormularioRegistro();
         assertEquals("registro", viewName);
     }
+
+    @Test
+    void testValorarPelicula_UserLoggedIn() {
+        Long peliculaId = 10L;
+        int puntuacion = 5;
+        String comentario = "Muy buena";
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(mockSession.getAttribute("perfil")).thenReturn(mockPerfil);
+
+        String viewName = webController.valorarPelicula(peliculaId, puntuacion, comentario, mockSession);
+
+        verify(deustoStreamService).valorarPelicula(peliculaId, mockPerfil, puntuacion, comentario);
+        assertEquals("redirect:/pelicula/" + peliculaId, viewName);
+    }
+
+    @Test
+    void testValorarPelicula_UserNotLoggedIn() {
+        Long peliculaId = 10L;
+        int puntuacion = 4;
+        String comentario = "Entretenida";
+
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        String viewName = webController.valorarPelicula(peliculaId, puntuacion, comentario, mockSession);
+
+        verify(deustoStreamService, never()).valorarPelicula(anyLong(), any(), anyInt(), anyString());
+        assertEquals("redirect:/login", viewName);
+    }
+
+    @Test
+    void testValorarSerie_UserLoggedIn() {
+        Long serieId = 20L;
+        int puntuacion = 3;
+        String comentario = "Regular";
+        Usuario mockUsuario = new Usuario();
+        Perfil mockPerfil = new Perfil();
+
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(mockSession.getAttribute("perfil")).thenReturn(mockPerfil);
+
+        String viewName = webController.valorarSerie(serieId, puntuacion, comentario, mockSession);
+
+        verify(deustoStreamService).valorarSerie(serieId, mockPerfil, puntuacion, comentario);
+        assertEquals("redirect:/serie/" + serieId, viewName);
+    }
+
+    @Test
+    void testValorarSerie_UserNotLoggedIn() {
+        Long serieId = 20L;
+        int puntuacion = 2;
+        String comentario = "No me gustó";
+
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("usuario")).thenReturn(null);
+
+        String viewName = webController.valorarSerie(serieId, puntuacion, comentario, mockSession);
+
+        verify(deustoStreamService, never()).valorarSerie(anyLong(), any(), anyInt(), anyString());
+        assertEquals("redirect:/login", viewName);
+    }
+
 }

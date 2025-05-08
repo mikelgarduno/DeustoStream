@@ -15,8 +15,15 @@ import com.example.restapi.model.Usuario;
 import com.example.restapi.service.AuthService;
 import com.example.restapi.service.DeustoStreamService;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -24,7 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Collections;
 import java.util.List;
-
 
 @WebMvcTest(WebController.class)
 class WebControllerIT {
@@ -37,7 +43,6 @@ class WebControllerIT {
 
     @MockitoBean
     private AuthService authService;
-
 
     @Test
     void testMostrarIndex() throws Exception {
@@ -113,9 +118,9 @@ class WebControllerIT {
     @Test
     void testMostrarPerfil_UsuarioAutenticado() throws Exception {
         Usuario usuario = new Usuario();
-        Perfil perfil = new Perfil("Test", "avatar.png"); 
+        Perfil perfil = new Perfil("Test", "avatar.png");
         usuario.getPerfiles().add(perfil);
-        
+
         mockMvc.perform(get("/perfil")
                 .sessionAttr("usuario", usuario))
                 .andExpect(status().isOk())
@@ -123,6 +128,47 @@ class WebControllerIT {
                 .andExpect(model().attribute("usuario", usuario))
                 .andExpect(model().attribute("perfiles", usuario.getPerfiles()))
                 .andExpect(model().attribute("avatar", "avatar.png"));
+    }
+
+    @Test
+    void testValorarPelicula_UsuarioAutenticado() throws Exception {
+        Long peliculaId = 1L;
+        int puntuacion = 5;
+        String comentario = "Muy buena";
+        Usuario usuario = new Usuario();
+        Perfil perfil = new Perfil("TestPerfil", "avatar.png");
+
+        // No need to mock deustoStreamService.valorarPelicula as it returns void
+
+        mockMvc.perform(
+                post("/pelicula/{id}/valorar", peliculaId)
+                        .param("puntuacion", String.valueOf(puntuacion))
+                        .param("comentario", comentario)
+                        .sessionAttr("usuario", usuario)
+                        .sessionAttr("perfil", perfil))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/pelicula/" + peliculaId));
+
+        // Verify service call
+        verify(deustoStreamService).valorarPelicula(peliculaId, perfil, puntuacion, comentario);
+    }
+
+    @Test
+    void testValorarPelicula_SinUsuarioEnSesion() throws Exception {
+        Long peliculaId = 1L;
+        int puntuacion = 4;
+        String comentario = "Entretenida";
+
+        mockMvc.perform(
+                post("/pelicula/{id}/valorar", peliculaId)
+                        .param("puntuacion", String.valueOf(puntuacion))
+                        .param("comentario", comentario)
+        // No usuario in session
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/login"));
+
+        verify(deustoStreamService, never()).valorarPelicula(anyLong(), any(), anyInt(), anyString());
     }
 
 }
