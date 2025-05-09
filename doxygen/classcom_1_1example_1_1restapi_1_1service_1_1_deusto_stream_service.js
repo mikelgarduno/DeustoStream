@@ -1,6 +1,6 @@
 var classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service =
 [
-    [ "DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#af43191415b874b0b962634342c085206", null ],
+    [ "DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a934687fdea77328c7cb390e4a9637f3c", null ],
     [ "addPeliculaToFavoritos", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#ab474ad59e684313ae4100b1e3d60fc4c", null ],
     [ "addSerieToFavoritos", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a78435bcb19388379d0bc4ed5e00a7574", null ],
     [ "buscarPeliculasFiltradas", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#abf3d25953b01b50fc09cf36b5dd50680", null ],
@@ -24,13 +24,9 @@ var classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service =
     [ "getSeriesById", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#af588576d0a15d97d5f9697380a7cfea2", null ],
     [ "getSeriesRelacionadas", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a878ef535ed7c6f57a94e56fec506562f", null ],
     [ "getUsuarioById", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#ac9897614932080bba37ff8bd5687a2fd", null ],
-    [ "getValoracionesPelicula", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a475234cf8ff168f091b21132864bddbb", null ],
-    [ "getValoracionesSerie", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a7b6142b9b53df94f1a50de82f6c22fd1", null ],
     [ "guardarUsuario", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a5b1f2b047906fed4872e50b58027fbf8", null ],
     [ "updateCapitulo", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a76d88c9c9006d43d17cb9a94c0da1a24", null ],
     [ "updatePelicula", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a0050b26304f57d9594f00ada42d85ed4", null ],
     [ "updateSeries", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a21f59f9fb260d6876fc1214a8280d18d", null ],
-    [ "updateUsuario", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a23e74ef16e845c18a8a8abebc643dd74", null ],
-    [ "valorarPelicula", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a2c1cb5910fbbf43136a858de29a16791", null ],
-    [ "valorarSerie", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a1003befbe4031ae482dcc1eaf110ae8b", null ]
+    [ "updateUsuario", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a23e74ef16e845c18a8a8abebc643dd74", null ]
 ];

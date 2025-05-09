@@ -1,6 +1,5 @@
 var classcom_1_1example_1_1restapi_1_1client_1_1_web_controller =
 [
-    [ "WebController", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a26460fdfda55aaf25bd8d8b2f2539e46", null ],
     [ "accesoDenegado", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#ade0829b2776f24a904e18c068e82d24b", null ],
     [ "cambiarPerfil", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#af21acffc1f345425cb73802ee8a911b4", null ],
     [ "catalogo", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a26aac850b02b8360e608709f23311e9e", null ],
@@ -20,8 +19,6 @@ var classcom_1_1example_1_1restapi_1_1client_1_1_web_controller =
     [ "mostrarUsuarios", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a6b7f7fa31e56591a8bc226b2c35b1355", null ],
     [ "procesarLogin", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a11e90b70e8c293d9c3b2e07f0d1cb3ce", null ],
     [ "procesarRegistro", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc", null ],
-    [ "valorarPelicula", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a911fd28519b8785d19e57ae79e3e3215", null ],
-    [ "valorarSerie", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#ad615f5fbaa199821d8a82ec3908de81b", null ],
     [ "verPeliculas", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#ad4230b070db89a75c9f6438896ab1309", null ],
     [ "verSeries", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a9f113c983e39d38b9cb11c6b41aafc1a", null ],
     [ "verSuscripcion", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#aedc9a408f09c471e27b2b71a643cba0d", null ]
