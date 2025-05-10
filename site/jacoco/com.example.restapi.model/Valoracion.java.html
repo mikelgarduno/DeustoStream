@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Valoracion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.model</a> &gt; <span class="el_source">Valoracion.java</span></div><h1>Valoracion.java</h1><pre class="source lang-java linenums">package com.example.restapi.model;
+
+import java.io.Serializable;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
+public class Valoracion implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private int puntuacion; // por ejemplo de 1 a 5
+    private String comentario;
+
+    @ManyToOne
+    private Usuario usuario;
+
+    @ManyToOne
+    private Pelicula pelicula;
+
+    @ManyToOne
+    private Series serie;
+
+    @ManyToOne
+    private Perfil perfil;
+
+<span class="fc" id="L32">    public Valoracion() {</span>
+<span class="fc" id="L33">    }</span>
+
+<span class="fc" id="L35">    public Valoracion(int puntuacion, String comentario, Usuario usuario, Pelicula pelicula, Series serie, Perfil perfil) {</span>
+<span class="fc" id="L36">        this.puntuacion = puntuacion;</span>
+<span class="fc" id="L37">        this.comentario = comentario;</span>
+<span class="fc" id="L38">        this.usuario = usuario;</span>
+<span class="fc" id="L39">        this.pelicula = pelicula;</span>
+<span class="fc" id="L40">        this.serie = serie;</span>
+<span class="fc" id="L41">        this.perfil = perfil;</span>
+
+<span class="fc" id="L43">    }</span>
+
+    public Long getId() {
+<span class="fc" id="L46">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L50">        this.id = id;</span>
+<span class="fc" id="L51">    }</span>
+
+    public int getPuntuacion() {
+<span class="fc" id="L54">        return puntuacion;</span>
+    }
+
+    public void setPuntuacion(int puntuacion) {
+<span class="fc" id="L58">        this.puntuacion = puntuacion;</span>
+<span class="fc" id="L59">    }</span>
+
+    public String getComentario() {
+<span class="fc" id="L62">        return comentario;</span>
+    }
+
+    public void setComentario(String comentario) {
+<span class="fc" id="L66">        this.comentario = comentario;</span>
+<span class="fc" id="L67">    }</span>
+
+    public Usuario getUsuario() {
+<span class="fc" id="L70">        return usuario;</span>
+    }
+
+    public void setUsuario(Usuario usuario) {
+<span class="fc" id="L74">        this.usuario = usuario;</span>
+<span class="fc" id="L75">    }</span>
+
+    public Pelicula getPelicula() {
+<span class="fc" id="L78">        return pelicula;</span>
+    }
+
+    public void setPelicula(Pelicula pelicula) {
+<span class="fc" id="L82">        this.pelicula = pelicula;</span>
+<span class="fc" id="L83">    }</span>
+
+    public Series getSerie() {
+<span class="fc" id="L86">        return serie;</span>
+    }
+
+    public void setSerie(Series serie) {
+<span class="fc" id="L90">        this.serie = serie;</span>
+
+<span class="fc" id="L92">    }</span>
+
+    public Perfil getPerfil() {
+<span class="fc" id="L95">        return perfil;</span>
+    }
+
+    public void setPerfil(Perfil perfil) {
+<span class="fc" id="L99">        this.perfil = perfil;</span>
+<span class="fc" id="L100">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L104">        return &quot;Valoracion{&quot; +</span>
+                &quot;id=&quot; + id +
+                &quot;, puntuacion=&quot; + puntuacion +
+                &quot;, comentario='&quot; + comentario + '\'' +
+                &quot;, usuario=&quot; + usuario +
+                &quot;, pelicula=&quot; + pelicula +
+                &quot;, serie=&quot; + serie +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (this == o) return true;</span>
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (!(o instanceof Valoracion)) return false;</span>
+
+<span class="fc" id="L119">        Valoracion that = (Valoracion) o;</span>
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        if (puntuacion != that.puntuacion) return false;</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (!id.equals(that.id)) return false;</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (!comentario.equals(that.comentario)) return false;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (!usuario.equals(that.usuario)) return false;</span>
+<span class="pc bpc" id="L125" title="1 of 2 branches missed.">        if (!pelicula.equals(that.pelicula)) return false;</span>
+<span class="fc" id="L126">        return serie.equals(that.serie);</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L131">        int result = id.hashCode();</span>
+<span class="fc" id="L132">        result = 31 * result + puntuacion;</span>
+<span class="fc" id="L133">        result = 31 * result + comentario.hashCode();</span>
+<span class="fc" id="L134">        result = 31 * result + usuario.hashCode();</span>
+<span class="fc" id="L135">        result = 31 * result + pelicula.hashCode();</span>
+<span class="fc" id="L136">        result = 31 * result + serie.hashCode();</span>
+<span class="fc" id="L137">        return result;</span>
+    }
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
