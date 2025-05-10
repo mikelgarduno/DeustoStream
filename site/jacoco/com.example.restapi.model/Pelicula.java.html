@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pelicula.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.model</a> &gt; <span class="el_source">Pelicula.java</span></div><h1>Pelicula.java</h1><pre class="source lang-java linenums">package com.example.restapi.model;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,16 +8,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
-import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = &quot;peliculas&quot;)
-public class Pelicula implements Serializable {
+public class Pelicula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,84 +39,81 @@ public class Pelicula implements Serializable {
     @ManyToMany(mappedBy = &quot;listaMeGustaPeliculas&quot;)
     private List&lt;Perfil&gt; perfiles; // Relación ManyToMany con Usuario
 
-    @OneToMany(mappedBy = &quot;pelicula&quot;, cascade = CascadeType.ALL)
-    private List&lt;Valoracion&gt; valoraciones;
-
     // No-argument constructor
-<span class="fc" id="L51">    public Pelicula() {</span>
-<span class="fc" id="L52">    }</span>
+<span class="fc" id="L43">    public Pelicula() {</span>
+<span class="fc" id="L44">    }</span>
 
     // All-argument constructor (optional, for convenience)
-<span class="fc" id="L55">    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {</span>
-<span class="fc" id="L56">        this.titulo = titulo;</span>
-<span class="fc" id="L57">        this.genero = genero;</span>
-<span class="fc" id="L58">        this.duracion = duracion;</span>
-<span class="fc" id="L59">        this.anio = anio;</span>
-<span class="fc" id="L60">        this.sinopsis = sinopsis;</span>
-<span class="fc" id="L61">        this.imagenUrl = imagenUrl;</span>
-<span class="fc" id="L62">    }</span>
+<span class="fc" id="L47">    public Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl) {</span>
+<span class="fc" id="L48">        this.titulo = titulo;</span>
+<span class="fc" id="L49">        this.genero = genero;</span>
+<span class="fc" id="L50">        this.duracion = duracion;</span>
+<span class="fc" id="L51">        this.anio = anio;</span>
+<span class="fc" id="L52">        this.sinopsis = sinopsis;</span>
+<span class="fc" id="L53">        this.imagenUrl = imagenUrl;</span>
+<span class="fc" id="L54">    }</span>
     
 
     // Getters and setters
     public Long getId() {
-<span class="fc" id="L67">        return id;</span>
+<span class="fc" id="L59">        return id;</span>
     }
 
     public void setId(Long id) {
-<span class="fc" id="L71">        this.id = id;</span>
-<span class="fc" id="L72">    }</span>
+<span class="fc" id="L63">        this.id = id;</span>
+<span class="fc" id="L64">    }</span>
 
     public String getTitulo() {
-<span class="fc" id="L75">        return titulo;</span>
+<span class="fc" id="L67">        return titulo;</span>
     }
 
     public void setTitulo(String titulo) {
-<span class="fc" id="L79">        this.titulo = titulo;</span>
-<span class="fc" id="L80">    }</span>
+<span class="fc" id="L71">        this.titulo = titulo;</span>
+<span class="fc" id="L72">    }</span>
 
     public Generos getGenero() {
-<span class="fc" id="L83">        return genero;</span>
+<span class="fc" id="L75">        return genero;</span>
     }
 
     public void setGenero(Generos genero) {
-<span class="fc" id="L87">        this.genero = genero;</span>
-<span class="fc" id="L88">    }</span>
+<span class="fc" id="L79">        this.genero = genero;</span>
+<span class="fc" id="L80">    }</span>
 
     public int getDuracion() {
-<span class="fc" id="L91">        return duracion;</span>
+<span class="fc" id="L83">        return duracion;</span>
     }
 
     public void setDuracion(int duracion) {
-<span class="fc" id="L95">        this.duracion = duracion;</span>
-<span class="fc" id="L96">    }</span>
+<span class="fc" id="L87">        this.duracion = duracion;</span>
+<span class="fc" id="L88">    }</span>
 
     public int getAnio() {
-<span class="fc" id="L99">        return anio;</span>
+<span class="fc" id="L91">        return anio;</span>
     }
 
     public void setAnio(int anio) {
-<span class="fc" id="L103">        this.anio = anio;</span>
-<span class="fc" id="L104">    }</span>
+<span class="fc" id="L95">        this.anio = anio;</span>
+<span class="fc" id="L96">    }</span>
 
     public String getSinopsis() {
-<span class="fc" id="L107">        return sinopsis;</span>
+<span class="fc" id="L99">        return sinopsis;</span>
     }
 
     public void setSinopsis(String sinopsis) {
-<span class="fc" id="L111">        this.sinopsis = sinopsis;</span>
-<span class="fc" id="L112">    }</span>
+<span class="fc" id="L103">        this.sinopsis = sinopsis;</span>
+<span class="fc" id="L104">    }</span>
 
     public String getImagenUrl() {
-<span class="fc" id="L115">        return imagenUrl;</span>
+<span class="fc" id="L107">        return imagenUrl;</span>
     }
 
     public void setImagenUrl(String imagenUrl) {
-<span class="fc" id="L119">        this.imagenUrl = imagenUrl;</span>
-<span class="fc" id="L120">    }</span>
+<span class="fc" id="L111">        this.imagenUrl = imagenUrl;</span>
+<span class="fc" id="L112">    }</span>
 
     @Override
     public String toString() {
-<span class="fc" id="L124">        return &quot;Pelicula{&quot; +</span>
+<span class="fc" id="L116">        return &quot;Pelicula{&quot; +</span>
                 &quot;id=&quot; + id +
                 &quot;, titulo='&quot; + titulo + '\'' +
                 &quot;, genero=&quot; + genero +
@@ -132,22 +124,15 @@ public class Pelicula implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (this == o)</span>
-<span class="fc" id="L136">            return true;</span>
-<span class="pc bpc" id="L137" title="1 of 4 branches missed.">        if (o == null || getClass() != o.getClass())</span>
-<span class="fc" id="L138">            return false;</span>
-<span class="fc" id="L139">        Pelicula pelicula = (Pelicula) o;</span>
-<span class="fc bfc" id="L140" title="All 8 branches covered.">        return titulo.equals(pelicula.titulo) &amp;&amp;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (this == o)</span>
+<span class="fc" id="L128">            return true;</span>
+<span class="fc bfc" id="L129" title="All 4 branches covered.">        if (o == null || getClass() != o.getClass())</span>
+<span class="fc" id="L130">            return false;</span>
+<span class="fc" id="L131">        Pelicula pelicula = (Pelicula) o;</span>
+<span class="fc bfc" id="L132" title="All 8 branches covered.">        return titulo.equals(pelicula.titulo) &amp;&amp;</span>
                 genero == pelicula.genero &amp;&amp;
                 duracion == pelicula.duracion &amp;&amp;
                 anio == pelicula.anio;
     }
-
-    @Override
-    public int hashCode() {
-<span class="fc" id="L148">        return Objects.hash(titulo, genero, duracion, anio);</span>
-    }
 }
-
-
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

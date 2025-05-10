@@ -114,7 +114,8 @@ $(document).ready(function(){initNavTree('_auth_controller_i_t_8java_source.html
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>@SpringBootTest</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>@AutoConfigureMockMvc</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">class </span>AuthControllerIT {</div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html">   18</a></span><span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html">AuthControllerIT</a> {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    @Autowired</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">private</span> MockMvc mockMvc;</div>
@@ -123,24 +124,29 @@ $(document).ready(function(){initNavTree('_auth_controller_i_t_8java_source.html
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">private</span> UsuarioRepository usuarioRepository;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    @BeforeEach</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">void</span> setUp() {</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#abc4e0ac08fa27c3babbba611f1bf0036">   27</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#abc4e0ac08fa27c3babbba611f1bf0036">setUp</a>() {</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        usuarioRepository.deleteAll();</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        Usuario user = <span class="keyword">new</span> Usuario(<span class="stringliteral">&quot;Test&quot;</span>, <span class="stringliteral">&quot;User&quot;</span>,<span class="stringliteral">&quot;test@correo.com&quot;</span>, <span class="stringliteral">&quot;1234&quot;</span>);</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        usuarioRepository.save(user);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    }</div>
+</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    @Test</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> loginCorrecto_redireccionaCatalogo() <span class="keywordflow">throws</span> Exception {</div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#a9fb9afff4abd19c897babaa2d5fa10d3">   35</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#a9fb9afff4abd19c897babaa2d5fa10d3">loginCorrecto_redireccionaCatalogo</a>() throws Exception {</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        mockMvc.perform(post(<span class="stringliteral">&quot;/login&quot;</span>)</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                .param(<span class="stringliteral">&quot;correo&quot;</span>, <span class="stringliteral">&quot;test@correo.com&quot;</span>)</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                .param(<span class="stringliteral">&quot;contrasenya&quot;</span>, <span class="stringliteral">&quot;1234&quot;</span>))</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                .andExpect(status().is3xxRedirection())</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                .andExpect(redirectedUrl(<span class="stringliteral">&quot;/catalogo&quot;</span>));</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    }</div>
+</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    @Test</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">void</span> loginFallido_muestraError() <span class="keywordflow">throws</span> Exception {</div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#aed2534fe1524a4af46357d1e78ca6f5d">   44</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#aed2534fe1524a4af46357d1e78ca6f5d">loginFallido_muestraError</a>() throws Exception {</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        mockMvc.perform(post(<span class="stringliteral">&quot;/login&quot;</span>)</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        .param(<span class="stringliteral">&quot;correo&quot;</span>, <span class="stringliteral">&quot;test@correo.com&quot;</span>)</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        .param(<span class="stringliteral">&quot;contrasenya&quot;</span>, <span class="stringliteral">&quot;mala&quot;</span>))</div>
@@ -148,9 +154,11 @@ $(document).ready(function(){initNavTree('_auth_controller_i_t_8java_source.html
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        .andExpect(model().attributeExists(<span class="stringliteral">&quot;error&quot;</span>))</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        .andExpect(view().name(<span class="stringliteral">&quot;login&quot;</span>));</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    }</div>
+</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    @Test</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keywordtype">void</span> registroNuevoUsuario_redireccionaLogin() <span class="keywordflow">throws</span> Exception {</div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#a58002a84e5bab3ed21c2f10647d09560">   54</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#a58002a84e5bab3ed21c2f10647d09560">registroNuevoUsuario_redireccionaLogin</a>() throws Exception {</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        mockMvc.perform(post(<span class="stringliteral">&quot;/registro&quot;</span>)</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        .contentType(MediaType.APPLICATION_FORM_URLENCODED)</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        .param(<span class="stringliteral">&quot;nombre&quot;</span>,<span class="stringliteral">&quot;Nuevo&quot;</span>)</div>
@@ -160,9 +168,11 @@ $(document).ready(function(){initNavTree('_auth_controller_i_t_8java_source.html
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        .andExpect(status().is3xxRedirection())</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        .andExpect(redirectedUrl(<span class="stringliteral">&quot;/catalogo&quot;</span>));</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
+</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    @Test</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">void</span> registroFallido_correoRepetido() <span class="keywordflow">throws</span> Exception {</div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#afd2f8bd2c4c1d53a3e4744b5091f19c0">   66</a></span>    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#afd2f8bd2c4c1d53a3e4744b5091f19c0">registroFallido_correoRepetido</a>() throws Exception {</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        mockMvc.perform(post(<span class="stringliteral">&quot;/registro&quot;</span>)</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        .contentType(MediaType.APPLICATION_FORM_URLENCODED)</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        .param(<span class="stringliteral">&quot;nombre&quot;</span>, <span class="stringliteral">&quot;Test&quot;</span>)</div>
@@ -173,15 +183,23 @@ $(document).ready(function(){initNavTree('_auth_controller_i_t_8java_source.html
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        .andExpect(model().attributeExists(<span class="stringliteral">&quot;error&quot;</span>))</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        .andExpect(view().name(<span class="stringliteral">&quot;registro&quot;</span>));</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
+</div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t_html"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html">com.example.restapi.integration.AuthControllerIT</a></div><div class="ttdef"><b>Definition</b> <a href="_auth_controller_i_t_8java_source.html#l00018">AuthControllerIT.java:18</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t_html_a58002a84e5bab3ed21c2f10647d09560"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#a58002a84e5bab3ed21c2f10647d09560">com.example.restapi.integration.AuthControllerIT.registroNuevoUsuario_redireccionaLogin</a></div><div class="ttdeci">void registroNuevoUsuario_redireccionaLogin()</div><div class="ttdef"><b>Definition</b> <a href="_auth_controller_i_t_8java_source.html#l00054">AuthControllerIT.java:54</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t_html_a9fb9afff4abd19c897babaa2d5fa10d3"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#a9fb9afff4abd19c897babaa2d5fa10d3">com.example.restapi.integration.AuthControllerIT.loginCorrecto_redireccionaCatalogo</a></div><div class="ttdeci">void loginCorrecto_redireccionaCatalogo()</div><div class="ttdef"><b>Definition</b> <a href="_auth_controller_i_t_8java_source.html#l00035">AuthControllerIT.java:35</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t_html_abc4e0ac08fa27c3babbba611f1bf0036"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#abc4e0ac08fa27c3babbba611f1bf0036">com.example.restapi.integration.AuthControllerIT.setUp</a></div><div class="ttdeci">void setUp()</div><div class="ttdef"><b>Definition</b> <a href="_auth_controller_i_t_8java_source.html#l00027">AuthControllerIT.java:27</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t_html_aed2534fe1524a4af46357d1e78ca6f5d"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#aed2534fe1524a4af46357d1e78ca6f5d">com.example.restapi.integration.AuthControllerIT.loginFallido_muestraError</a></div><div class="ttdeci">void loginFallido_muestraError()</div><div class="ttdef"><b>Definition</b> <a href="_auth_controller_i_t_8java_source.html#l00044">AuthControllerIT.java:44</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t_html_afd2f8bd2c4c1d53a3e4744b5091f19c0"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_auth_controller_i_t.html#afd2f8bd2c4c1d53a3e4744b5091f19c0">com.example.restapi.integration.AuthControllerIT.registroFallido_correoRepetido</a></div><div class="ttdeci">void registroFallido_correoRepetido()</div><div class="ttdef"><b>Definition</b> <a href="_auth_controller_i_t_8java_source.html#l00066">AuthControllerIT.java:66</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_120ed4da3e3217b1e7fc0b4f48568e79.html">test</a></li><li class="navelem"><a class="el" href="dir_97debbc39e3b917fca663601bb2b0709.html">java</a></li><li class="navelem"><a class="el" href="dir_23faaf0c5c81a0660a411c4a306acbb5.html">com</a></li><li class="navelem"><a class="el" href="dir_78723e336fd254b123dc05d5464f5a60.html">example</a></li><li class="navelem"><a class="el" href="dir_73081b1dc5db13aed24f62510fc1946d.html">restapi</a></li><li class="navelem"><a class="el" href="dir_25ef36f08b2fc358c8f4b27308102981.html">integration</a></li><li class="navelem"><a class="el" href="_auth_controller_i_t_8java.html">AuthControllerIT.java</a></li>
-    <li class="footer">Generated on Sat May 10 2025 01:30:00 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Mon May 5 2025 06:32:17 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
