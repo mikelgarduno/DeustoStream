@@ -10,6 +10,7 @@ var classcom_1_1example_1_1restapi_1_1model_1_1_pelicula =
     [ "getImagenUrl", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a7742c4be925afd9d1c00a469e6787091", null ],
     [ "getSinopsis", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#ae3e733cae8a3a736928eafdc91eea1d2", null ],
     [ "getTitulo", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#ad8b779431197379a4fc1d213a6d3a22b", null ],
+    [ "hashCode", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#ae2f9697bd7f2999f66683e480b76f231", null ],
     [ "setAnio", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a645fcf1c5872190e609e4eeac311cef3", null ],
     [ "setDuracion", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a77308d0fe0bec157bf6ac09e6a683d6d", null ],
     [ "setGenero", "classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a8838e104106600211ff2781d1793edeb", null ],

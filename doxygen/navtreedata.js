@@ -47,7 +47,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_auth_controller_i_t_8java.html",
-"classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html#a610cde13fa1f970f786cc1a5fd3e578b"
+"classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
