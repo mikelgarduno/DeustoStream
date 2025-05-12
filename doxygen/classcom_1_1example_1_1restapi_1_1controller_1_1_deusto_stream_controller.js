@@ -1,6 +1,5 @@
 var classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller =
 [
-    [ "DeustoStreamController", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#afe7499e85ebb7898b234c464212752bd", null ],
     [ "addCapitulo", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#a1e3bc1a6e35abb2c67f83fb8aac6da89", null ],
     [ "addPeliculaToFavoritos", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#a2b5aadec0206117a5abde903764424d3", null ],
     [ "addSerieToFavoritos", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#a91a183bd2920bb2ed1d60a49c9928147", null ],
