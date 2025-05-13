@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>inicializarDatos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.config</a> &gt; <span class="el_source">inicializarDatos.java</span></div><h1>inicializarDatos.java</h1><pre class="source lang-java linenums">package com.example.restapi.config;
+
+import com.example.restapi.model.Pelicula;
+import com.example.restapi.model.Series;
+import com.example.restapi.model.Usuario;
+import com.example.restapi.model.Generos;
+import com.example.restapi.model.Perfil;
+import com.example.restapi.repository.PeliculaRepository;
+import com.example.restapi.repository.SerieRepository;
+import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.repository.PerfilRepository;
+import java.util.Collections;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Component
+<span class="nc" id="L18">public class inicializarDatos implements CommandLineRunner {</span>
+
+        @Autowired
+        private PeliculaRepository peliculaRepository;
+
+        @Autowired
+        private SerieRepository serieRepository;
+        
+        @Autowired
+        private UsuarioRepository usuarioRepository;
+
+        @Autowired
+        private PerfilRepository perfilRepository;
+
+        @Override
+        public void run(String... args) throws Exception {
+                // Vaciar las tablas antes de inicializar datos
+<span class="nc" id="L35">                usuarioRepository.deleteAll(); </span>
+<span class="nc" id="L36">                perfilRepository.deleteAll();</span>
+<span class="nc" id="L37">                peliculaRepository.deleteAll();</span>
+<span class="nc" id="L38">                serieRepository.deleteAll();</span>
+
+                // Inicializar usuarios de prueba
+<span class="nc" id="L41">                Usuario usu1 = new Usuario(</span>
+                        
+                        &quot;qw&quot;, 
+                        &quot;qw&quot;,
+                        &quot;qw@deustostream.es&quot;,
+                        &quot;qw&quot;
+                );
+
+<span class="nc" id="L49">                Usuario usu2 = new Usuario(</span>
+                        
+                        &quot;qw&quot;, 
+                        &quot;qw&quot;,
+                        &quot;qw@gmail.com&quot;,
+                        &quot;qw&quot;
+                );
+
+<span class="nc" id="L57">                usuarioRepository.save(usu1);</span>
+<span class="nc" id="L58">                usuarioRepository.save(usu2);</span>
+
+                // Inicializar películas de prueba
+<span class="nc" id="L61">                Pelicula pelicula1 = new Pelicula(</span>
+                                &quot;Interstellar&quot;,           // Título
+                                Generos.CIENCIA_FICCION,  // Género
+                                169,                      // Duración en minutos
+                                2014,                     // Año
+                                &quot;Un grupo de astronautas viaja a través de un agujero de gusano en busca de un nuevo hogar para la humanidad.&quot;, // Sinopsis
+                                &quot;https://m.media-amazon.com/images/I/61i7admY+hL._AC_UF894,1000_QL80_.jpg&quot; // URL de la imagen
+                );
+<span class="nc" id="L69">                Pelicula pelicula2 = new Pelicula(</span>
+                                &quot;El Padrino&quot;,
+                                Generos.DRAMA,
+                                175,
+                                1972,
+                                &quot;La historia de la familia mafiosa Corleone y su lucha por el poder en Estados Unidos.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/41WMFqes1iL._AC_UF894,1000_QL80_.jpg&quot;
+                );
+<span class="nc" id="L77">                Pelicula pelicula3 = new Pelicula(</span>
+                                &quot;Pulp Fiction&quot;,
+                                Generos.AVENTURA,
+                                154,
+                                1994,
+                                &quot;Historias entrelazadas de crimen y redención en Los Ángeles.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/81IOViIosKL.jpg&quot;
+                );
+<span class="nc" id="L85">                Pelicula pelicula4 = new Pelicula(</span>
+                                &quot;La La Land&quot;,
+                                Generos.MUSICAL,
+                                128,
+                                2016,
+                                &quot;Un pianista de jazz y una actriz en ascenso se enamoran mientras persiguen sus sueños en Los Ángeles.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/91jrKX9xjQL.jpg&quot;
+                );
+<span class="nc" id="L93">                Pelicula pelicula5 = new Pelicula(</span>
+                                &quot;El Señor de los Anillos: La Comunidad del Anillo&quot;,
+                                Generos.FANTASIA,
+                                178,
+                                2001,
+                                &quot;Un hobbit emprende un peligroso viaje para destruir un anillo mágico y salvar la Tierra Media.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/6143TqGItiL.jpg&quot;
+                );
+<span class="nc" id="L101">                Pelicula pelicula6 = new Pelicula(</span>
+                                &quot;Forrest Gump&quot;,
+                                Generos.DRAMA,
+                                142,
+                                1994,
+                                &quot;La vida de un hombre con un coeficiente intelectual bajo que presencia y participa en eventos históricos clave del siglo XX.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/61oZBKzdPVL.jpg&quot;
+                );
+<span class="nc" id="L109">                Pelicula pelicula7 = new Pelicula(</span>
+                                &quot;El Caballero Oscuro&quot;,
+                                Generos.ACCION,
+                                152,
+                                2008,
+                                &quot;Batman enfrenta al Joker, un criminal caótico que siembra el caos en Gotham.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/91aHN3Y8o4L.jpg&quot;
+                );
+<span class="nc" id="L117">                Pelicula pelicula8 = new Pelicula(</span>
+                                &quot;Matrix&quot;,
+                                Generos.CIENCIA_FICCION,
+                                136,
+                                1999,
+                                &quot;Un hacker descubre la verdadera naturaleza de su realidad y su papel en la guerra contra sus controladores.&quot;,
+                                &quot;https://static.posters.cz/image/1300/posters/matrix-hacker-i104636.jpg&quot;
+                );
+
+<span class="nc" id="L126">                Pelicula pelicula9 = new Pelicula(</span>
+                                &quot;Avatar&quot;,
+                                Generos.AVENTURA,
+                                162,
+                                2009,
+                                &quot;Un ex marine se infiltra en una civilización alienígena para ayudar a su especie.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/61uspTokDBL._AC_UF894,1000_QL80_.jpg&quot;
+                );
+<span class="nc" id="L134">                Pelicula pelicula10 = new Pelicula(</span>
+                                &quot;Titanic&quot;,
+                                Generos.ROMANCE,
+                                195,
+                                1997,
+                                &quot;Una joven aristócrata y un artista pobre se enamoran a bordo del infame transatlántico.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/91zGp74Qc4L.jpg&quot;
+                );
+
+<span class="nc" id="L143">                Pelicula pelicula11 = new Pelicula(</span>
+                                &quot;Gladiator&quot;,
+                                Generos.ACCION,
+                                155,
+                                2000,
+                                &quot;Un general romano es traicionado y se convierte en gladiador para vengar la muerte de su familia.&quot;,
+                                &quot;https://i.ebayimg.com/images/g/dpkAAOSw~llgqj0q/s-l1200.jpg&quot;
+                );
+
+<span class="nc" id="L152">                Pelicula pelicula12 = new Pelicula(</span>
+                                &quot;Jurassic Park&quot;,
+                                Generos.AVENTURA,
+                                127,
+                                1993,
+                                &quot;Un parque temático con dinosaurios clonados se convierte en un caos cuando los animales escapan.&quot;,
+                                &quot;https://i.etsystatic.com/18242346/r/il/1d6c94/4608692380/il_fullxfull.4608692380_ooro.jpg&quot;
+                );
+
+<span class="nc" id="L161">                Pelicula pelicula13 = new Pelicula(</span>
+                                &quot;Inception&quot;,
+                                Generos.CIENCIA_FICCION,
+                                148,
+                                2010,
+                                &quot;Un ladrón especializado en robar secretos de los sueños es contratado para implantar una idea en la mente de un objetivo.&quot;,
+                                &quot;https://www.originalfilmart.com/cdn/shop/files/inception_2010_french_original_film_art_5000x.webp?v=1686692704&quot;
+                );
+
+<span class="nc" id="L170">                Pelicula pelicula14 = new Pelicula(</span>
+                                &quot;The Shawshank Redemption&quot;,
+                                Generos.DRAMA,
+                                142,
+                                1994,
+                                &quot;La historia de un banquero condenado a cadena perpetua que encuentra esperanza y amistad en prisión.&quot;,
+                                &quot;https://m.media-amazon.com/images/I/71VNhykMgNL._AC_UF894,1000_QL80_.jpg&quot;
+                );
+
+<span class="nc" id="L179">                Pelicula pelicula15 = new Pelicula(</span>
+                                &quot;The Godfather Part II&quot;,
+                                Generos.DRAMA,
+                                202,
+                                1974,
+                                &quot;La historia de la familia Corleone continúa mientras Michael Corleone se convierte en el nuevo jefe de la mafia.&quot;,
+                                &quot;https://i.ebayimg.com/00/s/MTYwMFgxMDY2/z/WfUAAOSw44Zj8lry/$_57.JPG?set_id=880000500F&quot;
+                );
+        
+<span class="nc" id="L188">                peliculaRepository.save(pelicula1);</span>
+<span class="nc" id="L189">                peliculaRepository.save(pelicula2);</span>
+<span class="nc" id="L190">                peliculaRepository.save(pelicula3);</span>
+<span class="nc" id="L191">                peliculaRepository.save(pelicula4);</span>
+<span class="nc" id="L192">                peliculaRepository.save(pelicula5);</span>
+<span class="nc" id="L193">                peliculaRepository.save(pelicula6);</span>
+<span class="nc" id="L194">                peliculaRepository.save(pelicula7);</span>
+<span class="nc" id="L195">                peliculaRepository.save(pelicula8);</span>
+<span class="nc" id="L196">                peliculaRepository.save(pelicula9);</span>
+<span class="nc" id="L197">                peliculaRepository.save(pelicula10);</span>
+<span class="nc" id="L198">                peliculaRepository.save(pelicula11);</span>
+<span class="nc" id="L199">                peliculaRepository.save(pelicula12);</span>
+<span class="nc" id="L200">                peliculaRepository.save(pelicula13);</span>
+<span class="nc" id="L201">                peliculaRepository.save(pelicula14);</span>
+<span class="nc" id="L202">                peliculaRepository.save(pelicula15);</span>
+        
+                // Inicializar series de prueba
+<span class="nc" id="L205">                Series serie1 = new Series(</span>
+                                &quot;Game of Thrones&quot;,        // Título
+                                2011,                     // Año de inicio
+                                &quot;Nobles familias luchan por el control del Trono de Hierro en los Siete Reinos de Westeros.&quot;, // Descripción
+                                Generos.FANTASIA,         // Género
+<span class="nc" id="L210">                                Collections.emptyList(),  // Lista de capítulos inicialmente vacía</span>
+                                &quot;https://i.ebayimg.com/images/g/QfcAAOSwPmRk1YGD/s-l1200.jpg&quot; // URL de la imagen
+                );
+<span class="nc" id="L213">                Series serie2 = new Series(</span>
+                                &quot;The Office&quot;,
+                                2005,
+                                &quot;Comedia que retrata la vida cotidiana de los empleados de una oficina en Scranton, Pensilvania.&quot;,
+                                Generos.COMEDIA,
+<span class="nc" id="L218">                                Collections.emptyList(),</span>
+                                &quot;https://ih1.redbubble.net/image.2138428860.4920/flat,750x,075,f-pad,750x1000,f8f8f8.jpg&quot;
+                );
+<span class="nc" id="L221">                Series serie3 = new Series(</span>
+                                &quot;Friends&quot;,
+                                1994,
+                                &quot;Seis amigos navegan por las complejidades de la vida y el amor en Nueva York.&quot;,
+                                Generos.COMEDIA,
+<span class="nc" id="L226">                                Collections.emptyList(),</span>
+                                &quot;https://img.posterstore.com/zoom/wb0193-8friends-thefriendsportrayedno150x70.jpg&quot;
+                );
+<span class="nc" id="L229">                Series serie4 = new Series(</span>
+                                &quot;The Crown&quot;,
+                                2016,
+                                &quot;Crónica de la vida de la Reina Isabel II y los eventos políticos que moldearon su reinado.&quot;,
+                                Generos.DRAMA,
+<span class="nc" id="L234">                                Collections.emptyList(),</span>
+                                &quot;https://pics.filmaffinity.com/the_crown-838357032-large.jpg&quot;
+                );
+<span class="nc" id="L237">                Series serie5 = new Series(</span>
+                                &quot;Stranger Things&quot;,
+                                2016,
+                                &quot;Un grupo de niños descubre misterios sobrenaturales en su pequeño pueblo.&quot;,
+                                Generos.CIENCIA_FICCION,
+<span class="nc" id="L242">                                Collections.emptyList(),</span>
+                                &quot;https://www.yourdecoration.es/cdn/shop/products/pyramid-pp34422-stranger-things-one-sheet-season-2-poster-61x91-5cm.jpg?v=1709734663&quot;
+                );
+<span class="nc" id="L245">                Series serie6 = new Series(</span>
+                                &quot;The Simpsons&quot;,
+                                1989,
+                                &quot;Las aventuras y desventuras de una familia amarilla en la ciudad de Springfield.&quot;,
+                                Generos.ANIMACION,
+<span class="nc" id="L250">                                Collections.emptyList(),</span>
+                                &quot;https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1491519331i/28549904.jpg&quot;
+                );
+
+<span class="nc" id="L254">                serieRepository.save(serie1);</span>
+<span class="nc" id="L255">                serieRepository.save(serie2);</span>
+<span class="nc" id="L256">                serieRepository.save(serie3);</span>
+<span class="nc" id="L257">                serieRepository.save(serie4);</span>
+<span class="nc" id="L258">                serieRepository.save(serie5);</span>
+<span class="nc" id="L259">                serieRepository.save(serie6);</span>
+<span class="nc" id="L260">        serieRepository.save(serie6);</span>
+
+        // Inicializar usuarios de prueba
+<span class="nc" id="L263">        Usuario usuario1 = new Usuario(&quot;Esperanza&quot;, &quot;Gracia&quot;, &quot;prueba@prueba.com&quot;,&quot;1234&quot; );</span>
+<span class="nc" id="L264">        Usuario usuario2 = new Usuario (&quot;nombre&quot;, &quot;apellido&quot;, &quot;prueba@deustostream.es&quot;,&quot;1234&quot; );</span>
+<span class="nc" id="L265">        usuario1.getPerfiles().get(0).setListaMeGustaPeliculas(Collections.singletonList(pelicula1));</span>
+<span class="nc" id="L266">        usuario1.getPerfiles().get(0).setAvatar(&quot;perfil4&quot;);</span>
+<span class="nc" id="L267">        usuario1.getPerfiles().get(0).setEdad(24);</span>
+
+<span class="nc" id="L269">        Perfil perfil1 = new Perfil(&quot;Hermano&quot;, &quot;perfil1&quot;);</span>
+<span class="nc" id="L270">        perfil1.setUsuario(usuario1);</span>
+<span class="nc" id="L271">        perfil1.setEdad(12);</span>
+<span class="nc" id="L272">        usuario1.getPerfiles().add(perfil1);</span>
+
+<span class="nc" id="L274">        Perfil perfil2 = new Perfil(&quot;Ricardo Palomares&quot;, &quot;perfil3&quot;);</span>
+<span class="nc" id="L275">        perfil2.setUsuario(usuario1);</span>
+<span class="nc" id="L276">        perfil2.setEdad(50);</span>
+<span class="nc" id="L277">        usuario1.getPerfiles().add(perfil2);</span>
+
+
+
+<span class="nc" id="L281">        usuarioRepository.save(usuario1);</span>
+<span class="nc" id="L282">        usuarioRepository.save(usuario2);</span>
+
+        // Asignar películas y series a los usuarios
+        
+
+<span class="nc" id="L287">        }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
