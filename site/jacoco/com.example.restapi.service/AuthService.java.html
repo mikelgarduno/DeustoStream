@@ -13,75 +13,71 @@ import java.util.Optional;
 import java.util.List;
 
 @Service
-public class AuthService {
-
-    private final UsuarioRepository usuarioRepository;
-    private final PerfilRepository perfilRepository;
+<span class="fc" id="L16">public class AuthService {</span>
 
     @Autowired
-<span class="fc" id="L22">    public AuthService(UsuarioRepository usuarioRepository, PerfilRepository perfilRepository) {</span>
-<span class="fc" id="L23">        this.usuarioRepository = usuarioRepository;</span>
-<span class="fc" id="L24">        this.perfilRepository = perfilRepository;</span>
-<span class="fc" id="L25">    }</span>
+    private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PerfilRepository perfilRepository;
 
     // valida las credenciales de un usuario
     public Optional&lt;Usuario&gt; login(String correo, String contrasenya) {
-<span class="fc" id="L29">        Optional&lt;Usuario&gt; usuarioOpt = usuarioRepository.findByCorreo(correo);</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (usuarioOpt.isPresent()) {</span>
-<span class="fc" id="L31">            Usuario usuario = usuarioOpt.get();</span>
-<span class="fc bfc" id="L32" title="All 2 branches covered.">            if (usuario.getContrasenya().equals(contrasenya)) {</span>
-<span class="fc" id="L33">                return Optional.of(usuario);</span>
+<span class="fc" id="L25">        Optional&lt;Usuario&gt; usuarioOpt = usuarioRepository.findByCorreo(correo);</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (usuarioOpt.isPresent()) {</span>
+<span class="fc" id="L27">            Usuario usuario = usuarioOpt.get();</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">            if (usuario.getContrasenya().equals(contrasenya)) {</span>
+<span class="fc" id="L29">                return Optional.of(usuario);</span>
             }
         }
-<span class="fc" id="L36">        return Optional.empty();</span>
+<span class="fc" id="L32">        return Optional.empty();</span>
     }
 
     // registra un nuevo usuario si el correo no existe
     @Transactional
     public boolean register(Usuario nuevoUsuario) {
-<span class="fc" id="L42">        Optional&lt;Usuario&gt; existente = usuarioRepository.findByCorreo(nuevoUsuario.getCorreo());</span>
-<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (existente.isPresent()) {</span>
-<span class="fc" id="L44">            return false; // correo ya registrado</span>
+<span class="fc" id="L38">        Optional&lt;Usuario&gt; existente = usuarioRepository.findByCorreo(nuevoUsuario.getCorreo());</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        if (existente.isPresent()) {</span>
+<span class="fc" id="L40">            return false; // correo ya registrado</span>
         }
 
         // Guardar el nuevo usuario primero (para generar ID)
-<span class="fc" id="L48">        nuevoUsuario = usuarioRepository.save(nuevoUsuario);</span>
+<span class="fc" id="L44">        nuevoUsuario = usuarioRepository.save(nuevoUsuario);</span>
 
         // Crear el perfil básico
-<span class="fc" id="L51">        Perfil perfil = new Perfil();</span>
-<span class="fc" id="L52">        perfil.setNombre(&quot;Perfil Principal&quot;);</span>
-<span class="fc" id="L53">        perfil.setListaMeGustaPeliculas(new ArrayList&lt;&gt;());</span>
-<span class="fc" id="L54">        perfil.setListaMeGustaSeries(new ArrayList&lt;&gt;());</span>
-<span class="fc" id="L55">        perfil.setUsuario(nuevoUsuario); // Asociar el usuario</span>
+<span class="fc" id="L47">        Perfil perfil = new Perfil();</span>
+<span class="fc" id="L48">        perfil.setNombre(&quot;Perfil Principal&quot;);</span>
+<span class="fc" id="L49">        perfil.setListaMeGustaPeliculas(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L50">        perfil.setListaMeGustaSeries(new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L51">        perfil.setUsuario(nuevoUsuario); // Asociar el usuario</span>
 
         // Guardar el perfil
-<span class="fc" id="L58">        perfilRepository.save(perfil);</span>
+<span class="fc" id="L54">        perfilRepository.save(perfil);</span>
 
         // Asignar el perfil al usuario
-<span class="fc" id="L61">        List&lt;Perfil&gt; perfiles = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L62">        perfiles.add(perfil);</span>
-<span class="fc" id="L63">        nuevoUsuario.setPerfiles(perfiles);</span>
+<span class="fc" id="L57">        List&lt;Perfil&gt; perfiles = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L58">        perfiles.add(perfil);</span>
+<span class="fc" id="L59">        nuevoUsuario.setPerfiles(perfiles);</span>
 
         // Actualizar el usuario con su lista de perfiles
-<span class="fc" id="L66">        usuarioRepository.save(nuevoUsuario);</span>
+<span class="fc" id="L62">        usuarioRepository.save(nuevoUsuario);</span>
 
-<span class="fc" id="L68">        return true;</span>
+<span class="fc" id="L64">        return true;</span>
     }
 
     // verifica si un correo esta registrado para recuperar la cuenta
     public boolean existeCorreo(String correo) {
-<span class="fc" id="L73">        return usuarioRepository.findByCorreo(correo).isPresent();</span>
+<span class="fc" id="L69">        return usuarioRepository.findByCorreo(correo).isPresent();</span>
     }
 
     // redireccion segun el tipo de usuario
     public String obtenerRedireccion(Usuario usuario) {
 
-<span class="fc" id="L79">        String correo = usuario.getCorreo().toLowerCase();</span>
+<span class="fc" id="L75">        String correo = usuario.getCorreo().toLowerCase();</span>
 
-<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (correo.endsWith(&quot;@deustostream.es&quot;)) {</span>
-<span class="fc" id="L82">            return &quot;/admin&quot;;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (correo.endsWith(&quot;@deustostream.es&quot;)) {</span>
+<span class="fc" id="L78">            return &quot;/admin&quot;;</span>
         } else {
-<span class="fc" id="L84">            return &quot;/catalogo&quot;;</span>
+<span class="fc" id="L80">            return &quot;/catalogo&quot;;</span>
         }
 
     }
