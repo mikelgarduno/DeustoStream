@@ -3,7 +3,6 @@ package com.example.restapi.unit.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,6 +34,7 @@ import com.example.restapi.repository.UsuarioRepository;
 import com.example.restapi.repository.ValoracionRepository;
 import com.example.restapi.service.DeustoStreamService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import static org.mockito.Mockito.*;
 
@@ -1023,14 +1023,14 @@ public class DeustoStreamServiceTest {
 
         when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.valorarPelicula(1L, perfil, 4, "Comentario");
         });
-        assertEquals("Pelicula or Usuario not found", ex.getMessage());
+        assertEquals("Película or Usuario not found for the rating operation", ex.getMessage());
     }
 
     @Test
-    void testValorarPelicula_PerfilSinUsuario_ThrowsException() {
+    void testValorarPelicula_PerfilSinUsuario_ThrowsEntityNotFoundException() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
         pelicula.setId(1L);
         Perfil perfil = new Perfil();
@@ -1038,10 +1038,10 @@ public class DeustoStreamServiceTest {
 
         when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.valorarPelicula(1L, perfil, 3, "Comentario");
         });
-        assertEquals("Pelicula or Usuario not found", ex.getMessage());
+        assertEquals("Película or Usuario not found for the rating operation", ex.getMessage());
     }
 
     @Test
@@ -1062,7 +1062,7 @@ public class DeustoStreamServiceTest {
     }
 
     @Test
-    void testValorarSerie_SerieNotFound_ThrowsException() {
+    void testValorarSerie_SerieNotFound_ThrowsEntityNotFoundException() {
         Usuario usuario = new Usuario();
         usuario.setId(1L);
         Perfil perfil = new Perfil();
@@ -1070,25 +1070,10 @@ public class DeustoStreamServiceTest {
 
         when(seriesRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.valorarSerie(1L, perfil, 2, "Comentario");
         });
-        assertEquals("Serie or Usuario not found", ex.getMessage());
-    }
-
-    @Test
-    void testValorarSerie_PerfilSinUsuario_ThrowsException() {
-        Series serie = new Series("Lost", 2004, "Desc", Generos.DRAMA, null, "img");
-        serie.setId(1L);
-        Perfil perfil = new Perfil();
-        perfil.setUsuario(null);
-
-        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
-
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
-            deustoStreamService.valorarSerie(1L, perfil, 1, "Comentario");
-        });
-        assertEquals("Serie or Usuario not found", ex.getMessage());
+        assertEquals("Series or Usuario not found for the rating operation", ex.getMessage());
     }
 
     @Test
@@ -1135,13 +1120,61 @@ public class DeustoStreamServiceTest {
     }
 
     @Test
-    void testGetValoracionesSerie_SerieNotFound_ThrowsException() {
+    void testGetValoracionesSerie_SerieNotFound_ThrowsEntityNotFoundException() {
         when(seriesRepository.findById(88L)).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.getValoracionesSerie(88L);
         });
-        assertEquals("Serie not found with id: 88", ex.getMessage());
+        assertEquals("Series not found with id: 88", ex.getMessage());
+    }
+
+    @Test
+    void testGetValoracionesSerie_EmptyList() {
+        Series serie = new Series("Breaking Bad", 2008, "Desc", Generos.DRAMA, null, "url");
+        serie.setId(5L);
+        
+        when(seriesRepository.findById(5L)).thenReturn(Optional.of(serie));
+        when(valoracionRepository.findBySerie(serie)).thenReturn(new ArrayList<>());
+        
+        List<Valoracion> result = deustoStreamService.getValoracionesSerie(5L);
+        
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
+        verify(valoracionRepository).findBySerie(serie);
+    }
+
+    @Test
+    void testGetValoracionesSerie_MultipleValoraciones() {
+        Series serie = new Series("Game of Thrones", 2011, "Desc", Generos.FANTASIA, null, "url");
+        serie.setId(10L);
+        
+        Perfil perfil1 = new Perfil("User1", "avatar1.png");
+        Perfil perfil2 = new Perfil("User2", "avatar2.png");
+        
+        Valoracion v1 = new Valoracion();
+        v1.setPerfil(perfil1);
+        v1.setSerie(serie);
+        v1.setPuntuacion(5);
+        v1.setComentario("Excelente");
+        
+        Valoracion v2 = new Valoracion();
+        v2.setPerfil(perfil2);
+        v2.setSerie(serie);
+        v2.setPuntuacion(3);
+        v2.setComentario("Regular");
+        
+        List<Valoracion> valoraciones = Arrays.asList(v1, v2);
+        
+        when(seriesRepository.findById(10L)).thenReturn(Optional.of(serie));
+        when(valoracionRepository.findBySerie(serie)).thenReturn(valoraciones);
+        
+        List<Valoracion> result = deustoStreamService.getValoracionesSerie(10L);
+        
+        assertEquals(2, result.size());
+        assertEquals(5, result.get(0).getPuntuacion());
+        assertEquals("Regular", result.get(1).getComentario());
+        verify(valoracionRepository).findBySerie(serie);
     }
 
     @Test

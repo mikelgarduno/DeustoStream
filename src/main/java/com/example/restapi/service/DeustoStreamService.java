@@ -14,6 +14,7 @@ import com.example.restapi.repository.UsuarioRepository;
 import com.example.restapi.repository.ValoracionRepository;
 import com.example.restapi.repository.PerfilRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -337,7 +338,7 @@ public class DeustoStreamService {
             valoracionRepository.save(v);
         }
         else {
-            throw new RuntimeException("Pelicula or Usuario not found");
+            throw new EntityNotFoundException("Película or Usuario not found for the rating operation");
         }
     }
 
@@ -356,14 +357,14 @@ public class DeustoStreamService {
             valoracionRepository.save(v);
         }
         else {
-            throw new RuntimeException("Serie or Usuario not found");
+            throw new EntityNotFoundException("Series or Usuario not found for the rating operation");
         }
     }
     
     public List<Valoracion> getValoracionesPelicula(Long idPelicula) {
         Optional<Pelicula> optionalPelicula = peliculaRepository.findById(idPelicula);
         if (optionalPelicula.isEmpty()) {
-            throw new RuntimeException("Pelicula not found with id: " + idPelicula);
+            throw new EntityNotFoundException("Pelicula not found with id: " + idPelicula);
         }
         return valoracionRepository.findByPelicula(optionalPelicula.get());
     }
@@ -371,7 +372,7 @@ public class DeustoStreamService {
     public List<Valoracion> getValoracionesSerie(Long idSerie) {
         Optional<Series> optionalSerie = serieRepository.findById(idSerie);
         if (optionalSerie.isEmpty()) {
-            throw new RuntimeException("Serie not found with id: " + idSerie);
+            throw new EntityNotFoundException("Series not found with id: " + idSerie);
         }
         return valoracionRepository.findBySerie(optionalSerie.get());
     }
