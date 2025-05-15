@@ -3,11 +3,11 @@ package com.example.restapi.unit.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -210,7 +210,6 @@ public class DeustoStreamServiceTest {
     }
 
 
-
     @Test
     void testGetPeliculaById() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
@@ -264,7 +263,8 @@ public class DeustoStreamServiceTest {
     @Test
     void testCreatePelicula() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
-        // Mock the behavior of the repository to return the pelicula when save is called
+        // Mock the behavior of the repository to return the pelicula when save is
+        // called
         when(peliculaRepository.save(pelicula)).thenReturn(pelicula);
 
         Pelicula result = deustoStreamService.createPelicula(pelicula);
@@ -300,6 +300,7 @@ public class DeustoStreamServiceTest {
             deustoStreamService.createPelicula(pelicula);
         });
     }
+
     @Test
     void testUpdatePelicula() {
         Pelicula original = new Pelicula("Old Title", Generos.ACCION, 100, 2000, "Vieja sinopsis", "oldurl");
@@ -330,43 +331,45 @@ public class DeustoStreamServiceTest {
     @Test
     void testDeletePelicula_Successfully() {
         // Create a Pelicula instance
-        Pelicula pelicula = new Pelicula("Test Pelicula", Generos.CIENCIA_FICCION, 120, 2022, "Test sinopsis", "testurl");
+        Pelicula pelicula = new Pelicula("Test Pelicula", Generos.CIENCIA_FICCION, 120, 2022, "Test sinopsis",
+                "testurl");
         pelicula.setId(1L);
-        
+
         // Create two Perfil instances: one that has the pelicula and one that does not
         Perfil perfilWithPelicula = new Perfil("User1", "avatar1.png");
         perfilWithPelicula.setId(100L);
         List<Pelicula> peliculasFavoritas = new ArrayList<>();
         peliculasFavoritas.add(pelicula);
         perfilWithPelicula.setListaMeGustaPeliculas(peliculasFavoritas);
-        
+
         Perfil perfilWithoutPelicula = new Perfil("User2", "avatar2.png");
         perfilWithoutPelicula.setId(101L);
         perfilWithoutPelicula.setListaMeGustaPeliculas(new ArrayList<>());
-        
+
         List<Perfil> perfiles = Arrays.asList(perfilWithPelicula, perfilWithoutPelicula);
-        
+
         // Mock repository methods
         when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
         when(perfilRepository.findAll()).thenReturn(perfiles);
-        
+
         // Call the method under test
         deustoStreamService.deletePelicula(1L);
-        
+
         // Verify that the pelicula was removed from the perfil that contained it
         assertFalse(perfilWithPelicula.getListaMeGustaPeliculas().contains(pelicula));
         verify(perfilRepository).save(perfilWithPelicula);
-        
+
         // Verify that the pelicula repository's delete method was called
         verify(peliculaRepository).delete(pelicula);
-        
+
         // Verify that perfilWithoutPelicula was not unnecessarily saved
         verify(perfilRepository, never()).save(perfilWithoutPelicula);
     }
 
     @Test
     void testDeletePeliculaNotFound() {
-        // Mock the behavior of the repository to return an empty Optional when findById is called
+        // Mock the behavior of the repository to return an empty Optional when findById
+        // is called
         when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
 
         // Assert that the RuntimeException is thrown with the correct message
@@ -383,7 +386,8 @@ public class DeustoStreamServiceTest {
         Pelicula pelicula2 = new Pelicula("Inception 2", Generos.ACCION, 150, 2012, "Secuela", "url2");
         List<Pelicula> peliculas = Arrays.asList(pelicula1, pelicula2);
 
-        when(peliculaRepository.findByTituloContainingIgnoreCaseAndGenero("Inception", Generos.ACCION)).thenReturn(peliculas);
+        when(peliculaRepository.findByTituloContainingIgnoreCaseAndGenero("Inception", Generos.ACCION))
+                .thenReturn(peliculas);
 
         List<Pelicula> result = deustoStreamService.buscarPeliculasFiltradas("Inception", Generos.ACCION);
 
@@ -507,7 +511,7 @@ public class DeustoStreamServiceTest {
         assertEquals("Un profesor de química se convierte en fabricante de metanfetaminas", result.getDescripcion());
         assertEquals(Generos.ACCION, result.getGenero());
     }
-    
+
     @Test
     void testUpdateSeries() {
         Series original = new Series("Old Title", 2000, "Vieja sinopsis", Generos.ACCION, new ArrayList<>(), "oldurl");
@@ -538,10 +542,12 @@ public class DeustoStreamServiceTest {
     @Test
     void testDeleteSeries_Successfully() {
         // Create a Series instance
-        Series series = new Series("Test Series", 2022, "Test Description", Generos.DRAMA, new ArrayList<>(), "testurl");
+        Series series = new Series("Test Series", 2022, "Test Description", Generos.DRAMA, new ArrayList<>(),
+                "testurl");
         series.setId(1L);
 
-        // Create two Perfil instances: one that includes the series and one that does not
+        // Create two Perfil instances: one that includes the series and one that does
+        // not
         Perfil perfilWithSeries = new Perfil("User1", "avatar1.png");
         perfilWithSeries.setId(10L);
         List<Series> favoritosConSerie = new ArrayList<>();
@@ -561,7 +567,8 @@ public class DeustoStreamServiceTest {
         // Call the method under test
         deustoStreamService.deleteSeries(1L);
 
-        // Verify that for the profile containing the series, the series was removed and saved
+        // Verify that for the profile containing the series, the series was removed and
+        // saved
         assertFalse(perfilWithSeries.getListaMeGustaSeries().contains(series));
         verify(perfilRepository).save(perfilWithSeries);
 
@@ -574,7 +581,8 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testDeleteSeriesNotFound() {
-        // Mock the behavior of the repository to return an empty Optional when findById is called
+        // Mock the behavior of the repository to return an empty Optional when findById
+        // is called
         when(seriesRepository.findById(1L)).thenReturn(Optional.empty());
 
         // Assert that the RuntimeException is thrown with the correct message
@@ -587,11 +595,14 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testBuscarSeriesFiltradas_TituloYGenero() {
-        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
+        Series serie1 = new Series("Breaking Bad", 2008,
+                "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION,
+                new ArrayList<>(), "url1");
         Series serie2 = new Series("Breaking Bad 2", 2010, "Secuela", Generos.ACCION, new ArrayList<>(), "url2");
         List<Series> series = Arrays.asList(serie1, serie2);
 
-        when(seriesRepository.findByTituloContainingIgnoreCaseAndGenero("Breaking Bad", Generos.ACCION)).thenReturn(series);
+        when(seriesRepository.findByTituloContainingIgnoreCaseAndGenero("Breaking Bad", Generos.ACCION))
+                .thenReturn(series);
 
         List<Series> result = deustoStreamService.buscarSeriesFiltradas("Breaking Bad", Generos.ACCION);
 
@@ -603,7 +614,9 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testBuscarSeriesFiltradas_SoloTitulo() {
-        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
+        Series serie1 = new Series("Breaking Bad", 2008,
+                "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION,
+                new ArrayList<>(), "url1");
         List<Series> series = Arrays.asList(serie1);
 
         when(seriesRepository.findByTituloContainingIgnoreCase("Breaking Bad")).thenReturn(series);
@@ -617,8 +630,11 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testBuscarSeriesFiltradas_SoloGenero() {
-        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
-        Series serie2 = new Series("Game of Thrones", 2011, "Luchas por el trono de hierro en un mundo de fantasía", Generos.ACCION, new ArrayList<>(), "url2");
+        Series serie1 = new Series("Breaking Bad", 2008,
+                "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION,
+                new ArrayList<>(), "url1");
+        Series serie2 = new Series("Game of Thrones", 2011, "Luchas por el trono de hierro en un mundo de fantasía",
+                Generos.ACCION, new ArrayList<>(), "url2");
         List<Series> series = Arrays.asList(serie1, serie2);
 
         when(seriesRepository.findByGenero(Generos.ACCION)).thenReturn(series);
@@ -633,8 +649,11 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testBuscarSeriesFiltradas_SinFiltros() {
-        Series serie1 = new Series("Breaking Bad", 2008, "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION, new ArrayList<>(), "url1");
-        Series serie2 = new Series("Game of Thrones", 2011, "Luchas por el trono de hierro en un mundo de fantasía", Generos.FANTASIA, new ArrayList<>(), "url2");
+        Series serie1 = new Series("Breaking Bad", 2008,
+                "Un profesor de química se convierte en fabricante de metanfetaminas", Generos.ACCION,
+                new ArrayList<>(), "url1");
+        Series serie2 = new Series("Game of Thrones", 2011, "Luchas por el trono de hierro en un mundo de fantasía",
+                Generos.FANTASIA, new ArrayList<>(), "url2");
         List<Series> series = Arrays.asList(serie1, serie2);
 
         when(seriesRepository.findAll()).thenReturn(series);
@@ -677,7 +696,7 @@ public class DeustoStreamServiceTest {
     }
 
     @Test
-        void testGetAllCapitulos() {
+    void testGetAllCapitulos() {
         Capitulo c1 = new Capitulo("Cap 1", 30);
         Capitulo c2 = new Capitulo("Cap 2", 40);
         List<Capitulo> lista = Arrays.asList(c1, c2);
@@ -806,8 +825,6 @@ public class DeustoStreamServiceTest {
         assertTrue(deustoStreamService.getSeriesRelacionadas(99L).isEmpty());
     }
 
-
-
     /* --------------------------------------------------------------------- */
     /* ------------------- Favoritos y Perfiles ---------------------------- */
     /* --------------------------------------------------------------------- */
@@ -859,7 +876,7 @@ public class DeustoStreamServiceTest {
     void testAddPeliculaToFavoritos_UserNotFound_ThrowsException() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
         pelicula.setId(1L);
-        
+
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
         when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
 
@@ -876,7 +893,7 @@ public class DeustoStreamServiceTest {
         Perfil perfil = new Perfil();
         perfil.setId(1L);
         usuario.setPerfiles(List.of(perfil));
-        
+
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
         when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
 
@@ -1128,5 +1145,98 @@ public class DeustoStreamServiceTest {
         assertEquals("Serie not found with id: 88", ex.getMessage());
     }
 
+    @Test
+    void testCreateUsuario_ConSuscripcion() {
+        // Arrange
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre("Carlos");
+        nuevoUsuario.setApellido("Ramírez");
+        nuevoUsuario.setCorreo("carlos@example.com");
+        nuevoUsuario.setContrasenya("abcd1234");
+        nuevoUsuario.setTipoSuscripcion("Estándar");
 
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Usuario resultado = deustoStreamService.createUsuario(nuevoUsuario);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals("Estándar", resultado.getTipoSuscripcion());
+    }
+
+    @Test
+    void testUpdateUsuario_SuscripcionActualizada() {
+        // Arrange
+        Long userId = 1L;
+        Usuario usuarioExistente = new Usuario();
+        usuarioExistente.setId(userId);
+        usuarioExistente.setNombre("Ana");
+        usuarioExistente.setApellido("Pérez");
+        usuarioExistente.setCorreo("ana@example.com");
+        usuarioExistente.setContrasenya("1234");
+        usuarioExistente.setTipoSuscripcion("Básico");
+
+        Usuario usuarioActualizado = new Usuario();
+        usuarioActualizado.setNombre("Ana");
+        usuarioActualizado.setApellido("Pérez");
+        usuarioActualizado.setCorreo("ana@example.com");
+        usuarioActualizado.setContrasenya("1234");
+        usuarioActualizado.setTipoSuscripcion("Premium");
+
+        when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        // Act
+        Usuario resultado = deustoStreamService.updateUsuario(userId, usuarioActualizado);
+
+        // Assert
+        assertNotNull(resultado);
+        assertEquals("Premium", resultado.getTipoSuscripcion());
+    }
+
+    @Test
+    void testUpdateUsuario_NoExiste() {
+        // Arrange
+        Long userId = 99L;
+        Usuario usuarioActualizado = new Usuario();
+        usuarioActualizado.setTipoSuscripcion("Premium");
+
+        when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());
+
+        // Act
+        Usuario resultado = deustoStreamService.updateUsuario(userId, usuarioActualizado);
+
+        // Assert
+        assertNull(resultado);
+    }
+
+    @Test
+    void testCreateUsuario_SinSuscripcion() {
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setNombre("Luis");
+        nuevoUsuario.setTipoSuscripcion(null); // o no seteado
+
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> {
+            Usuario u = invocation.getArgument(0);
+            if (u.getTipoSuscripcion() == null) {
+                u.setTipoSuscripcion("Gratis"); // simulamos comportamiento por defecto
+            }
+            return u;
+        });
+
+        Usuario resultado = deustoStreamService.createUsuario(nuevoUsuario);
+
+        assertEquals("Gratis", resultado.getTipoSuscripcion());
+    }
+
+    @Test
+    void testCreateUsuario_TipoSuscripcionInvalido() {
+        Usuario nuevoUsuario = new Usuario();
+        nuevoUsuario.setTipoSuscripcion("SUPERGOLD");
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            deustoStreamService.createUsuario(nuevoUsuario);
+        });
+    }
 }
