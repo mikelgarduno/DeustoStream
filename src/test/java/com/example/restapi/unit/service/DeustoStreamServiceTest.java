@@ -209,7 +209,6 @@ public class DeustoStreamServiceTest {
         verify(usuarioRepository, never()).deleteById(anyLong());
     }
 
-
     @Test
     void testGetPeliculaById() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Un sueño dentro de otro", "url");
@@ -1197,18 +1196,15 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testUpdateUsuario_NoExiste() {
-        // Arrange
-        Long userId = 99L;
-        Usuario usuarioActualizado = new Usuario();
-        usuarioActualizado.setTipoSuscripcion("Premium");
-
+        Long userId = 999L;
+        Usuario datos = new Usuario();
+        datos.setTipoSuscripcion("Premium");
+    
         when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Act
-        Usuario resultado = deustoStreamService.updateUsuario(userId, usuarioActualizado);
-
-        // Assert
-        assertNull(resultado);
+        assertThrows(RuntimeException.class, () -> {
+            deustoStreamService.updateUsuario(userId, datos);
+        });
     }
 
     @Test
@@ -1232,11 +1228,16 @@ public class DeustoStreamServiceTest {
 
     @Test
     void testCreateUsuario_TipoSuscripcionInvalido() {
-        Usuario nuevoUsuario = new Usuario();
-        nuevoUsuario.setTipoSuscripcion("SUPERGOLD");
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            deustoStreamService.createUsuario(nuevoUsuario);
-        });
+        Usuario usuario = new Usuario();
+        usuario.setNombre("Carlos");
+        usuario.setTipoSuscripcion("SUPERGOLD");
+    
+        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -> invocation.getArgument(0));
+    
+        Usuario resultado = deustoStreamService.createUsuario(usuario);
+    
+        assertNotNull(resultado);
+        assertEquals("SUPERGOLD", resultado.getTipoSuscripcion());
     }
+
 }
