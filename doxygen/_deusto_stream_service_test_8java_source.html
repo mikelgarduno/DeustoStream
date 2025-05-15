@@ -102,38 +102,38 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_test_8java_sour
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertEquals;</div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertFalse;</div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertNotNull;</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertNull;</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertThrows;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertTrue;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.ArgumentMatchers.any;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.ArgumentMatchers.anyLong;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">import</span> java.util.ArrayList;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">import</span> java.util.Arrays;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">import</span> java.util.List;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">import</span> java.util.Optional;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">import</span> org.junit.jupiter.api.BeforeEach;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> org.junit.jupiter.api.Test;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">import</span> org.mockito.InjectMocks;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">import</span> org.mockito.Mock;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">import</span> org.mockito.MockitoAnnotations;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">import</span> com.example.restapi.model.Capitulo;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">import</span> com.example.restapi.model.Generos;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">import</span> com.example.restapi.model.Pelicula;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">import</span> com.example.restapi.model.Perfil;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">import</span> com.example.restapi.model.Series;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">import</span> com.example.restapi.model.Usuario;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">import</span> com.example.restapi.model.Valoracion;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">import</span> com.example.restapi.repository.CapituloRepository;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">import</span> com.example.restapi.repository.PeliculaRepository;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">import</span> com.example.restapi.repository.PerfilRepository;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">import</span> com.example.restapi.repository.SerieRepository;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">import</span> com.example.restapi.repository.UsuarioRepository;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">import</span> com.example.restapi.repository.ValoracionRepository;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">import</span> com.example.restapi.service.DeustoStreamService;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertThrows;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">import</span> <span class="keyword">static</span> org.junit.jupiter.api.Assertions.assertTrue;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.ArgumentMatchers.any;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.ArgumentMatchers.anyLong;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">import</span> java.util.ArrayList;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">import</span> java.util.Arrays;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">import</span> java.util.List;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">import</span> java.util.Optional;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">import</span> org.junit.jupiter.api.BeforeEach;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">import</span> org.junit.jupiter.api.Test;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> org.mockito.InjectMocks;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">import</span> org.mockito.Mock;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">import</span> org.mockito.MockitoAnnotations;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">import</span> com.example.restapi.model.Capitulo;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">import</span> com.example.restapi.model.Generos;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">import</span> com.example.restapi.model.Pelicula;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">import</span> com.example.restapi.model.Perfil;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">import</span> com.example.restapi.model.Series;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">import</span> com.example.restapi.model.Usuario;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">import</span> com.example.restapi.model.Valoracion;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">import</span> com.example.restapi.repository.CapituloRepository;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">import</span> com.example.restapi.repository.PeliculaRepository;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">import</span> com.example.restapi.repository.PerfilRepository;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">import</span> com.example.restapi.repository.SerieRepository;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">import</span> com.example.restapi.repository.UsuarioRepository;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">import</span> com.example.restapi.repository.ValoracionRepository;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">import</span> com.example.restapi.service.DeustoStreamService;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">import</span> jakarta.persistence.EntityNotFoundException;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">import</span> jakarta.servlet.http.HttpSession;</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">import</span> <span class="keyword">static</span> org.mockito.Mockito.*;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
@@ -1123,14 +1123,14 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_test_8java_sour
 <div class="line"><a id="l01023" name="l01023"></a><span class="lineno"> 1023</span> </div>
 <div class="line"><a id="l01024" name="l01024"></a><span class="lineno"> 1024</span>        when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());</div>
 <div class="line"><a id="l01025" name="l01025"></a><span class="lineno"> 1025</span> </div>
-<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01026" name="l01026"></a><span class="lineno"> 1026</span>        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -&gt; {</div>
 <div class="line"><a id="l01027" name="l01027"></a><span class="lineno"> 1027</span>            deustoStreamService.valorarPelicula(1L, perfil, 4, <span class="stringliteral">&quot;Comentario&quot;</span>);</div>
 <div class="line"><a id="l01028" name="l01028"></a><span class="lineno"> 1028</span>        });</div>
-<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>        assertEquals(<span class="stringliteral">&quot;Pelicula or Usuario not found&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01029" name="l01029"></a><span class="lineno"> 1029</span>        assertEquals(<span class="stringliteral">&quot;Película or Usuario not found for the rating operation&quot;</span>, ex.getMessage());</div>
 <div class="line"><a id="l01030" name="l01030"></a><span class="lineno"> 1030</span>    }</div>
 <div class="line"><a id="l01031" name="l01031"></a><span class="lineno"> 1031</span> </div>
 <div class="line"><a id="l01032" name="l01032"></a><span class="lineno"> 1032</span>    @Test</div>
-<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>    <span class="keywordtype">void</span> testValorarPelicula_PerfilSinUsuario_ThrowsException() {</div>
+<div class="line"><a id="l01033" name="l01033"></a><span class="lineno"> 1033</span>    <span class="keywordtype">void</span> testValorarPelicula_PerfilSinUsuario_ThrowsEntityNotFoundException() {</div>
 <div class="line"><a id="l01034" name="l01034"></a><span class="lineno"> 1034</span>        Pelicula pelicula = <span class="keyword">new</span> Pelicula(<span class="stringliteral">&quot;Inception&quot;</span>, Generos.ACCION, 148, 2010, <span class="stringliteral">&quot;Sueños&quot;</span>, <span class="stringliteral">&quot;url&quot;</span>);</div>
 <div class="line"><a id="l01035" name="l01035"></a><span class="lineno"> 1035</span>        pelicula.setId(1L);</div>
 <div class="line"><a id="l01036" name="l01036"></a><span class="lineno"> 1036</span>        Perfil perfil = <span class="keyword">new</span> Perfil();</div>
@@ -1138,10 +1138,10 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_test_8java_sour
 <div class="line"><a id="l01038" name="l01038"></a><span class="lineno"> 1038</span> </div>
 <div class="line"><a id="l01039" name="l01039"></a><span class="lineno"> 1039</span>        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));</div>
 <div class="line"><a id="l01040" name="l01040"></a><span class="lineno"> 1040</span> </div>
-<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01041" name="l01041"></a><span class="lineno"> 1041</span>        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -&gt; {</div>
 <div class="line"><a id="l01042" name="l01042"></a><span class="lineno"> 1042</span>            deustoStreamService.valorarPelicula(1L, perfil, 3, <span class="stringliteral">&quot;Comentario&quot;</span>);</div>
 <div class="line"><a id="l01043" name="l01043"></a><span class="lineno"> 1043</span>        });</div>
-<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>        assertEquals(<span class="stringliteral">&quot;Pelicula or Usuario not found&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01044" name="l01044"></a><span class="lineno"> 1044</span>        assertEquals(<span class="stringliteral">&quot;Película or Usuario not found for the rating operation&quot;</span>, ex.getMessage());</div>
 <div class="line"><a id="l01045" name="l01045"></a><span class="lineno"> 1045</span>    }</div>
 <div class="line"><a id="l01046" name="l01046"></a><span class="lineno"> 1046</span> </div>
 <div class="line"><a id="l01047" name="l01047"></a><span class="lineno"> 1047</span>    @Test</div>
@@ -1162,7 +1162,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_test_8java_sour
 <div class="line"><a id="l01062" name="l01062"></a><span class="lineno"> 1062</span>    }</div>
 <div class="line"><a id="l01063" name="l01063"></a><span class="lineno"> 1063</span> </div>
 <div class="line"><a id="l01064" name="l01064"></a><span class="lineno"> 1064</span>    @Test</div>
-<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>    <span class="keywordtype">void</span> testValorarSerie_SerieNotFound_ThrowsException() {</div>
+<div class="line"><a id="l01065" name="l01065"></a><span class="lineno"> 1065</span>    <span class="keywordtype">void</span> testValorarSerie_SerieNotFound_ThrowsEntityNotFoundException() {</div>
 <div class="line"><a id="l01066" name="l01066"></a><span class="lineno"> 1066</span>        Usuario usuario = <span class="keyword">new</span> Usuario();</div>
 <div class="line"><a id="l01067" name="l01067"></a><span class="lineno"> 1067</span>        usuario.setId(1L);</div>
 <div class="line"><a id="l01068" name="l01068"></a><span class="lineno"> 1068</span>        Perfil perfil = <span class="keyword">new</span> Perfil();</div>
@@ -1170,177 +1170,210 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_test_8java_sour
 <div class="line"><a id="l01070" name="l01070"></a><span class="lineno"> 1070</span> </div>
 <div class="line"><a id="l01071" name="l01071"></a><span class="lineno"> 1071</span>        when(seriesRepository.findById(1L)).thenReturn(Optional.empty());</div>
 <div class="line"><a id="l01072" name="l01072"></a><span class="lineno"> 1072</span> </div>
-<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01073" name="l01073"></a><span class="lineno"> 1073</span>        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -&gt; {</div>
 <div class="line"><a id="l01074" name="l01074"></a><span class="lineno"> 1074</span>            deustoStreamService.valorarSerie(1L, perfil, 2, <span class="stringliteral">&quot;Comentario&quot;</span>);</div>
 <div class="line"><a id="l01075" name="l01075"></a><span class="lineno"> 1075</span>        });</div>
-<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span>        assertEquals(<span class="stringliteral">&quot;Serie or Usuario not found&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01076" name="l01076"></a><span class="lineno"> 1076</span>        assertEquals(<span class="stringliteral">&quot;Series or Usuario not found for the rating operation&quot;</span>, ex.getMessage());</div>
 <div class="line"><a id="l01077" name="l01077"></a><span class="lineno"> 1077</span>    }</div>
 <div class="line"><a id="l01078" name="l01078"></a><span class="lineno"> 1078</span> </div>
 <div class="line"><a id="l01079" name="l01079"></a><span class="lineno"> 1079</span>    @Test</div>
-<div class="line"><a id="l01080" name="l01080"></a><span class="lineno"> 1080</span>    <span class="keywordtype">void</span> testValorarSerie_PerfilSinUsuario_ThrowsException() {</div>
-<div class="line"><a id="l01081" name="l01081"></a><span class="lineno"> 1081</span>        Series serie = <span class="keyword">new</span> Series(<span class="stringliteral">&quot;Lost&quot;</span>, 2004, <span class="stringliteral">&quot;Desc&quot;</span>, Generos.DRAMA, <span class="keyword">null</span>, <span class="stringliteral">&quot;img&quot;</span>);</div>
-<div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span>        serie.setId(1L);</div>
-<div class="line"><a id="l01083" name="l01083"></a><span class="lineno"> 1083</span>        Perfil perfil = <span class="keyword">new</span> Perfil();</div>
-<div class="line"><a id="l01084" name="l01084"></a><span class="lineno"> 1084</span>        perfil.setUsuario(<span class="keyword">null</span>);</div>
-<div class="line"><a id="l01085" name="l01085"></a><span class="lineno"> 1085</span> </div>
-<div class="line"><a id="l01086" name="l01086"></a><span class="lineno"> 1086</span>        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));</div>
-<div class="line"><a id="l01087" name="l01087"></a><span class="lineno"> 1087</span> </div>
-<div class="line"><a id="l01088" name="l01088"></a><span class="lineno"> 1088</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
-<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span>            deustoStreamService.valorarSerie(1L, perfil, 1, <span class="stringliteral">&quot;Comentario&quot;</span>);</div>
-<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"> 1090</span>        });</div>
-<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span>        assertEquals(<span class="stringliteral">&quot;Serie or Usuario not found&quot;</span>, ex.getMessage());</div>
-<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"> 1092</span>    }</div>
-<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span> </div>
-<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span>    @Test</div>
-<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"> 1095</span>    <span class="keywordtype">void</span> testGetValoracionesPelicula_Success() {</div>
-<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>        Pelicula pelicula = <span class="keyword">new</span> Pelicula(<span class="stringliteral">&quot;Inception&quot;</span>, Generos.ACCION, 148, 2010, <span class="stringliteral">&quot;Sueños&quot;</span>, <span class="stringliteral">&quot;url&quot;</span>);</div>
-<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>        pelicula.setId(1L);</div>
-<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span>        Valoracion v1 = <span class="keyword">new</span> Valoracion();</div>
-<div class="line"><a id="l01099" name="l01099"></a><span class="lineno"> 1099</span>        Valoracion v2 = <span class="keyword">new</span> Valoracion();</div>
-<div class="line"><a id="l01100" name="l01100"></a><span class="lineno"> 1100</span>        List&lt;Valoracion&gt; valoraciones = Arrays.asList(v1, v2);</div>
-<div class="line"><a id="l01101" name="l01101"></a><span class="lineno"> 1101</span> </div>
-<div class="line"><a id="l01102" name="l01102"></a><span class="lineno"> 1102</span>        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));</div>
-<div class="line"><a id="l01103" name="l01103"></a><span class="lineno"> 1103</span>        when(valoracionRepository.findByPelicula(pelicula)).thenReturn(valoraciones);</div>
-<div class="line"><a id="l01104" name="l01104"></a><span class="lineno"> 1104</span> </div>
-<div class="line"><a id="l01105" name="l01105"></a><span class="lineno"> 1105</span>        List&lt;Valoracion&gt; result = deustoStreamService.getValoracionesPelicula(1L);</div>
-<div class="line"><a id="l01106" name="l01106"></a><span class="lineno"> 1106</span> </div>
-<div class="line"><a id="l01107" name="l01107"></a><span class="lineno"> 1107</span>        assertEquals(2, result.size());</div>
-<div class="line"><a id="l01108" name="l01108"></a><span class="lineno"> 1108</span>        verify(valoracionRepository).findByPelicula(pelicula);</div>
-<div class="line"><a id="l01109" name="l01109"></a><span class="lineno"> 1109</span>    }</div>
-<div class="line"><a id="l01110" name="l01110"></a><span class="lineno"> 1110</span> </div>
-<div class="line"><a id="l01111" name="l01111"></a><span class="lineno"> 1111</span>    @Test</div>
-<div class="line"><a id="l01112" name="l01112"></a><span class="lineno"> 1112</span>    <span class="keywordtype">void</span> testGetValoracionesPelicula_PeliculaNotFound_ThrowsException() {</div>
-<div class="line"><a id="l01113" name="l01113"></a><span class="lineno"> 1113</span>        when(peliculaRepository.findById(99L)).thenReturn(Optional.empty());</div>
-<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"> 1114</span> </div>
-<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
-<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>            deustoStreamService.getValoracionesPelicula(99L);</div>
-<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span>        });</div>
-<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span>        assertEquals(<span class="stringliteral">&quot;Pelicula not found with id: 99&quot;</span>, ex.getMessage());</div>
-<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span>    }</div>
-<div class="line"><a id="l01120" name="l01120"></a><span class="lineno"> 1120</span> </div>
-<div class="line"><a id="l01121" name="l01121"></a><span class="lineno"> 1121</span>    @Test</div>
-<div class="line"><a id="l01122" name="l01122"></a><span class="lineno"> 1122</span>    <span class="keywordtype">void</span> testGetValoracionesSerie_Success() {</div>
-<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>        Series serie = <span class="keyword">new</span> Series(<span class="stringliteral">&quot;Lost&quot;</span>, 2004, <span class="stringliteral">&quot;Desc&quot;</span>, Generos.DRAMA, <span class="keyword">null</span>, <span class="stringliteral">&quot;img&quot;</span>);</div>
-<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>        serie.setId(1L);</div>
-<div class="line"><a id="l01125" name="l01125"></a><span class="lineno"> 1125</span>        Valoracion v1 = <span class="keyword">new</span> Valoracion();</div>
-<div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span>        List&lt;Valoracion&gt; valoraciones = List.of(v1);</div>
-<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span> </div>
-<div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span>        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));</div>
-<div class="line"><a id="l01129" name="l01129"></a><span class="lineno"> 1129</span>        when(valoracionRepository.findBySerie(serie)).thenReturn(valoraciones);</div>
-<div class="line"><a id="l01130" name="l01130"></a><span class="lineno"> 1130</span> </div>
-<div class="line"><a id="l01131" name="l01131"></a><span class="lineno"> 1131</span>        List&lt;Valoracion&gt; result = deustoStreamService.getValoracionesSerie(1L);</div>
-<div class="line"><a id="l01132" name="l01132"></a><span class="lineno"> 1132</span> </div>
-<div class="line"><a id="l01133" name="l01133"></a><span class="lineno"> 1133</span>        assertEquals(1, result.size());</div>
-<div class="line"><a id="l01134" name="l01134"></a><span class="lineno"> 1134</span>        verify(valoracionRepository).findBySerie(serie);</div>
-<div class="line"><a id="l01135" name="l01135"></a><span class="lineno"> 1135</span>    }</div>
-<div class="line"><a id="l01136" name="l01136"></a><span class="lineno"> 1136</span> </div>
-<div class="line"><a id="l01137" name="l01137"></a><span class="lineno"> 1137</span>    @Test</div>
-<div class="line"><a id="l01138" name="l01138"></a><span class="lineno"> 1138</span>    <span class="keywordtype">void</span> testGetValoracionesSerie_SerieNotFound_ThrowsException() {</div>
-<div class="line"><a id="l01139" name="l01139"></a><span class="lineno"> 1139</span>        when(seriesRepository.findById(88L)).thenReturn(Optional.empty());</div>
-<div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span> </div>
-<div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
-<div class="line"><a id="l01142" name="l01142"></a><span class="lineno"> 1142</span>            deustoStreamService.getValoracionesSerie(88L);</div>
-<div class="line"><a id="l01143" name="l01143"></a><span class="lineno"> 1143</span>        });</div>
-<div class="line"><a id="l01144" name="l01144"></a><span class="lineno"> 1144</span>        assertEquals(<span class="stringliteral">&quot;Serie not found with id: 88&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01080" name="l01080"></a><span class="lineno"> 1080</span>    <span class="keywordtype">void</span> testGetValoracionesPelicula_Success() {</div>
+<div class="line"><a id="l01081" name="l01081"></a><span class="lineno"> 1081</span>        Pelicula pelicula = <span class="keyword">new</span> Pelicula(<span class="stringliteral">&quot;Inception&quot;</span>, Generos.ACCION, 148, 2010, <span class="stringliteral">&quot;Sueños&quot;</span>, <span class="stringliteral">&quot;url&quot;</span>);</div>
+<div class="line"><a id="l01082" name="l01082"></a><span class="lineno"> 1082</span>        pelicula.setId(1L);</div>
+<div class="line"><a id="l01083" name="l01083"></a><span class="lineno"> 1083</span>        Valoracion v1 = <span class="keyword">new</span> Valoracion();</div>
+<div class="line"><a id="l01084" name="l01084"></a><span class="lineno"> 1084</span>        Valoracion v2 = <span class="keyword">new</span> Valoracion();</div>
+<div class="line"><a id="l01085" name="l01085"></a><span class="lineno"> 1085</span>        List&lt;Valoracion&gt; valoraciones = Arrays.asList(v1, v2);</div>
+<div class="line"><a id="l01086" name="l01086"></a><span class="lineno"> 1086</span> </div>
+<div class="line"><a id="l01087" name="l01087"></a><span class="lineno"> 1087</span>        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));</div>
+<div class="line"><a id="l01088" name="l01088"></a><span class="lineno"> 1088</span>        when(valoracionRepository.findByPelicula(pelicula)).thenReturn(valoraciones);</div>
+<div class="line"><a id="l01089" name="l01089"></a><span class="lineno"> 1089</span> </div>
+<div class="line"><a id="l01090" name="l01090"></a><span class="lineno"> 1090</span>        List&lt;Valoracion&gt; result = deustoStreamService.getValoracionesPelicula(1L);</div>
+<div class="line"><a id="l01091" name="l01091"></a><span class="lineno"> 1091</span> </div>
+<div class="line"><a id="l01092" name="l01092"></a><span class="lineno"> 1092</span>        assertEquals(2, result.size());</div>
+<div class="line"><a id="l01093" name="l01093"></a><span class="lineno"> 1093</span>        verify(valoracionRepository).findByPelicula(pelicula);</div>
+<div class="line"><a id="l01094" name="l01094"></a><span class="lineno"> 1094</span>    }</div>
+<div class="line"><a id="l01095" name="l01095"></a><span class="lineno"> 1095</span> </div>
+<div class="line"><a id="l01096" name="l01096"></a><span class="lineno"> 1096</span>    @Test</div>
+<div class="line"><a id="l01097" name="l01097"></a><span class="lineno"> 1097</span>    <span class="keywordtype">void</span> testGetValoracionesPelicula_PeliculaNotFound_ThrowsException() {</div>
+<div class="line"><a id="l01098" name="l01098"></a><span class="lineno"> 1098</span>        when(peliculaRepository.findById(99L)).thenReturn(Optional.empty());</div>
+<div class="line"><a id="l01099" name="l01099"></a><span class="lineno"> 1099</span> </div>
+<div class="line"><a id="l01100" name="l01100"></a><span class="lineno"> 1100</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01101" name="l01101"></a><span class="lineno"> 1101</span>            deustoStreamService.getValoracionesPelicula(99L);</div>
+<div class="line"><a id="l01102" name="l01102"></a><span class="lineno"> 1102</span>        });</div>
+<div class="line"><a id="l01103" name="l01103"></a><span class="lineno"> 1103</span>        assertEquals(<span class="stringliteral">&quot;Pelicula not found with id: 99&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01104" name="l01104"></a><span class="lineno"> 1104</span>    }</div>
+<div class="line"><a id="l01105" name="l01105"></a><span class="lineno"> 1105</span> </div>
+<div class="line"><a id="l01106" name="l01106"></a><span class="lineno"> 1106</span>    @Test</div>
+<div class="line"><a id="l01107" name="l01107"></a><span class="lineno"> 1107</span>    <span class="keywordtype">void</span> testGetValoracionesSerie_Success() {</div>
+<div class="line"><a id="l01108" name="l01108"></a><span class="lineno"> 1108</span>        Series serie = <span class="keyword">new</span> Series(<span class="stringliteral">&quot;Lost&quot;</span>, 2004, <span class="stringliteral">&quot;Desc&quot;</span>, Generos.DRAMA, <span class="keyword">null</span>, <span class="stringliteral">&quot;img&quot;</span>);</div>
+<div class="line"><a id="l01109" name="l01109"></a><span class="lineno"> 1109</span>        serie.setId(1L);</div>
+<div class="line"><a id="l01110" name="l01110"></a><span class="lineno"> 1110</span>        Valoracion v1 = <span class="keyword">new</span> Valoracion();</div>
+<div class="line"><a id="l01111" name="l01111"></a><span class="lineno"> 1111</span>        List&lt;Valoracion&gt; valoraciones = List.of(v1);</div>
+<div class="line"><a id="l01112" name="l01112"></a><span class="lineno"> 1112</span> </div>
+<div class="line"><a id="l01113" name="l01113"></a><span class="lineno"> 1113</span>        when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));</div>
+<div class="line"><a id="l01114" name="l01114"></a><span class="lineno"> 1114</span>        when(valoracionRepository.findBySerie(serie)).thenReturn(valoraciones);</div>
+<div class="line"><a id="l01115" name="l01115"></a><span class="lineno"> 1115</span> </div>
+<div class="line"><a id="l01116" name="l01116"></a><span class="lineno"> 1116</span>        List&lt;Valoracion&gt; result = deustoStreamService.getValoracionesSerie(1L);</div>
+<div class="line"><a id="l01117" name="l01117"></a><span class="lineno"> 1117</span> </div>
+<div class="line"><a id="l01118" name="l01118"></a><span class="lineno"> 1118</span>        assertEquals(1, result.size());</div>
+<div class="line"><a id="l01119" name="l01119"></a><span class="lineno"> 1119</span>        verify(valoracionRepository).findBySerie(serie);</div>
+<div class="line"><a id="l01120" name="l01120"></a><span class="lineno"> 1120</span>    }</div>
+<div class="line"><a id="l01121" name="l01121"></a><span class="lineno"> 1121</span> </div>
+<div class="line"><a id="l01122" name="l01122"></a><span class="lineno"> 1122</span>    @Test</div>
+<div class="line"><a id="l01123" name="l01123"></a><span class="lineno"> 1123</span>    <span class="keywordtype">void</span> testGetValoracionesSerie_SerieNotFound_ThrowsEntityNotFoundException() {</div>
+<div class="line"><a id="l01124" name="l01124"></a><span class="lineno"> 1124</span>        when(seriesRepository.findById(88L)).thenReturn(Optional.empty());</div>
+<div class="line"><a id="l01125" name="l01125"></a><span class="lineno"> 1125</span> </div>
+<div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span>        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -&gt; {</div>
+<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"> 1127</span>            deustoStreamService.getValoracionesSerie(88L);</div>
+<div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span>        });</div>
+<div class="line"><a id="l01129" name="l01129"></a><span class="lineno"> 1129</span>        assertEquals(<span class="stringliteral">&quot;Series not found with id: 88&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01130" name="l01130"></a><span class="lineno"> 1130</span>    }</div>
+<div class="line"><a id="l01131" name="l01131"></a><span class="lineno"> 1131</span> </div>
+<div class="line"><a id="l01132" name="l01132"></a><span class="lineno"> 1132</span>    @Test</div>
+<div class="line"><a id="l01133" name="l01133"></a><span class="lineno"> 1133</span>    <span class="keywordtype">void</span> testGetValoracionesSerie_EmptyList() {</div>
+<div class="line"><a id="l01134" name="l01134"></a><span class="lineno"> 1134</span>        Series serie = <span class="keyword">new</span> Series(<span class="stringliteral">&quot;Breaking Bad&quot;</span>, 2008, <span class="stringliteral">&quot;Desc&quot;</span>, Generos.DRAMA, <span class="keyword">null</span>, <span class="stringliteral">&quot;url&quot;</span>);</div>
+<div class="line"><a id="l01135" name="l01135"></a><span class="lineno"> 1135</span>        serie.setId(5L);</div>
+<div class="line"><a id="l01136" name="l01136"></a><span class="lineno"> 1136</span>        </div>
+<div class="line"><a id="l01137" name="l01137"></a><span class="lineno"> 1137</span>        when(seriesRepository.findById(5L)).thenReturn(Optional.of(serie));</div>
+<div class="line"><a id="l01138" name="l01138"></a><span class="lineno"> 1138</span>        when(valoracionRepository.findBySerie(serie)).thenReturn(<span class="keyword">new</span> ArrayList&lt;&gt;());</div>
+<div class="line"><a id="l01139" name="l01139"></a><span class="lineno"> 1139</span>        </div>
+<div class="line"><a id="l01140" name="l01140"></a><span class="lineno"> 1140</span>        List&lt;Valoracion&gt; result = deustoStreamService.getValoracionesSerie(5L);</div>
+<div class="line"><a id="l01141" name="l01141"></a><span class="lineno"> 1141</span>        </div>
+<div class="line"><a id="l01142" name="l01142"></a><span class="lineno"> 1142</span>        assertNotNull(result);</div>
+<div class="line"><a id="l01143" name="l01143"></a><span class="lineno"> 1143</span>        assertTrue(result.isEmpty());</div>
+<div class="line"><a id="l01144" name="l01144"></a><span class="lineno"> 1144</span>        verify(valoracionRepository).findBySerie(serie);</div>
 <div class="line"><a id="l01145" name="l01145"></a><span class="lineno"> 1145</span>    }</div>
 <div class="line"><a id="l01146" name="l01146"></a><span class="lineno"> 1146</span> </div>
 <div class="line"><a id="l01147" name="l01147"></a><span class="lineno"> 1147</span>    @Test</div>
-<div class="line"><a id="l01148" name="l01148"></a><span class="lineno"> 1148</span>    <span class="keywordtype">void</span> testCreateUsuario_ConSuscripcion() {</div>
-<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>        <span class="comment">// Arrange</span></div>
-<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>        Usuario nuevoUsuario = <span class="keyword">new</span> Usuario();</div>
-<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span>        nuevoUsuario.setNombre(<span class="stringliteral">&quot;Carlos&quot;</span>);</div>
-<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>        nuevoUsuario.setApellido(<span class="stringliteral">&quot;Ramírez&quot;</span>);</div>
-<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>        nuevoUsuario.setCorreo(<span class="stringliteral">&quot;carlos@example.com&quot;</span>);</div>
-<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span>        nuevoUsuario.setContrasenya(<span class="stringliteral">&quot;abcd1234&quot;</span>);</div>
-<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span>        nuevoUsuario.setTipoSuscripcion(<span class="stringliteral">&quot;Estándar&quot;</span>);</div>
-<div class="line"><a id="l01156" name="l01156"></a><span class="lineno"> 1156</span> </div>
-<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"> 1157</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; invocation.getArgument(0));</div>
-<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span> </div>
-<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>        <span class="comment">// Act</span></div>
-<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>        Usuario resultado = deustoStreamService.createUsuario(nuevoUsuario);</div>
-<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span> </div>
-<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>        <span class="comment">// Assert</span></div>
-<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>        assertNotNull(resultado);</div>
-<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>        assertEquals(<span class="stringliteral">&quot;Estándar&quot;</span>, resultado.getTipoSuscripcion());</div>
-<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>    }</div>
-<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span> </div>
-<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>    @Test</div>
-<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>    <span class="keywordtype">void</span> testUpdateUsuario_SuscripcionActualizada() {</div>
-<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>        <span class="comment">// Arrange</span></div>
-<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>        Long userId = 1L;</div>
-<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>        Usuario usuarioExistente = <span class="keyword">new</span> Usuario();</div>
-<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>        usuarioExistente.setId(userId);</div>
-<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>        usuarioExistente.setNombre(<span class="stringliteral">&quot;Ana&quot;</span>);</div>
-<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>        usuarioExistente.setApellido(<span class="stringliteral">&quot;Pérez&quot;</span>);</div>
-<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>        usuarioExistente.setCorreo(<span class="stringliteral">&quot;ana@example.com&quot;</span>);</div>
-<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>        usuarioExistente.setContrasenya(<span class="stringliteral">&quot;1234&quot;</span>);</div>
-<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>        usuarioExistente.setTipoSuscripcion(<span class="stringliteral">&quot;Básico&quot;</span>);</div>
-<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span> </div>
-<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>        Usuario usuarioActualizado = <span class="keyword">new</span> Usuario();</div>
-<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>        usuarioActualizado.setNombre(<span class="stringliteral">&quot;Ana&quot;</span>);</div>
-<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>        usuarioActualizado.setApellido(<span class="stringliteral">&quot;Pérez&quot;</span>);</div>
-<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>        usuarioActualizado.setCorreo(<span class="stringliteral">&quot;ana@example.com&quot;</span>);</div>
-<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>        usuarioActualizado.setContrasenya(<span class="stringliteral">&quot;1234&quot;</span>);</div>
-<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span>        usuarioActualizado.setTipoSuscripcion(<span class="stringliteral">&quot;Premium&quot;</span>);</div>
-<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span> </div>
-<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>        when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuarioExistente));</div>
-<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; invocation.getArgument(0));</div>
-<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span> </div>
-<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span>        <span class="comment">// Act</span></div>
-<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>        Usuario resultado = deustoStreamService.updateUsuario(userId, usuarioActualizado);</div>
+<div class="line"><a id="l01148" name="l01148"></a><span class="lineno"> 1148</span>    <span class="keywordtype">void</span> testGetValoracionesSerie_MultipleValoraciones() {</div>
+<div class="line"><a id="l01149" name="l01149"></a><span class="lineno"> 1149</span>        Series serie = <span class="keyword">new</span> Series(<span class="stringliteral">&quot;Game of Thrones&quot;</span>, 2011, <span class="stringliteral">&quot;Desc&quot;</span>, Generos.FANTASIA, <span class="keyword">null</span>, <span class="stringliteral">&quot;url&quot;</span>);</div>
+<div class="line"><a id="l01150" name="l01150"></a><span class="lineno"> 1150</span>        serie.setId(10L);</div>
+<div class="line"><a id="l01151" name="l01151"></a><span class="lineno"> 1151</span>        </div>
+<div class="line"><a id="l01152" name="l01152"></a><span class="lineno"> 1152</span>        Perfil perfil1 = <span class="keyword">new</span> Perfil(<span class="stringliteral">&quot;User1&quot;</span>, <span class="stringliteral">&quot;avatar1.png&quot;</span>);</div>
+<div class="line"><a id="l01153" name="l01153"></a><span class="lineno"> 1153</span>        Perfil perfil2 = <span class="keyword">new</span> Perfil(<span class="stringliteral">&quot;User2&quot;</span>, <span class="stringliteral">&quot;avatar2.png&quot;</span>);</div>
+<div class="line"><a id="l01154" name="l01154"></a><span class="lineno"> 1154</span>        </div>
+<div class="line"><a id="l01155" name="l01155"></a><span class="lineno"> 1155</span>        Valoracion v1 = <span class="keyword">new</span> Valoracion();</div>
+<div class="line"><a id="l01156" name="l01156"></a><span class="lineno"> 1156</span>        v1.setPerfil(perfil1);</div>
+<div class="line"><a id="l01157" name="l01157"></a><span class="lineno"> 1157</span>        v1.setSerie(serie);</div>
+<div class="line"><a id="l01158" name="l01158"></a><span class="lineno"> 1158</span>        v1.setPuntuacion(5);</div>
+<div class="line"><a id="l01159" name="l01159"></a><span class="lineno"> 1159</span>        v1.setComentario(<span class="stringliteral">&quot;Excelente&quot;</span>);</div>
+<div class="line"><a id="l01160" name="l01160"></a><span class="lineno"> 1160</span>        </div>
+<div class="line"><a id="l01161" name="l01161"></a><span class="lineno"> 1161</span>        Valoracion v2 = <span class="keyword">new</span> Valoracion();</div>
+<div class="line"><a id="l01162" name="l01162"></a><span class="lineno"> 1162</span>        v2.setPerfil(perfil2);</div>
+<div class="line"><a id="l01163" name="l01163"></a><span class="lineno"> 1163</span>        v2.setSerie(serie);</div>
+<div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>        v2.setPuntuacion(3);</div>
+<div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>        v2.setComentario(<span class="stringliteral">&quot;Regular&quot;</span>);</div>
+<div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span>        </div>
+<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>        List&lt;Valoracion&gt; valoraciones = Arrays.asList(v1, v2);</div>
+<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>        </div>
+<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>        when(seriesRepository.findById(10L)).thenReturn(Optional.of(serie));</div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>        when(valoracionRepository.findBySerie(serie)).thenReturn(valoraciones);</div>
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>        </div>
+<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span>        List&lt;Valoracion&gt; result = deustoStreamService.getValoracionesSerie(10L);</div>
+<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>        </div>
+<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>        assertEquals(2, result.size());</div>
+<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>        assertEquals(5, result.get(0).getPuntuacion());</div>
+<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span>        assertEquals(<span class="stringliteral">&quot;Regular&quot;</span>, result.get(1).getComentario());</div>
+<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>        verify(valoracionRepository).findBySerie(serie);</div>
+<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>    }</div>
+<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span> </div>
+<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span>    @Test</div>
+<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>    <span class="keywordtype">void</span> testCreateUsuario_ConSuscripcion() {</div>
+<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>        <span class="comment">// Arrange</span></div>
+<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>        Usuario nuevoUsuario = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span>        nuevoUsuario.setNombre(<span class="stringliteral">&quot;Carlos&quot;</span>);</div>
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span>        nuevoUsuario.setApellido(<span class="stringliteral">&quot;Ramírez&quot;</span>);</div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>        nuevoUsuario.setCorreo(<span class="stringliteral">&quot;carlos@example.com&quot;</span>);</div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>        nuevoUsuario.setContrasenya(<span class="stringliteral">&quot;abcd1234&quot;</span>);</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span>        nuevoUsuario.setTipoSuscripcion(<span class="stringliteral">&quot;Estándar&quot;</span>);</div>
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span> </div>
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; invocation.getArgument(0));</div>
 <div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span> </div>
-<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>        <span class="comment">// Assert</span></div>
-<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>        assertNotNull(resultado);</div>
-<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span>        assertEquals(<span class="stringliteral">&quot;Premium&quot;</span>, resultado.getTipoSuscripcion());</div>
-<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>    }</div>
-<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span> </div>
-<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>    @Test</div>
-<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>    <span class="keywordtype">void</span> testUpdateUsuario_NoExiste() {</div>
-<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span>        Long userId = 999L;</div>
-<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>        Usuario datos = <span class="keyword">new</span> Usuario();</div>
-<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>        datos.setTipoSuscripcion(<span class="stringliteral">&quot;Premium&quot;</span>);</div>
-<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>    </div>
-<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>        when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());</div>
-<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span> </div>
-<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>        assertThrows(RuntimeException.class, () -&gt; {</div>
-<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>            deustoStreamService.updateUsuario(userId, datos);</div>
-<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>        });</div>
-<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>    }</div>
-<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span> </div>
-<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>    @Test</div>
-<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>    <span class="keywordtype">void</span> testCreateUsuario_SinSuscripcion() {</div>
-<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>        Usuario nuevoUsuario = <span class="keyword">new</span> Usuario();</div>
-<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>        nuevoUsuario.setNombre(<span class="stringliteral">&quot;Luis&quot;</span>);</div>
-<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span>        nuevoUsuario.setTipoSuscripcion(<span class="keyword">null</span>); <span class="comment">// o no seteado</span></div>
-<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span> </div>
-<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; {</div>
-<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>            Usuario u = invocation.getArgument(0);</div>
-<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span>            <span class="keywordflow">if</span> (u.getTipoSuscripcion() == <span class="keyword">null</span>) {</div>
-<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>                u.setTipoSuscripcion(<span class="stringliteral">&quot;Gratis&quot;</span>); <span class="comment">// simulamos comportamiento por defecto</span></div>
-<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span>            }</div>
-<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span>            <span class="keywordflow">return</span> u;</div>
-<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>        });</div>
-<div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span> </div>
-<div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span>        Usuario resultado = deustoStreamService.createUsuario(nuevoUsuario);</div>
-<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span> </div>
-<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>        assertEquals(<span class="stringliteral">&quot;Gratis&quot;</span>, resultado.getTipoSuscripcion());</div>
-<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>    }</div>
-<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span> </div>
-<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span>    @Test</div>
-<div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>    <span class="keywordtype">void</span> testCreateUsuario_TipoSuscripcionInvalido() {</div>
-<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>        Usuario usuario = <span class="keyword">new</span> Usuario();</div>
-<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>        usuario.setNombre(<span class="stringliteral">&quot;Carlos&quot;</span>);</div>
-<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>        usuario.setTipoSuscripcion(<span class="stringliteral">&quot;SUPERGOLD&quot;</span>);</div>
-<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>    </div>
-<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; invocation.getArgument(0));</div>
-<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>    </div>
-<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span>        Usuario resultado = deustoStreamService.createUsuario(usuario);</div>
-<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>    </div>
-<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>        assertNotNull(resultado);</div>
-<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span>        assertEquals(<span class="stringliteral">&quot;SUPERGOLD&quot;</span>, resultado.getTipoSuscripcion());</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>        <span class="comment">// Act</span></div>
+<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>        Usuario resultado = deustoStreamService.createUsuario(nuevoUsuario);</div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span> </div>
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>        <span class="comment">// Assert</span></div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>        assertNotNull(resultado);</div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>        assertEquals(<span class="stringliteral">&quot;Estándar&quot;</span>, resultado.getTipoSuscripcion());</div>
+<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>    }</div>
+<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span> </div>
+<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span>    @Test</div>
+<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>    <span class="keywordtype">void</span> testUpdateUsuario_SuscripcionActualizada() {</div>
+<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>        <span class="comment">// Arrange</span></div>
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span>        Long userId = 1L;</div>
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>        Usuario usuarioExistente = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>        usuarioExistente.setId(userId);</div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>        usuarioExistente.setNombre(<span class="stringliteral">&quot;Ana&quot;</span>);</div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span>        usuarioExistente.setApellido(<span class="stringliteral">&quot;Pérez&quot;</span>);</div>
+<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>        usuarioExistente.setCorreo(<span class="stringliteral">&quot;ana@example.com&quot;</span>);</div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>        usuarioExistente.setContrasenya(<span class="stringliteral">&quot;1234&quot;</span>);</div>
+<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>        usuarioExistente.setTipoSuscripcion(<span class="stringliteral">&quot;Básico&quot;</span>);</div>
+<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span> </div>
+<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span>        Usuario usuarioActualizado = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>        usuarioActualizado.setNombre(<span class="stringliteral">&quot;Ana&quot;</span>);</div>
+<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span>        usuarioActualizado.setApellido(<span class="stringliteral">&quot;Pérez&quot;</span>);</div>
+<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>        usuarioActualizado.setCorreo(<span class="stringliteral">&quot;ana@example.com&quot;</span>);</div>
+<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>        usuarioActualizado.setContrasenya(<span class="stringliteral">&quot;1234&quot;</span>);</div>
+<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>        usuarioActualizado.setTipoSuscripcion(<span class="stringliteral">&quot;Premium&quot;</span>);</div>
+<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span> </div>
+<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>        when(usuarioRepository.findById(userId)).thenReturn(Optional.of(usuarioExistente));</div>
+<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; invocation.getArgument(0));</div>
+<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span> </div>
+<div class="line"><a id="l01222" name="l01222"></a><span class="lineno"> 1222</span>        <span class="comment">// Act</span></div>
+<div class="line"><a id="l01223" name="l01223"></a><span class="lineno"> 1223</span>        Usuario resultado = deustoStreamService.updateUsuario(userId, usuarioActualizado);</div>
+<div class="line"><a id="l01224" name="l01224"></a><span class="lineno"> 1224</span> </div>
+<div class="line"><a id="l01225" name="l01225"></a><span class="lineno"> 1225</span>        <span class="comment">// Assert</span></div>
+<div class="line"><a id="l01226" name="l01226"></a><span class="lineno"> 1226</span>        assertNotNull(resultado);</div>
+<div class="line"><a id="l01227" name="l01227"></a><span class="lineno"> 1227</span>        assertEquals(<span class="stringliteral">&quot;Premium&quot;</span>, resultado.getTipoSuscripcion());</div>
+<div class="line"><a id="l01228" name="l01228"></a><span class="lineno"> 1228</span>    }</div>
+<div class="line"><a id="l01229" name="l01229"></a><span class="lineno"> 1229</span> </div>
+<div class="line"><a id="l01230" name="l01230"></a><span class="lineno"> 1230</span>    @Test</div>
+<div class="line"><a id="l01231" name="l01231"></a><span class="lineno"> 1231</span>    <span class="keywordtype">void</span> testUpdateUsuario_NoExiste() {</div>
+<div class="line"><a id="l01232" name="l01232"></a><span class="lineno"> 1232</span>        Long userId = 999L;</div>
+<div class="line"><a id="l01233" name="l01233"></a><span class="lineno"> 1233</span>        Usuario datos = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01234" name="l01234"></a><span class="lineno"> 1234</span>        datos.setTipoSuscripcion(<span class="stringliteral">&quot;Premium&quot;</span>);</div>
+<div class="line"><a id="l01235" name="l01235"></a><span class="lineno"> 1235</span>    </div>
+<div class="line"><a id="l01236" name="l01236"></a><span class="lineno"> 1236</span>        when(usuarioRepository.findById(userId)).thenReturn(Optional.empty());</div>
+<div class="line"><a id="l01237" name="l01237"></a><span class="lineno"> 1237</span> </div>
+<div class="line"><a id="l01238" name="l01238"></a><span class="lineno"> 1238</span>        assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01239" name="l01239"></a><span class="lineno"> 1239</span>            deustoStreamService.updateUsuario(userId, datos);</div>
+<div class="line"><a id="l01240" name="l01240"></a><span class="lineno"> 1240</span>        });</div>
 <div class="line"><a id="l01241" name="l01241"></a><span class="lineno"> 1241</span>    }</div>
 <div class="line"><a id="l01242" name="l01242"></a><span class="lineno"> 1242</span> </div>
-<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>}</div>
+<div class="line"><a id="l01243" name="l01243"></a><span class="lineno"> 1243</span>    @Test</div>
+<div class="line"><a id="l01244" name="l01244"></a><span class="lineno"> 1244</span>    <span class="keywordtype">void</span> testCreateUsuario_SinSuscripcion() {</div>
+<div class="line"><a id="l01245" name="l01245"></a><span class="lineno"> 1245</span>        Usuario nuevoUsuario = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01246" name="l01246"></a><span class="lineno"> 1246</span>        nuevoUsuario.setNombre(<span class="stringliteral">&quot;Luis&quot;</span>);</div>
+<div class="line"><a id="l01247" name="l01247"></a><span class="lineno"> 1247</span>        nuevoUsuario.setTipoSuscripcion(<span class="keyword">null</span>); <span class="comment">// o no seteado</span></div>
+<div class="line"><a id="l01248" name="l01248"></a><span class="lineno"> 1248</span> </div>
+<div class="line"><a id="l01249" name="l01249"></a><span class="lineno"> 1249</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; {</div>
+<div class="line"><a id="l01250" name="l01250"></a><span class="lineno"> 1250</span>            Usuario u = invocation.getArgument(0);</div>
+<div class="line"><a id="l01251" name="l01251"></a><span class="lineno"> 1251</span>            <span class="keywordflow">if</span> (u.getTipoSuscripcion() == <span class="keyword">null</span>) {</div>
+<div class="line"><a id="l01252" name="l01252"></a><span class="lineno"> 1252</span>                u.setTipoSuscripcion(<span class="stringliteral">&quot;Gratis&quot;</span>); <span class="comment">// simulamos comportamiento por defecto</span></div>
+<div class="line"><a id="l01253" name="l01253"></a><span class="lineno"> 1253</span>            }</div>
+<div class="line"><a id="l01254" name="l01254"></a><span class="lineno"> 1254</span>            <span class="keywordflow">return</span> u;</div>
+<div class="line"><a id="l01255" name="l01255"></a><span class="lineno"> 1255</span>        });</div>
+<div class="line"><a id="l01256" name="l01256"></a><span class="lineno"> 1256</span> </div>
+<div class="line"><a id="l01257" name="l01257"></a><span class="lineno"> 1257</span>        Usuario resultado = deustoStreamService.createUsuario(nuevoUsuario);</div>
+<div class="line"><a id="l01258" name="l01258"></a><span class="lineno"> 1258</span> </div>
+<div class="line"><a id="l01259" name="l01259"></a><span class="lineno"> 1259</span>        assertEquals(<span class="stringliteral">&quot;Gratis&quot;</span>, resultado.getTipoSuscripcion());</div>
+<div class="line"><a id="l01260" name="l01260"></a><span class="lineno"> 1260</span>    }</div>
+<div class="line"><a id="l01261" name="l01261"></a><span class="lineno"> 1261</span> </div>
+<div class="line"><a id="l01262" name="l01262"></a><span class="lineno"> 1262</span>    @Test</div>
+<div class="line"><a id="l01263" name="l01263"></a><span class="lineno"> 1263</span>    <span class="keywordtype">void</span> testCreateUsuario_TipoSuscripcionInvalido() {</div>
+<div class="line"><a id="l01264" name="l01264"></a><span class="lineno"> 1264</span>        Usuario usuario = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01265" name="l01265"></a><span class="lineno"> 1265</span>        usuario.setNombre(<span class="stringliteral">&quot;Carlos&quot;</span>);</div>
+<div class="line"><a id="l01266" name="l01266"></a><span class="lineno"> 1266</span>        usuario.setTipoSuscripcion(<span class="stringliteral">&quot;SUPERGOLD&quot;</span>);</div>
+<div class="line"><a id="l01267" name="l01267"></a><span class="lineno"> 1267</span>    </div>
+<div class="line"><a id="l01268" name="l01268"></a><span class="lineno"> 1268</span>        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(invocation -&gt; invocation.getArgument(0));</div>
+<div class="line"><a id="l01269" name="l01269"></a><span class="lineno"> 1269</span>    </div>
+<div class="line"><a id="l01270" name="l01270"></a><span class="lineno"> 1270</span>        Usuario resultado = deustoStreamService.createUsuario(usuario);</div>
+<div class="line"><a id="l01271" name="l01271"></a><span class="lineno"> 1271</span>    </div>
+<div class="line"><a id="l01272" name="l01272"></a><span class="lineno"> 1272</span>        assertNotNull(resultado);</div>
+<div class="line"><a id="l01273" name="l01273"></a><span class="lineno"> 1273</span>        assertEquals(<span class="stringliteral">&quot;SUPERGOLD&quot;</span>, resultado.getTipoSuscripcion());</div>
+<div class="line"><a id="l01274" name="l01274"></a><span class="lineno"> 1274</span>    }</div>
+<div class="line"><a id="l01275" name="l01275"></a><span class="lineno"> 1275</span> </div>
+<div class="line"><a id="l01276" name="l01276"></a><span class="lineno"> 1276</span>}</div>
 </div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test_html"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html">com.example.restapi.unit.service.DeustoStreamServiceTest</a></div><div class="ttdef"><b>Definition</b> <a href="_deusto_stream_service_test_8java_source.html#l00041">DeustoStreamServiceTest.java:41</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -1349,7 +1382,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_test_8java_sour
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_120ed4da3e3217b1e7fc0b4f48568e79.html">test</a></li><li class="navelem"><a class="el" href="dir_97debbc39e3b917fca663601bb2b0709.html">java</a></li><li class="navelem"><a class="el" href="dir_23faaf0c5c81a0660a411c4a306acbb5.html">com</a></li><li class="navelem"><a class="el" href="dir_78723e336fd254b123dc05d5464f5a60.html">example</a></li><li class="navelem"><a class="el" href="dir_73081b1dc5db13aed24f62510fc1946d.html">restapi</a></li><li class="navelem"><a class="el" href="dir_cf0fc0ad0d517fa752ce8510050d8178.html">unit</a></li><li class="navelem"><a class="el" href="dir_4794535249a654410966d1b0de16d4d6.html">service</a></li><li class="navelem"><a class="el" href="_deusto_stream_service_test_8java.html">DeustoStreamServiceTest.java</a></li>
-    <li class="footer">Generated on Thu May 15 2025 20:44:03 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Thu May 15 2025 21:11:41 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
