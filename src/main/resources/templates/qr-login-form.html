@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio de Sesión - QR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Inicio de Sesión desde QR</h2>
+
+        <form action="/qr-login-submit" method="post" class="login-form">
+            <input type="hidden" name="token" th:value="${token}" />
+            
+            <input type="email" name="correo" placeholder="Correo" required />
+            <input type="password" name="contrasenya" placeholder="Contraseña" required />
+
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+
+        <p th:if="${error}" th:text="${error}" class="error-msg"></p>
+        <p th:if="${mensaje}" th:text="${mensaje}" class="success-msg"></p>
+    </div>
+</body>
+</html>
