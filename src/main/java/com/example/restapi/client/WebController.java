@@ -8,13 +8,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Cookie;
 
 import com.example.restapi.model.Generos;
 import com.example.restapi.model.Pelicula;
@@ -48,26 +51,66 @@ public class WebController {
         this.authService = authService;
     }
 
-    @GetMapping("/")
-    public String mostrarIndex() {
-        return "index"; // Muestra la página principal con las opciones de login/registro
-    }
-
-    @GetMapping("/login") // AGREGADO INICIO
-    public String mostrarFormularioLogin() {
+    @GetMapping("/login")
+    public String mostrarFormularioLogin(
+            Model model,
+            @CookieValue(value = "correo", defaultValue = "") String correoValor,
+            @CookieValue(value = "contrasenya", defaultValue = "") String contrasenyaValor,
+            @CookieValue(value = "guardarContrasenya", defaultValue = "false") boolean guardarContrasenya) {
+        model.addAttribute("correoValor", correoValor);
+        model.addAttribute("contrasenyaValor", contrasenyaValor);
+        model.addAttribute("guardarContrasenya", guardarContrasenya);
         return "login";
     }
 
     @PostMapping("/login")
-    public String procesarLogin(@RequestParam String correo,
+    public String procesarLogin(
+            @RequestParam String correo,
             @RequestParam String contrasenya,
+            @RequestParam(required = false) String guardarContrasenya, // viene sólo si está marcado
+            HttpServletResponse response,
             HttpSession session,
             Model model) {
+        boolean remember = (guardarContrasenya != null);
 
+        if (remember) {
+            // Crear cookies con validez, p.e. 7 días
+            Cookie cCorreo = new Cookie("correo", correo);
+            cCorreo.setMaxAge(7 * 24 * 60 * 60);
+            cCorreo.setPath("/");
+            response.addCookie(cCorreo);
+
+            Cookie cPass = new Cookie("contrasenya", contrasenya);
+            cPass.setMaxAge(7 * 24 * 60 * 60);
+            cPass.setPath("/");
+            response.addCookie(cPass);
+
+            Cookie cGuardar = new Cookie("guardarContrasenya", "true");
+            cGuardar.setMaxAge(7 * 24 * 60 * 60);
+            cGuardar.setPath("/");
+            response.addCookie(cGuardar);
+        } else {
+            // Borrar cookies
+            Cookie borrarCorreo = new Cookie("correo", "");
+            borrarCorreo.setMaxAge(0);
+            borrarCorreo.setPath("/");
+            response.addCookie(borrarCorreo);
+
+            Cookie borrarPass = new Cookie("contrasenya", "");
+            borrarPass.setMaxAge(0);
+            borrarPass.setPath("/");
+            response.addCookie(borrarPass);
+
+            Cookie cGuardar = new Cookie("guardarContrasenya", "false");
+            cGuardar.setMaxAge(7 * 24 * 60 * 60);
+            cGuardar.setPath("/");
+            response.addCookie(cGuardar);
+        }
+
+        // Aquí tu lógica de autenticación existente…
         return authService.login(correo, contrasenya)
                 .map(usuario -> {
-                    session.setAttribute(USUARIO_STRING, usuario);
-                    session.setAttribute(PERFIL_STRING, usuario.getPerfiles().get(0)); // Obetener el primer perfil
+                    session.setAttribute("usuario", usuario);
                     return "redirect:" + authService.obtenerRedireccion(usuario);
                 })
                 .orElseGet(() -> {
@@ -279,7 +322,6 @@ public class WebController {
         model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());
         model.addAttribute(USUARIO_STRING, usuario);
         model.addAttribute(GENEROS_STRING, Generos.values());
-        
 
         return "catSeries"; // apunta a templates/series.html
     }
@@ -381,10 +423,10 @@ public class WebController {
 
     @PostMapping("/pelicula/{id}/valorar")
     public String valorarPelicula(
-                                @PathVariable Long id, 
-                                @RequestParam int puntuacion,
-                                @RequestParam String comentario, 
-                                HttpSession session) {
+            @PathVariable Long id,
+            @RequestParam int puntuacion,
+            @RequestParam String comentario,
+            HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
         Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);
         if (usuario != null) {
@@ -397,10 +439,10 @@ public class WebController {
 
     @PostMapping("/serie/{id}/valorar")
     public String valorarSerie(
-                                @PathVariable Long id, 
-                                @RequestParam int puntuacion,
-                                @RequestParam String comentario, 
-                                HttpSession session) {
+            @PathVariable Long id,
+            @RequestParam int puntuacion,
+            @RequestParam String comentario,
+            HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
         Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);
         if (usuario != null) {
@@ -410,7 +452,5 @@ public class WebController {
             return "redirect:/login"; // Si no hay sesión, redirigir a login
         }
     }
-
-    
 
 }
