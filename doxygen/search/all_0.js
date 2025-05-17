@@ -12,5 +12,6 @@ var searchData=
   ['authservice_9',['authservice',['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html',1,'com.example.restapi.service.AuthService'],['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html#a6a79ee999ea9f3697a20836e33ba6e72',1,'com.example.restapi.service.AuthService.AuthService()']]],
   ['authservice_2ejava_10',['AuthService.java',['../_auth_service_8java.html',1,'']]],
   ['authservicetest_2ejava_11',['AuthServiceTest.java',['../_auth_service_test_8java.html',1,'']]],
-  ['aventura_12',['AVENTURA',['../enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html#a5b0e944bc68ddd38b55e7b9345f58718',1,'com::example::restapi::model::Generos']]]
+  ['autorizarqr_12',['autorizarQr',['../classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller.html#a8e85564494127c4adb67b94ed2af898d',1,'com::example::restapi::controller::MobileLoginController']]],
+  ['aventura_13',['AVENTURA',['../enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html#a5b0e944bc68ddd38b55e7b9345f58718',1,'com::example::restapi::model::Generos']]]
 ];

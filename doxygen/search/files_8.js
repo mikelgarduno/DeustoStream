@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['serierepository_2ejava_0',['SerieRepository.java',['../_serie_repository_8java.html',1,'']]],
-  ['series_2ejava_1',['Series.java',['../_series_8java.html',1,'']]],
-  ['serietest_2ejava_2',['SerieTest.java',['../_serie_test_8java.html',1,'']]]
+  ['qrlogincontroller_2ejava_0',['QrLoginController.java',['../_qr_login_controller_8java.html',1,'']]],
+  ['qrloginservice_2ejava_1',['QrLoginService.java',['../_qr_login_service_8java.html',1,'']]],
+  ['qrstatuscontroller_2ejava_2',['QrStatusController.java',['../_qr_status_controller_8java.html',1,'']]]
 ];

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QrLoginController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.controller</a> &gt; <span class="el_source">QrLoginController.java</span></div><h1>QrLoginController.java</h1><pre class="source lang-java linenums">package com.example.restapi.controller;
+
+import com.example.restapi.model.Usuario;
+import com.example.restapi.repository.UsuarioRepository;
+import com.example.restapi.service.QrLoginService;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.ByteArrayOutputStream;
+import java.util.UUID;
+
+@Controller
+<span class="fc" id="L23">public class QrLoginController {</span>
+
+    @Autowired
+    private QrLoginService qrLoginService;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    // Vista del formulario de login QR cuando se escanea el código
+    @GetMapping(&quot;/qr-login-form&quot;)
+    public String mostrarFormularioLogin(@RequestParam(&quot;token&quot;) String token, Model model) {
+<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (!StringUtils.hasText(token)) {</span>
+<span class="nc" id="L35">            model.addAttribute(&quot;error&quot;, &quot;Token inválido&quot;);</span>
+<span class="nc" id="L36">            return &quot;qr-login-form&quot;;</span>
+        }
+<span class="nc" id="L38">        model.addAttribute(&quot;token&quot;, token);</span>
+<span class="nc" id="L39">        return &quot;qr-login-form&quot;;</span>
+    }
+
+    // Procesa el login desde móvil
+    @PostMapping(&quot;/qr-login-submit&quot;)
+    public String procesarLoginQr(@RequestParam(&quot;token&quot;) String token,
+                                  @RequestParam(&quot;correo&quot;) String correo,
+                                  @RequestParam(&quot;contrasenya&quot;) String contrasenya,
+                                  Model model) {
+<span class="nc" id="L48">        Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);</span>
+
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (usuario == null) {</span>
+<span class="nc" id="L51">            model.addAttribute(&quot;error&quot;, &quot;Credenciales inválidas&quot;);</span>
+<span class="nc" id="L52">            model.addAttribute(&quot;token&quot;, token);</span>
+<span class="nc" id="L53">            return &quot;qr-login-form&quot;;</span>
+        }
+
+<span class="nc" id="L56">        qrLoginService.marcarAutorizado(token);</span>
+<span class="nc" id="L57">        model.addAttribute(&quot;mensaje&quot;, &quot;Inicio de sesión autorizado correctamente.&quot;);</span>
+<span class="nc" id="L58">        return &quot;qr-login-form&quot;;</span>
+    }
+
+    // Genera y muestra el código QR (accedido desde /qr-login)
+    @GetMapping(value = &quot;/qr-login&quot;, produces = MediaType.IMAGE_PNG_VALUE)
+    @ResponseBody
+    public byte[] mostrarCodigoQr(HttpSession session) throws Exception {
+<span class="nc" id="L65">        String token = (String) session.getAttribute(&quot;qr-token&quot;);</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (token == null) {</span>
+<span class="nc" id="L68">            token = UUID.randomUUID().toString();</span>
+<span class="nc" id="L69">            session.setAttribute(&quot;qr-token&quot;, token);</span>
+<span class="nc" id="L70">            qrLoginService.registrarToken(token);</span>
+        }
+
+<span class="nc" id="L73">        String url = &quot;http://localhost:8080/qr-login-form?token=&quot; + token;</span>
+<span class="nc" id="L74">        return qrLoginService.generarCodigoQR(url);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

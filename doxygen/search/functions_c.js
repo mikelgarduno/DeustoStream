@@ -4,5 +4,6 @@ var searchData=
   ['perfil_1',['perfil',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a73a9c504d42fd551e0b63e59a6eedd19',1,'com.example.restapi.model.Perfil.Perfil()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#ad276537695a37a8d68f721d1698a1ed2',1,'com.example.restapi.model.Perfil.Perfil(String nombre, String avatar)']]],
   ['prehandle_2',['preHandle',['../classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c',1,'com::example::restapi::config::LoginInterceptor']]],
   ['procesarlogin_3',['procesarLogin',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0df230cb74ce51504bfeed60b603c4a6',1,'com::example::restapi::client::WebController']]],
-  ['procesarregistro_4',['procesarRegistro',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc',1,'com::example::restapi::client::WebController']]]
+  ['procesarloginqr_4',['procesarLoginQr',['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b',1,'com::example::restapi::controller::QrLoginController']]],
+  ['procesarregistro_5',['procesarRegistro',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc',1,'com::example::restapi::client::WebController']]]
 ];

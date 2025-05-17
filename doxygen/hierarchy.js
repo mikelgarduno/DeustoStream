@@ -20,6 +20,10 @@ var hierarchy =
       [ "com.example.restapi.repository.UsuarioRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository.html", null ],
       [ "com.example.restapi.repository.ValoracionRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_valoracion_repository.html", null ]
     ] ],
+    [ "com.example.restapi.controller.MobileLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller.html", null ],
+    [ "com.example.restapi.controller.QrLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html", null ],
+    [ "com.example.restapi.service.QrLoginService", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html", null ],
+    [ "com.example.restapi.controller.QrStatusController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html", null ],
     [ "com.example.restapi.performance.RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ],
     [ "com.example.restapi.RestApiApplication", "classcom_1_1example_1_1restapi_1_1_rest_api_application.html", null ],
     [ "Serializable", null, [

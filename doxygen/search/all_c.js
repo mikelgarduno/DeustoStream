@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['pelicula_0',['pelicula',['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a45c8a55fdf0275c2acd43b1c4a299a65',1,'com.example.restapi.model.Pelicula.Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl)'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a74b1361362e41f9e5ecaf155cb67d55a',1,'com.example.restapi.model.Pelicula.Pelicula()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html',1,'com.example.restapi.model.Pelicula']]],
+  ['pelicula_0',['pelicula',['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html',1,'com.example.restapi.model.Pelicula'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a74b1361362e41f9e5ecaf155cb67d55a',1,'com.example.restapi.model.Pelicula.Pelicula()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a45c8a55fdf0275c2acd43b1c4a299a65',1,'com.example.restapi.model.Pelicula.Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl)']]],
   ['pelicula_2ejava_1',['Pelicula.java',['../_pelicula_8java.html',1,'']]],
   ['pelicularepository_2',['PeliculaRepository',['../interfacecom_1_1example_1_1restapi_1_1repository_1_1_pelicula_repository.html',1,'com::example::restapi::repository']]],
   ['pelicularepository_2ejava_3',['PeliculaRepository.java',['../_pelicula_repository_8java.html',1,'']]],
@@ -12,5 +12,6 @@ var searchData=
   ['perfiltest_2ejava_9',['PerfilTest.java',['../_perfil_test_8java.html',1,'']]],
   ['prehandle_10',['preHandle',['../classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c',1,'com::example::restapi::config::LoginInterceptor']]],
   ['procesarlogin_11',['procesarLogin',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0df230cb74ce51504bfeed60b603c4a6',1,'com::example::restapi::client::WebController']]],
-  ['procesarregistro_12',['procesarRegistro',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc',1,'com::example::restapi::client::WebController']]]
+  ['procesarloginqr_12',['procesarLoginQr',['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b',1,'com::example::restapi::controller::QrLoginController']]],
+  ['procesarregistro_13',['procesarRegistro',['../classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0a4d86872a07b1f1507e0054fc7d78bc',1,'com::example::restapi::client::WebController']]]
 ];

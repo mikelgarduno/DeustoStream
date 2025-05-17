@@ -13,7 +13,10 @@ var annotated_dup =
           ] ],
           [ "controller", "namespacecom_1_1example_1_1restapi_1_1controller.html", [
             [ "DeustoStreamController", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller" ],
-            [ "GenerosController", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller" ]
+            [ "GenerosController", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller" ],
+            [ "MobileLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller" ],
+            [ "QrLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller" ],
+            [ "QrStatusController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller" ]
           ] ],
           [ "model", "namespacecom_1_1example_1_1restapi_1_1model.html", [
             [ "Capitulo", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo" ],
@@ -37,7 +40,8 @@ var annotated_dup =
           ] ],
           [ "service", "namespacecom_1_1example_1_1restapi_1_1service.html", [
             [ "AuthService", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service" ],
-            [ "DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service" ]
+            [ "DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service" ],
+            [ "QrLoginService", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service" ]
           ] ],
           [ "unit", null, [
             [ "service", "namespacecom_1_1example_1_1restapi_1_1unit_1_1service.html", [

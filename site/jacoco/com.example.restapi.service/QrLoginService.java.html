@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>QrLoginService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">deustostream-api-app</a> &gt; <a href="index.source.html" class="el_package">com.example.restapi.service</a> &gt; <span class="el_source">QrLoginService.java</span></div><h1>QrLoginService.java</h1><pre class="source lang-java linenums">package com.example.restapi.service;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Service
+<span class="fc" id="L15">public class QrLoginService {</span>
+
+<span class="fc" id="L17">    private final Map&lt;String, Boolean&gt; tokenAutorizado = new ConcurrentHashMap&lt;&gt;();</span>
+
+    public void registrarToken(String token) {
+<span class="nc" id="L20">        tokenAutorizado.put(token, false);</span>
+<span class="nc" id="L21">    }</span>
+
+    public void marcarAutorizado(String token) {
+<span class="nc" id="L24">        tokenAutorizado.put(token, true);</span>
+<span class="nc" id="L25">    }</span>
+
+    public boolean estaAutorizado(String token) {
+<span class="nc" id="L28">        return tokenAutorizado.getOrDefault(token, false);</span>
+    }
+
+    public byte[] generarCodigoQR(String contenido) throws Exception {
+<span class="nc" id="L32">        int width = 300;</span>
+<span class="nc" id="L33">        int height = 300;</span>
+
+<span class="nc" id="L35">        BitMatrix matrix = new MultiFormatWriter()</span>
+<span class="nc" id="L36">                .encode(contenido, BarcodeFormat.QR_CODE, width, height);</span>
+
+<span class="nc" id="L38">        ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L39">        MatrixToImageWriter.writeToStream(matrix, &quot;PNG&quot;, out);</span>
+<span class="nc" id="L40">        return out.toByteArray();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
