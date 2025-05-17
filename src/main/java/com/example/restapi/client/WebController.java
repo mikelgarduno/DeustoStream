@@ -51,6 +51,11 @@ public class WebController {
         this.authService = authService;
     }
 
+    @GetMapping("/")
+    public String mostrarIndex() {
+        return "index"; // Muestra la página principal con las opciones de login/registro
+    }
+
     @GetMapping("/login")
     public String mostrarFormularioLogin(
             Model model,
@@ -107,7 +112,6 @@ public class WebController {
             response.addCookie(cGuardar);
         }
 
-        // Aquí tu lógica de autenticación existente…
         return authService.login(correo, contrasenya)
                 .map(usuario -> {
                     session.setAttribute("usuario", usuario);

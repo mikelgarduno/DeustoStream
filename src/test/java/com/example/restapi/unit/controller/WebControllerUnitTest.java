@@ -1,8 +1,13 @@
 package com.example.restapi.unit.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
@@ -33,6 +38,15 @@ class WebControllerUnitTest {
     @Mock
     private AuthService authService;
 
+    @Mock
+    private HttpServletResponse response;
+
+    @Mock
+    private HttpSession session;
+
+    @Mock
+    private Model model;
+
     @InjectMocks
     private WebController webController;
 
@@ -50,17 +64,17 @@ class WebControllerUnitTest {
     @Test
     void testMostrarPanelAdmin() {
         Model mockModel = mock(Model.class);
-        
+
         List<Pelicula> mockPeliculas = List.of(new Pelicula());
         List<Series> mockSeries = List.of(new Series());
         List<Usuario> mockUsuarios = List.of(new Usuario());
-        
+
         when(deustoStreamService.getAllPeliculas()).thenReturn(mockPeliculas);
         when(deustoStreamService.getAllSeries()).thenReturn(mockSeries);
         when(deustoStreamService.getAllUsuarios()).thenReturn(mockUsuarios);
-        
+
         String viewName = webController.mostrarPanelAdmin(mockModel);
-        
+
         verify(mockModel).addAttribute("peliculas", mockPeliculas);
         verify(mockModel).addAttribute("series", mockSeries);
         verify(mockModel).addAttribute("usuarios", mockUsuarios);
@@ -335,7 +349,7 @@ class WebControllerUnitTest {
         when(mockSession.getAttribute("usuario")).thenReturn(null);
 
         assertThrows(NullPointerException.class, () -> {
-            webController.catalogo(null, null,null,null, mockModel, mockSession);
+            webController.catalogo(null, null, null, null, mockModel, mockSession);
         });
     }
 
@@ -354,7 +368,7 @@ class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.catalogo(null, null,null,null, mockModel, mockSession);
+        String viewName = webController.catalogo(null, null, null, null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("series", List.of());
@@ -385,7 +399,7 @@ class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas("test", null)).thenReturn(List.of(pelicula1));
         when(deustoStreamService.buscarSeriesFiltradas("test", null)).thenReturn(List.of(serie1));
 
-        String viewName = webController.catalogo("test", null,null,null, mockModel, mockSession);
+        String viewName = webController.catalogo("test", null, null, null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of(pelicula1));
         verify(mockModel).addAttribute("series", List.of(serie1));
@@ -411,7 +425,8 @@ class WebControllerUnitTest {
         Pelicula pelicula2 = new Pelicula("Long Movie", Generos.ACCION, 150, 2010, "Desc", "url");
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null))
+                .thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of()));
 
         String viewName = webController.catalogo(null, null, "100", null, mockModel, mockSession);
@@ -436,7 +451,8 @@ class WebControllerUnitTest {
         Pelicula pelicula2 = new Pelicula("New Movie", Generos.ACCION, 90, 2005, "Desc", "url");
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null))
+                .thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of()));
 
         String viewName = webController.catalogo(null, null, null, "2000", mockModel, mockSession);
@@ -461,7 +477,8 @@ class WebControllerUnitTest {
         Pelicula pelicula2 = new Pelicula("New Movie", Generos.ACCION, 90, 2005, "Desc", "url");
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
-        when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
+        when(deustoStreamService.buscarPeliculasFiltradas(null, null))
+                .thenReturn(new java.util.ArrayList<>(List.of(pelicula1, pelicula2)));
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of()));
 
         String viewName = webController.catalogo(null, null, null, "1999", mockModel, mockSession);
@@ -486,7 +503,8 @@ class WebControllerUnitTest {
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
-        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(serie1, serie2)));
+        when(deustoStreamService.buscarSeriesFiltradas(null, null))
+                .thenReturn(new java.util.ArrayList<>(List.of(serie1, serie2)));
 
         String viewName = webController.catalogo(null, null, null, "2000", mockModel, mockSession);
 
@@ -510,7 +528,8 @@ class WebControllerUnitTest {
 
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
-        when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(new java.util.ArrayList<>(List.of(serie1, serie2)));
+        when(deustoStreamService.buscarSeriesFiltradas(null, null))
+                .thenReturn(new java.util.ArrayList<>(List.of(serie1, serie2)));
 
         String viewName = webController.catalogo(null, null, null, "1999", mockModel, mockSession);
 
@@ -540,7 +559,7 @@ class WebControllerUnitTest {
         when(deustoStreamService.buscarPeliculasFiltradas(null, null)).thenReturn(List.of());
         when(deustoStreamService.buscarSeriesFiltradas(null, null)).thenReturn(List.of());
 
-        String viewName = webController.catalogo(null, null,null,null, mockModel, mockSession);
+        String viewName = webController.catalogo(null, null, null, null, mockModel, mockSession);
 
         verify(mockModel).addAttribute("peliculas", List.of());
         verify(mockModel).addAttribute("series", List.of());
@@ -562,7 +581,7 @@ class WebControllerUnitTest {
         when(mockSession.getAttribute("usuario")).thenReturn(mockUsuario);
 
         assertThrows(IndexOutOfBoundsException.class, () -> {
-            webController.catalogo(null, null,null,null, mockModel, mockSession);
+            webController.catalogo(null, null, null, null, mockModel, mockSession);
         });
     }
 
@@ -728,16 +747,15 @@ class WebControllerUnitTest {
     @Test
     void mostrarDetallePelicula_admin_peliculaNoEncontrada() {
         when(deustoStreamService.getPeliculaById(1L)).thenReturn(Optional.empty());
-    
+
         Model model = new ExtendedModelMap();
-    
+
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             webController.mostrarDetallePeliculaAdmin(1L, model);
         });
-    
+
         assertEquals("Película no encontrada", exception.getMessage());
     }
-    
 
     @Test
     void mostrarDetalleSerie_usuario() {
@@ -765,7 +783,6 @@ class WebControllerUnitTest {
 
         assertEquals("Serie no encontrada", exception.getMessage());
     }
-
 
     @Test
     void mostrarDetalleSerie_admin() {
@@ -902,7 +919,8 @@ class WebControllerUnitTest {
         Model mockModel = mock(Model.class);
 
         when(authService.register(mockUsuario)).thenReturn(true);
-        when(authService.login(mockUsuario.getCorreo(), mockUsuario.getContrasenya())).thenReturn(Optional.of(mockUsuario));
+        when(authService.login(mockUsuario.getCorreo(), mockUsuario.getContrasenya()))
+                .thenReturn(Optional.of(mockUsuario));
         when(authService.obtenerRedireccion(mockUsuario)).thenReturn("/catalogo");
 
         String viewName = webController.procesarRegistro(mockUsuario, mockSession, mockModel);
@@ -929,38 +947,75 @@ class WebControllerUnitTest {
     }
 
     @Test
-    void testProcesarLogin_Success() {
-        String correo = "test@deustostream.es";
-        String contrasenya = "password";
-        Usuario mockUsuario = new Usuario();
-        mockUsuario.setCorreo(correo);
-        mockUsuario.setPerfiles(List.of(new Perfil()));
+    void testProcesarLogin_SuccessWithoutRemember() {
+        // datos de prueba
+        String correo = "user@example.com";
+        String contrasenya = "correct";
+        Usuario usuario = new Usuario();
+        String destino = "/home";
 
-        HttpSession mockSession = mock(HttpSession.class);
-        Model mockModel = mock(Model.class);
+        when(authService.login(correo, contrasenya))
+                .thenReturn(Optional.of(usuario));
+        when(authService.obtenerRedireccion(usuario))
+                .thenReturn(destino);
 
-        when(authService.login(correo, contrasenya)).thenReturn(Optional.of(mockUsuario));
-        when(authService.obtenerRedireccion(mockUsuario)).thenReturn("/catalogo");
+        // sin marcar "remember me"
+        String viewName = webController.procesarLogin(
+                correo,
+                contrasenya,
+                null,
+                response,
+                session,
+                model);
 
-        String viewName = webController.procesarLogin(correo, contrasenya, mockSession, mockModel);
+        // session y redirección
+        verify(session).setAttribute("usuario", usuario);
+        assertEquals("redirect:" + destino, viewName);
+    }
 
-        verify(mockSession).setAttribute("usuario", mockUsuario);
-        assertEquals("redirect:/catalogo", viewName);
+    @Test
+    void testProcesarLogin_SuccessWithRemember() {
+        String correo = "user2@example.com";
+        String contrasenya = "correct2";
+        String guardar = "on";
+        Usuario usuario = new Usuario();
+        String destino = "/dashboard";
+
+        when(authService.login(correo, contrasenya))
+                .thenReturn(Optional.of(usuario));
+        when(authService.obtenerRedireccion(usuario))
+                .thenReturn(destino);
+
+        String viewName = webController.procesarLogin(
+                correo,
+                contrasenya,
+                guardar, // marcamos "remember me"
+                response,
+                session,
+                model);
+
+        verify(session).setAttribute("usuario", usuario);
+        assertEquals("redirect:" + destino, viewName);
     }
 
     @Test
     void testProcesarLogin_Failure() {
+
         String correo = "test@deustostream.es";
         String contrasenya = "wrongpassword";
 
-        HttpSession mockSession = mock(HttpSession.class);
-        Model mockModel = mock(Model.class);
+        when(authService.login(correo, contrasenya))
+                .thenReturn(Optional.empty());
 
-        when(authService.login(correo, contrasenya)).thenReturn(Optional.empty());
+        String viewName = webController.procesarLogin(
+                correo,
+                contrasenya,
+                null,
+                response,
+                session,
+                model);
 
-        String viewName = webController.procesarLogin(correo, contrasenya, mockSession, mockModel);
-
-        verify(mockModel).addAttribute("error", "Correo o contraseña incorrectas");
+        verify(model).addAttribute("error", "Correo o contraseña incorrectas");
         assertEquals("login", viewName);
     }
 
@@ -1001,8 +1056,39 @@ class WebControllerUnitTest {
     }
 
     @Test
-    void testMostrarFormularioLogin() {
-        String viewName = webController.mostrarFormularioLogin();
+    void testMostrarFormularioLogin_WithCookies() {
+        String correoCookie = "usuario@ejemplo.com";
+        String passCookie = "secreto";
+        boolean guardar = true;
+
+        String viewName = webController.mostrarFormularioLogin(
+                model,
+                correoCookie,
+                passCookie,
+                guardar);
+
+        verify(model).addAttribute("correoValor", correoCookie);
+        verify(model).addAttribute("contrasenyaValor", passCookie);
+        verify(model).addAttribute("guardarContrasenya", guardar);
+
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void testMostrarFormularioLogin_Defaults() {
+        String correoCookie = "";
+        String passCookie = "";
+        boolean guardar = false;
+
+        String viewName = webController.mostrarFormularioLogin(
+                model,
+                correoCookie,
+                passCookie,
+                guardar);
+
+        verify(model).addAttribute("correoValor", "");
+        verify(model).addAttribute("contrasenyaValor", "");
+        verify(model).addAttribute("guardarContrasenya", false);
         assertEquals("login", viewName);
     }
 
