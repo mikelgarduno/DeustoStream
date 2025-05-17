@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Iniciar Sesión - DeustoStream</title>
@@ -16,8 +17,17 @@
         <h2>Iniciar Sesión</h2>
 
         <form action="/login" method="post" class="login-form">
-            <input type="email" name="correo" placeholder="Correo" required>
-            <input type="password" name="contrasenya" placeholder="Contraseña" required>
+            <input type="email" name="correo" placeholder="Correo" required th:value="${correoValor}" />
+
+            <input type="password" name="contrasenya" placeholder="Contraseña" required
+                th:value="${contrasenyaValor}" />
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="guardar-contrasenya" name="guardarContrasenya"
+                    th:checked="${guardarContrasenya}" />
+                <label for="guardar-contrasenya">Guardar contraseña</label>
+            </div>
+
             <button type="submit">Entrar</button>
         </form>
 
@@ -26,4 +36,5 @@
         <p class="registro-link">¿No tienes cuenta? <a href="/registro">Regístrate aquí</a></p>
     </div>
 </body>
+
 </html>
