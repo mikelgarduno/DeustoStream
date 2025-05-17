@@ -361,6 +361,22 @@ button:hover,
     font-size: 14px;
 }
 
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 100%;
+    margin: 10px 0;
+    color: white;
+    font-size: 14px;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: auto;
+    height: auto;
+}
+
 /* ==================================================
    📊 TABLAS
 ================================================== */
