@@ -8,24 +8,43 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
         rel="stylesheet">
 
-    <script>
-        async function guardarPeliculaFavoritos(idPelicula, idUsuario) {
-
-            await fetch(`/api/usuarios/${idUsuario}/peliculas/${idPelicula}`, {
-                method: 'POST',
-                credentials: 'same-origin' // Asegura enviar las cookies de sesión
-            });
-            
-        }
-        async function guardarSerieFavoritos(idSerie, idUsuario) {
-
-            await fetch(`/api/usuarios/${idUsuario}/series/${idSerie}`, {
-                method: 'POST',
-                credentials: 'same-origin' // Asegura enviar las cookies de sesión
-            });
-        }
-    </script>
-
+        <script>
+            async function guardarPeliculaFavoritos(idPelicula, idUsuario) {
+                try {
+                    const response = await fetch(`/api/usuarios/${idUsuario}/peliculas/${idPelicula}`, {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    });
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        console.error("Error al procesar película favorita. Status: " + response.status);
+                        alert("Hubo un error al actualizar tus favoritos. Inténtalo de nuevo.");
+                    }
+                } catch (error) {
+                    console.error("Error en fetch guardarPeliculaFavoritos:", error);
+                    alert("Hubo un error de red al actualizar tus favoritos.");
+                }
+            }
+        
+            async function guardarSerieFavoritos(idSerie, idUsuario) {
+                try {
+                    const response = await fetch(`/api/usuarios/${idUsuario}/series/${idSerie}`, {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    });
+                    if (response.ok) {
+                        window.location.reload();
+                    } else {
+                        console.error("Error al procesar serie favorita. Status: " + response.status);
+                        alert("Hubo un error al actualizar tus favoritos. Inténtalo de nuevo.");
+                    }
+                } catch (error) {
+                    console.error("Error en fetch guardarSerieFavoritos:", error);
+                    alert("Hubo un error de red al actualizar tus favoritos.");
+                }
+            }
+        </script>
 </head>
 
 <body>
