@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detalles de Usuario - Admin</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/detalles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="admin-detalle">
+    <h1 class="page-title">Detalles de Usuario&nbsp;(Admin)</h1>
+
+    <label>
+    <section class="user-card">
+        <h2 class="user-name">
+            <span th:text="${usuario.nombre}">Nombre</span>
+            <span th:text="${usuario.apellido}">Apellido</span>
+        </h2>
+
+        <div class="info-grid">
+            <div class="field">
+                <span class="label">ID:</span>
+                <span class="value" th:text="${usuario.id}">–</span>
+            </div>
+            <div class="field">
+                <span class="label">Correo:</span>
+                <span class="value" th:text="${usuario.correo}"></span>
+            </div>
+            <div class="field">
+                <span class="label">Contraseña:</span>
+                <span class="value" th:text="${usuario.contrasenya}"></span>
+            </div>
+        </div>
+
+        <h3>Perfiles asociados</h3>
+            <ul class="chip-list no-bullets">
+            <li th:each="perf : ${usuario.perfiles}"
+                th:text="${perf.nombre}"></li>
+            </ul>
+    </section>
+
+    <a th:href="@{/admin/usuarios}" class="btn-volver">
+        &larr; Volver a Gestión de Usuarios
+    </a>
+    </label>
+</body>
+
+</html>
