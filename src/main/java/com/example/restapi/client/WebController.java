@@ -472,19 +472,7 @@ public class WebController {
         Usuario usuario = deustoStreamService.getUsuarioById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
         model.addAttribute("usuario", usuario);
-<<<<<<< HEAD
-        return "detalleUsuarioAdmin";  
-=======
         return "detalleUsuario"; // Thymeleaf renderiza detalleUsuario.html
->>>>>>> f86ede892 (Feat: Impidencia de acceso via JavaScript en Cookie cCorreo)
     }
-
-    @GetMapping("/usuario/{id}")
-    public String mostrarDetalleUsuario(@PathVariable Long id, Model model, HttpSession session) {
-        Usuario usuario = deustoStreamService.getUsuarioById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
-        model.addAttribute("usuario", usuario);
-        return "detalleUsuario";
-}
 
 }
