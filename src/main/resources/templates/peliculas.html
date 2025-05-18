@@ -8,38 +8,34 @@
 
     <title>Gestión de Películas</title>
     <script>
-        // Función para obtener las películas desde el backend y mostrarlas
+        // ----------------------- FUNCIONES DE CARGA ----------------------- //
         async function fetchPeliculas() {
-        const response = await fetch('/api/peliculas');
-        const peliculas = await response.json();
+            const response = await fetch('/api/peliculas');
+            const peliculas = await response.json();
 
-        let tableContent = peliculas.map(pelicula =>
-            `<tr id="row-${pelicula.id}" onclick="window.location='/admin/pelicula/${pelicula.id}'" style="cursor: pointer;">
-                <td>${pelicula.id}</td>
-                <td id="titulo-cell-${pelicula.id}">
-                    <a href="/admin/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
-                        ${pelicula.titulo}
-                    </a>
-                </td>
-                <td id="anio-cell-${pelicula.id}">${pelicula.anio}</td>
-                <td id="genero-cell-${pelicula.id}">${pelicula.genero}</td>
-                <td id="sinopsis-cell-${pelicula.id}">${pelicula.sinopsis}</td>
-                <td id="duracion-cell-${pelicula.id}">${pelicula.duracion}</td>
-                <td>
-                    <img src="${pelicula.imagenUrl}" alt="Póster" width="100" onclick="event.stopPropagation();">
-                </td>
-                <td id="actions-${pelicula.id}">
-                    <button onclick="event.stopPropagation(); enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.duracion}', '${pelicula.imagenUrl}')">Update</button>
-                    <button onclick="event.stopPropagation(); deletePelicula(${pelicula.id})">Delete</button>
-                </td>
-            </tr>`
-        ).join('');
+            const tableContent = peliculas.map(pelicula => `
+                <tr id="row-${pelicula.id}" onclick="window.location='/admin/pelicula/${pelicula.id}'" style="cursor: pointer;">
+                    <td>${pelicula.id}</td>
+                    <td>
+                        <a href="/admin/pelicula/${pelicula.id}" onclick="event.stopPropagation();">
+                            ${pelicula.titulo}
+                        </a>
+                    </td>
+                    <td>${pelicula.anio}</td>
+                    <td>${pelicula.genero}</td>
+                    <td>${pelicula.sinopsis}</td>
+                    <td>${pelicula.duracion}</td>
+                    <td><img src="${pelicula.imagenUrl}" alt="Póster" width="100" onclick="event.stopPropagation();"></td>
+                    <td onclick="event.stopPropagation();">
+                        <button onclick="event.stopPropagation(); enableEdit(${pelicula.id}, '${pelicula.titulo}', '${pelicula.anio}', '${pelicula.genero}', '${pelicula.sinopsis}', '${pelicula.duracion}', '${pelicula.imagenUrl}')">Update</button>
+                        <button onclick="event.stopPropagation(); deletePelicula(${pelicula.id})">Delete</button>
+                    </td>
+                </tr>
+            `).join('');
 
-        document.getElementById('peliculaTable').innerHTML = tableContent;
-    }
+            document.getElementById('peliculaTable').innerHTML = tableContent;
+        }
 
-
-        // Función para obtener los géneros del backend y actualizar el select
         async function fetchGeneros() {
             const response = await fetch('/api/generos');
             const generos = await response.json();
@@ -52,73 +48,101 @@
             });
         }
 
-        // Función para añadir una nueva película
+        // ----------------------- CRUD: CREATE ----------------------- //
         async function addPelicula() {
             const titulo = document.getElementById('titulo').value;
             const anio = document.getElementById('anio').value;
             const genero = document.getElementById('genero').value;
             const sinopsis = document.getElementById('sinopsis').value;
-            const duracion = document.getElementById('duracion').value;  // NUEVO
-            const imagenUrl = document.getElementById('imagenUrl').value;  // NUEVO
+            const duracion = document.getElementById('duracion').value;
+            const imagenUrl = document.getElementById('imagenUrl').value;
 
             await fetch('/api/peliculas', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, sinopsis, duracion ,imagenUrl })  // INCLUIR imagenUrl
+                body: JSON.stringify({ titulo, anio, genero, sinopsis, duracion, imagenUrl })
             });
 
-            // Limpiar los campos después de añadir la película
-            document.getElementById('titulo').value = "";
-            document.getElementById('anio').value = "";
-            document.getElementById('genero').value = "";
-            document.getElementById('sinopsis').value = "";
-            document.getElementById('duracion').value = "";  // NUEVO
-            document.getElementById('imagenUrl').value = "";  
+            // Limpiar campos
+            document.getElementById('titulo').value = '';
+            document.getElementById('anio').value = '';
+            document.getElementById('genero').value = '';
+            document.getElementById('sinopsis').value = '';
+            document.getElementById('duracion').value = '';
+            document.getElementById('imagenUrl').value = '';
+
             fetchPeliculas();
         }
 
-        // Función para habilitar la edición de una película
-        function enableEdit(id, titulo, anio, genero, sinopsis, duracion,  imagenUrl) {
-            document.getElementById(`row-${id}`).innerHTML = `
+        // ----------------------- CRUD: UPDATE (MODO EDICIÓN) ----------------------- //
+        function enableEdit(id, titulo, anio, genero, sinopsis, duracion, imagenUrl) {
+            const row = document.getElementById(`row-${id}`);
+
+            // Guardamos y eliminamos el redireccionamiento como se hace en series
+            row.onclickBackup = row.getAttribute('onclick');
+            row.removeAttribute('onclick');
+
+            row.innerHTML = `
                 <td>${id}</td>
                 <td><input type="text" id="edit-titulo-${id}" value="${titulo}"></td>
                 <td><input type="text" id="edit-anio-${id}" value="${anio}"></td>
                 <td><input type="text" id="edit-genero-${id}" value="${genero}"></td>
                 <td><input type="text" id="edit-sinopsis-${id}" value="${sinopsis}"></td>
-                <td><input type="text" id="edit-duracion-${id}" value="${duracion}"></td> <!-- NUEVO -->
-                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td> 
-                <td>
+                <td><input type="text" id="edit-duracion-${id}" value="${duracion}"></td>
+                <td><input type="text" id="edit-imagenUrl-${id}" value="${imagenUrl}"></td>
+                <td onclick="event.stopPropagation();">
                     <button onclick="event.stopPropagation(); confirmUpdate(${id})">Confirm</button>
-                    <button onclick="event.stopPropagation(); fetchPeliculas()">Cancel</button>
+                    <button onclick="event.stopPropagation(); cancelEdit(${id})">Cancel</button>
                 </td>
             `;
         }
 
-        // Función para confirmar la actualización de una película
+        function cancelEdit(id) {
+            const row = document.getElementById(`row-${id}`);
+            // Restauramos el onclick original si existía
+            if (row.onclickBackup) {
+                row.setAttribute('onclick', row.onclickBackup);
+                delete row.onclickBackup;
+            }
+            fetchPeliculas();
+        }
+
         async function confirmUpdate(id) {
             const titulo = document.getElementById(`edit-titulo-${id}`).value;
             const anio = document.getElementById(`edit-anio-${id}`).value;
             const genero = document.getElementById(`edit-genero-${id}`).value;
             const sinopsis = document.getElementById(`edit-sinopsis-${id}`).value;
-            const duracion = document.getElementById(`edit-duracion-${id}`).value; // NUEVO
-            const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value; // NUEVO
+            const duracion = document.getElementById(`edit-duracion-${id}`).value;
+            const imagenUrl = document.getElementById(`edit-imagenUrl-${id}`).value;
 
-            await fetch(`/api/peliculas/${id}`, {
+            const response = await fetch(`/api/peliculas/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ titulo, anio, genero, sinopsis, duracion ,imagenUrl }) // INCLUIR imagenUrl
+                body: JSON.stringify({ titulo, anio, genero, sinopsis, duracion, imagenUrl })
             });
+
+            if (!response.ok) {
+                alert('Error al actualizar la película');
+                return;
+            }
+
+            // Restauramos el onclick original para la fila
+            const row = document.getElementById(`row-${id}`);
+            if (row.onclickBackup) {
+                row.setAttribute('onclick', row.onclickBackup);
+                delete row.onclickBackup;
+            }
 
             fetchPeliculas();
         }
 
-        // Función para eliminar una película
+        // ----------------------- CRUD: DELETE ----------------------- //
         async function deletePelicula(id) {
             await fetch(`/api/peliculas/${id}`, { method: 'DELETE' });
             fetchPeliculas();
         }
 
-        // Cargar las películas y géneros cuando se carga la página
+        // ----------------------- EVENTOS DE CARGA ----------------------- //
         window.onload = () => {
             fetchPeliculas();
             fetchGeneros();
@@ -138,22 +162,17 @@
             <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
             <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
         </nav>
-
         <div class="header-right">
             <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
         </div>
     </header>
-
 
     <form onsubmit="event.preventDefault(); addPelicula();">
         <h2>Añadir Nueva Película</h2>
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="number" id="anio" placeholder="Año" required>
 
-        
-        <select id="genero" required>
-            <!-- Las opciones de género se llenarán dinámicamente con JavaScript -->
-        </select>
+        <select id="genero" required><!-- opciones dinámicas --></select>
 
         <textarea id="sinopsis" placeholder="Sinopsis" required></textarea>
         <input type="number" id="duracion" placeholder="Duración (min)" required>
