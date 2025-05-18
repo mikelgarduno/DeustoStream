@@ -126,42 +126,43 @@ $(document).ready(function(){initNavTree('_qr_status_controller_8java_source.htm
 </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    @GetMapping(<span class="stringliteral">&quot;/qr-status&quot;</span>)</div>
-<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ac7f10160265f52bc0124e47edb467701">   27</a></span>    public Map&lt;String, Object&gt; <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ac7f10160265f52bc0124e47edb467701">verificarEstadoToken</a>(@RequestParam String token, HttpSession session) {</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        Logger logger = LoggerFactory.getLogger(getClass());</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        logger.info(<span class="stringliteral">&quot;Verificando estado del token QR: {}&quot;</span>, token);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        Map&lt;String, Object&gt; response = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">if</span> (qrLoginService.estaAutorizado(token)) {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            Usuario usuario = qrLoginService.getUsuarioAutorizado(token);</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <span class="keywordflow">if</span> (usuario != <span class="keyword">null</span>) {</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                logger.info(<span class="stringliteral">&quot;Token autorizado para usuario: {}&quot;</span>, usuario.getCorreo());</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                <span class="comment">// Guardar usuario en sesión para login persistente</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                session.setAttribute(<span class="stringliteral">&quot;usuarioId&quot;</span>, usuario.getId());</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                session.setAttribute(<span class="stringliteral">&quot;usuario&quot;</span>, usuario);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                session.setAttribute(<span class="stringliteral">&quot;usuarioAutenticado&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                response.put(<span class="stringliteral">&quot;autorizado&quot;</span>, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                response.put(<span class="stringliteral">&quot;usuario&quot;</span>, usuario.getCorreo());</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <span class="keywordflow">return</span> response;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                logger.warn(<span class="stringliteral">&quot;Token autorizado pero sin usuario asociado: {}&quot;</span>, token);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            logger.info(<span class="stringliteral">&quot;Token no autorizado aún: {}&quot;</span>, token);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        }</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        response.put(<span class="stringliteral">&quot;autorizado&quot;</span>, <span class="keyword">false</span>);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> response;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    @ResponseBody</div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ac7f10160265f52bc0124e47edb467701">   28</a></span>    <span class="keyword">public</span> Map&lt;String, Object&gt; <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ac7f10160265f52bc0124e47edb467701">verificarEstadoToken</a>(@RequestParam String token, HttpSession session) {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        Logger logger = LoggerFactory.getLogger(getClass());</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        logger.info(<span class="stringliteral">&quot;Verificando estado del token QR: {}&quot;</span>, token);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        Map&lt;String, Object&gt; response = <span class="keyword">new</span> HashMap&lt;&gt;();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">if</span> (qrLoginService.estaAutorizado(token)) {</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            Usuario usuario = qrLoginService.getUsuarioAutorizado(token);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="keywordflow">if</span> (usuario != <span class="keyword">null</span>) {</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                logger.info(<span class="stringliteral">&quot;Token autorizado para usuario: {}&quot;</span>, usuario.getCorreo());</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                <span class="comment">// Guardar usuario en sesión para login persistente</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                session.setAttribute(<span class="stringliteral">&quot;usuarioId&quot;</span>, usuario.getId());</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                session.setAttribute(<span class="stringliteral">&quot;usuario&quot;</span>, usuario);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                session.setAttribute(<span class="stringliteral">&quot;usuarioAutenticado&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                response.put(<span class="stringliteral">&quot;autorizado&quot;</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                response.put(<span class="stringliteral">&quot;usuario&quot;</span>, usuario.getCorreo());</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="keywordflow">return</span> response;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                logger.warn(<span class="stringliteral">&quot;Token autorizado pero sin usuario asociado: {}&quot;</span>, token);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            logger.info(<span class="stringliteral">&quot;Token no autorizado aún: {}&quot;</span>, token);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        response.put(<span class="stringliteral">&quot;autorizado&quot;</span>, <span class="keyword">false</span>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordflow">return</span> response;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    }</div>
 </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
 </div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller_html"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html">com.example.restapi.controller.QrStatusController</a></div><div class="ttdef"><b>Definition</b> <a href="_qr_status_controller_8java_source.html#l00017">QrStatusController.java:17</a></div></div>
-<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller_html_ac7f10160265f52bc0124e47edb467701"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ac7f10160265f52bc0124e47edb467701">com.example.restapi.controller.QrStatusController.verificarEstadoToken</a></div><div class="ttdeci">Map&lt; String, Object &gt; verificarEstadoToken(@RequestParam String token, HttpSession session)</div><div class="ttdef"><b>Definition</b> <a href="_qr_status_controller_8java_source.html#l00027">QrStatusController.java:27</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller_html_ac7f10160265f52bc0124e47edb467701"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ac7f10160265f52bc0124e47edb467701">com.example.restapi.controller.QrStatusController.verificarEstadoToken</a></div><div class="ttdeci">Map&lt; String, Object &gt; verificarEstadoToken(@RequestParam String token, HttpSession session)</div><div class="ttdef"><b>Definition</b> <a href="_qr_status_controller_8java_source.html#l00028">QrStatusController.java:28</a></div></div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller_html_ad9bc9b49e11df2bd57ad0acd74b9f332"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ad9bc9b49e11df2bd57ad0acd74b9f332">com.example.restapi.controller.QrStatusController.QrStatusController</a></div><div class="ttdeci">QrStatusController(QrLoginService qrLoginService)</div><div class="ttdef"><b>Definition</b> <a href="_qr_status_controller_8java_source.html#l00022">QrStatusController.java:22</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -169,7 +170,7 @@ $(document).ready(function(){initNavTree('_qr_status_controller_8java_source.htm
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_5eb159725f84c66aafd839904a4acdd0.html">main</a></li><li class="navelem"><a class="el" href="dir_fd3f6763802dee1ad875f6c80eac0bda.html">java</a></li><li class="navelem"><a class="el" href="dir_d8517d8b842053dc3dd7dde525dd9163.html">com</a></li><li class="navelem"><a class="el" href="dir_ada4f439cdb25ec987d0b7526884b52b.html">example</a></li><li class="navelem"><a class="el" href="dir_188469e1adf35605c71a0c9e111ef0fe.html">restapi</a></li><li class="navelem"><a class="el" href="dir_ee83e09d0b031ec7793e5a8f4a886891.html">controller</a></li><li class="navelem"><a class="el" href="_qr_status_controller_8java.html">QrStatusController.java</a></li>
-    <li class="footer">Generated on Sun May 18 2025 23:14:14 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun May 18 2025 23:20:11 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
