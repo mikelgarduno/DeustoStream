@@ -89,7 +89,7 @@ public class AuthService {
 
     }
 
-    public void autenticarUsuario(HttpSession session, Usuario usuario) {
+    public void autenticarUsuario(HttpSession session) {
         // Guarda los datos del usuario en la sesión
         session.setAttribute("usuarioAutenticado", true);
         // Otros atributos que necesites para tu sistema de autenticación

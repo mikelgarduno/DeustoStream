@@ -66,9 +66,9 @@ public class QrLoginService {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                tokens.remove(token);
+            tokens.remove(token);
             }
-        }, 5 * 60 * 1000);
+        }, 5 * (long)60 * 1000);
     }
 }
 

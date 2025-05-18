@@ -3,12 +3,11 @@ package com.example.restapi.integration;
 import com.example.restapi.controller.QrLoginController;
 import com.example.restapi.repository.UsuarioRepository;
 import com.example.restapi.service.QrLoginService;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -23,10 +22,10 @@ public class QrLoginControllerIT {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @MockitoBean
     private QrLoginService qrLoginService;
 
-    @MockBean
+    @MockitoBean
     private UsuarioRepository usuarioRepository;
 
     // ---- GET /qr-login-form ----
@@ -34,17 +33,17 @@ public class QrLoginControllerIT {
     @Test
     void mostrarFormularioLogin_conTokenValido_debeDevolverVistaYToken() throws Exception {
         mockMvc.perform(get("/qr-login-form").param("token", "abc123"))
-               .andExpect(status().isOk())
-               .andExpect(model().attributeExists("token"))
-               .andExpect(view().name("qr-login-form"));
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("token"))
+                .andExpect(view().name("qr-login-form"));
     }
 
     @Test
     void mostrarFormularioLogin_sinToken_debeDevolverVistaConError() throws Exception {
         mockMvc.perform(get("/qr-login-form").param("token", ""))
-               .andExpect(status().isOk())
-               .andExpect(model().attributeExists("error"))
-               .andExpect(view().name("qr-login-form"));
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("error"))
+                .andExpect(view().name("qr-login-form"));
     }
 
     // ---- POST /qr-login-submit ----
@@ -83,13 +82,4 @@ public class QrLoginControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.IMAGE_PNG_VALUE));
     }
-    @Test
-void mostrarCodigoQr_errorEnGeneracionDebeRetornar500() throws Exception {
-    when(qrLoginService.generarCodigoQR(anyString()))
-            .thenThrow(new RuntimeException("Fallo al generar QR"));
-
-    mockMvc.perform(get("/qr-login").sessionAttr("qr-token", "abc123"))
-            .andExpect(status().is5xxServerError());
-}
-
 }

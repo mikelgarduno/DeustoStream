@@ -24,7 +24,6 @@ public class QrStatusController {
     }
 
     @GetMapping("/qr-status")
-    @ResponseBody
     public Map<String, Object> verificarEstadoToken(@RequestParam String token, HttpSession session) {
         Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("Verificando estado del token QR: {}", token);
