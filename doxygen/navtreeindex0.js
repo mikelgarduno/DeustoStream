@@ -54,6 +54,8 @@ var NAVTREEINDEX0 =
 "_qr_login_controller_8java_source.html":[2,0,0,0,0,0,0,0,2,3],
 "_qr_login_service_8java.html":[2,0,0,0,0,0,0,0,5,2],
 "_qr_login_service_8java_source.html":[2,0,0,0,0,0,0,0,5,2],
+"_qr_login_service_test_8java.html":[2,0,0,1,0,0,0,0,2,3,2],
+"_qr_login_service_test_8java_source.html":[2,0,0,1,0,0,0,0,2,3,2],
 "_qr_status_controller_8java.html":[2,0,0,0,0,0,0,0,2,4],
 "_qr_status_controller_8java_source.html":[2,0,0,0,0,0,0,0,2,4],
 "_rendimiento_api_test_8java.html":[2,0,0,1,0,0,0,0,1,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a04b1fd654c52f0fdb672f5055892729d":[1,0,0,0,0,3,5,20],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a077d1f952914615fce0562a9751e30f4":[1,0,0,0,0,3,5,6],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a0c9db2fc46da0218ff6d9209759afd76":[1,0,0,0,0,3,5,17],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a1079077056798423dc61033f213ef42e":[1,0,0,0,0,3,5,12],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a15121752a62dd4ce15aec6ccb0415762":[1,0,0,0,0,3,5,16],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a1860294dcd878e7ffa5f06df8509dbb9":[1,0,0,0,0,3,5,0]
+"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a1079077056798423dc61033f213ef42e":[1,0,0,0,0,3,5,12]
 };

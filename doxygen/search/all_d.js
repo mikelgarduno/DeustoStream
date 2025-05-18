@@ -4,6 +4,8 @@ var searchData=
   ['qrlogincontroller_2ejava_1',['QrLoginController.java',['../_qr_login_controller_8java.html',1,'']]],
   ['qrloginservice_2',['QrLoginService',['../classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html',1,'com::example::restapi::service']]],
   ['qrloginservice_2ejava_3',['QrLoginService.java',['../_qr_login_service_8java.html',1,'']]],
-  ['qrstatuscontroller_4',['qrstatuscontroller',['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html',1,'com.example.restapi.controller.QrStatusController'],['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ad9bc9b49e11df2bd57ad0acd74b9f332',1,'com.example.restapi.controller.QrStatusController.QrStatusController()']]],
-  ['qrstatuscontroller_2ejava_5',['QrStatusController.java',['../_qr_status_controller_8java.html',1,'']]]
+  ['qrloginservicetest_4',['QrLoginServiceTest',['../classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_qr_login_service_test.html',1,'com::example::restapi::unit::service']]],
+  ['qrloginservicetest_2ejava_5',['QrLoginServiceTest.java',['../_qr_login_service_test_8java.html',1,'']]],
+  ['qrstatuscontroller_6',['qrstatuscontroller',['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html',1,'com.example.restapi.controller.QrStatusController'],['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ad9bc9b49e11df2bd57ad0acd74b9f332',1,'com.example.restapi.controller.QrStatusController.QrStatusController()']]],
+  ['qrstatuscontroller_2ejava_7',['QrStatusController.java',['../_qr_status_controller_8java.html',1,'']]]
 ];

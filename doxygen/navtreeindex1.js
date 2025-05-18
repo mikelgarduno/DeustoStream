@@ -1,5 +1,7 @@
 var NAVTREEINDEX1 =
 {
+"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a15121752a62dd4ce15aec6ccb0415762":[1,0,0,0,0,3,5,16],
+"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a1860294dcd878e7ffa5f06df8509dbb9":[1,0,0,0,0,3,5,0],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a413e162367dbf764019e3a3efeda883e":[1,0,0,0,0,3,5,15],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a470678d3ba8f3755394e46915067667f":[1,0,0,0,0,3,5,5],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a4ee744e4f186b7af1df199e3550c426a":[1,0,0,0,0,3,5,10],
@@ -86,6 +88,7 @@ var NAVTREEINDEX1 =
 "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html#a744beb02e3c5e51227a09f60070d3974":[1,0,0,0,0,6,2,1],
 "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html#a9f0764c99a06bb88f95ea6c8d2c4a1e0":[1,0,0,0,0,6,2,2],
 "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html":[1,0,0,0,0,7,0,0],
+"classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_qr_login_service_test.html":[1,0,0,0,0,7,0,1],
 "classes.html":[1,1],
 "dir_120ed4da3e3217b1e7fc0b4f48568e79.html":[2,0,0,1],
 "dir_188469e1adf35605c71a0c9e111ef0fe.html":[2,0,0,0,0,0,0,0],
@@ -133,8 +136,8 @@ var NAVTREEINDEX1 =
 "functions_d.html":[1,3,0,3],
 "functions_e.html":[1,3,0,4],
 "functions_f.html":[1,3,0,5],
-"functions_func.html":[1,3,1,0],
 "functions_func.html":[1,3,1],
+"functions_func.html":[1,3,1,0],
 "functions_func_b.html":[1,3,1,1],
 "functions_func_c.html":[1,3,1,2],
 "functions_func_d.html":[1,3,1,3],

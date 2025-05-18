@@ -45,7 +45,8 @@ var annotated_dup =
           ] ],
           [ "unit", null, [
             [ "service", "namespacecom_1_1example_1_1restapi_1_1unit_1_1service.html", [
-              [ "DeustoStreamServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html", null ]
+              [ "DeustoStreamServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html", null ],
+              [ "QrLoginServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_qr_login_service_test.html", null ]
             ] ]
           ] ],
           [ "RestApiApplication", "classcom_1_1example_1_1restapi_1_1_rest_api_application.html", null ]
