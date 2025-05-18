@@ -11,5 +11,7 @@ var searchData=
   ['qrloginservicetest_8',['QrLoginServiceTest',['../classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_qr_login_service_test.html',1,'com::example::restapi::unit::service']]],
   ['qrloginservicetest_2ejava_9',['QrLoginServiceTest.java',['../_qr_login_service_test_8java.html',1,'']]],
   ['qrstatuscontroller_10',['qrstatuscontroller',['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html',1,'com.example.restapi.controller.QrStatusController'],['../classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html#ad9bc9b49e11df2bd57ad0acd74b9f332',1,'com.example.restapi.controller.QrStatusController.QrStatusController()']]],
-  ['qrstatuscontroller_2ejava_11',['QrStatusController.java',['../_qr_status_controller_8java.html',1,'']]]
+  ['qrstatuscontroller_2ejava_11',['QrStatusController.java',['../_qr_status_controller_8java.html',1,'']]],
+  ['qrstatusunitcontrollertest_12',['QrStatusUnitControllerTest',['../classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_status_unit_controller_test.html',1,'com::example::restapi::unit::controller']]],
+  ['qrstatusunitcontrollertest_2ejava_13',['QrStatusUnitControllerTest.java',['../_qr_status_unit_controller_test_8java.html',1,'']]]
 ];

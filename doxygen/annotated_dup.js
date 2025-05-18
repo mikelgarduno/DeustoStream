@@ -47,7 +47,8 @@ var annotated_dup =
           ] ],
           [ "unit", null, [
             [ "controller", "namespacecom_1_1example_1_1restapi_1_1unit_1_1controller.html", [
-              [ "QrLoginControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_login_controller_unit_test.html", null ]
+              [ "QrLoginControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_login_controller_unit_test.html", null ],
+              [ "QrStatusUnitControllerTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_status_unit_controller_test.html", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_status_unit_controller_test" ]
             ] ],
             [ "service", "namespacecom_1_1example_1_1restapi_1_1unit_1_1service.html", [
               [ "DeustoStreamServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_deusto_stream_service_test.html", null ],

@@ -66,9 +66,9 @@ import java.util.concurrent.ConcurrentHashMap;
 <span class="fc" id="L66">        new Timer().schedule(new TimerTask() {</span>
             @Override
             public void run() {
-<span class="nc" id="L69">                tokens.remove(token);</span>
+<span class="nc" id="L69">            tokens.remove(token);</span>
 <span class="nc" id="L70">            }</span>
-        }, 5 * 60 * 1000);
+        }, 5 * (long)60 * 1000);
 <span class="fc" id="L72">    }</span>
 }
 

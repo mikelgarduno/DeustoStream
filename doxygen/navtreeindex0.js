@@ -60,6 +60,8 @@ var NAVTREEINDEX0 =
 "_qr_login_service_test_8java_source.html":[2,0,0,1,0,0,0,0,2,3,2],
 "_qr_status_controller_8java.html":[2,0,0,0,0,0,0,0,2,3],
 "_qr_status_controller_8java_source.html":[2,0,0,0,0,0,0,0,2,3],
+"_qr_status_unit_controller_test_8java.html":[2,0,0,1,0,0,0,0,2,1,3],
+"_qr_status_unit_controller_test_8java_source.html":[2,0,0,1,0,0,0,0,2,1,3],
 "_rendimiento_api_test_8java.html":[2,0,0,1,0,0,0,0,1,0],
 "_rendimiento_api_test_8java_source.html":[2,0,0,1,0,0,0,0,1,0],
 "_rest_api_application_8java.html":[2,0,0,0,0,0,0,0,6],
@@ -90,8 +92,8 @@ var NAVTREEINDEX0 =
 "_web_controller_8java_source.html":[2,0,0,0,0,0,0,0,0,0],
 "_web_controller_i_t_8java.html":[2,0,0,1,0,0,0,0,0,4],
 "_web_controller_i_t_8java_source.html":[2,0,0,1,0,0,0,0,0,4],
-"_web_controller_unit_test_8java.html":[2,0,0,1,0,0,0,0,2,1,3],
-"_web_controller_unit_test_8java_source.html":[2,0,0,1,0,0,0,0,2,1,3],
+"_web_controller_unit_test_8java.html":[2,0,0,1,0,0,0,0,2,1,4],
+"_web_controller_unit_test_8java_source.html":[2,0,0,1,0,0,0,0,2,1,4],
 "annotated.html":[1,0],
 "classcom_1_1example_1_1restapi_1_1_rest_api_application.html":[1,0,0,0,0,9],
 "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html":[1,0,0,0,0,0,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "classcom_1_1example_1_1restapi_1_1model_1_1_series.html#aff4858ce96fdec9c6a7711e027559b6e":[1,0,0,0,0,4,4,14],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html":[1,0,0,0,0,4,5],
 "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a00441e2cc06c5649b4132a787929d3c0":[1,0,0,0,0,4,5,13],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a01fa2b9677400081f17ad4317f2f627b":[1,0,0,0,0,4,5,24],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a04b1fd654c52f0fdb672f5055892729d":[1,0,0,0,0,4,5,20],
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a077d1f952914615fce0562a9751e30f4":[1,0,0,0,0,4,5,6]
+"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a01fa2b9677400081f17ad4317f2f627b":[1,0,0,0,0,4,5,24]
 };

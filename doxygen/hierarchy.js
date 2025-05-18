@@ -26,6 +26,7 @@ var hierarchy =
     [ "com.example.restapi.service.QrLoginService", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html", null ],
     [ "com.example.restapi.unit.service.QrLoginServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_qr_login_service_test.html", null ],
     [ "com.example.restapi.controller.QrStatusController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html", null ],
+    [ "com.example.restapi.unit.controller.QrStatusUnitControllerTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_status_unit_controller_test.html", null ],
     [ "com.example.restapi.performance.RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ],
     [ "com.example.restapi.RestApiApplication", "classcom_1_1example_1_1restapi_1_1_rest_api_application.html", null ],
     [ "Serializable", null, [
