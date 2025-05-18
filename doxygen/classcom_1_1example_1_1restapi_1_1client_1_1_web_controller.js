@@ -9,6 +9,7 @@ var classcom_1_1example_1_1restapi_1_1client_1_1_web_controller =
     [ "mostrarDetallePeliculaAdmin", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#ac94ba32f4d7af115ae1a636ae0a27bcf", null ],
     [ "mostrarDetalleSerieAdmin", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0b7121f3e9751e6850bf57ca15385f58", null ],
     [ "mostrarDetalleSerieUsuario", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a583a0afa1a5b11814db2254299f0f465", null ],
+    [ "mostrarDetalleUsuario", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a69691d380ab975b8d2528528c73cd6ae", null ],
     [ "mostrarFormularioLogin", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a816c0f5e2814e7a082b6c6d666f1cef3", null ],
     [ "mostrarFormularioRegistro", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a5daf7ce3cddbbd7d6e95e437435a37e0", null ],
     [ "mostrarGuardados", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a1fb0cded83d7fae56f2603e3781c43d0", null ],

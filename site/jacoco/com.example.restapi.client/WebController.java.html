@@ -465,5 +465,15 @@ public class WebController {
         }
     }
 
+
+    // Detalle de usuario 
+    @GetMapping(&quot;/admin/usuario/{id}&quot;)
+    public String mostrarDetalleUsuario(@PathVariable Long id, Model model) {
+<span class="nc" id="L472">        Usuario usuario = deustoStreamService.getUsuarioById(id)</span>
+<span class="nc" id="L473">                .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Usuario no encontrado: &quot; + id));</span>
+<span class="nc" id="L474">        model.addAttribute(&quot;usuario&quot;, usuario);</span>
+<span class="nc" id="L475">        return &quot;detalleUsuario&quot;;   // Thymeleaf renderiza detalleUsuario.html</span>
+    }
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

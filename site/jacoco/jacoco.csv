@@ -2,7 +2,7 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 deustostream-api-app,com.example.restapi.config,InicializarDatos,459,0,0,0,79,0,2,0,2,0
 deustostream-api-app,com.example.restapi.config,LoginInterceptor,63,0,22,0,13,0,13,0,2,0
 deustostream-api-app,com.example.restapi.config,WebConfig,53,0,2,0,6,0,3,0,2,0
-deustostream-api-app,com.example.restapi.client,WebController,10,891,5,67,0,209,5,63,0,32
+deustostream-api-app,com.example.restapi.client,WebController,32,891,5,67,4,209,7,63,2,32
 deustostream-api-app,com.example.restapi,RestApiApplication,5,3,0,0,2,1,1,1,1,1
 deustostream-api-app,com.example.restapi.controller,DeustoStreamController,101,435,7,37,27,100,7,45,3,27
 deustostream-api-app,com.example.restapi.controller,MobileLoginController,11,6,0,0,3,3,1,1,1,1
