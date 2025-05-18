@@ -1164,4 +1164,58 @@ class WebControllerUnitTest {
         assertEquals("redirect:/login", viewName);
     }
 
+     @Test
+    void mostrarDetalleUsuario_usuario() {
+        Usuario usuario = new Usuario();
+        when(deustoStreamService.getUsuarioById(1L))
+            .thenReturn(Optional.of(usuario));
+
+        Model model = new ExtendedModelMap();
+        HttpSession session = mock(HttpSession.class);
+        String view = webController.mostrarDetalleUsuario(1L, model, session);
+
+        assertEquals("detalleUsuario", view);
+        assertSame(usuario, model.getAttribute("usuario"));
+    }
+
+    @Test
+    void mostrarDetalleUsuario_usuario_usuarioNoEncontrado() {
+        when(deustoStreamService.getUsuarioById(1L))
+            .thenReturn(Optional.empty());
+
+        Model model = new ExtendedModelMap();
+        HttpSession session = mock(HttpSession.class);
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarDetalleUsuario(1L, model, session);
+        });
+        assertEquals("Usuario no encontrado: 1", ex.getMessage());
+    }
+
+    @Test
+    void mostrarDetalleUsuario_admin() {
+        Usuario usuario = new Usuario();
+        when(deustoStreamService.getUsuarioById(1L))
+            .thenReturn(Optional.of(usuario));
+
+        Model model = new ExtendedModelMap();
+        String view = webController.mostrarDetalleUsuarioAdmin(1L, model);
+
+        assertEquals("detalleUsuarioAdmin", view);
+        assertSame(usuario, model.getAttribute("usuario"));
+    }
+
+    @Test
+    void mostrarDetalleUsuario_admin_usuarioNoEncontrado() {
+        when(deustoStreamService.getUsuarioById(1L))
+            .thenReturn(Optional.empty());
+
+        Model model = new ExtendedModelMap();
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarDetalleUsuarioAdmin(1L, model);
+        });
+        assertEquals("Usuario no encontrado: 1", ex.getMessage());
+    }
+
 }
