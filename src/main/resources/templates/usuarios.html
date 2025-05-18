@@ -1,31 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/styles.css}" href="../static/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap"
-        rel="stylesheet">
-    <title>Deusto Stream Admin: Usuarios</title>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link rel='stylesheet' th:href='@{/styles.css}' href='../static/styles.css'>
+    <link href='https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=DM+Sans:wght@400;600&display=swap' rel='stylesheet'>
+    <title>Gestión de Usuarios</title>
+
     <script>
         async function fetchUsuarios() {
             const response = await fetch('/api/registro');
             const usuarios = await response.json();
-            let tableContent = usuarios.map(usuario =>
-                `<tr id="row-${usuario.id}">
+
+            const tableContent = usuarios.map(usuario => `
+                <tr id='row-${usuario.id}'
+                    style='cursor: pointer;'
+                    onclick='redirigirDetalle(${usuario.id})'>
+
                     <td>${usuario.id}</td>
-                    <td id="nombre-cell-${usuario.id}">${usuario.nombre}</td>
-                    <td id="apellido-cell-${usuario.id}">${usuario.apellido}</td>
-                    <td id="correo-cell-${usuario.id}">${usuario.correo}</td>
-                    <td id="contrasenya-cell-${usuario.id}">${usuario.contrasenya}</td>
-                    <td id="actions-${usuario.id}">
-                        <button onclick="enableEdit(${usuario.id}, '${usuario.nombre}', '${usuario.apellido}', '${usuario.correo}', '${usuario.contrasenya}')">Update</button>
-                        <button onclick="deleteUsuario(${usuario.id})">Delete</button>
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.apellido}</td>
+                    <td>${usuario.correo}</td>
+                    <td>${usuario.contrasenya}</td>
+
+                    <td onclick='event.stopPropagation()' style='cursor: auto;'>
+                        <button onclick='event.stopPropagation(); enableEdit(${usuario.id}, \"${usuario.nombre}\", \"${usuario.apellido}\", \"${usuario.correo}\", \"${usuario.contrasenya}\");'>Update</button>
+                        <button onclick='event.stopPropagation(); deleteUsuario(${usuario.id});'>Delete</button>
                     </td>
-                </tr>`
-            ).join('');
+                </tr>
+            `).join('');
+
             document.getElementById('usuarioTable').innerHTML = tableContent;
+        }
+
+        function redirigirDetalle(id) {
+            window.location = '/admin/usuario/' + id;
         }
 
         async function addUsuario() {
@@ -40,109 +49,106 @@
                 body: JSON.stringify({ nombre, apellido, correo, contrasenya })
             });
 
-            document.getElementById('nombre').value = "";
-            document.getElementById('apellido').value = "";
-            document.getElementById('correo').value = "";
-            document.getElementById('contrasenya').value = "";
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellido').value = '';
+            document.getElementById('correo').value = '';
+            document.getElementById('contrasenya').value = '';
             fetchUsuarios();
         }
 
         function enableEdit(id, nombre, apellido, correo, contrasenya) {
-            document.getElementById(`row-${id}`).innerHTML = `
+            const row = document.getElementById('row-' + id);
+            row.onclickBackup = row.getAttribute('onclick');
+            row.removeAttribute('onclick');
+
+            row.innerHTML = `
                 <td>${id}</td>
-                <td><input type="text" id="edit-nombre-${id}" value="${nombre}"></td>
-                <td><input type="text" id="edit-apellido-${id}" value="${apellido}"></td>
-                <td><input type="text" id="edit-correo-${id}" value="${correo}"></td>
-                <td><input type="text" id="edit-contrasenya-${id}" value="${contrasenya}"></td>
-                <td>
-                    <button onclick="confirmUpdate(${id})">Confirm</button>
-                    <button onclick="fetchUsuarios()">Cancel</button>
+                <td><input type='text' id='edit-nombre-${id}' value='${nombre}'></td>
+                <td><input type='text' id='edit-apellido-${id}' value='${apellido}'></td>
+                <td><input type='text' id='edit-correo-${id}' value='${correo}'></td>
+                <td><input type='text' id='edit-contrasenya-${id}' value='${contrasenya}'></td>
+                <td onclick='event.stopPropagation()'>
+                    <button onclick='event.stopPropagation(); confirmUpdate(${id})'>Confirm</button>
+                    <button onclick='event.stopPropagation(); cancelEdit(${id})'>Cancel</button>
                 </td>
             `;
         }
 
-        async function confirmUpdate(id) {
-            const nombre = document.getElementById(`edit-nombre-${id}`).value;
-            const apellido = document.getElementById(`edit-apellido-${id}`).value;
-            const correo = document.getElementById(`edit-correo-${id}`).value;
-            const contrasenya = document.getElementById(`edit-contrasenya-${id}`).value;
+        function cancelEdit(id) {
+            const row = document.getElementById('row-' + id);
+            if (row.onclickBackup) {
+                row.setAttribute('onclick', row.onclickBackup);
+                delete row.onclickBackup;
+            }
+            fetchUsuarios();
+        }
 
-            await fetch(`/api/registro/${id}`, {
+        async function confirmUpdate(id) {
+            const nombre = document.getElementById('edit-nombre-' + id).value;
+            const apellido = document.getElementById('edit-apellido-' + id).value;
+            const correo = document.getElementById('edit-correo-' + id).value;
+            const contrasenya = document.getElementById('edit-contrasenya-' + id).value;
+
+            await fetch('/api/registro/' + id, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nombre, apellido, correo, contrasenya })
             });
 
-            fetchUsuarios();
+            cancelEdit(id);
         }
 
         async function deleteUsuario(id) {
-            await fetch(`/api/registro/${id}`, {
-                method: 'DELETE'
-            });
-
+            await fetch('/api/registro/' + id, { method: 'DELETE' });
             fetchUsuarios();
         }
 
         window.onload = fetchUsuarios;
     </script>
 </head>
-
-
-</header>
-
 <body>
-    <header class="main-header">
-        <div class="header-left">
-            <a th:href="@{/catalogo}" class="logo-link">
-                <img th:src="@{/images/logoDeustoStream.png}" alt="Logo DeustoStream" class="logo-small">
+    <header class='main-header'>
+        <div class='header-left'>
+            <a th:href='@{/catalogo}' class='logo-link'>
+                <img th:src='@{/images/logoDeustoStream.png}' alt='Logo DeustoStream' class='logo-small'>
             </a>
-            <h2 class="catalogo-title">Gestion de Usuarios</h2>
+            <h2 class='catalogo-title'>Gestión de Usuarios</h2>
         </div>
-        <nav class="header-nav">
-            <a th:href="@{/admin/usuarios}" href="/admin/usuarios">Gestión de Usuarios</a>
-            <a th:href="@{/admin/peliculas}" href="/admin/peliculas">Gestión Películas</a>
-            <a th:href="@{/admin/series}" href="/admin/series">Gestión Series</a>
+        <nav class='header-nav'>
+            <a th:href='@{/admin/usuarios}' href='/admin/usuarios'>Gestión de Usuarios</a>
+            <a th:href='@{/admin/peliculas}' href='/admin/peliculas'>Gestión Películas</a>
+            <a th:href='@{/admin/series}' href='/admin/series'>Gestión Series</a>
         </nav>
 
-        <div class="header-right">
-            <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
+        <div class='header-right'>
+            <button class='logout-btn' onclick='window.location.href="/logout"'>Cerrar sesión</button>
         </div>
     </header>
 
-    <main class="container">
-        
-        <section class="form-section">
-            <h2>Crear nuevo usuario</h2>
-            <form onsubmit="event.preventDefault(); addUsuario();">
-                <input type="text" id="nombre" placeholder="Nombre" required>
-                <input type="text" id="apellido" placeholder="Apellido" required>
-                <input type="email" id="correo" placeholder="Correo" required>
-                <input type="password" id="contrasenya" placeholder="Contraseña" required>
-                <button type="submit">Añadir Usuario</button>
-            </form>
-        </section>
+    <form onsubmit='event.preventDefault(); addUsuario();'>
+        <h2>Añadir Nuevo Usuario</h2>
+        <input type='text' id='nombre' placeholder='Nombre' required>
+        <input type='text' id='apellido' placeholder='Apellido' required>
+        <input type='email' id='correo' placeholder='Correo' required>
+        <input type='password' id='contrasenya' placeholder='Contraseña' required>
+        <button type='submit'>Añadir Usuario</button>
+    </form>
 
-        <section class="table-section">
-            <h2>Lista de Usuarios</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Correo</th>
-                        <th>Contrasenya</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="usuarioTable"></tbody>
-            </table>
-            <div class="back-link">
-                <a href="/admin">&larr; Volver al inicio</a>
-            </div>
-        </section>
-    </main>
+    <h3>Lista de Usuarios</h3>
+    <table border='1'>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Contraseña</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id='usuarioTable'></tbody>
+    </table>
+
+    <a href='/admin'>Volver al inicio</a>
 </body>
-
 </html>
