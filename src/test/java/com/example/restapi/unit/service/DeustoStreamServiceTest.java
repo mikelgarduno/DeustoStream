@@ -177,10 +177,10 @@ public class DeustoStreamServiceTest {
 
         when(usuarioRepository.findById(99L)).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.updateUsuario(99L, detalles);
         });
-        assertEquals("Usuario not found", ex.getMessage());
+        assertEquals("Usuario not found with id: 99", ex.getMessage());
     }
 
     @Test
@@ -875,14 +875,16 @@ public class DeustoStreamServiceTest {
     void testAddPeliculaToFavoritos_UserNotFound_ThrowsException() {
         Pelicula pelicula = new Pelicula("Inception", Generos.ACCION, 148, 2010, "Sueños", "url");
         pelicula.setId(1L);
+        Long usuarioId = 1L;
+        Long peliculaId = 1L;
 
-        when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
-        when(peliculaRepository.findById(1L)).thenReturn(Optional.of(pelicula));
+        when(usuarioRepository.findById(usuarioId)).thenReturn(Optional.empty());
+        when(peliculaRepository.findById(peliculaId)).thenReturn(Optional.of(pelicula));
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            deustoStreamService.addPeliculaToFavoritos(1L, 1L, session);
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            deustoStreamService.addPeliculaToFavoritos(usuarioId, peliculaId, session);
         });
-        assertEquals("Usuario or Pelicula not found", exception.getMessage());
+        assertEquals("Usuario with id: " + usuarioId + " or Pelicula with id: " + peliculaId + " not found", exception.getMessage());
     }
 
     @Test
@@ -896,10 +898,10 @@ public class DeustoStreamServiceTest {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
         when(peliculaRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.addPeliculaToFavoritos(1L, 1L, session);
         });
-        assertEquals("Usuario or Pelicula not found", exception.getMessage());
+        assertEquals("Usuario with id: 1 or Pelicula with id: 1 not found", exception.getMessage());
     }
 
     @Test
@@ -952,12 +954,11 @@ public class DeustoStreamServiceTest {
         when(usuarioRepository.findById(1L)).thenReturn(Optional.empty());
         when(seriesRepository.findById(1L)).thenReturn(Optional.of(serie));
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
             deustoStreamService.addSerieToFavoritos(1L, 1L, session);
         });
-        assertEquals("Usuario or Serie not found", exception.getMessage());
+        assertEquals("Usuario with id: 1 or Serie with id: 1 not found", exception.getMessage());
     }
-
     @Test
     void testAddSerieToFavoritos_SerieNotFound_ThrowsException() {
         Usuario usuario = new Usuario();
@@ -965,14 +966,16 @@ public class DeustoStreamServiceTest {
         Perfil perfil = new Perfil();
         perfil.setId(1L);
         usuario.setPerfiles(List.of(perfil));
+        Long usuarioId = 1L;
+        Long serieId = 1L;
 
         when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
         when(seriesRepository.findById(1L)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            deustoStreamService.addSerieToFavoritos(1L, 1L, session);
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            deustoStreamService.addSerieToFavoritos(usuarioId, serieId, session);
         });
-        assertEquals("Usuario or Serie not found", exception.getMessage());
+        assertEquals("Usuario with id: " + usuarioId + " or Serie with id: " + serieId + " not found", exception.getMessage());
     }
 
     @Test
