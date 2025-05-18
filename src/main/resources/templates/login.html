@@ -43,14 +43,14 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            let qrToken = /*[[${qrToken}]]*/ '';
+            let qrToken = /*[['${qrToken}']]*/ 'defaultToken';
             sessionStorage.setItem("qr-token", qrToken);
 
             const interval = setInterval(() => {
                 fetch(`/qr-status?token=${qrToken}`)
                     .then(res => res.json())
-                    .then(autorizado => {
-                        if (autorizado) {
+                    .then(data => {
+                        if (data.autorizado) {
                             clearInterval(interval);
                             window.location.href = "/catalogo";
                         }

@@ -1056,41 +1056,129 @@ class WebControllerUnitTest {
     }
 
     @Test
-    void testMostrarFormularioLogin_WithNullQrLoginService() {
+    void testMostrarFormularioLogin_ExistingTokenInSession() {
         // Setup
-        String correoCookie = "test@example.com";
-        String passCookie = "password";
-        boolean guardar = true;
+        String existingToken = "existing-token-123";
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("qr-token")).thenReturn(existingToken);
         
-        // Explicitly set QrLoginService to null through reflection
+        // Mock QrLoginService
+        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
+        
+        // Set QrLoginService through reflection
         try {
             java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
             field.setAccessible(true);
-            field.set(webController, null);
+            field.set(webController, qrLoginService);
         } catch (Exception e) {
-            fail("Failed to set qrLoginService to null: " + e.getMessage());
+            fail("Failed to set qrLoginService: " + e.getMessage());
+        }
+        
+        String viewName = webController.mostrarFormularioLogin(model, mockSession, "", "", false);
+        
+        // Verify
+        verify(mockSession).getAttribute("qr-token");
+        verify(mockSession, never()).setAttribute(eq("qr-token"), any());
+        verify(qrLoginService, never()).registrarToken(anyString());
+        verify(model).addAttribute("qrToken", existingToken);
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void testMostrarFormularioLogin_CreateNewToken() {
+        // Setup
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("qr-token")).thenReturn(null);
+        
+        // Mock QrLoginService
+        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
+        
+        // Set QrLoginService through reflection
+        try {
+            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
+            field.setAccessible(true);
+            field.set(webController, qrLoginService);
+        } catch (Exception e) {
+            fail("Failed to set qrLoginService: " + e.getMessage());
+        }
+        
+        String viewName = webController.mostrarFormularioLogin(model, mockSession, "", "", false);
+        
+        // Verify
+        verify(mockSession).getAttribute("qr-token");
+        verify(mockSession).setAttribute(eq("qr-token"), anyString());
+        verify(qrLoginService).registrarToken(anyString());
+        verify(model).addAttribute(eq("qrToken"), anyString());
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void testMostrarFormularioLogin_WithSavedCredentials() {
+        // Setup
+        String correoValor = "saved@example.com";
+        String contrasenyaValor = "savedPassword123";
+        boolean guardarContrasenya = true;
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("qr-token")).thenReturn("some-token");
+        
+        // Mock QrLoginService
+        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
+        
+        // Set QrLoginService through reflection
+        try {
+            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
+            field.setAccessible(true);
+            field.set(webController, qrLoginService);
+        } catch (Exception e) {
+            fail("Failed to set qrLoginService: " + e.getMessage());
+        }
+        
+        String viewName = webController.mostrarFormularioLogin(model, mockSession, correoValor, contrasenyaValor, guardarContrasenya);
+        
+        // Verify
+        verify(model).addAttribute("correoValor", correoValor);
+        verify(model).addAttribute("contrasenyaValor", contrasenyaValor);
+        verify(model).addAttribute("guardarContrasenya", guardarContrasenya);
+        verify(model).addAttribute(eq("qrToken"), anyString());
+        assertEquals("login", viewName);
+    }
+
+    @Test
+    void testMostrarFormularioLogin_QrServiceThrowsException() {
+        // Setup
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("qr-token")).thenReturn(null);
+        
+        // Mock QrLoginService that throws exception
+        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
+        doThrow(new RuntimeException("QR Service failure")).when(qrLoginService).registrarToken(anyString());
+        
+        // Set QrLoginService through reflection
+        try {
+            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
+            field.setAccessible(true);
+            field.set(webController, qrLoginService);
+        } catch (Exception e) {
+            fail("Failed to set qrLoginService: " + e.getMessage());
         }
         
         // Test & verify
-        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
-            webController.mostrarFormularioLogin(model, correoCookie, passCookie, guardar);
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            webController.mostrarFormularioLogin(model, mockSession, "", "", false);
         });
         
-        assertEquals("Cannot invoke \"com.example.restapi.service.QrLoginService.registrarToken(String)\" because \"this.qrLoginService\" is null", 
-                     exception.getMessage());
+        assertEquals("QR Service failure", exception.getMessage());
+        verify(mockSession).setAttribute(eq("qr-token"), anyString());
     }
 
     @Test
-    void testMostrarFormularioLogin_WithQrLoginService() {
+    void testMostrarFormularioLogin_ModelAttributesCombination() {
         // Setup
-        String correoCookie = "test@example.com";
-        String passCookie = "password";
-        boolean guardar = true;
-        String qrTokenValue = "token123";
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("qr-token")).thenReturn("token-xyz");
         
         // Mock QrLoginService
         com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
-        doNothing().when(qrLoginService).registrarToken(anyString());
         
         // Set QrLoginService through reflection
         try {
@@ -1101,46 +1189,14 @@ class WebControllerUnitTest {
             fail("Failed to set qrLoginService: " + e.getMessage());
         }
         
-        String viewName = webController.mostrarFormularioLogin(model, correoCookie, passCookie, guardar);
+        // Execute with different combinations
+        webController.mostrarFormularioLogin(model, mockSession, "email@test.com", "", true);
         
         // Verify
-        verify(model).addAttribute("correoValor", correoCookie);
-        verify(model).addAttribute("contrasenyaValor", passCookie);
-        verify(model).addAttribute("guardarContrasenya", guardar);
-        verify(model).addAttribute(eq("qrToken"), anyString());
-        verify(qrLoginService).registrarToken(anyString());
-        assertEquals("login", viewName);
-    }
-
-    @Test
-    void testMostrarFormularioLogin_WithEmptyCredentials() {
-        // Setup
-        String correoCookie = "";
-        String passCookie = "";
-        boolean guardar = false;
-        String qrTokenValue = "token123";
-        
-        // Mock QrLoginService
-        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
-        doNothing().when(qrLoginService).registrarToken(anyString());
-        
-        // Set QrLoginService through reflection
-        try {
-            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
-            field.setAccessible(true);
-            field.set(webController, qrLoginService);
-        } catch (Exception e) {
-            fail("Failed to set qrLoginService: " + e.getMessage());
-        }
-        
-        String viewName = webController.mostrarFormularioLogin(model, correoCookie, passCookie, guardar);
-        
-        // Verify
-        verify(model).addAttribute("correoValor", "");
+        verify(model).addAttribute("correoValor", "email@test.com");
         verify(model).addAttribute("contrasenyaValor", "");
-        verify(model).addAttribute("guardarContrasenya", false);
-        verify(model).addAttribute(eq("qrToken"), anyString());
-        assertEquals("login", viewName);
+        verify(model).addAttribute("guardarContrasenya", true);
+        verify(model).addAttribute("qrToken", "token-xyz");
     }
 
 
