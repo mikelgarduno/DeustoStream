@@ -93,6 +93,7 @@ public class WebController {
             cPass.setMaxAge(7 * 24 * 60 * 60);
             cPass.setPath("/");
             cPass.setSecure(true); // Asegúrate de que la cookie sea segura
+            cPass.setHttpOnly(true); // 🔒 Impide acceso vía JavaScript
             response.addCookie(cPass);
 
             Cookie cGuardar = new Cookie("guardarContrasenya", "true");
