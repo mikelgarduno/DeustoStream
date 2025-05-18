@@ -2,7 +2,7 @@ GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_
 deustostream-api-app,com.example.restapi.config,InicializarDatos,459,0,0,0,79,0,2,0,2,0
 deustostream-api-app,com.example.restapi.config,LoginInterceptor,75,0,28,0,16,0,16,0,2,0
 deustostream-api-app,com.example.restapi.config,WebConfig,53,0,2,0,6,0,3,0,2,0
-deustostream-api-app,com.example.restapi.client,WebController,15,963,6,66,0,227,6,66,0,36
+deustostream-api-app,com.example.restapi.client,WebController,106,972,16,66,20,229,14,66,3,36
 deustostream-api-app,com.example.restapi,RestApiApplication,5,3,0,0,2,1,1,1,1,1
 deustostream-api-app,com.example.restapi.controller,DeustoStreamController,101,435,7,37,27,100,7,45,3,27
 deustostream-api-app,com.example.restapi.controller,QrLoginController,0,108,0,6,0,30,0,8,0,5
@@ -18,5 +18,5 @@ deustostream-api-app,com.example.restapi.model,Perfil,0,179,0,16,0,38,0,28,0,20
 deustostream-api-app,com.example.restapi.service,QrLoginService.QrLoginStatus,0,9,0,0,0,3,0,1,0,1
 deustostream-api-app,com.example.restapi.service,AuthService,6,109,0,8,2,30,1,9,1,5
 deustostream-api-app,com.example.restapi.service,QrLoginService,0,99,0,10,0,23,0,12,0,7
-deustostream-api-app,com.example.restapi.service,DeustoStreamService,10,824,14,82,0,183,14,69,0,35
+deustostream-api-app,com.example.restapi.service,DeustoStreamService,93,824,20,82,22,183,19,69,2,35
 deustostream-api-app,com.example.restapi.service,QrLoginService.new TimerTask() {...},8,9,0,0,2,1,1,1,1,1

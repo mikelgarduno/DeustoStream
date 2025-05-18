@@ -5,6 +5,8 @@ var classcom_1_1example_1_1restapi_1_1client_1_1_web_controller =
     [ "cambiarPerfil", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#af21acffc1f345425cb73802ee8a911b4", null ],
     [ "catalogo", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a26aac850b02b8360e608709f23311e9e", null ],
     [ "cerrarSesion", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a1b932c2850e583a6de2a4102eb3dedf7", null ],
+    [ "eliminarPerfil", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a37d25f6a212cc09b1bc0668b1e2e594d", null ],
+    [ "guardarPerfil", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a6eb0ff5fa2bb4fd4bae73e8f2bde2b53", null ],
     [ "mostrarDetallePelicula", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#abffc1d0c6cb1d12910527bfad1a943c0", null ],
     [ "mostrarDetallePeliculaAdmin", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#ac94ba32f4d7af115ae1a636ae0a27bcf", null ],
     [ "mostrarDetalleSerieAdmin", "classcom_1_1example_1_1restapi_1_1client_1_1_web_controller.html#a0b7121f3e9751e6850bf57ca15385f58", null ],

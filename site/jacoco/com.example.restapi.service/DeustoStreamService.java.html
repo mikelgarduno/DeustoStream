@@ -16,6 +16,7 @@ import com.example.restapi.repository.PerfilRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,344 +39,381 @@ public class DeustoStreamService {
 
     @Autowired
     public DeustoStreamService(UsuarioRepository usuarioRepository, PeliculaRepository peliculaRepository,
-<span class="fc" id="L41">            SerieRepository serieRepository, CapituloRepository capituloRepository, PerfilRepository perfilRepository, ValoracionRepository valoracionRepository) {</span>
-<span class="fc" id="L42">        this.usuarioRepository = usuarioRepository;</span>
-<span class="fc" id="L43">        this.peliculaRepository = peliculaRepository;</span>
-<span class="fc" id="L44">        this.serieRepository = serieRepository;</span>
-<span class="fc" id="L45">        this.capituloRepository = capituloRepository;</span>
-<span class="fc" id="L46">        this.perfilRepository = perfilRepository;</span>
-<span class="fc" id="L47">        this.valoracionRepository = valoracionRepository;</span>
-<span class="fc" id="L48">    }</span>
+<span class="fc" id="L42">            SerieRepository serieRepository, CapituloRepository capituloRepository, PerfilRepository perfilRepository, ValoracionRepository valoracionRepository) {</span>
+<span class="fc" id="L43">        this.usuarioRepository = usuarioRepository;</span>
+<span class="fc" id="L44">        this.peliculaRepository = peliculaRepository;</span>
+<span class="fc" id="L45">        this.serieRepository = serieRepository;</span>
+<span class="fc" id="L46">        this.capituloRepository = capituloRepository;</span>
+<span class="fc" id="L47">        this.perfilRepository = perfilRepository;</span>
+<span class="fc" id="L48">        this.valoracionRepository = valoracionRepository;</span>
+<span class="fc" id="L49">    }</span>
 
     public List&lt;Usuario&gt; getAllUsuarios() {
-<span class="fc" id="L51">        return usuarioRepository.findAll();</span>
+<span class="fc" id="L52">        return usuarioRepository.findAll();</span>
     }
 
     public Optional&lt;Usuario&gt; getUsuarioById(Long id) {
-<span class="fc" id="L55">        return usuarioRepository.findById(id);</span>
+<span class="fc" id="L56">        return usuarioRepository.findById(id);</span>
     }
 
     public Usuario createUsuario(Usuario usuario) {
-<span class="fc" id="L59">        return usuarioRepository.save(usuario);</span>
+<span class="fc" id="L60">        return usuarioRepository.save(usuario);</span>
     }
 
     public Usuario updateUsuario(Long id, Usuario usuarioDetalles) {
-<span class="fc" id="L63">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(id);</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (optionalUsuario.isPresent()) {</span>
-<span class="fc" id="L65">            Usuario usuario = optionalUsuario.get();</span>
-<span class="fc" id="L66">            usuario.setNombre(usuarioDetalles.getNombre());</span>
-<span class="fc" id="L67">            usuario.setApellido(usuarioDetalles.getApellido());</span>
-<span class="fc" id="L68">            usuario.setCorreo(usuarioDetalles.getCorreo());</span>
-<span class="fc" id="L69">            usuario.setContrasenya(usuarioDetalles.getContrasenya());</span>
-<span class="fc" id="L70">            usuario.setTipoSuscripcion(usuarioDetalles.getTipoSuscripcion()); // Agregado</span>
-<span class="fc" id="L71">            return usuarioRepository.save(usuario);</span>
+<span class="fc" id="L64">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(id);</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (optionalUsuario.isPresent()) {</span>
+<span class="fc" id="L66">            Usuario usuario = optionalUsuario.get();</span>
+<span class="fc" id="L67">            usuario.setNombre(usuarioDetalles.getNombre());</span>
+<span class="fc" id="L68">            usuario.setApellido(usuarioDetalles.getApellido());</span>
+<span class="fc" id="L69">            usuario.setCorreo(usuarioDetalles.getCorreo());</span>
+<span class="fc" id="L70">            usuario.setContrasenya(usuarioDetalles.getContrasenya());</span>
+<span class="fc" id="L71">            usuario.setTipoSuscripcion(usuarioDetalles.getTipoSuscripcion()); // Agregado</span>
+<span class="fc" id="L72">            return usuarioRepository.save(usuario);</span>
         } else {
-<span class="fc" id="L73">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + id);</span>
+<span class="fc" id="L74">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + id);</span>
         }
     }
 
     public void deleteUsuario(Long id) {
-<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (usuarioRepository.existsById(id)) {</span>
-<span class="fc" id="L79">            usuarioRepository.deleteById(id);</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        if (usuarioRepository.existsById(id)) {</span>
+<span class="fc" id="L80">            usuarioRepository.deleteById(id);</span>
         } else {
-<span class="fc" id="L81">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + id);</span>
+<span class="fc" id="L82">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + id);</span>
         }
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L84">    }</span>
 
     // Métodos para Películas
     public List&lt;Pelicula&gt; getAllPeliculas() {
-<span class="fc" id="L87">        return peliculaRepository.findAll();</span>
+<span class="fc" id="L88">        return peliculaRepository.findAll();</span>
     }
 
     public Optional&lt;Pelicula&gt; getPeliculaById(Long id) {
-<span class="fc" id="L91">        return peliculaRepository.findById(id);</span>
+<span class="fc" id="L92">        return peliculaRepository.findById(id);</span>
     }
 
     public Pelicula createPelicula(Pelicula pelicula) {
-<span class="fc bfc" id="L95" title="All 6 branches covered.">        if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() &lt;= 0) {</span>
-<span class="fc" id="L96">            throw new IllegalArgumentException(&quot;Datos inválidos para la película: título no puede ser nulo y año debe ser positivo&quot;);</span>
+<span class="fc bfc" id="L96" title="All 6 branches covered.">        if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() &lt;= 0) {</span>
+<span class="fc" id="L97">            throw new IllegalArgumentException(&quot;Datos inválidos para la película: título no puede ser nulo y año debe ser positivo&quot;);</span>
         }
-<span class="fc" id="L98">        return peliculaRepository.save(pelicula);</span>
+<span class="fc" id="L99">        return peliculaRepository.save(pelicula);</span>
     }
 
     public Pelicula updatePelicula(Long id, Pelicula peliculaDetalles) {
-<span class="fc" id="L102">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(id);</span>
-<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (optionalPelicula.isPresent()) {</span>
-<span class="fc" id="L104">            Pelicula pelicula = optionalPelicula.get();</span>
-<span class="fc" id="L105">            pelicula.setTitulo(peliculaDetalles.getTitulo());</span>
-<span class="fc" id="L106">            pelicula.setAnio(peliculaDetalles.getAnio());</span>
-<span class="fc" id="L107">            pelicula.setDuracion(peliculaDetalles.getDuracion());</span>
-<span class="fc" id="L108">            pelicula.setSinopsis(peliculaDetalles.getSinopsis());</span>
-<span class="fc" id="L109">            pelicula.setGenero(peliculaDetalles.getGenero());</span>
-<span class="fc" id="L110">            pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());</span>
-<span class="fc" id="L111">            return peliculaRepository.save(pelicula);</span>
+<span class="fc" id="L103">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(id);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (optionalPelicula.isPresent()) {</span>
+<span class="fc" id="L105">            Pelicula pelicula = optionalPelicula.get();</span>
+<span class="fc" id="L106">            pelicula.setTitulo(peliculaDetalles.getTitulo());</span>
+<span class="fc" id="L107">            pelicula.setAnio(peliculaDetalles.getAnio());</span>
+<span class="fc" id="L108">            pelicula.setDuracion(peliculaDetalles.getDuracion());</span>
+<span class="fc" id="L109">            pelicula.setSinopsis(peliculaDetalles.getSinopsis());</span>
+<span class="fc" id="L110">            pelicula.setGenero(peliculaDetalles.getGenero());</span>
+<span class="fc" id="L111">            pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());</span>
+<span class="fc" id="L112">            return peliculaRepository.save(pelicula);</span>
         } else {
-<span class="fc" id="L113">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + id);</span>
+<span class="fc" id="L114">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + id);</span>
         }
     }
 
     public void deletePelicula(Long id) {
-<span class="fc" id="L118">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(id);</span>
-<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (optionalPelicula.isPresent()) {</span>
-<span class="fc" id="L120">            Pelicula pelicula = optionalPelicula.get();</span>
+<span class="fc" id="L119">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(id);</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (optionalPelicula.isPresent()) {</span>
+<span class="fc" id="L121">            Pelicula pelicula = optionalPelicula.get();</span>
             // Eliminar la relación en listaMeGustaPeliculas de los perfiles
-<span class="fc" id="L122">            List&lt;Perfil&gt; perfiles = perfilRepository.findAll();</span>
-<span class="fc bfc" id="L123" title="All 2 branches covered.">            for (Perfil perfil : perfiles) {</span>
-<span class="fc bfc" id="L124" title="All 2 branches covered.">                if (perfil.getListaMeGustaPeliculas().contains(pelicula)) {</span>
-<span class="fc" id="L125">                    perfil.getListaMeGustaPeliculas().remove(pelicula);</span>
-<span class="fc" id="L126">                    perfilRepository.save(perfil);</span>
+<span class="fc" id="L123">            List&lt;Perfil&gt; perfiles = perfilRepository.findAll();</span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">            for (Perfil perfil : perfiles) {</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">                if (perfil.getListaMeGustaPeliculas().contains(pelicula)) {</span>
+<span class="fc" id="L126">                    perfil.getListaMeGustaPeliculas().remove(pelicula);</span>
+<span class="fc" id="L127">                    perfilRepository.save(perfil);</span>
                 }
-<span class="fc" id="L128">            }</span>
-<span class="fc" id="L129">            peliculaRepository.delete(pelicula);</span>
-<span class="fc" id="L130">        } else {</span>
-<span class="fc" id="L131">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + id);</span>
+<span class="fc" id="L129">            }</span>
+<span class="fc" id="L130">            peliculaRepository.delete(pelicula);</span>
+<span class="fc" id="L131">        } else {</span>
+<span class="fc" id="L132">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + id);</span>
         }
-<span class="fc" id="L133">    }</span>
+<span class="fc" id="L134">    }</span>
 
     public List&lt;Pelicula&gt; buscarPeliculasFiltradas(String titulo, Generos genero) {
-<span class="pc bpc" id="L136" title="2 of 8 branches missed.">        if (titulo != null &amp;&amp; !titulo.isEmpty() &amp;&amp; genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
-<span class="fc" id="L137">            return peliculaRepository.findByTituloContainingIgnoreCaseAndGenero(titulo, genero);</span>
-<span class="pc bpc" id="L138" title="1 of 4 branches missed.">        } else if (titulo != null &amp;&amp; !titulo.isEmpty()) {</span>
-<span class="fc" id="L139">            return peliculaRepository.findByTituloContainingIgnoreCase(titulo);</span>
-<span class="pc bpc" id="L140" title="1 of 4 branches missed.">        } else if (genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
-<span class="fc" id="L141">            return peliculaRepository.findByGenero(genero);</span>
+<span class="pc bpc" id="L137" title="2 of 8 branches missed.">        if (titulo != null &amp;&amp; !titulo.isEmpty() &amp;&amp; genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
+<span class="fc" id="L138">            return peliculaRepository.findByTituloContainingIgnoreCaseAndGenero(titulo, genero);</span>
+<span class="pc bpc" id="L139" title="1 of 4 branches missed.">        } else if (titulo != null &amp;&amp; !titulo.isEmpty()) {</span>
+<span class="fc" id="L140">            return peliculaRepository.findByTituloContainingIgnoreCase(titulo);</span>
+<span class="pc bpc" id="L141" title="1 of 4 branches missed.">        } else if (genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
+<span class="fc" id="L142">            return peliculaRepository.findByGenero(genero);</span>
         } else {
-<span class="fc" id="L143">            return peliculaRepository.findAll();</span>
+<span class="fc" id="L144">            return peliculaRepository.findAll();</span>
         }
     }
 
     // Métodos para Series
     public List&lt;Series&gt; getAllSeries() {
-<span class="fc" id="L149">        return serieRepository.findAll();</span>
+<span class="fc" id="L150">        return serieRepository.findAll();</span>
     }
 
     public Optional&lt;Series&gt; getSeriesById(Long id) {
-<span class="fc" id="L153">        return serieRepository.findById(id);</span>
+<span class="fc" id="L154">        return serieRepository.findById(id);</span>
     }
 
     public Series createSeries(Series series) {
-<span class="fc" id="L157">        return serieRepository.save(series);</span>
+<span class="fc" id="L158">        return serieRepository.save(series);</span>
     }
 
     public Series updateSeries(Long id, Series seriesDetalles) {
-<span class="fc" id="L161">        Optional&lt;Series&gt; optionalSeries = serieRepository.findById(id);</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (optionalSeries.isPresent()) {</span>
-<span class="fc" id="L163">            Series series = optionalSeries.get();</span>
-<span class="fc" id="L164">            series.setTitulo(seriesDetalles.getTitulo());</span>
-<span class="fc" id="L165">            series.setAnio(seriesDetalles.getAnio());</span>
-<span class="fc" id="L166">            series.setDescripcion(seriesDetalles.getDescripcion());</span>
-<span class="fc" id="L167">            series.setGenero(seriesDetalles.getGenero());</span>
-<span class="fc" id="L168">            series.setImagenUrl(seriesDetalles.getImagenUrl());</span>
-<span class="fc" id="L169">            return serieRepository.save(series);</span>
+<span class="fc" id="L162">        Optional&lt;Series&gt; optionalSeries = serieRepository.findById(id);</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (optionalSeries.isPresent()) {</span>
+<span class="fc" id="L164">            Series series = optionalSeries.get();</span>
+<span class="fc" id="L165">            series.setTitulo(seriesDetalles.getTitulo());</span>
+<span class="fc" id="L166">            series.setAnio(seriesDetalles.getAnio());</span>
+<span class="fc" id="L167">            series.setDescripcion(seriesDetalles.getDescripcion());</span>
+<span class="fc" id="L168">            series.setGenero(seriesDetalles.getGenero());</span>
+<span class="fc" id="L169">            series.setImagenUrl(seriesDetalles.getImagenUrl());</span>
+<span class="fc" id="L170">            return serieRepository.save(series);</span>
         } else {
-<span class="fc" id="L171">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + id);</span>
+<span class="fc" id="L172">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + id);</span>
         }
     }
 
     public void deleteSeries(Long id) {
-<span class="fc" id="L176">        Optional&lt;Series&gt; optionalSeries = serieRepository.findById(id);</span>
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (optionalSeries.isPresent()) {</span>
-<span class="fc" id="L178">            Series series = optionalSeries.get();</span>
+<span class="fc" id="L177">        Optional&lt;Series&gt; optionalSeries = serieRepository.findById(id);</span>
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        if (optionalSeries.isPresent()) {</span>
+<span class="fc" id="L179">            Series series = optionalSeries.get();</span>
             // Eliminar la relación en listaMeGustaSeries de los usuarios
-<span class="fc" id="L180">            List&lt;Perfil&gt; perfiles = perfilRepository.findAll();</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">            for (Perfil perfil : perfiles) {</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">                if (perfil.getListaMeGustaSeries().contains(series)) {</span>
-<span class="fc" id="L183">                    perfil.getListaMeGustaSeries().remove(series);</span>
-<span class="fc" id="L184">                    perfilRepository.save(perfil);</span>
+<span class="fc" id="L181">            List&lt;Perfil&gt; perfiles = perfilRepository.findAll();</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">            for (Perfil perfil : perfiles) {</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">                if (perfil.getListaMeGustaSeries().contains(series)) {</span>
+<span class="fc" id="L184">                    perfil.getListaMeGustaSeries().remove(series);</span>
+<span class="fc" id="L185">                    perfilRepository.save(perfil);</span>
                 }
-<span class="fc" id="L186">            }</span>
-<span class="fc" id="L187">            serieRepository.delete(series);</span>
-<span class="fc" id="L188">        } else {</span>
-<span class="fc" id="L189">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + id);</span>
+<span class="fc" id="L187">            }</span>
+<span class="fc" id="L188">            serieRepository.delete(series);</span>
+<span class="fc" id="L189">        } else {</span>
+<span class="fc" id="L190">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + id);</span>
         }
-<span class="fc" id="L191">    }</span>
+<span class="fc" id="L192">    }</span>
 
     public List&lt;Series&gt; buscarSeriesFiltradas(String titulo, Generos genero) {
-<span class="pc bpc" id="L194" title="2 of 8 branches missed.">        if (titulo != null &amp;&amp; !titulo.isEmpty() &amp;&amp; genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
-<span class="fc" id="L195">            return serieRepository.findByTituloContainingIgnoreCaseAndGenero(titulo, genero);</span>
-<span class="pc bpc" id="L196" title="1 of 4 branches missed.">        } else if (titulo != null &amp;&amp; !titulo.isEmpty()) {</span>
-<span class="fc" id="L197">            return serieRepository.findByTituloContainingIgnoreCase(titulo);</span>
-<span class="pc bpc" id="L198" title="1 of 4 branches missed.">        } else if (genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
-<span class="fc" id="L199">            return serieRepository.findByGenero(genero);</span>
+<span class="pc bpc" id="L195" title="2 of 8 branches missed.">        if (titulo != null &amp;&amp; !titulo.isEmpty() &amp;&amp; genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
+<span class="fc" id="L196">            return serieRepository.findByTituloContainingIgnoreCaseAndGenero(titulo, genero);</span>
+<span class="pc bpc" id="L197" title="1 of 4 branches missed.">        } else if (titulo != null &amp;&amp; !titulo.isEmpty()) {</span>
+<span class="fc" id="L198">            return serieRepository.findByTituloContainingIgnoreCase(titulo);</span>
+<span class="pc bpc" id="L199" title="1 of 4 branches missed.">        } else if (genero != null &amp;&amp; !genero.toString().isEmpty()) {</span>
+<span class="fc" id="L200">            return serieRepository.findByGenero(genero);</span>
         } else {
-<span class="fc" id="L201">            return serieRepository.findAll();</span>
+<span class="fc" id="L202">            return serieRepository.findAll();</span>
         }
     }
 
     // Métodos para inicializar datos
     public void addPeliculaToFavoritos(Long usuarioId, Long peliculaId, HttpSession session) {
-<span class="fc" id="L207">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(usuarioId);</span>
-<span class="fc" id="L208">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(peliculaId);</span>
+<span class="fc" id="L208">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(usuarioId);</span>
+<span class="fc" id="L209">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(peliculaId);</span>
 
-<span class="fc bfc" id="L210" title="All 4 branches covered.">        if (optionalUsuario.isPresent() &amp;&amp; optionalPelicula.isPresent()) {</span>
-<span class="fc" id="L211">            Usuario usuario = optionalUsuario.get();</span>
-<span class="fc" id="L212">            Pelicula pelicula = optionalPelicula.get();</span>
-<span class="pc bpc" id="L213" title="1 of 2 branches missed.">            Perfil perfil = session.getAttribute(PER_STRING) != null ? (Perfil) session.getAttribute(PER_STRING)</span>
-<span class="pc" id="L214">                    : usuario.getPerfiles().get(0);</span>
+<span class="fc bfc" id="L211" title="All 4 branches covered.">        if (optionalUsuario.isPresent() &amp;&amp; optionalPelicula.isPresent()) {</span>
+<span class="fc" id="L212">            Usuario usuario = optionalUsuario.get();</span>
+<span class="fc" id="L213">            Pelicula pelicula = optionalPelicula.get();</span>
+<span class="pc bpc" id="L214" title="1 of 2 branches missed.">            Perfil perfil = session.getAttribute(PER_STRING) != null ? (Perfil) session.getAttribute(PER_STRING)</span>
+<span class="pc" id="L215">                    : usuario.getPerfiles().get(0);</span>
 
-<span class="fc bfc" id="L216" title="All 2 branches covered.">            if (perfil.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">            if (perfil.getListaMeGustaPeliculas().contains(optionalPelicula.get())) {</span>
                 // Si la película ya está en la lista de favoritos, eliminarla
-<span class="fc" id="L218">                perfil.getListaMeGustaPeliculas().remove(pelicula);</span>
+<span class="fc" id="L219">                perfil.getListaMeGustaPeliculas().remove(pelicula);</span>
             } else {
                 // Añadir la película a la lista de favoritos del usuario
-<span class="fc" id="L221">                perfil.getListaMeGustaPeliculas().add(pelicula);</span>
+<span class="fc" id="L222">                perfil.getListaMeGustaPeliculas().add(pelicula);</span>
             }
-<span class="fc" id="L223">            perfilRepository.save(perfil);</span>
+<span class="fc" id="L224">            perfilRepository.save(perfil);</span>
 
-<span class="fc" id="L225">        } else {</span>
-<span class="fc" id="L226">            throw new EntityNotFoundException(&quot;Usuario with id: &quot; + usuarioId + &quot; or Pelicula with id: &quot; + peliculaId + &quot; not found&quot;);</span>
+<span class="fc" id="L226">        } else {</span>
+<span class="fc" id="L227">            throw new EntityNotFoundException(&quot;Usuario with id: &quot; + usuarioId + &quot; or Pelicula with id: &quot; + peliculaId + &quot; not found&quot;);</span>
         }
-<span class="fc" id="L228">    }</span>
+<span class="fc" id="L229">    }</span>
 
     public void addSerieToFavoritos(Long usuarioId, Long serieId, HttpSession session) {
-<span class="fc" id="L231">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(usuarioId);</span>
-<span class="fc" id="L232">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(serieId);</span>
+<span class="fc" id="L232">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(usuarioId);</span>
+<span class="fc" id="L233">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(serieId);</span>
 
-<span class="fc bfc" id="L234" title="All 4 branches covered.">        if (optionalUsuario.isPresent() &amp;&amp; optionalSerie.isPresent()) {</span>
-<span class="fc" id="L235">            Usuario usuario = optionalUsuario.get();</span>
-<span class="fc" id="L236">            Series serie = optionalSerie.get();</span>
-<span class="pc bpc" id="L237" title="1 of 2 branches missed.">            Perfil perfil = session.getAttribute(PER_STRING) != null ? (Perfil) session.getAttribute(PER_STRING)</span>
-<span class="pc" id="L238">                    : usuario.getPerfiles().get(0);</span>
+<span class="fc bfc" id="L235" title="All 4 branches covered.">        if (optionalUsuario.isPresent() &amp;&amp; optionalSerie.isPresent()) {</span>
+<span class="fc" id="L236">            Usuario usuario = optionalUsuario.get();</span>
+<span class="fc" id="L237">            Series serie = optionalSerie.get();</span>
+<span class="pc bpc" id="L238" title="1 of 2 branches missed.">            Perfil perfil = session.getAttribute(PER_STRING) != null ? (Perfil) session.getAttribute(PER_STRING)</span>
+<span class="pc" id="L239">                    : usuario.getPerfiles().get(0);</span>
 
-<span class="fc bfc" id="L240" title="All 2 branches covered.">            if (perfil.getListaMeGustaSeries().contains(optionalSerie.get())) {</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">            if (perfil.getListaMeGustaSeries().contains(optionalSerie.get())) {</span>
                 // Si la serie ya está en la lista de favoritos, eliminarla
-<span class="fc" id="L242">                perfil.getListaMeGustaSeries().remove(serie);</span>
+<span class="fc" id="L243">                perfil.getListaMeGustaSeries().remove(serie);</span>
             } else {
                 // Añadir la serie a la lista de favoritos del usuario
-<span class="fc" id="L245">                perfil.getListaMeGustaSeries().add(serie);</span>
+<span class="fc" id="L246">                perfil.getListaMeGustaSeries().add(serie);</span>
             }
-<span class="fc" id="L247">            perfilRepository.save(perfil);</span>
+<span class="fc" id="L248">            perfilRepository.save(perfil);</span>
 
-<span class="fc" id="L249">        } else {</span>
-<span class="fc" id="L250">            throw new EntityNotFoundException(&quot;Usuario with id: &quot; + usuarioId + &quot; or Serie with id: &quot; + serieId + &quot; not found&quot;);</span>
+<span class="fc" id="L250">        } else {</span>
+<span class="fc" id="L251">            throw new EntityNotFoundException(&quot;Usuario with id: &quot; + usuarioId + &quot; or Serie with id: &quot; + serieId + &quot; not found&quot;);</span>
         }
 
-<span class="fc" id="L253">    }</span>
+<span class="fc" id="L254">    }</span>
 
     // DeustoStreamService.java
     public Usuario guardarUsuario(Usuario usuario) {
-<span class="fc" id="L257">        return usuarioRepository.save(usuario);</span>
+<span class="fc" id="L258">        return usuarioRepository.save(usuario);</span>
     }
 
     // Métodos para capítulos
     public List&lt;Capitulo&gt; getAllCapitulos() {
-<span class="fc" id="L262">        return capituloRepository.findAll();</span>
+<span class="fc" id="L263">        return capituloRepository.findAll();</span>
     }
 
     public Optional&lt;Capitulo&gt; getCapituloById(Long id) {
-<span class="fc" id="L266">        return capituloRepository.findById(id);</span>
+<span class="fc" id="L267">        return capituloRepository.findById(id);</span>
     }
 
     public Capitulo createCapitulo(Capitulo capitulo) {
-<span class="fc" id="L270">        Capitulo nuevo = capituloRepository.save(capitulo);</span>
+<span class="fc" id="L271">        Capitulo nuevo = capituloRepository.save(capitulo);</span>
 
-<span class="fc" id="L272">        Series serie = capitulo.getSerie();</span>
-<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (serie != null) {</span>
-<span class="fc" id="L274">            int cantidad = capituloRepository.countBySerieId(serie.getId());</span>
-<span class="fc" id="L275">            serie.setNumeroCapitulos(cantidad);</span>
-<span class="fc" id="L276">            serieRepository.save(serie);</span>
+<span class="fc" id="L273">        Series serie = capitulo.getSerie();</span>
+<span class="pc bpc" id="L274" title="1 of 2 branches missed.">        if (serie != null) {</span>
+<span class="fc" id="L275">            int cantidad = capituloRepository.countBySerieId(serie.getId());</span>
+<span class="fc" id="L276">            serie.setNumeroCapitulos(cantidad);</span>
+<span class="fc" id="L277">            serieRepository.save(serie);</span>
         }
 
-<span class="fc" id="L279">        return nuevo;</span>
+<span class="fc" id="L280">        return nuevo;</span>
     }
 
     public Capitulo updateCapitulo(Long id, Capitulo detalles) {
-<span class="fc" id="L283">        Optional&lt;Capitulo&gt; optional = capituloRepository.findById(id);</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">        if (optional.isPresent()) {</span>
-<span class="fc" id="L285">            Capitulo cap = optional.get();</span>
-<span class="fc" id="L286">            cap.setDuracion(detalles.getDuracion());</span>
+<span class="fc" id="L284">        Optional&lt;Capitulo&gt; optional = capituloRepository.findById(id);</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">        if (optional.isPresent()) {</span>
+<span class="fc" id="L286">            Capitulo cap = optional.get();</span>
+<span class="fc" id="L287">            cap.setDuracion(detalles.getDuracion());</span>
 
             // actualizar el título si se pasa uno nuevo no vacío
-<span class="pc bpc" id="L289" title="2 of 4 branches missed.">            if (detalles.getTitulo() != null &amp;&amp; !detalles.getTitulo().trim().isEmpty()) {</span>
-<span class="fc" id="L290">                cap.setTitulo(detalles.getTitulo());</span>
+<span class="pc bpc" id="L290" title="2 of 4 branches missed.">            if (detalles.getTitulo() != null &amp;&amp; !detalles.getTitulo().trim().isEmpty()) {</span>
+<span class="fc" id="L291">                cap.setTitulo(detalles.getTitulo());</span>
             }
 
-<span class="fc" id="L293">            return capituloRepository.save(cap);</span>
+<span class="fc" id="L294">            return capituloRepository.save(cap);</span>
         } else {
-<span class="fc" id="L295">            throw new EntityNotFoundException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
+<span class="fc" id="L296">            throw new EntityNotFoundException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
         }
     }
 
     public void deleteCapitulo(Long id) {
-<span class="fc bfc" id="L300" title="All 2 branches covered.">        if (capituloRepository.existsById(id)) {</span>
-<span class="fc" id="L301">            capituloRepository.deleteById(id);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">        if (capituloRepository.existsById(id)) {</span>
+<span class="fc" id="L302">            capituloRepository.deleteById(id);</span>
         } else {
-<span class="fc" id="L303">            throw new EntityNotFoundException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
+<span class="fc" id="L304">            throw new EntityNotFoundException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
         }
-<span class="fc" id="L305">    }</span>
+<span class="fc" id="L306">    }</span>
 
     // Películas relacionadas
     public List&lt;Pelicula&gt; getPeliculasRelacionadas(Long peliculaId) {
-<span class="fc" id="L309">        return peliculaRepository.findById(peliculaId)</span>
-<span class="fc" id="L310">                .map(p -&gt; peliculaRepository.findTop6ByGeneroAndIdNot(p.getGenero(), p.getId()))</span>
-<span class="fc" id="L311">                .orElse(Collections.emptyList());</span>
+<span class="fc" id="L310">        return peliculaRepository.findById(peliculaId)</span>
+<span class="fc" id="L311">                .map(p -&gt; peliculaRepository.findTop6ByGeneroAndIdNot(p.getGenero(), p.getId()))</span>
+<span class="fc" id="L312">                .orElse(Collections.emptyList());</span>
     }
 
     // Series relacionadas
     public List&lt;Series&gt; getSeriesRelacionadas(Long serieId) {
-<span class="fc" id="L316">        return serieRepository.findById(serieId)</span>
-<span class="fc" id="L317">                .map(s -&gt; serieRepository.findTop6ByGeneroAndIdNot(s.getGenero(), s.getId()))</span>
-<span class="fc" id="L318">                .orElse(Collections.emptyList());</span>
+<span class="fc" id="L317">        return serieRepository.findById(serieId)</span>
+<span class="fc" id="L318">                .map(s -&gt; serieRepository.findTop6ByGeneroAndIdNot(s.getGenero(), s.getId()))</span>
+<span class="fc" id="L319">                .orElse(Collections.emptyList());</span>
     }
 
     // Obtener perfil por id
     public Optional&lt;Perfil&gt; getPerfilById(Long id) {
-<span class="fc" id="L323">        return perfilRepository.findById(id);</span>
+<span class="fc" id="L324">        return perfilRepository.findById(id);</span>
     }
 
     public void valorarPelicula(Long peliculaId, Perfil perfil, int puntuacion, String comentario) {
-<span class="fc" id="L327">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(peliculaId);</span>
+<span class="fc" id="L328">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(peliculaId);</span>
 
-<span class="fc bfc" id="L329" title="All 4 branches covered.">        if(optionalPelicula.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
-<span class="fc" id="L330">            Pelicula pelicula = optionalPelicula.get();</span>
+<span class="fc bfc" id="L330" title="All 4 branches covered.">        if(optionalPelicula.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
+<span class="fc" id="L331">            Pelicula pelicula = optionalPelicula.get();</span>
 
-<span class="fc" id="L332">            Valoracion v = new Valoracion();</span>
-<span class="fc" id="L333">            v.setPelicula(pelicula);</span>
-<span class="fc" id="L334">            v.setPerfil(perfil);</span>
-<span class="fc" id="L335">            v.setPuntuacion(puntuacion);</span>
-<span class="fc" id="L336">            v.setComentario(comentario);</span>
+<span class="fc" id="L333">            Valoracion v = new Valoracion();</span>
+<span class="fc" id="L334">            v.setPelicula(pelicula);</span>
+<span class="fc" id="L335">            v.setPerfil(perfil);</span>
+<span class="fc" id="L336">            v.setPuntuacion(puntuacion);</span>
+<span class="fc" id="L337">            v.setComentario(comentario);</span>
 
-<span class="fc" id="L338">            valoracionRepository.save(v);</span>
-<span class="fc" id="L339">        }</span>
+<span class="fc" id="L339">            valoracionRepository.save(v);</span>
+<span class="fc" id="L340">        }</span>
         else {
-<span class="fc" id="L341">            throw new EntityNotFoundException(&quot;Película or Usuario not found for the rating operation&quot;);</span>
+<span class="fc" id="L342">            throw new EntityNotFoundException(&quot;Película or Usuario not found for the rating operation&quot;);</span>
         }
-<span class="fc" id="L343">    }</span>
+<span class="fc" id="L344">    }</span>
 
     public void valorarSerie(Long idSerie, Perfil perfil, int puntuacion, String comentario) {
-<span class="fc" id="L346">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
+<span class="fc" id="L347">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
 
-<span class="pc bpc" id="L348" title="1 of 4 branches missed.">        if(optionalSerie.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
-<span class="fc" id="L349">            Series serie = optionalSerie.get();</span>
+<span class="pc bpc" id="L349" title="1 of 4 branches missed.">        if(optionalSerie.isPresent() &amp;&amp; perfil.getUsuario() != null) {</span>
+<span class="fc" id="L350">            Series serie = optionalSerie.get();</span>
 
-<span class="fc" id="L351">            Valoracion v = new Valoracion();</span>
-<span class="fc" id="L352">            v.setSerie(serie);</span>
-<span class="fc" id="L353">            v.setPerfil(perfil);</span>
-<span class="fc" id="L354">            v.setPuntuacion(puntuacion);</span>
-<span class="fc" id="L355">            v.setComentario(comentario);</span>
+<span class="fc" id="L352">            Valoracion v = new Valoracion();</span>
+<span class="fc" id="L353">            v.setSerie(serie);</span>
+<span class="fc" id="L354">            v.setPerfil(perfil);</span>
+<span class="fc" id="L355">            v.setPuntuacion(puntuacion);</span>
+<span class="fc" id="L356">            v.setComentario(comentario);</span>
 
-<span class="fc" id="L357">            valoracionRepository.save(v);</span>
-<span class="fc" id="L358">        }</span>
+<span class="fc" id="L358">            valoracionRepository.save(v);</span>
+<span class="fc" id="L359">        }</span>
         else {
-<span class="fc" id="L360">            throw new EntityNotFoundException(&quot;Series or Usuario not found for the rating operation&quot;);</span>
+<span class="fc" id="L361">            throw new EntityNotFoundException(&quot;Series or Usuario not found for the rating operation&quot;);</span>
         }
-<span class="fc" id="L362">    }</span>
+<span class="fc" id="L363">    }</span>
     
     public List&lt;Valoracion&gt; getValoracionesPelicula(Long idPelicula) {
-<span class="fc" id="L365">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(idPelicula);</span>
-<span class="fc bfc" id="L366" title="All 2 branches covered.">        if (optionalPelicula.isEmpty()) {</span>
-<span class="fc" id="L367">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + idPelicula);</span>
+<span class="fc" id="L366">        Optional&lt;Pelicula&gt; optionalPelicula = peliculaRepository.findById(idPelicula);</span>
+<span class="fc bfc" id="L367" title="All 2 branches covered.">        if (optionalPelicula.isEmpty()) {</span>
+<span class="fc" id="L368">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + idPelicula);</span>
         }
-<span class="fc" id="L369">        return valoracionRepository.findByPelicula(optionalPelicula.get());</span>
+<span class="fc" id="L370">        return valoracionRepository.findByPelicula(optionalPelicula.get());</span>
     }
 
     public List&lt;Valoracion&gt; getValoracionesSerie(Long idSerie) {
-<span class="fc" id="L373">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
-<span class="fc bfc" id="L374" title="All 2 branches covered.">        if (optionalSerie.isEmpty()) {</span>
-<span class="fc" id="L375">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + idSerie);</span>
+<span class="fc" id="L374">        Optional&lt;Series&gt; optionalSerie = serieRepository.findById(idSerie);</span>
+<span class="fc bfc" id="L375" title="All 2 branches covered.">        if (optionalSerie.isEmpty()) {</span>
+<span class="fc" id="L376">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + idSerie);</span>
         }
-<span class="fc" id="L377">        return valoracionRepository.findBySerie(optionalSerie.get());</span>
+<span class="fc" id="L378">        return valoracionRepository.findBySerie(optionalSerie.get());</span>
     }
+
+    @Transactional
+    public void crearPerfil(Perfil perfil, Long idUsuario) {
+<span class="nc" id="L383">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(idUsuario);</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">        if (optionalUsuario.isPresent()) {</span>
+<span class="nc" id="L385">            Usuario usuario = optionalUsuario.get();</span>
+<span class="nc" id="L386">            perfil.setUsuario(usuario);</span>
+<span class="nc" id="L387">            usuario.getPerfiles().add(perfil);</span>
+<span class="nc" id="L388">            perfilRepository.save(perfil);</span>
+<span class="nc" id="L389">        } else {</span>
+<span class="nc" id="L390">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + idUsuario);</span>
+        }
+<span class="nc" id="L392">    }</span>
+
+    @Transactional
+    public void eliminarPerfil(Long idPerfil, Long idUsuario) {
+<span class="nc" id="L396">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(idUsuario);</span>
+<span class="nc" id="L397">        Optional&lt;Perfil&gt; optionalPerfil = perfilRepository.findById(idPerfil);</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">        if (optionalPerfil.isPresent()) {</span>
+<span class="nc" id="L399">            Perfil perfil = optionalPerfil.get();</span>
+
+<span class="nc" id="L401">            valoracionRepository.deleteByPerfil_Id(idPerfil);</span>
+
+            // Eliminar la relación entre perfil y usuario
+<span class="nc bnc" id="L404" title="All 2 branches missed.">            if (optionalUsuario.isPresent()) {</span>
+<span class="nc" id="L405">                Usuario usuario = optionalUsuario.get();</span>
+<span class="nc" id="L406">                usuario.getPerfiles().remove(perfil);</span>
+<span class="nc" id="L407">                usuarioRepository.save(usuario);</span>
+            }
+            
+    
+            // Finalmente, eliminar el perfil
+<span class="nc" id="L412">            perfilRepository.delete(perfil);</span>
+<span class="nc" id="L413">        } else {</span>
+<span class="nc" id="L414">            throw new EntityNotFoundException(&quot;Perfil not found with id: &quot; + idPerfil);</span>
+        }
+<span class="nc" id="L416">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
