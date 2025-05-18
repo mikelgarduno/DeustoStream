@@ -5,8 +5,8 @@ deustostream-api-app,com.example.restapi.config,WebConfig,53,0,2,0,6,0,3,0,2,0
 deustostream-api-app,com.example.restapi.client,WebController,32,891,5,67,4,209,7,63,2,32
 deustostream-api-app,com.example.restapi,RestApiApplication,5,3,0,0,2,1,1,1,1,1
 deustostream-api-app,com.example.restapi.controller,DeustoStreamController,101,435,7,37,27,100,7,45,3,27
-deustostream-api-app,com.example.restapi.controller,MobileLoginController,11,6,0,0,3,3,1,1,1,1
-deustostream-api-app,com.example.restapi.controller,QrLoginController,74,9,6,0,20,4,6,1,3,1
+deustostream-api-app,com.example.restapi.controller,MobileLoginController,0,17,0,0,0,6,0,2,0,2
+deustostream-api-app,com.example.restapi.controller,QrLoginController,26,57,2,4,7,17,2,5,1,3
 deustostream-api-app,com.example.restapi.controller,GenerosController,0,9,0,0,0,4,0,2,0,2
 deustostream-api-app,com.example.restapi.controller,QrStatusController,5,6,0,0,1,3,1,1,1,1
 deustostream-api-app,com.example.restapi.model,Generos,0,81,0,0,0,14,0,1,0,1

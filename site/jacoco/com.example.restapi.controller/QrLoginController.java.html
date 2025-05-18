@@ -31,12 +31,12 @@ public class QrLoginController {
     // Vista del formulario de login QR cuando se escanea el código
     @GetMapping(&quot;/qr-login-form&quot;)
     public String mostrarFormularioLogin(@RequestParam(&quot;token&quot;) String token, Model model) {
-<span class="nc bnc" id="L34" title="All 2 branches missed.">        if (!StringUtils.hasText(token)) {</span>
-<span class="nc" id="L35">            model.addAttribute(&quot;error&quot;, &quot;Token inválido&quot;);</span>
-<span class="nc" id="L36">            return &quot;qr-login-form&quot;;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (!StringUtils.hasText(token)) {</span>
+<span class="fc" id="L35">            model.addAttribute(&quot;error&quot;, &quot;Token inválido&quot;);</span>
+<span class="fc" id="L36">            return &quot;qr-login-form&quot;;</span>
         }
-<span class="nc" id="L38">        model.addAttribute(&quot;token&quot;, token);</span>
-<span class="nc" id="L39">        return &quot;qr-login-form&quot;;</span>
+<span class="fc" id="L38">        model.addAttribute(&quot;token&quot;, token);</span>
+<span class="fc" id="L39">        return &quot;qr-login-form&quot;;</span>
     }
 
     // Procesa el login desde móvil
@@ -45,17 +45,17 @@ public class QrLoginController {
                                   @RequestParam(&quot;correo&quot;) String correo,
                                   @RequestParam(&quot;contrasenya&quot;) String contrasenya,
                                   Model model) {
-<span class="nc" id="L48">        Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);</span>
+<span class="fc" id="L48">        Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);</span>
 
-<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (usuario == null) {</span>
-<span class="nc" id="L51">            model.addAttribute(&quot;error&quot;, &quot;Credenciales inválidas&quot;);</span>
-<span class="nc" id="L52">            model.addAttribute(&quot;token&quot;, token);</span>
-<span class="nc" id="L53">            return &quot;qr-login-form&quot;;</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (usuario == null) {</span>
+<span class="fc" id="L51">            model.addAttribute(&quot;error&quot;, &quot;Credenciales inválidas&quot;);</span>
+<span class="fc" id="L52">            model.addAttribute(&quot;token&quot;, token);</span>
+<span class="fc" id="L53">            return &quot;qr-login-form&quot;;</span>
         }
 
-<span class="nc" id="L56">        qrLoginService.marcarAutorizado(token);</span>
-<span class="nc" id="L57">        model.addAttribute(&quot;mensaje&quot;, &quot;Inicio de sesión autorizado correctamente.&quot;);</span>
-<span class="nc" id="L58">        return &quot;qr-login-form&quot;;</span>
+<span class="fc" id="L56">        qrLoginService.marcarAutorizado(token);</span>
+<span class="fc" id="L57">        model.addAttribute(&quot;mensaje&quot;, &quot;Inicio de sesión autorizado correctamente.&quot;);</span>
+<span class="fc" id="L58">        return &quot;qr-login-form&quot;;</span>
     }
 
     // Genera y muestra el código QR (accedido desde /qr-login)

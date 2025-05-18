@@ -18,12 +18,12 @@ public class MobileLoginController {
     @PostMapping(&quot;/autorizar-qr&quot;)
     public String autorizarQr(@RequestParam String token, HttpSession session) {
         // Aquí podrías validar credenciales del usuario primero
-<span class="nc" id="L21">        qrLoginService.marcarAutorizado(token);</span>
+<span class="fc" id="L21">        qrLoginService.marcarAutorizado(token);</span>
 
         // También podrías iniciar sesión aquí con Spring Security o guardar usuario en la sesión
-<span class="nc" id="L24">        session.setAttribute(&quot;usuarioAutenticado&quot;, true); // ejemplo</span>
+<span class="fc" id="L24">        session.setAttribute(&quot;usuarioAutenticado&quot;, true); // ejemplo</span>
 
-<span class="nc" id="L26">        return &quot;Autorizado&quot;;</span>
+<span class="fc" id="L26">        return &quot;Autorizado&quot;;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

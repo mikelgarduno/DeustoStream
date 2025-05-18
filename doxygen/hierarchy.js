@@ -21,7 +21,11 @@ var hierarchy =
       [ "com.example.restapi.repository.ValoracionRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_valoracion_repository.html", null ]
     ] ],
     [ "com.example.restapi.controller.MobileLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller.html", null ],
+    [ "com.example.restapi.integration.MobileLoginControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_mobile_login_controller_i_t.html", null ],
+    [ "com.example.restapi.unit.controller.MobileLoginControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_mobile_login_controller_unit_test.html", null ],
     [ "com.example.restapi.controller.QrLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html", null ],
+    [ "com.example.restapi.integration.QrLoginControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_qr_login_controller_i_t.html", null ],
+    [ "com.example.restapi.unit.controller.QrLoginControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_login_controller_unit_test.html", null ],
     [ "com.example.restapi.service.QrLoginService", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html", null ],
     [ "com.example.restapi.unit.service.QrLoginServiceTest", "classcom_1_1example_1_1restapi_1_1unit_1_1service_1_1_qr_login_service_test.html", null ],
     [ "com.example.restapi.controller.QrStatusController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html", null ],
