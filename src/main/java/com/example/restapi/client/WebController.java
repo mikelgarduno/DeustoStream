@@ -116,6 +116,7 @@ public class WebController {
             borrarPass.setMaxAge(0);
             borrarPass.setPath("/");
             borrarPass.setSecure(true); // Asegúrate de que la cookie sea segura
+            borrarPass.setHttpOnly(true); // Impide acceso vía JavaScript
             response.addCookie(borrarPass);
 
             Cookie cGuardar = new Cookie("guardarContrasenya", "false");
