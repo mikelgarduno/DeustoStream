@@ -1263,14 +1263,68 @@ $(document).ready(function(){initNavTree('_web_controller_unit_test_8java_source
 <div class="line"><a id="l01164" name="l01164"></a><span class="lineno"> 1164</span>        assertEquals(<span class="stringliteral">&quot;redirect:/login&quot;</span>, viewName);</div>
 <div class="line"><a id="l01165" name="l01165"></a><span class="lineno"> 1165</span>    }</div>
 <div class="line"><a id="l01166" name="l01166"></a><span class="lineno"> 1166</span> </div>
-<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>}</div>
+<div class="line"><a id="l01167" name="l01167"></a><span class="lineno"> 1167</span>     @Test</div>
+<div class="line"><a id="l01168" name="l01168"></a><span class="lineno"> 1168</span>    <span class="keywordtype">void</span> mostrarDetalleUsuario_usuario() {</div>
+<div class="line"><a id="l01169" name="l01169"></a><span class="lineno"> 1169</span>        Usuario usuario = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01170" name="l01170"></a><span class="lineno"> 1170</span>        when(deustoStreamService.getUsuarioById(1L))</div>
+<div class="line"><a id="l01171" name="l01171"></a><span class="lineno"> 1171</span>            .thenReturn(Optional.of(usuario));</div>
+<div class="line"><a id="l01172" name="l01172"></a><span class="lineno"> 1172</span> </div>
+<div class="line"><a id="l01173" name="l01173"></a><span class="lineno"> 1173</span>        Model model = <span class="keyword">new</span> ExtendedModelMap();</div>
+<div class="line"><a id="l01174" name="l01174"></a><span class="lineno"> 1174</span>        HttpSession session = mock(HttpSession.class);</div>
+<div class="line"><a id="l01175" name="l01175"></a><span class="lineno"> 1175</span>        String view = webController.mostrarDetalleUsuario(1L, model, session);</div>
+<div class="line"><a id="l01176" name="l01176"></a><span class="lineno"> 1176</span> </div>
+<div class="line"><a id="l01177" name="l01177"></a><span class="lineno"> 1177</span>        assertEquals(<span class="stringliteral">&quot;detalleUsuario&quot;</span>, view);</div>
+<div class="line"><a id="l01178" name="l01178"></a><span class="lineno"> 1178</span>        assertSame(usuario, model.getAttribute(<span class="stringliteral">&quot;usuario&quot;</span>));</div>
+<div class="line"><a id="l01179" name="l01179"></a><span class="lineno"> 1179</span>    }</div>
+<div class="line"><a id="l01180" name="l01180"></a><span class="lineno"> 1180</span> </div>
+<div class="line"><a id="l01181" name="l01181"></a><span class="lineno"> 1181</span>    @Test</div>
+<div class="line"><a id="l01182" name="l01182"></a><span class="lineno"> 1182</span>    <span class="keywordtype">void</span> mostrarDetalleUsuario_usuario_usuarioNoEncontrado() {</div>
+<div class="line"><a id="l01183" name="l01183"></a><span class="lineno"> 1183</span>        when(deustoStreamService.getUsuarioById(1L))</div>
+<div class="line"><a id="l01184" name="l01184"></a><span class="lineno"> 1184</span>            .thenReturn(Optional.empty());</div>
+<div class="line"><a id="l01185" name="l01185"></a><span class="lineno"> 1185</span> </div>
+<div class="line"><a id="l01186" name="l01186"></a><span class="lineno"> 1186</span>        Model model = <span class="keyword">new</span> ExtendedModelMap();</div>
+<div class="line"><a id="l01187" name="l01187"></a><span class="lineno"> 1187</span>        HttpSession session = mock(HttpSession.class);</div>
+<div class="line"><a id="l01188" name="l01188"></a><span class="lineno"> 1188</span> </div>
+<div class="line"><a id="l01189" name="l01189"></a><span class="lineno"> 1189</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01190" name="l01190"></a><span class="lineno"> 1190</span>            webController.mostrarDetalleUsuario(1L, model, session);</div>
+<div class="line"><a id="l01191" name="l01191"></a><span class="lineno"> 1191</span>        });</div>
+<div class="line"><a id="l01192" name="l01192"></a><span class="lineno"> 1192</span>        assertEquals(<span class="stringliteral">&quot;Usuario no encontrado: 1&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01193" name="l01193"></a><span class="lineno"> 1193</span>    }</div>
+<div class="line"><a id="l01194" name="l01194"></a><span class="lineno"> 1194</span> </div>
+<div class="line"><a id="l01195" name="l01195"></a><span class="lineno"> 1195</span>    @Test</div>
+<div class="line"><a id="l01196" name="l01196"></a><span class="lineno"> 1196</span>    <span class="keywordtype">void</span> mostrarDetalleUsuario_admin() {</div>
+<div class="line"><a id="l01197" name="l01197"></a><span class="lineno"> 1197</span>        Usuario usuario = <span class="keyword">new</span> Usuario();</div>
+<div class="line"><a id="l01198" name="l01198"></a><span class="lineno"> 1198</span>        when(deustoStreamService.getUsuarioById(1L))</div>
+<div class="line"><a id="l01199" name="l01199"></a><span class="lineno"> 1199</span>            .thenReturn(Optional.of(usuario));</div>
+<div class="line"><a id="l01200" name="l01200"></a><span class="lineno"> 1200</span> </div>
+<div class="line"><a id="l01201" name="l01201"></a><span class="lineno"> 1201</span>        Model model = <span class="keyword">new</span> ExtendedModelMap();</div>
+<div class="line"><a id="l01202" name="l01202"></a><span class="lineno"> 1202</span>        String view = webController.mostrarDetalleUsuarioAdmin(1L, model);</div>
+<div class="line"><a id="l01203" name="l01203"></a><span class="lineno"> 1203</span> </div>
+<div class="line"><a id="l01204" name="l01204"></a><span class="lineno"> 1204</span>        assertEquals(<span class="stringliteral">&quot;detalleUsuarioAdmin&quot;</span>, view);</div>
+<div class="line"><a id="l01205" name="l01205"></a><span class="lineno"> 1205</span>        assertSame(usuario, model.getAttribute(<span class="stringliteral">&quot;usuario&quot;</span>));</div>
+<div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span>    }</div>
+<div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span> </div>
+<div class="line"><a id="l01208" name="l01208"></a><span class="lineno"> 1208</span>    @Test</div>
+<div class="line"><a id="l01209" name="l01209"></a><span class="lineno"> 1209</span>    <span class="keywordtype">void</span> mostrarDetalleUsuario_admin_usuarioNoEncontrado() {</div>
+<div class="line"><a id="l01210" name="l01210"></a><span class="lineno"> 1210</span>        when(deustoStreamService.getUsuarioById(1L))</div>
+<div class="line"><a id="l01211" name="l01211"></a><span class="lineno"> 1211</span>            .thenReturn(Optional.empty());</div>
+<div class="line"><a id="l01212" name="l01212"></a><span class="lineno"> 1212</span> </div>
+<div class="line"><a id="l01213" name="l01213"></a><span class="lineno"> 1213</span>        Model model = <span class="keyword">new</span> ExtendedModelMap();</div>
+<div class="line"><a id="l01214" name="l01214"></a><span class="lineno"> 1214</span> </div>
+<div class="line"><a id="l01215" name="l01215"></a><span class="lineno"> 1215</span>        RuntimeException ex = assertThrows(RuntimeException.class, () -&gt; {</div>
+<div class="line"><a id="l01216" name="l01216"></a><span class="lineno"> 1216</span>            webController.mostrarDetalleUsuarioAdmin(1L, model);</div>
+<div class="line"><a id="l01217" name="l01217"></a><span class="lineno"> 1217</span>        });</div>
+<div class="line"><a id="l01218" name="l01218"></a><span class="lineno"> 1218</span>        assertEquals(<span class="stringliteral">&quot;Usuario no encontrado: 1&quot;</span>, ex.getMessage());</div>
+<div class="line"><a id="l01219" name="l01219"></a><span class="lineno"> 1219</span>    }</div>
+<div class="line"><a id="l01220" name="l01220"></a><span class="lineno"> 1220</span> </div>
+<div class="line"><a id="l01221" name="l01221"></a><span class="lineno"> 1221</span>}</div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_120ed4da3e3217b1e7fc0b4f48568e79.html">test</a></li><li class="navelem"><a class="el" href="dir_97debbc39e3b917fca663601bb2b0709.html">java</a></li><li class="navelem"><a class="el" href="dir_23faaf0c5c81a0660a411c4a306acbb5.html">com</a></li><li class="navelem"><a class="el" href="dir_78723e336fd254b123dc05d5464f5a60.html">example</a></li><li class="navelem"><a class="el" href="dir_73081b1dc5db13aed24f62510fc1946d.html">restapi</a></li><li class="navelem"><a class="el" href="dir_cf0fc0ad0d517fa752ce8510050d8178.html">unit</a></li><li class="navelem"><a class="el" href="dir_b486e463b30cac19f4af7f5551989b85.html">controller</a></li><li class="navelem"><a class="el" href="_web_controller_unit_test_8java.html">WebControllerUnitTest.java</a></li>
-    <li class="footer">Generated on Sun May 18 2025 17:03:28 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun May 18 2025 17:11:07 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
