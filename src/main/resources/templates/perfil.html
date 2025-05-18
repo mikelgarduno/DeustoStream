@@ -23,6 +23,7 @@
             <a href="/perfil">
                 <img th:src="@{|/images/${avatar}.jpg|}" alt="Imagen de perfil" class="perfil-img">
             </a>
+                <button class="perfil-btn" th:onclick="|window.location.href='/usuario/' + ${usuario.id}|"> Ver mis datos </button>
             <button class="logout-btn" onclick="window.location.href='/logout'">Cerrar sesión</button>
         </div>
 
