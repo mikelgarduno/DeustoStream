@@ -13,5 +13,8 @@ public interface ValoracionRepository extends JpaRepository<Valoracion, Long> {
     List<Valoracion> findByPelicula(Pelicula pelicula);
     List<Valoracion> findBySerie(Series serie);
     List<Valoracion> findByUsuario(Usuario usuario);
+
+    List<Valoracion> findByPerfil_Id(Long perfilId);
+    void deleteByPerfil_Id(Long perfilId);
 }
 

@@ -311,6 +311,7 @@ public class WebController {
         model.addAttribute(USUARIO_STRING, usuario);
         model.addAttribute(GENEROS_STRING, Generos.values()); // Importa tu enum Generos
         model.addAttribute("avatar", perfil.getAvatar());
+        session.setAttribute(PERFIL_STRING,perfil );
 
         return "catalogo"; // Asegúrate de que este es el nombre del archivo HTML en templates
     }
@@ -449,6 +450,7 @@ public class WebController {
             HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
         Perfil perfil = (Perfil) session.getAttribute(PERFIL_STRING);
+        System.out.println("perfil: " + perfil);
         if (usuario != null) {
             deustoStreamService.valorarPelicula(id, perfil, puntuacion, comentario);
             return "redirect:/pelicula/" + id;
@@ -489,5 +491,48 @@ public class WebController {
         model.addAttribute("usuario", usuario);
         return "detalleUsuario";
     }
+
+    //Funciones para crear perfil, eliminarlo y borrar perfil
+
+    @PostMapping("/crearPerfil")
+    public String guardarPerfil(@ModelAttribute Perfil nuevoPerfil, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
+        if (usuario != null) {
+            deustoStreamService.crearPerfil(nuevoPerfil, usuario.getId());
+            // Recargar y actualizar el usuario en sesión para que incluya el nuevo perfil
+            usuario = deustoStreamService.getUsuarioById(usuario.getId()).orElse(usuario);
+            session.setAttribute(USUARIO_STRING, usuario);
+            return "redirect:/perfil";
+        } else {
+            return "redirect:/login"; // Si no hay sesión, redirigir a login
+        }
+    }
+    @GetMapping("/eliminarPerfil/{id}")
+    public String eliminarPerfil(@PathVariable Long id, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);
+        if (usuario != null) {
+            deustoStreamService.eliminarPerfil(id, usuario.getId());
+            // Recargar y actualizar el usuario en sesión para que elimine el perfil
+            usuario.getPerfiles().removeIf(perfil -> perfil.getId().equals(id));
+            session.setAttribute(USUARIO_STRING, usuario);
+
+            // Si el perfil eliminado es el que está activo, redirigir a otro perfil
+            if (session.getAttribute(PERFIL_STRING) != null) {
+                Perfil perfilActivo = (Perfil) session.getAttribute(PERFIL_STRING);
+                if (perfilActivo.getId().equals(id)) {
+                    // Cambiar al primer perfil disponible
+                    if (!usuario.getPerfiles().isEmpty()) {
+                        session.setAttribute(PERFIL_STRING, usuario.getPerfiles().get(0));
+                    } else {
+                        session.removeAttribute(PERFIL_STRING); // No hay perfiles disponibles
+                    }
+                }
+            }
+            return "redirect:/perfil";
+        } else {
+            return "redirect:/login"; // Si no hay sesión, redirigir a login
+        }
+    }
+
 
 }
