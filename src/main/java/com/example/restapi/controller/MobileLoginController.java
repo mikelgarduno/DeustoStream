@@ -7,9 +7,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class MobileLoginController {
+    
+    private final QrLoginService qrLoginService;
 
     @Autowired
-    private QrLoginService qrLoginService;
+    public MobileLoginController(QrLoginService qrLoginService) {
+        this.qrLoginService = qrLoginService;
+    }
 
     @PostMapping("/autorizar-qr")
     public String autorizarQr(@RequestParam String token, HttpSession session) {

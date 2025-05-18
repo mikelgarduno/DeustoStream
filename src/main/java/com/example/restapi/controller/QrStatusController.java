@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class QrStatusController {
 
+   
+    private final QrLoginService qrLoginService;
+
     @Autowired
-    private QrLoginService qrLoginService;
+    public QrStatusController(QrLoginService qrLoginService) {
+        this.qrLoginService = qrLoginService;
+    }
 
     @GetMapping("/qr-status")
     public boolean verificarEstadoToken(@RequestParam String token) {

@@ -70,7 +70,7 @@ public class DeustoStreamService {
             usuario.setTipoSuscripcion(usuarioDetalles.getTipoSuscripcion()); // Agregado
             return usuarioRepository.save(usuario);
         } else {
-            throw new RuntimeException("Usuario not found");
+            throw new EntityNotFoundException("Usuario not found with id: " + id);
         }
     }
 
@@ -78,7 +78,7 @@ public class DeustoStreamService {
         if (usuarioRepository.existsById(id)) {
             usuarioRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Usuario not found with id: " + id);
+            throw new EntityNotFoundException("Usuario not found with id: " + id);
         }
     }
 
@@ -93,7 +93,7 @@ public class DeustoStreamService {
 
     public Pelicula createPelicula(Pelicula pelicula) {
         if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() <= 0) {
-            throw new RuntimeException("Datos inválidos para la película");
+            throw new IllegalArgumentException("Datos inválidos para la película: título no puede ser nulo y año debe ser positivo");
         }
         return peliculaRepository.save(pelicula);
     }
@@ -110,7 +110,7 @@ public class DeustoStreamService {
             pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());
             return peliculaRepository.save(pelicula);
         } else {
-            throw new RuntimeException("Pelicula not found");
+            throw new EntityNotFoundException("Pelicula not found with id: " + id);
         }
     }
 
@@ -128,7 +128,7 @@ public class DeustoStreamService {
             }
             peliculaRepository.delete(pelicula);
         } else {
-            throw new RuntimeException("Pelicula not found with id: " + id);
+            throw new EntityNotFoundException("Pelicula not found with id: " + id);
         }
     }
 
@@ -168,7 +168,7 @@ public class DeustoStreamService {
             series.setImagenUrl(seriesDetalles.getImagenUrl());
             return serieRepository.save(series);
         } else {
-            throw new RuntimeException("Series not found");
+            throw new EntityNotFoundException("Series not found with id: " + id);
         }
     }
 
@@ -186,7 +186,7 @@ public class DeustoStreamService {
             }
             serieRepository.delete(series);
         } else {
-            throw new RuntimeException("Series not found with id: " + id);
+            throw new EntityNotFoundException("Series not found with id: " + id);
         }
     }
 
@@ -223,7 +223,7 @@ public class DeustoStreamService {
             perfilRepository.save(perfil);
 
         } else {
-            throw new RuntimeException("Usuario or Pelicula not found");
+            throw new EntityNotFoundException("Usuario with id: " + usuarioId + " or Pelicula with id: " + peliculaId + " not found");
         }
     }
 
@@ -247,7 +247,7 @@ public class DeustoStreamService {
             perfilRepository.save(perfil);
 
         } else {
-            throw new RuntimeException("Usuario or Serie not found");
+            throw new EntityNotFoundException("Usuario with id: " + usuarioId + " or Serie with id: " + serieId + " not found");
         }
 
     }
@@ -292,7 +292,7 @@ public class DeustoStreamService {
 
             return capituloRepository.save(cap);
         } else {
-            throw new RuntimeException("Capítulo no encontrado");
+            throw new EntityNotFoundException("Capítulo no encontrado con id: " + id);
         }
     }
 
@@ -300,7 +300,7 @@ public class DeustoStreamService {
         if (capituloRepository.existsById(id)) {
             capituloRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Capítulo no encontrado con id: " + id);
+            throw new EntityNotFoundException("Capítulo no encontrado con id: " + id);
         }
     }
 

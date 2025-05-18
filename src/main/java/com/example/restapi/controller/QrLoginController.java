@@ -3,10 +3,6 @@ package com.example.restapi.controller;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.UsuarioRepository;
 import com.example.restapi.service.QrLoginService;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +12,21 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayOutputStream;
+
 import java.util.UUID;
 
 @Controller
 public class QrLoginController {
 
-    @Autowired
-    private QrLoginService qrLoginService;
+   
+    private final QrLoginService qrLoginService;
+    private final UsuarioRepository usuarioRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    public QrLoginController(QrLoginService qrLoginService, UsuarioRepository usuarioRepository) {
+        this.qrLoginService = qrLoginService;
+        this.usuarioRepository = usuarioRepository;
+    }
 
     // Vista del formulario de login QR cuando se escanea el código
     @GetMapping("/qr-login-form")

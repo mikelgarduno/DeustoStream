@@ -41,6 +41,8 @@ public class WebController {
     private static final String SERIE_STRING = "series";
     private static final String SERIES_FAV_STRING = "seriesFavoritas";
     private static final String GENEROS_STRING = "generos";
+    private static final String ERROR_STRING = "error";
+    private static final String REL_STRING = "relacionadas";
 
     private final DeustoStreamService deustoStreamService;
     private final AuthService authService;
@@ -83,42 +85,48 @@ public class WebController {
             Cookie cCorreo = new Cookie("correo", correo);
             cCorreo.setMaxAge(7 * 24 * 60 * 60);
             cCorreo.setPath("/");
+            cCorreo.setSecure(true); // Asegúrate de que la cookie sea segura
             response.addCookie(cCorreo);
 
             Cookie cPass = new Cookie("contrasenya", contrasenya);
             cPass.setMaxAge(7 * 24 * 60 * 60);
             cPass.setPath("/");
+            cPass.setSecure(true); // Asegúrate de que la cookie sea segura
             response.addCookie(cPass);
 
             Cookie cGuardar = new Cookie("guardarContrasenya", "true");
             cGuardar.setMaxAge(7 * 24 * 60 * 60);
             cGuardar.setPath("/");
+            cGuardar.setSecure(true); // Asegúrate de que la cookie sea segura
             response.addCookie(cGuardar);
         } else {
             // Borrar cookies
             Cookie borrarCorreo = new Cookie("correo", "");
             borrarCorreo.setMaxAge(0);
             borrarCorreo.setPath("/");
+            borrarCorreo.setSecure(true); // Asegúrate de que la cookie sea segura
             response.addCookie(borrarCorreo);
 
             Cookie borrarPass = new Cookie("contrasenya", "");
             borrarPass.setMaxAge(0);
             borrarPass.setPath("/");
+            borrarPass.setSecure(true); // Asegúrate de que la cookie sea segura
             response.addCookie(borrarPass);
 
             Cookie cGuardar = new Cookie("guardarContrasenya", "false");
             cGuardar.setMaxAge(7 * 24 * 60 * 60);
             cGuardar.setPath("/");
+            cGuardar.setSecure(true); // Asegúrate de que la cookie sea segura
             response.addCookie(cGuardar);
         }
 
         return authService.login(correo, contrasenya)
                 .map(usuario -> {
-                    session.setAttribute("usuario", usuario);
+                    session.setAttribute(USUARIO_STRING, usuario);
                     return "redirect:" + authService.obtenerRedireccion(usuario);
                 })
                 .orElseGet(() -> {
-                    model.addAttribute("error", "Correo o contraseña incorrectas");
+                    model.addAttribute(ERROR_STRING, "Correo o contraseña incorrectas");
                     return "login";
                 });
     }
@@ -164,7 +172,7 @@ public class WebController {
         }
 
         // Si no pudo registrarse (correo ya usado)
-        model.addAttribute("error", "El correo ya está registrado.");
+        model.addAttribute(ERROR_STRING, "El correo ya está registrado.");
         return "registro";
     }
 
@@ -337,7 +345,7 @@ public class WebController {
 
         model.addAttribute(PEL_STRING, pelicula);
         // ← NUEVO: lista de relacionadas
-        model.addAttribute("relacionadas",
+        model.addAttribute(REL_STRING,
                 deustoStreamService.getPeliculasRelacionadas(id));
         model.addAttribute("valoraciones", deustoStreamService.getValoracionesPelicula(id));
 
@@ -351,7 +359,7 @@ public class WebController {
                 .orElseThrow(() -> new RuntimeException("Película no encontrada"));
 
         model.addAttribute(PEL_STRING, pelicula);
-        model.addAttribute("relacionadas",
+        model.addAttribute(REL_STRING,
                 deustoStreamService.getPeliculasRelacionadas(id));
 
         return "detallePeliculaAdmin";
@@ -365,7 +373,7 @@ public class WebController {
 
         model.addAttribute("serie", serie);
         // ← NUEVO
-        model.addAttribute("relacionadas",
+        model.addAttribute(REL_STRING,
                 deustoStreamService.getSeriesRelacionadas(id));
 
         model.addAttribute("valoraciones", deustoStreamService.getValoracionesSerie(id));
@@ -392,7 +400,7 @@ public class WebController {
             model.addAttribute(PEL_FAV_STRING, perfil.getListaMeGustaPeliculas());
             model.addAttribute(SERIES_FAV_STRING, perfil.getListaMeGustaSeries());
         } else {
-            model.addAttribute("error", "Debes iniciar sesión para ver tus películas favoritas.");
+            model.addAttribute(ERROR_STRING, "Debes iniciar sesión para ver tus películas favoritas.");
         }
         return "guardados"; // Retorna el nombre del archivo HTML en /resources/templates/
     }
@@ -409,7 +417,7 @@ public class WebController {
             model.addAttribute("avatar", perfil.getAvatar());
             return PERFIL_STRING; // Retorna el nombre del archivo HTML en /resources/templates/
         } else {
-            model.addAttribute("error", "Debes iniciar sesión para ver tu perfil.");
+            model.addAttribute(ERROR_STRING, "Debes iniciar sesión para ver tu perfil.");
             return "redirect:/login";
         }
     }
