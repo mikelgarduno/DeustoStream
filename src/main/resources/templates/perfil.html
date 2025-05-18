@@ -29,14 +29,68 @@
 
     </header>
 
-        <div class="perfiles">
-            <div th:each="perfil : ${perfiles}" class="perfil-card">
-                <h2 th:text="${perfil.nombre}">Nombre del perfil</h2>
-                <p>Edad: <span th:text="${perfil.edad}">Edad</span></p>
-                <img th:src="@{|/images/${perfil.avatar}.jpg|}" alt="Foto de perfil" class="perfil-img">
-                <button class="perfil-btn" th:onclick="|window.location.href='/perfil/${perfil.id}'|">Cambiar perfil</button>
-            </div>
+    <h1>Perfil principal</h1>
+    <div class="perfil principal">
+        <div class="perfil-card">
+            <h2 th:text="${perfiles[0].nombre}">Nombre del perfil</h2>
+            <p>Edad: <span th:text="${perfiles[0].edad}">Edad</span></p>
+            <img th:src="@{|/images/${perfiles[0].avatar}.jpg|}" alt="Foto de perfil" class="perfil-img">
+            <button class="perfil-btn" th:onclick="|window.location.href='/perfil/${perfiles[0].id}'|">Cambiar perfil</button>
         </div>
+    </div>
+
+    <h1>Perfiles secundarios</h1>
+    <p>Selecciona un perfil secundario para ver su información o eliminarlo.</p>
+    <div class="perfiles">
+        <div th:each="perfil, perfilStat : ${perfiles}" class="perfil-card" th:if="${perfilStat.index > 0}">
+            <h2 th:text="${perfil.nombre}">Nombre del perfil</h2>
+            <p>Edad: <span th:text="${perfil.edad}">Edad</span></p>
+            <img th:src="@{|/images/${perfil.avatar}.jpg|}" alt="Foto de perfil" class="perfil-img">
+            <button class="perfil-btn" th:onclick="|window.location.href='/perfil/${perfil.id}'|">Cambiar perfil</button>
+            <hr class="button-separator">
+            <button class="perfil-btn" th:onclick="|window.location.href='/eliminarPerfil/${perfil.id}'|">Eliminar perfil</button>
+        </div>
+    </div>
+
+        <div class="crear-perfil">
+            <h2>Crear nuevo perfil</h2>
+            <form th:action="@{/crearPerfil}" method="post">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad" name="edad" required min="1" max="120">
+
+            <label for="avatar">Avatar:</label>
+            <div class="avatar-selection">
+                <button type="button" class="avatar-btn" onclick="selectAvatar('perfil1', this)">
+                <img src="/images/perfil1.jpg" alt="perfil1" class="perfil-img">
+                </button>
+                <button type="button" class="avatar-btn" onclick="selectAvatar('perfil2', this)">
+                <img src="/images/perfil2.jpg" alt="perfil2" class="perfil-img">
+                </button>
+                <button type="button" class="avatar-btn" onclick="selectAvatar('perfil3', this)">
+                <img src="/images/perfil3.jpg" alt="perfil3" class="perfil-img">
+                </button>
+                <button type="button" class="avatar-btn" onclick="selectAvatar('perfil4', this)">
+                <img src="/images/perfil4.jpg" alt="perfil4" class="perfil-img">
+                </button>
+            </div>
+            <input type="hidden" name="avatar" id="avatar">
+            <style>
+                .avatar-btn.selected {
+                background-color: #dcdcdc;
+                }
+            </style>
+            <script>
+                function selectAvatar(value, btn) {
+                document.getElementById("avatar").value = value;
+                document.querySelectorAll('.avatar-btn').forEach(button => button.classList.remove('selected'));
+                btn.classList.add('selected');
+                }
+            </script>
+
+                <button type="submit">Crear perfil</button>
+            </form>
 
 </body>
 

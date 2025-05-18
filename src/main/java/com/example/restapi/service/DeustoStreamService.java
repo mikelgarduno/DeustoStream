@@ -16,6 +16,7 @@ import com.example.restapi.repository.PerfilRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -375,6 +376,43 @@ public class DeustoStreamService {
             throw new EntityNotFoundException("Series not found with id: " + idSerie);
         }
         return valoracionRepository.findBySerie(optionalSerie.get());
+    }
+
+    @Transactional
+    public void crearPerfil(Perfil perfil, Long idUsuario) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        if (optionalUsuario.isPresent()) {
+            Usuario usuario = optionalUsuario.get();
+            perfil.setUsuario(usuario);
+            usuario.getPerfiles().add(perfil);
+            perfilRepository.save(perfil);
+        } else {
+            throw new EntityNotFoundException("Usuario not found with id: " + idUsuario);
+        }
+    }
+
+    @Transactional
+    public void eliminarPerfil(Long idPerfil, Long idUsuario) {
+        Optional<Usuario> optionalUsuario = usuarioRepository.findById(idUsuario);
+        Optional<Perfil> optionalPerfil = perfilRepository.findById(idPerfil);
+        if (optionalPerfil.isPresent()) {
+            Perfil perfil = optionalPerfil.get();
+
+            valoracionRepository.deleteByPerfil_Id(idPerfil);
+
+            // Eliminar la relación entre perfil y usuario
+            if (optionalUsuario.isPresent()) {
+                Usuario usuario = optionalUsuario.get();
+                usuario.getPerfiles().remove(perfil);
+                usuarioRepository.save(usuario);
+            }
+            
+    
+            // Finalmente, eliminar el perfil
+            perfilRepository.delete(perfil);
+        } else {
+            throw new EntityNotFoundException("Perfil not found with id: " + idPerfil);
+        }
     }
 
 }
