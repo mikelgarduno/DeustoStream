@@ -134,17 +134,17 @@ $(document).ready(function(){initNavTree('_qr_login_controller_i_t_8java_source.
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    @Test</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> mostrarFormularioLogin_conTokenValido_debeDevolverVistaYToken() <span class="keywordflow">throws</span> Exception {</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        mockMvc.perform(<span class="keyword">get</span>(<span class="stringliteral">&quot;/qr-login-form&quot;</span>).param(<span class="stringliteral">&quot;token&quot;</span>, <span class="stringliteral">&quot;abc123&quot;</span>))</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                .andExpect(status().isOk())</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                .andExpect(model().attributeExists(<span class="stringliteral">&quot;token&quot;</span>))</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                .andExpect(view().name(<span class="stringliteral">&quot;qr-login-form&quot;</span>));</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>               .andExpect(status().isOk())</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>               .andExpect(model().attributeExists(<span class="stringliteral">&quot;token&quot;</span>))</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>               .andExpect(view().name(<span class="stringliteral">&quot;qr-login-form&quot;</span>));</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    }</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    @Test</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> mostrarFormularioLogin_sinToken_debeDevolverVistaConError() <span class="keywordflow">throws</span> Exception {</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        mockMvc.perform(<span class="keyword">get</span>(<span class="stringliteral">&quot;/qr-login-form&quot;</span>).param(<span class="stringliteral">&quot;token&quot;</span>, <span class="stringliteral">&quot;&quot;</span>))</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                .andExpect(status().isOk())</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                .andExpect(model().attributeExists(<span class="stringliteral">&quot;error&quot;</span>))</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                .andExpect(view().name(<span class="stringliteral">&quot;qr-login-form&quot;</span>));</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>               .andExpect(status().isOk())</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>               .andExpect(model().attributeExists(<span class="stringliteral">&quot;error&quot;</span>))</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>               .andExpect(view().name(<span class="stringliteral">&quot;qr-login-form&quot;</span>));</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// ---- POST /qr-login-submit ----</span></div>
@@ -183,17 +183,16 @@ $(document).ready(function(){initNavTree('_qr_login_controller_i_t_8java_source.
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                .andExpect(status().isOk())</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                .andExpect(content().contentType(MediaType.IMAGE_PNG_VALUE));</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    @Test</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordtype">void</span> mostrarCodigoQr_errorEnGeneracionDebeRetornar500() <span class="keywordflow">throws</span> Exception {</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        when(qrLoginService.generarCodigoQR(anyString()))</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                .thenThrow(<span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Fallo al generar QR&quot;</span>));</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        mockMvc.perform(<span class="keyword">get</span>(<span class="stringliteral">&quot;/qr-login&quot;</span>).sessionAttr(<span class="stringliteral">&quot;qr-token&quot;</span>, <span class="stringliteral">&quot;abc123&quot;</span>))</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                .andExpect(status().is5xxServerError());</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>}</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    @Test</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keywordtype">void</span> mostrarCodigoQr_errorEnGeneracionDebeRetornar500() <span class="keywordflow">throws</span> Exception {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    when(qrLoginService.generarCodigoQR(anyString()))</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            .thenThrow(<span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Fallo al generar QR&quot;</span>));</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    mockMvc.perform(<span class="keyword">get</span>(<span class="stringliteral">&quot;/qr-login&quot;</span>).sessionAttr(<span class="stringliteral">&quot;qr-token&quot;</span>, <span class="stringliteral">&quot;abc123&quot;</span>))</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            .andExpect(status().is5xxServerError());</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>}</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>}</div>
 </div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1integration_1_1_qr_login_controller_i_t_html"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1integration_1_1_qr_login_controller_i_t.html">com.example.restapi.integration.QrLoginControllerIT</a></div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_i_t_8java_source.html#l00021">QrLoginControllerIT.java:21</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
@@ -202,7 +201,7 @@ $(document).ready(function(){initNavTree('_qr_login_controller_i_t_8java_source.
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_120ed4da3e3217b1e7fc0b4f48568e79.html">test</a></li><li class="navelem"><a class="el" href="dir_97debbc39e3b917fca663601bb2b0709.html">java</a></li><li class="navelem"><a class="el" href="dir_23faaf0c5c81a0660a411c4a306acbb5.html">com</a></li><li class="navelem"><a class="el" href="dir_78723e336fd254b123dc05d5464f5a60.html">example</a></li><li class="navelem"><a class="el" href="dir_73081b1dc5db13aed24f62510fc1946d.html">restapi</a></li><li class="navelem"><a class="el" href="dir_25ef36f08b2fc358c8f4b27308102981.html">integration</a></li><li class="navelem"><a class="el" href="_qr_login_controller_i_t_8java.html">QrLoginControllerIT.java</a></li>
-    <li class="footer">Generated on Sun May 18 2025 17:11:07 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun May 18 2025 18:13:58 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
