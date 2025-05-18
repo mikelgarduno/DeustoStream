@@ -1056,41 +1056,93 @@ class WebControllerUnitTest {
     }
 
     @Test
-    void testMostrarFormularioLogin_WithCookies() {
-        String correoCookie = "usuario@ejemplo.com";
-        String passCookie = "secreto";
+    void testMostrarFormularioLogin_WithNullQrLoginService() {
+        // Setup
+        String correoCookie = "test@example.com";
+        String passCookie = "password";
         boolean guardar = true;
+        
+        // Explicitly set QrLoginService to null through reflection
+        try {
+            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
+            field.setAccessible(true);
+            field.set(webController, null);
+        } catch (Exception e) {
+            fail("Failed to set qrLoginService to null: " + e.getMessage());
+        }
+        
+        // Test & verify
+        NullPointerException exception = assertThrows(NullPointerException.class, () -> {
+            webController.mostrarFormularioLogin(model, correoCookie, passCookie, guardar);
+        });
+        
+        assertEquals("Cannot invoke \"com.example.restapi.service.QrLoginService.registrarToken(String)\" because \"this.qrLoginService\" is null", 
+                     exception.getMessage());
+    }
 
-        String viewName = webController.mostrarFormularioLogin(
-                model,
-                correoCookie,
-                passCookie,
-                guardar);
-
+    @Test
+    void testMostrarFormularioLogin_WithQrLoginService() {
+        // Setup
+        String correoCookie = "test@example.com";
+        String passCookie = "password";
+        boolean guardar = true;
+        String qrTokenValue = "token123";
+        
+        // Mock QrLoginService
+        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
+        doNothing().when(qrLoginService).registrarToken(anyString());
+        
+        // Set QrLoginService through reflection
+        try {
+            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
+            field.setAccessible(true);
+            field.set(webController, qrLoginService);
+        } catch (Exception e) {
+            fail("Failed to set qrLoginService: " + e.getMessage());
+        }
+        
+        String viewName = webController.mostrarFormularioLogin(model, correoCookie, passCookie, guardar);
+        
+        // Verify
         verify(model).addAttribute("correoValor", correoCookie);
         verify(model).addAttribute("contrasenyaValor", passCookie);
         verify(model).addAttribute("guardarContrasenya", guardar);
-
+        verify(model).addAttribute(eq("qrToken"), anyString());
+        verify(qrLoginService).registrarToken(anyString());
         assertEquals("login", viewName);
     }
 
     @Test
-    void testMostrarFormularioLogin_Defaults() {
+    void testMostrarFormularioLogin_WithEmptyCredentials() {
+        // Setup
         String correoCookie = "";
         String passCookie = "";
         boolean guardar = false;
-
-        String viewName = webController.mostrarFormularioLogin(
-                model,
-                correoCookie,
-                passCookie,
-                guardar);
-
+        String qrTokenValue = "token123";
+        
+        // Mock QrLoginService
+        com.example.restapi.service.QrLoginService qrLoginService = mock(com.example.restapi.service.QrLoginService.class);
+        doNothing().when(qrLoginService).registrarToken(anyString());
+        
+        // Set QrLoginService through reflection
+        try {
+            java.lang.reflect.Field field = WebController.class.getDeclaredField("qrLoginService");
+            field.setAccessible(true);
+            field.set(webController, qrLoginService);
+        } catch (Exception e) {
+            fail("Failed to set qrLoginService: " + e.getMessage());
+        }
+        
+        String viewName = webController.mostrarFormularioLogin(model, correoCookie, passCookie, guardar);
+        
+        // Verify
         verify(model).addAttribute("correoValor", "");
         verify(model).addAttribute("contrasenyaValor", "");
         verify(model).addAttribute("guardarContrasenya", false);
+        verify(model).addAttribute(eq("qrToken"), anyString());
         assertEquals("login", viewName);
     }
+
 
     @Test
     void testMostrarFormularioRegistro() {

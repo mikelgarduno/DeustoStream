@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio de Sesión - QR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>Inicio de Sesión Exitoso</h2>
+        
+        <div class="success-message">
+            <p>¡Has iniciado sesión correctamente!</p>
+            <p>Ya puedes cerrar esta ventana y continuar usando DeustoStream en tu ordenador.</p>
+        </div>
+        
+        <p th:if="${mensaje}" th:text="${mensaje}" class="success-msg"></p>
+    </div>
+</body>
+</html>
