@@ -2,6 +2,7 @@ package com.example.restapi.client;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Series;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.service.DeustoStreamService;
+import com.example.restapi.service.QrLoginService;
 import com.example.restapi.service.AuthService;
 
 @Controller
@@ -46,11 +48,13 @@ public class WebController {
 
     private final DeustoStreamService deustoStreamService;
     private final AuthService authService;
+    private final QrLoginService qrLoginService;
 
     @Autowired
-    public WebController(DeustoStreamService deustoStreamService, AuthService authService) {
+    public WebController(DeustoStreamService deustoStreamService, AuthService authService, QrLoginService qrLoginService) {
         this.deustoStreamService = deustoStreamService;
         this.authService = authService;
+        this.qrLoginService = qrLoginService;
     }
 
     @GetMapping("/")
@@ -64,6 +68,12 @@ public class WebController {
             @CookieValue(value = "correo", defaultValue = "") String correoValor,
             @CookieValue(value = "contrasenya", defaultValue = "") String contrasenyaValor,
             @CookieValue(value = "guardarContrasenya", defaultValue = "false") boolean guardarContrasenya) {
+
+        String qrToken = UUID.randomUUID().toString();
+        qrLoginService.registrarToken(qrToken); // Registra el token para seguimiento
+            
+        model.addAttribute("qrToken", qrToken); // Añade el token al modelo para el QR
+
         model.addAttribute("correoValor", correoValor);
         model.addAttribute("contrasenyaValor", contrasenyaValor);
         model.addAttribute("guardarContrasenya", guardarContrasenya);

@@ -18,11 +18,12 @@
 
         <form action="/login" method="post" class="login-form">
             <input type="email" name="correo" placeholder="Correo" required th:value="${correoValor}" />
-            <input type="password" name="contrasenya" placeholder="Contraseña" required th:value="${contrasenyaValor}" />
+            <input type="password" name="contrasenya" placeholder="Contraseña" required
+                th:value="${contrasenyaValor}" />
 
             <div class="checkbox-container">
                 <input type="checkbox" id="guardar-contrasenya" name="guardarContrasenya"
-                       th:checked="${guardarContrasenya}" />
+                    th:checked="${guardarContrasenya}" />
                 <label for="guardar-contrasenya">Guardar contraseña</label>
             </div>
 
@@ -33,7 +34,7 @@
         <h3>O escanea este código QR para iniciar sesión</h3>
         <div style="text-align:center; margin-top: 1em;">
             <img id="qrLoginImage" th:src="@{/qr-login}" alt="Código QR para iniciar sesión"
-                 style="width:200px; height:200px;" />
+                style="width:200px; height:200px;" />
         </div>
 
         <p th:if="${error}" th:text="${error}" class="error-msg"></p>
@@ -42,24 +43,27 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            let qrToken = /*[[${session['qr-token'] != null} ? '${session["qr-token"]}' : '' ]]*/ '';
+            let qrToken = /*[[${qrToken}]]*/ '';
             sessionStorage.setItem("qr-token", qrToken);
 
             const interval = setInterval(() => {
-                const token = sessionStorage.getItem("qr-token");
-                if (token) {
-                    fetch(`/qr-status?token=${token}`)
-                        .then(res => res.json())
-                        .then(isAuthorized => {
-                            if (isAuthorized) {
-                                clearInterval(interval);
-                                window.location.href = "/catalogo"; // Redirigir al catálogo
-                            }
-                        });
-                }
+                fetch(`/qr-status?token=${qrToken}`)
+                    .then(res => res.json())
+                    .then(autorizado => {
+                        if (autorizado) {
+                            clearInterval(interval);
+                            window.location.href = "/catalogo";
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error al verificar estado de QR:", err);
+                    });
             }, 2000);
             /*]]>*/
         </script>
+
+
+
     </div>
 </body>
 

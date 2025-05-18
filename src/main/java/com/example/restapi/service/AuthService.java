@@ -4,6 +4,9 @@ import com.example.restapi.model.Perfil;
 import com.example.restapi.model.Usuario;
 import com.example.restapi.repository.PerfilRepository;
 import com.example.restapi.repository.UsuarioRepository;
+
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,5 +87,11 @@ public class AuthService {
             return "/catalogo";
         }
 
+    }
+
+    public void autenticarUsuario(HttpSession session) {
+        // Guarda los datos del usuario en la sesión
+        session.setAttribute("usuarioAutenticado", true);
+        // Otros atributos que necesites para tu sistema de autenticación
     }
 }
