@@ -9,21 +9,24 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
+            HttpServletResponse response,
+            Object handler) throws Exception {
 
         HttpSession session = request.getSession(false);
 
-        boolean isLoggedIn =  (session != null && session.getAttribute("usuario") != null);
+        boolean isLoggedIn = (session != null && session.getAttribute("usuario") != null);
 
         String uri = request.getRequestURI();
 
-        //permite libre acceso a estas rutas:
+        // permite libre acceso a estas rutas:
         boolean accesolibre = uri.equals("/login") ||
-                                uri.equals("/registro") ||
-                                uri.startsWith("/css/") || uri.startsWith("/js/") ||
-                                uri.startsWith("/images/") || 
-                                uri.startsWith("/index") ||   uri.startsWith("/styles.css");
+                uri.equals("/registro") ||
+                uri.equals("/qr-login") ||
+                uri.equals("/qr-login-form") || 
+                uri.equals("/qr-login-submit") ||
+                uri.startsWith("/css/") || uri.startsWith("/js/") ||
+                uri.startsWith("/images/") ||
+                uri.startsWith("/index") || uri.startsWith("/styles.css");
 
         if (isLoggedIn || accesolibre) {
             return true;
@@ -31,8 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         response.sendRedirect("/login");
         return false;
-        
+
     }
 
- 
 }
