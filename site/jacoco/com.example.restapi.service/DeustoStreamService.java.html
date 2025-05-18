@@ -70,7 +70,7 @@ public class DeustoStreamService {
 <span class="fc" id="L70">            usuario.setTipoSuscripcion(usuarioDetalles.getTipoSuscripcion()); // Agregado</span>
 <span class="fc" id="L71">            return usuarioRepository.save(usuario);</span>
         } else {
-<span class="fc" id="L73">            throw new RuntimeException(&quot;Usuario not found&quot;);</span>
+<span class="fc" id="L73">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + id);</span>
         }
     }
 
@@ -78,7 +78,7 @@ public class DeustoStreamService {
 <span class="fc bfc" id="L78" title="All 2 branches covered.">        if (usuarioRepository.existsById(id)) {</span>
 <span class="fc" id="L79">            usuarioRepository.deleteById(id);</span>
         } else {
-<span class="fc" id="L81">            throw new RuntimeException(&quot;Usuario not found with id: &quot; + id);</span>
+<span class="fc" id="L81">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + id);</span>
         }
 <span class="fc" id="L83">    }</span>
 
@@ -93,7 +93,7 @@ public class DeustoStreamService {
 
     public Pelicula createPelicula(Pelicula pelicula) {
 <span class="fc bfc" id="L95" title="All 6 branches covered.">        if (pelicula == null || pelicula.getTitulo() == null || pelicula.getAnio() &lt;= 0) {</span>
-<span class="fc" id="L96">            throw new RuntimeException(&quot;Datos inválidos para la película&quot;);</span>
+<span class="fc" id="L96">            throw new IllegalArgumentException(&quot;Datos inválidos para la película: título no puede ser nulo y año debe ser positivo&quot;);</span>
         }
 <span class="fc" id="L98">        return peliculaRepository.save(pelicula);</span>
     }
@@ -110,7 +110,7 @@ public class DeustoStreamService {
 <span class="fc" id="L110">            pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());</span>
 <span class="fc" id="L111">            return peliculaRepository.save(pelicula);</span>
         } else {
-<span class="fc" id="L113">            throw new RuntimeException(&quot;Pelicula not found&quot;);</span>
+<span class="fc" id="L113">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + id);</span>
         }
     }
 
@@ -128,7 +128,7 @@ public class DeustoStreamService {
 <span class="fc" id="L128">            }</span>
 <span class="fc" id="L129">            peliculaRepository.delete(pelicula);</span>
 <span class="fc" id="L130">        } else {</span>
-<span class="fc" id="L131">            throw new RuntimeException(&quot;Pelicula not found with id: &quot; + id);</span>
+<span class="fc" id="L131">            throw new EntityNotFoundException(&quot;Pelicula not found with id: &quot; + id);</span>
         }
 <span class="fc" id="L133">    }</span>
 
@@ -168,7 +168,7 @@ public class DeustoStreamService {
 <span class="fc" id="L168">            series.setImagenUrl(seriesDetalles.getImagenUrl());</span>
 <span class="fc" id="L169">            return serieRepository.save(series);</span>
         } else {
-<span class="fc" id="L171">            throw new RuntimeException(&quot;Series not found&quot;);</span>
+<span class="fc" id="L171">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + id);</span>
         }
     }
 
@@ -186,7 +186,7 @@ public class DeustoStreamService {
 <span class="fc" id="L186">            }</span>
 <span class="fc" id="L187">            serieRepository.delete(series);</span>
 <span class="fc" id="L188">        } else {</span>
-<span class="fc" id="L189">            throw new RuntimeException(&quot;Series not found with id: &quot; + id);</span>
+<span class="fc" id="L189">            throw new EntityNotFoundException(&quot;Series not found with id: &quot; + id);</span>
         }
 <span class="fc" id="L191">    }</span>
 
@@ -223,7 +223,7 @@ public class DeustoStreamService {
 <span class="fc" id="L223">            perfilRepository.save(perfil);</span>
 
 <span class="fc" id="L225">        } else {</span>
-<span class="fc" id="L226">            throw new RuntimeException(&quot;Usuario or Pelicula not found&quot;);</span>
+<span class="fc" id="L226">            throw new EntityNotFoundException(&quot;Usuario with id: &quot; + usuarioId + &quot; or Pelicula with id: &quot; + peliculaId + &quot; not found&quot;);</span>
         }
 <span class="fc" id="L228">    }</span>
 
@@ -247,7 +247,7 @@ public class DeustoStreamService {
 <span class="fc" id="L247">            perfilRepository.save(perfil);</span>
 
 <span class="fc" id="L249">        } else {</span>
-<span class="fc" id="L250">            throw new RuntimeException(&quot;Usuario or Serie not found&quot;);</span>
+<span class="fc" id="L250">            throw new EntityNotFoundException(&quot;Usuario with id: &quot; + usuarioId + &quot; or Serie with id: &quot; + serieId + &quot; not found&quot;);</span>
         }
 
 <span class="fc" id="L253">    }</span>
@@ -292,7 +292,7 @@ public class DeustoStreamService {
 
 <span class="fc" id="L293">            return capituloRepository.save(cap);</span>
         } else {
-<span class="fc" id="L295">            throw new RuntimeException(&quot;Capítulo no encontrado&quot;);</span>
+<span class="fc" id="L295">            throw new EntityNotFoundException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
         }
     }
 
@@ -300,7 +300,7 @@ public class DeustoStreamService {
 <span class="fc bfc" id="L300" title="All 2 branches covered.">        if (capituloRepository.existsById(id)) {</span>
 <span class="fc" id="L301">            capituloRepository.deleteById(id);</span>
         } else {
-<span class="fc" id="L303">            throw new RuntimeException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
+<span class="fc" id="L303">            throw new EntityNotFoundException(&quot;Capítulo no encontrado con id: &quot; + id);</span>
         }
 <span class="fc" id="L305">    }</span>
 

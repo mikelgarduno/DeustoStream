@@ -179,7 +179,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            usuario.setTipoSuscripcion(usuarioDetalles.getTipoSuscripcion()); <span class="comment">// Agregado</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">return</span> usuarioRepository.save(usuario);</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Usuario not found&quot;</span>);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Usuario not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        }</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
 </div>
@@ -189,7 +189,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">if</span> (usuarioRepository.existsById(<span class="keywordtype">id</span>)) {</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            usuarioRepository.deleteById(<span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Usuario not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Usuario not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        }</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
 </div>
@@ -210,7 +210,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#abd990a5825ee922e53e79b5b8b6880ef">   94</a></span>    <span class="keyword">public</span> Pelicula <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#abd990a5825ee922e53e79b5b8b6880ef">createPelicula</a>(Pelicula pelicula) {</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">if</span> (pelicula == <span class="keyword">null</span> || pelicula.getTitulo() == <span class="keyword">null</span> || pelicula.getAnio() &lt;= 0) {</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Datos inválidos para la película&quot;</span>);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="stringliteral">&quot;Datos inválidos para la película: título no puede ser nulo y año debe ser positivo&quot;</span>);</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">return</span> peliculaRepository.save(pelicula);</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    }</div>
@@ -229,7 +229,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            pelicula.setImagenUrl(peliculaDetalles.getImagenUrl());</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="keywordflow">return</span> peliculaRepository.save(pelicula);</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Pelicula not found&quot;</span>);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Pelicula not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        }</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    }</div>
 </div>
@@ -249,7 +249,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            }</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            peliculaRepository.delete(pelicula);</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Pelicula not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Pelicula not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        }</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    }</div>
 </div>
@@ -299,7 +299,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            series.setImagenUrl(seriesDetalles.getImagenUrl());</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <span class="keywordflow">return</span> serieRepository.save(series);</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Series not found&quot;</span>);</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Series not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        }</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    }</div>
 </div>
@@ -319,7 +319,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            }</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            serieRepository.delete(series);</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Series not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Series not found with id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        }</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    }</div>
 </div>
@@ -360,7 +360,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            perfilRepository.save(perfil);</div>
 <div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
 <div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Usuario or Pelicula not found&quot;</span>);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Usuario with id: &quot;</span> + usuarioId + <span class="stringliteral">&quot; or Pelicula with id: &quot;</span> + peliculaId + <span class="stringliteral">&quot; not found&quot;</span>);</div>
 <div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        }</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    }</div>
 </div>
@@ -386,7 +386,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            perfilRepository.save(perfil);</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Usuario or Serie not found&quot;</span>);</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Usuario with id: &quot;</span> + usuarioId + <span class="stringliteral">&quot; or Serie with id: &quot;</span> + serieId + <span class="stringliteral">&quot; not found&quot;</span>);</div>
 <div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        }</div>
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    }</div>
@@ -441,7 +441,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span> </div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>            <span class="keywordflow">return</span> capituloRepository.save(cap);</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Capítulo no encontrado&quot;</span>);</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Capítulo no encontrado con id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        }</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    }</div>
 </div>
@@ -451,7 +451,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        <span class="keywordflow">if</span> (capituloRepository.existsById(<span class="keywordtype">id</span>)) {</div>
 <div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>            capituloRepository.deleteById(<span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> RuntimeException(<span class="stringliteral">&quot;Capítulo no encontrado con id: &quot;</span> + <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> EntityNotFoundException(<span class="stringliteral">&quot;Capítulo no encontrado con id: &quot;</span> + <span class="keywordtype">id</span>);</div>
 <div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        }</div>
 <div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    }</div>
 </div>
@@ -585,7 +585,7 @@ $(document).ready(function(){initNavTree('_deusto_stream_service_8java_source.ht
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_5eb159725f84c66aafd839904a4acdd0.html">main</a></li><li class="navelem"><a class="el" href="dir_fd3f6763802dee1ad875f6c80eac0bda.html">java</a></li><li class="navelem"><a class="el" href="dir_d8517d8b842053dc3dd7dde525dd9163.html">com</a></li><li class="navelem"><a class="el" href="dir_ada4f439cdb25ec987d0b7526884b52b.html">example</a></li><li class="navelem"><a class="el" href="dir_188469e1adf35605c71a0c9e111ef0fe.html">restapi</a></li><li class="navelem"><a class="el" href="dir_37e627c8a897826f24e224987721cf99.html">service</a></li><li class="navelem"><a class="el" href="_deusto_stream_service_8java.html">DeustoStreamService.java</a></li>
-    <li class="footer">Generated on Sun May 18 2025 06:30:42 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun May 18 2025 11:44:25 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
