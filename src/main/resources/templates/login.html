@@ -43,15 +43,22 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            let qrToken = /*[['${qrToken}']]*/ 'defaultToken';
+            let qrToken = /*[[${qrToken}]]*/ '';
             sessionStorage.setItem("qr-token", qrToken);
 
             const interval = setInterval(() => {
                 fetch(`/qr-status?token=${qrToken}`)
-                    .then(res => res.json())
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! status: ${res.status}`);
+                        }
+                        return res.json();
+                    })
                     .then(data => {
-                        if (data.autorizado) {
+                        console.log('Respuesta /qr-status:', data);
+                        if (data.autorizado === true) {
                             clearInterval(interval);
+                            console.log('Token autorizado, redirigiendo a /catalogo');
                             window.location.href = "/catalogo";
                         }
                     })
@@ -61,6 +68,7 @@
             }, 2000);
             /*]]>*/
         </script>
+
 
 
 
