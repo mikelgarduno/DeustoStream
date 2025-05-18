@@ -14,12 +14,10 @@ var annotated_dup =
           [ "controller", "namespacecom_1_1example_1_1restapi_1_1controller.html", [
             [ "DeustoStreamController", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller" ],
             [ "GenerosController", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_generos_controller" ],
-            [ "MobileLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller" ],
             [ "QrLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller" ],
             [ "QrStatusController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller" ]
           ] ],
           [ "integration", "namespacecom_1_1example_1_1restapi_1_1integration.html", [
-            [ "MobileLoginControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_mobile_login_controller_i_t.html", null ],
             [ "QrLoginControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_qr_login_controller_i_t.html", null ]
           ] ],
           [ "model", "namespacecom_1_1example_1_1restapi_1_1model.html", [
@@ -49,7 +47,6 @@ var annotated_dup =
           ] ],
           [ "unit", null, [
             [ "controller", "namespacecom_1_1example_1_1restapi_1_1unit_1_1controller.html", [
-              [ "MobileLoginControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_mobile_login_controller_unit_test.html", null ],
               [ "QrLoginControllerUnitTest", "classcom_1_1example_1_1restapi_1_1unit_1_1controller_1_1_qr_login_controller_unit_test.html", null ]
             ] ],
             [ "service", "namespacecom_1_1example_1_1restapi_1_1unit_1_1service.html", [

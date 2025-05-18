@@ -98,11 +98,11 @@
 <td>1</td></tr>
 <tr class="b">
 <td><a href="#com.example.restapi.controller">com.example.restapi.controller</a></td>
-<td>2</td>
-<td>2</td>
+<td>1</td>
+<td>1</td>
 <td>0</td>
 <td>0</td>
-<td>3</td>
+<td>6</td>
 <td>0.0%</td>
 <td>100.0%</td>
 <td>0.0%</td>
@@ -112,11 +112,11 @@
 <td>1</td>
 <td>1</td>
 <td>0</td>
-<td>3</td>
+<td>4</td>
 <td>1</td>
 <td>0.0%</td>
-<td>25.0%</td>
-<td>75.0%</td>
+<td>20.0%</td>
+<td>80.0%</td>
 <td>1</td></tr>
 <tr class="b">
 <td><a href="#com.example.restapi.repository">com.example.restapi.repository</a></td>
@@ -131,14 +131,14 @@
 <td>1</td></tr>
 <tr class="a">
 <td><a href="#com.example.restapi.service">com.example.restapi.service</a></td>
-<td>2</td>
-<td>2</td>
+<td>4</td>
+<td>4</td>
 <td>0</td>
 <td>1</td>
-<td>8</td>
+<td>10</td>
 <td>0.0%</td>
-<td>89.0%</td>
-<td>11.0%</td>
+<td>91.0%</td>
+<td>9.0%</td>
 <td>1</td></tr></table><a id="packages"></a>
 <h1>Packages</h1>[ <a href="#summary">summary</a> ] [ <a href="#packages">packages</a> ] [ <a href="#cycles">cycles</a> ] [ <a href="#explanations">explanations</a> ] <br /><a id="com.example.restapi"></a>
 <h2>com.example.restapi</h2>
@@ -196,7 +196,7 @@
 <th>Distance</th></tr>
 <tr class="a">
 <td>0</td>
-<td>3</td>
+<td>6</td>
 <td>0.0%</td>
 <td>100.0%</td>
 <td>0.0%</td></tr></table>
@@ -207,9 +207,9 @@
 <th>Uses Packages</th></tr>
 <tr class="a">
 <td><i>None</i></td>
-<td>com.example.restapi.controller.MobileLoginController<br />com.example.restapi.controller.QrStatusController<br /></td>
+<td>com.example.restapi.controller.QrStatusController<br /></td>
 <td><i>None</i></td>
-<td>com.example.restapi.service<br />jakarta.servlet.http<br />java.lang<br /></td></tr></table><a id="com.example.restapi.model"></a>
+<td>com.example.restapi.model<br />com.example.restapi.service<br />jakarta.servlet.http<br />java.lang<br />java.util<br />org.slf4j<br /></td></tr></table><a id="com.example.restapi.model"></a>
 <h2>com.example.restapi.model</h2>
 <tr class="b">
 <th>Afferent Couplings</th>
@@ -218,11 +218,11 @@
 <th>Instability</th>
 <th>Distance</th></tr>
 <tr class="a">
-<td>3</td>
+<td>4</td>
 <td>1</td>
 <td>0.0%</td>
-<td>25.0%</td>
-<td>75.0%</td></tr></table>
+<td>20.0%</td>
+<td>80.0%</td></tr></table>
 <tr class="b">
 <th>Abstract Classes</th>
 <th>Concrete Classes</th>
@@ -231,7 +231,7 @@
 <tr class="a">
 <td><i>None</i></td>
 <td>com.example.restapi.model.Generos<br /></td>
-<td>com.example.restapi.config<br />com.example.restapi.repository<br />com.example.restapi.service<br /></td>
+<td>com.example.restapi.config<br />com.example.restapi.controller<br />com.example.restapi.repository<br />com.example.restapi.service<br /></td>
 <td>java.lang<br /></td></tr></table><a id="com.example.restapi.repository"></a>
 <h2>com.example.restapi.repository</h2>
 <tr class="b">
@@ -265,10 +265,10 @@
 <th>Distance</th></tr>
 <tr class="a">
 <td>1</td>
-<td>8</td>
+<td>10</td>
 <td>0.0%</td>
-<td>89.0%</td>
-<td>11.0%</td></tr></table>
+<td>91.0%</td>
+<td>9.0%</td></tr></table>
 <tr class="b">
 <th>Abstract Classes</th>
 <th>Concrete Classes</th>
@@ -276,9 +276,9 @@
 <th>Uses Packages</th></tr>
 <tr class="a">
 <td><i>None</i></td>
-<td>com.example.restapi.service.AuthService<br />com.example.restapi.service.QrLoginService<br /></td>
+<td>com.example.restapi.service.AuthService<br />com.example.restapi.service.QrLoginService<br />com.example.restapi.service.QrLoginService$1<br />com.example.restapi.service.QrLoginService$QrLoginStatus<br /></td>
 <td>com.example.restapi.controller<br /></td>
-<td>com.example.restapi.model<br />com.example.restapi.repository<br />com.google.zxing<br />com.google.zxing.client.j2se<br />java.io<br />java.lang<br />java.util<br />java.util.concurrent<br /></td></tr></table><a id="cycles"></a>
+<td>com.example.restapi.model<br />com.example.restapi.repository<br />com.google.zxing<br />com.google.zxing.client.j2se<br />com.google.zxing.qrcode<br />jakarta.servlet.http<br />java.io<br />java.lang<br />java.util<br />java.util.concurrent<br /></td></tr></table><a id="cycles"></a>
 <h1>Cycles</h1>[ <a href="#summary">summary</a> ] [ <a href="#packages">packages</a> ] [ <a href="#cycles">cycles</a> ] [ <a href="#explanations">explanations</a> ] <br /><br />There are no cyclic dependencies.<br /><a id="explanations"></a>
 <h1>Explanation</h1>[ <a href="#summary">summary</a> ] [ <a href="#packages">packages</a> ] [ <a href="#cycles">cycles</a> ] [ <a href="#explanations">explanations</a> ] <br /><br />The following explanations are for quick reference and are lifted directly from the original JDepend documentation.<br /><br />
 <tr class="b">

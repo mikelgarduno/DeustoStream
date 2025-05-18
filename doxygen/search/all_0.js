@@ -8,10 +8,10 @@ var searchData=
   ['addperfil_5',['addPerfil',['../classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a9d95879885de87773f61fd38b407f95a',1,'com::example::restapi::model::Usuario']]],
   ['addserietofavoritos_6',['addserietofavoritos',['../classcom_1_1example_1_1restapi_1_1controller_1_1_deusto_stream_controller.html#a91a183bd2920bb2ed1d60a49c9928147',1,'com.example.restapi.controller.DeustoStreamController.addSerieToFavoritos()'],['../classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html#a78435bcb19388379d0bc4ed5e00a7574',1,'com.example.restapi.service.DeustoStreamService.addSerieToFavoritos()']]],
   ['animacion_7',['ANIMACION',['../enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html#aba687638be3cf36bc557759894c5691e',1,'com::example::restapi::model::Generos']]],
-  ['authcontrollerit_2ejava_8',['AuthControllerIT.java',['../_auth_controller_i_t_8java.html',1,'']]],
-  ['authservice_9',['authservice',['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html',1,'com.example.restapi.service.AuthService'],['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html#a6a79ee999ea9f3697a20836e33ba6e72',1,'com.example.restapi.service.AuthService.AuthService()']]],
-  ['authservice_2ejava_10',['AuthService.java',['../_auth_service_8java.html',1,'']]],
-  ['authservicetest_2ejava_11',['AuthServiceTest.java',['../_auth_service_test_8java.html',1,'']]],
-  ['autorizarqr_12',['autorizarQr',['../classcom_1_1example_1_1restapi_1_1controller_1_1_mobile_login_controller.html#a8e85564494127c4adb67b94ed2af898d',1,'com::example::restapi::controller::MobileLoginController']]],
+  ['autenticarusuario_8',['autenticarUsuario',['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html#a150dde9b19d100016975d984830581b4',1,'com::example::restapi::service::AuthService']]],
+  ['authcontrollerit_2ejava_9',['AuthControllerIT.java',['../_auth_controller_i_t_8java.html',1,'']]],
+  ['authservice_10',['authservice',['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html',1,'com.example.restapi.service.AuthService'],['../classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html#a6a79ee999ea9f3697a20836e33ba6e72',1,'com.example.restapi.service.AuthService.AuthService()']]],
+  ['authservice_2ejava_11',['AuthService.java',['../_auth_service_8java.html',1,'']]],
+  ['authservicetest_2ejava_12',['AuthServiceTest.java',['../_auth_service_test_8java.html',1,'']]],
   ['aventura_13',['AVENTURA',['../enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html#a5b0e944bc68ddd38b55e7b9345f58718',1,'com::example::restapi::model::Generos']]]
 ];
