@@ -122,8 +122,10 @@ public class WebController {
             Cookie cGuardar = new Cookie("guardarContrasenya", "false");
             cGuardar.setMaxAge(7 * 24 * 60 * 60);
             cGuardar.setPath("/");
-            cGuardar.setSecure(true); // Asegúrate de que la cookie sea segura
+            cGuardar.setSecure(true); // Asegura la transmisión por HTTPS
+            cGuardar.setHttpOnly(true); // Evita acceso desde JavaScript (XSS)
             response.addCookie(cGuardar);
+
         }
 
         return authService.login(correo, contrasenya)
