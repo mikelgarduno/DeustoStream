@@ -51,7 +51,8 @@ public class WebController {
     private final QrLoginService qrLoginService;
 
     @Autowired
-    public WebController(DeustoStreamService deustoStreamService, AuthService authService, QrLoginService qrLoginService) {
+    public WebController(DeustoStreamService deustoStreamService, AuthService authService,
+            QrLoginService qrLoginService) {
         this.deustoStreamService = deustoStreamService;
         this.authService = authService;
         this.qrLoginService = qrLoginService;
@@ -65,18 +66,24 @@ public class WebController {
     @GetMapping("/login")
     public String mostrarFormularioLogin(
             Model model,
+            HttpSession session,
             @CookieValue(value = "correo", defaultValue = "") String correoValor,
             @CookieValue(value = "contrasenya", defaultValue = "") String contrasenyaValor,
             @CookieValue(value = "guardarContrasenya", defaultValue = "false") boolean guardarContrasenya) {
 
-        String qrToken = UUID.randomUUID().toString();
-        qrLoginService.registrarToken(qrToken); // Registra el token para seguimiento
-            
-        model.addAttribute("qrToken", qrToken); // Añade el token al modelo para el QR
+        String token = (String) session.getAttribute("qr-token");
+        if (token == null) {
+            token = UUID.randomUUID().toString();
+            session.setAttribute("qr-token", token);
+            qrLoginService.registrarToken(token);
+        }
+
+        model.addAttribute("qrToken", token);
 
         model.addAttribute("correoValor", correoValor);
         model.addAttribute("contrasenyaValor", contrasenyaValor);
         model.addAttribute("guardarContrasenya", guardarContrasenya);
+
         return "login";
     }
 

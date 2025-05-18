@@ -48,10 +48,17 @@
 
             const interval = setInterval(() => {
                 fetch(`/qr-status?token=${qrToken}`)
-                    .then(res => res.json())
-                    .then(autorizado => {
-                        if (autorizado) {
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error(`HTTP error! status: ${res.status}`);
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        console.log('Respuesta /qr-status:', data);
+                        if (data.autorizado === true) {
                             clearInterval(interval);
+                            console.log('Token autorizado, redirigiendo a /catalogo');
                             window.location.href = "/catalogo";
                         }
                     })
@@ -61,6 +68,7 @@
             }, 2000);
             /*]]>*/
         </script>
+
 
 
 
