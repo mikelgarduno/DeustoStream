@@ -100,13 +100,16 @@ public class WebController {
             cGuardar.setMaxAge(7 * 24 * 60 * 60);
             cGuardar.setPath("/");
             cGuardar.setSecure(true); // Asegúrate de que la cookie sea segura
+            cGuardar.setHttpOnly(true); // Impide acceso vía JavaScript
             response.addCookie(cGuardar);
+
         } else {
             // Borrar cookies
             Cookie borrarCorreo = new Cookie("correo", "");
             borrarCorreo.setMaxAge(0);
             borrarCorreo.setPath("/");
             borrarCorreo.setSecure(true); // Asegúrate de que la cookie sea segura
+            borrarCorreo.setHttpOnly(true); // Impide acceso vía JavaScript
             response.addCookie(borrarCorreo);
 
             Cookie borrarPass = new Cookie("contrasenya", "");
@@ -476,12 +479,12 @@ public class WebController {
         return "detalleUsuarioAdmin"; // Thymeleaf renderiza detalleUsuario.html
     }
 
-     @GetMapping("/usuario/{id}")
+    @GetMapping("/usuario/{id}")
     public String mostrarDetalleUsuario(@PathVariable Long id, Model model, HttpSession session) {
         Usuario usuario = deustoStreamService.getUsuarioById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
         model.addAttribute("usuario", usuario);
         return "detalleUsuario";
-}
+    }
 
 }
