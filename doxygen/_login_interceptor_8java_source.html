@@ -110,34 +110,36 @@ $(document).ready(function(){initNavTree('_login_interceptor_8java_source.html',
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    @Override</div>
 <div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c">   11</a></span>    <span class="keyword">public</span> <span class="keywordtype">boolean</span> <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c">preHandle</a>(HttpServletRequest request,</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>                             HttpServletResponse response,</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>                             Object handler) <span class="keywordflow">throws</span> Exception {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            HttpServletResponse response,</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>            Object handler) <span class="keywordflow">throws</span> Exception {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        HttpSession session = request.getSession(<span class="keyword">false</span>);</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordtype">boolean</span> isLoggedIn =  (session != <span class="keyword">null</span> &amp;&amp; session.getAttribute(<span class="stringliteral">&quot;usuario&quot;</span>) != <span class="keyword">null</span>);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordtype">boolean</span> isLoggedIn = (session != <span class="keyword">null</span> &amp;&amp; session.getAttribute(<span class="stringliteral">&quot;usuario&quot;</span>) != <span class="keyword">null</span>);</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        String uri = request.getRequestURI();</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="comment">//permite libre acceso a estas rutas:</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="comment">// permite libre acceso a estas rutas:</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordtype">boolean</span> accesolibre = uri.equals(<span class="stringliteral">&quot;/login&quot;</span>) ||</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                                uri.equals(<span class="stringliteral">&quot;/registro&quot;</span>) ||</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                                uri.startsWith(<span class="stringliteral">&quot;/css/&quot;</span>) || uri.startsWith(<span class="stringliteral">&quot;/js/&quot;</span>) ||</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                                uri.startsWith(<span class="stringliteral">&quot;/images/&quot;</span>) || </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                                uri.startsWith(<span class="stringliteral">&quot;/index&quot;</span>) ||   uri.startsWith(<span class="stringliteral">&quot;/styles.css&quot;</span>);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">if</span> (isLoggedIn || accesolibre) {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        }</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        response.sendRedirect(<span class="stringliteral">&quot;/login&quot;</span>);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    }</div>
-</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                uri.equals(<span class="stringliteral">&quot;/registro&quot;</span>) ||</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                uri.equals(<span class="stringliteral">&quot;/qr-login&quot;</span>) ||</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                uri.equals(<span class="stringliteral">&quot;/qr-login-form&quot;</span>) || </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                uri.equals(<span class="stringliteral">&quot;/qr-login-submit&quot;</span>) ||</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                uri.startsWith(<span class="stringliteral">&quot;/css/&quot;</span>) || uri.startsWith(<span class="stringliteral">&quot;/js/&quot;</span>) ||</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>                uri.startsWith(<span class="stringliteral">&quot;/images/&quot;</span>) ||</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                uri.startsWith(<span class="stringliteral">&quot;/index&quot;</span>) || uri.startsWith(<span class="stringliteral">&quot;/styles.css&quot;</span>);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">if</span> (isLoggedIn || accesolibre) {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        }</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        response.sendRedirect(<span class="stringliteral">&quot;/login&quot;</span>);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    }</div>
+</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
 </div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1config_1_1_login_interceptor_html"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html">com.example.restapi.config.LoginInterceptor</a></div><div class="ttdef"><b>Definition</b> <a href="_login_interceptor_8java_source.html#l00008">LoginInterceptor.java:8</a></div></div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1config_1_1_login_interceptor_html_ae584a0f930f30e231a4194ae058a321c"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1config_1_1_login_interceptor.html#ae584a0f930f30e231a4194ae058a321c">com.example.restapi.config.LoginInterceptor.preHandle</a></div><div class="ttdeci">boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)</div><div class="ttdef"><b>Definition</b> <a href="_login_interceptor_8java_source.html#l00011">LoginInterceptor.java:11</a></div></div>
@@ -147,7 +149,7 @@ $(document).ready(function(){initNavTree('_login_interceptor_8java_source.html',
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_5eb159725f84c66aafd839904a4acdd0.html">main</a></li><li class="navelem"><a class="el" href="dir_fd3f6763802dee1ad875f6c80eac0bda.html">java</a></li><li class="navelem"><a class="el" href="dir_d8517d8b842053dc3dd7dde525dd9163.html">com</a></li><li class="navelem"><a class="el" href="dir_ada4f439cdb25ec987d0b7526884b52b.html">example</a></li><li class="navelem"><a class="el" href="dir_188469e1adf35605c71a0c9e111ef0fe.html">restapi</a></li><li class="navelem"><a class="el" href="dir_e9519bc7e6f2c34639699f8c3d70f949.html">config</a></li><li class="navelem"><a class="el" href="_login_interceptor_8java.html">LoginInterceptor.java</a></li>
-    <li class="footer">Generated on Sun May 18 2025 18:49:06 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Sun May 18 2025 19:17:32 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>

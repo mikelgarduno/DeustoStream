@@ -62,16 +62,16 @@ public class QrLoginController {
     @GetMapping(value = &quot;/qr-login&quot;, produces = MediaType.IMAGE_PNG_VALUE)
     @ResponseBody
     public byte[] mostrarCodigoQr(HttpSession session) throws Exception {
-<span class="nc" id="L65">        String token = (String) session.getAttribute(&quot;qr-token&quot;);</span>
+<span class="fc" id="L65">        String token = (String) session.getAttribute(&quot;qr-token&quot;);</span>
 
-<span class="nc bnc" id="L67" title="All 2 branches missed.">        if (token == null) {</span>
-<span class="nc" id="L68">            token = UUID.randomUUID().toString();</span>
-<span class="nc" id="L69">            session.setAttribute(&quot;qr-token&quot;, token);</span>
-<span class="nc" id="L70">            qrLoginService.registrarToken(token);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (token == null) {</span>
+<span class="fc" id="L68">            token = UUID.randomUUID().toString();</span>
+<span class="fc" id="L69">            session.setAttribute(&quot;qr-token&quot;, token);</span>
+<span class="fc" id="L70">            qrLoginService.registrarToken(token);</span>
         }
 
-<span class="nc" id="L73">        String url = &quot;http://localhost:8080/qr-login-form?token=&quot; + token;</span>
-<span class="nc" id="L74">        return qrLoginService.generarCodigoQR(url);</span>
+<span class="fc" id="L73">        String url = &quot;http://localhost:8080/qr-login-form?token=&quot; + token;</span>
+<span class="fc" id="L74">        return qrLoginService.generarCodigoQR(url);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

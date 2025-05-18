@@ -9,31 +9,33 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
     @Override
     public boolean preHandle(HttpServletRequest request,
-                             HttpServletResponse response,
-                             Object handler) throws Exception {
+            HttpServletResponse response,
+            Object handler) throws Exception {
 
 <span class="nc" id="L15">        HttpSession session = request.getSession(false);</span>
 
-<span class="nc bnc" id="L17" title="All 4 branches missed.">        boolean isLoggedIn =  (session != null &amp;&amp; session.getAttribute(&quot;usuario&quot;) != null);</span>
+<span class="nc bnc" id="L17" title="All 4 branches missed.">        boolean isLoggedIn = (session != null &amp;&amp; session.getAttribute(&quot;usuario&quot;) != null);</span>
 
 <span class="nc" id="L19">        String uri = request.getRequestURI();</span>
 
-        //permite libre acceso a estas rutas:
+        // permite libre acceso a estas rutas:
 <span class="nc bnc" id="L22" title="All 2 branches missed.">        boolean accesolibre = uri.equals(&quot;/login&quot;) ||</span>
-<span class="nc bnc" id="L23" title="All 2 branches missed.">                                uri.equals(&quot;/registro&quot;) ||</span>
-<span class="nc bnc" id="L24" title="All 4 branches missed.">                                uri.startsWith(&quot;/css/&quot;) || uri.startsWith(&quot;/js/&quot;) ||</span>
-<span class="nc bnc" id="L25" title="All 2 branches missed.">                                uri.startsWith(&quot;/images/&quot;) || </span>
-<span class="nc bnc" id="L26" title="All 4 branches missed.">                                uri.startsWith(&quot;/index&quot;) ||   uri.startsWith(&quot;/styles.css&quot;);</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">                uri.equals(&quot;/registro&quot;) ||</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">                uri.equals(&quot;/qr-login&quot;) ||</span>
+<span class="nc bnc" id="L25" title="All 2 branches missed.">                uri.equals(&quot;/qr-login-form&quot;) || </span>
+<span class="nc bnc" id="L26" title="All 2 branches missed.">                uri.equals(&quot;/qr-login-submit&quot;) ||</span>
+<span class="nc bnc" id="L27" title="All 4 branches missed.">                uri.startsWith(&quot;/css/&quot;) || uri.startsWith(&quot;/js/&quot;) ||</span>
+<span class="nc bnc" id="L28" title="All 2 branches missed.">                uri.startsWith(&quot;/images/&quot;) ||</span>
+<span class="nc bnc" id="L29" title="All 4 branches missed.">                uri.startsWith(&quot;/index&quot;) || uri.startsWith(&quot;/styles.css&quot;);</span>
 
-<span class="nc bnc" id="L28" title="All 4 branches missed.">        if (isLoggedIn || accesolibre) {</span>
-<span class="nc" id="L29">            return true;</span>
+<span class="nc bnc" id="L31" title="All 4 branches missed.">        if (isLoggedIn || accesolibre) {</span>
+<span class="nc" id="L32">            return true;</span>
         }
 
-<span class="nc" id="L32">        response.sendRedirect(&quot;/login&quot;);</span>
-<span class="nc" id="L33">        return false;</span>
-        
+<span class="nc" id="L35">        response.sendRedirect(&quot;/login&quot;);</span>
+<span class="nc" id="L36">        return false;</span>
+
     }
 
- 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
