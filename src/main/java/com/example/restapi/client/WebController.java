@@ -85,7 +85,8 @@ public class WebController {
             Cookie cCorreo = new Cookie("correo", correo);
             cCorreo.setMaxAge(7 * 24 * 60 * 60);
             cCorreo.setPath("/");
-            cCorreo.setSecure(true); // Asegúrate de que la cookie sea segura
+            cCorreo.setSecure(true); // Para HTTPS
+            cCorreo.setHttpOnly(true); // 🔒 Impide acceso vía JavaScript
             response.addCookie(cCorreo);
 
             Cookie cPass = new Cookie("contrasenya", contrasenya);
@@ -465,14 +466,17 @@ public class WebController {
         }
     }
 
-
-    // Detalle de usuario 
+    // Detalle de usuario
     @GetMapping("/admin/usuario/{id}")
     public String mostrarDetalleUsuarioAdmin(@PathVariable Long id, Model model) {
         Usuario usuario = deustoStreamService.getUsuarioById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
         model.addAttribute("usuario", usuario);
+<<<<<<< HEAD
         return "detalleUsuarioAdmin";  
+=======
+        return "detalleUsuario"; // Thymeleaf renderiza detalleUsuario.html
+>>>>>>> f86ede892 (Feat: Impidencia de acceso via JavaScript en Cookie cCorreo)
     }
 
     @GetMapping("/usuario/{id}")
