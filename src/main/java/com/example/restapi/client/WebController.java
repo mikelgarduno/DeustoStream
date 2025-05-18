@@ -465,4 +465,14 @@ public class WebController {
         }
     }
 
+
+    // Detalle de usuario 
+    @GetMapping("/admin/usuario/{id}")
+    public String mostrarDetalleUsuario(@PathVariable Long id, Model model) {
+        Usuario usuario = deustoStreamService.getUsuarioById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado: " + id));
+        model.addAttribute("usuario", usuario);
+        return "detalleUsuario";   // Thymeleaf renderiza detalleUsuario.html
+    }
+
 }
