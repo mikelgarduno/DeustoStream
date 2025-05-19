@@ -12,17 +12,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 <span class="nc bnc" id="L12" title="All 2 branches missed.">        if(!&quot;test&quot;.equals(System.getProperty(&quot;spring.profiles.active&quot;))) {</span>
             // Si no estamos en el perfil de test, añadimos el interceptor
 <span class="nc" id="L14">            registry.addInterceptor(new LoginInterceptor())</span>
-<span class="nc" id="L15">                .addPathPatterns(&quot;/**&quot;)</span>
-<span class="nc" id="L16">                .excludePathPatterns(</span>
-                    &quot;/&quot;,   
-                    &quot;/index&quot;,           
-                    &quot;/login&quot;, 
-                    &quot;/registro&quot;, 
-                    &quot;/css/**&quot;, 
-                    &quot;/js/**&quot;, 
-                    &quot;/images/**&quot;
-                );
+<span class="nc" id="L15">                    .addPathPatterns(&quot;/**&quot;)</span>
+<span class="nc" id="L16">                    .excludePathPatterns(</span>
+                            &quot;/&quot;,
+                            &quot;/index&quot;,
+                            &quot;/login&quot;,
+                            &quot;/registro&quot;,
+                            &quot;/qr-login&quot;, // Asegúrate de que esta también esté excluida si la accedes sin sesión
+                            &quot;/qr-login-form&quot;, // También podría ser necesario excluirla
+                            &quot;/qr-login-submit&quot;, // También podría ser necesario excluirla
+                            &quot;/qr-status&quot;, // ¡Añade esta línea!
+                            &quot;/css/**&quot;,
+                            &quot;/js/**&quot;,
+                            &quot;/images/**&quot;,
+                            &quot;/styles.css&quot;
+                    );
         }
-<span class="nc" id="L26">    }</span>
+<span class="nc" id="L31">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

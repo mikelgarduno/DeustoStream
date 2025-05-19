@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController // Asegúrate de usar @RestController (combina @Controller y @ResponseBody)
 public class QrStatusController {
 
     private final QrLoginService qrLoginService;
@@ -24,7 +24,7 @@ public class QrStatusController {
 <span class="fc" id="L24">    }</span>
 
     @GetMapping(&quot;/qr-status&quot;)
-    @ResponseBody
+    @ResponseBody // Asegúrate de que esta anotación esté presente
     public Map&lt;String, Object&gt; verificarEstadoToken(@RequestParam String token, HttpSession session) {
 <span class="fc" id="L29">        Logger logger = LoggerFactory.getLogger(getClass());</span>
 <span class="fc" id="L30">        logger.info(&quot;Verificando estado del token QR: {}&quot;, token);</span>
@@ -35,25 +35,21 @@ public class QrStatusController {
 <span class="fc" id="L35">            Usuario usuario = qrLoginService.getUsuarioAutorizado(token);</span>
 <span class="fc bfc" id="L36" title="All 2 branches covered.">            if (usuario != null) {</span>
 <span class="fc" id="L37">                logger.info(&quot;Token autorizado para usuario: {}&quot;, usuario.getCorreo());</span>
-
-                // Guardar usuario en sesión para login persistente
-<span class="fc" id="L40">                session.setAttribute(&quot;usuarioId&quot;, usuario.getId());</span>
-<span class="fc" id="L41">                session.setAttribute(&quot;usuario&quot;, usuario);</span>
-<span class="fc" id="L42">                session.setAttribute(&quot;usuarioAutenticado&quot;, true);</span>
-
-<span class="fc" id="L44">                response.put(&quot;autorizado&quot;, true);</span>
-<span class="fc" id="L45">                response.put(&quot;usuario&quot;, usuario.getCorreo());</span>
-<span class="fc" id="L46">                return response;</span>
+<span class="fc" id="L38">                session.setAttribute(&quot;usuarioId&quot;, usuario.getId());</span>
+<span class="fc" id="L39">                session.setAttribute(&quot;usuario&quot;, usuario);</span>
+<span class="fc" id="L40">                session.setAttribute(&quot;usuarioAutenticado&quot;, true);</span>
+<span class="fc" id="L41">                response.put(&quot;autorizado&quot;, true);</span>
+<span class="fc" id="L42">                response.put(&quot;usuario&quot;, usuario.getCorreo());</span>
+<span class="fc" id="L43">                return response;</span>
             } else {
-<span class="fc" id="L48">                logger.warn(&quot;Token autorizado pero sin usuario asociado: {}&quot;, token);</span>
+<span class="fc" id="L45">                logger.warn(&quot;Token autorizado pero sin usuario asociado: {}&quot;, token);</span>
             }
-<span class="fc" id="L50">        } else {</span>
-<span class="fc" id="L51">            logger.info(&quot;Token no autorizado aún: {}&quot;, token);</span>
+<span class="fc" id="L47">        } else {</span>
+<span class="fc" id="L48">            logger.info(&quot;Token no autorizado aún: {}&quot;, token);</span>
         }
 
-<span class="fc" id="L54">        response.put(&quot;autorizado&quot;, false);</span>
-<span class="fc" id="L55">        return response;</span>
+<span class="fc" id="L51">        response.put(&quot;autorizado&quot;, false);</span>
+<span class="fc" id="L52">        return response;</span>
     }
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

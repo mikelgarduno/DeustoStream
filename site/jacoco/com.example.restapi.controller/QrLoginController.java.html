@@ -77,7 +77,7 @@ public class QrLoginController {
 <span class="fc" id="L77">            qrLoginService.registrarToken(token);</span>
         }
 
-<span class="fc" id="L80">        String url = &quot;https://fz75p9zf-8080.uks1.devtunnels.ms/qr-login-form?token=&quot; + token;</span>
+<span class="fc" id="L80">        String url = &quot;https://fleet-thoroughly-oryx.ngrok-free.app/qr-login-form?token=&quot; + token;</span>
 <span class="fc" id="L81">        return qrLoginService.generarCodigoQR(url);</span>
     }
 }
