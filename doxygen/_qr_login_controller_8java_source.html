@@ -137,63 +137,61 @@ $(document).ready(function(){initNavTree('_qr_login_controller_8java_source.html
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    @GetMapping(<span class="stringliteral">&quot;/qr-login-form&quot;</span>)</div>
 <div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#afd01bd433371533d35382c8856d78d6c">   36</a></span>    public String <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#afd01bd433371533d35382c8856d78d6c">mostrarFormularioLogin</a>(@RequestParam(&quot;token&quot;) String token, Model model) {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        logger.info(<span class="stringliteral">&quot;Mostrar formulario de login QR para token: {}&quot;</span>, token);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">if</span> (!StringUtils.hasText(token)) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            logger.warn(<span class="stringliteral">&quot;Token inválido recibido en /qr-login-form&quot;</span>);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            model.addAttribute(<span class="stringliteral">&quot;error&quot;</span>, <span class="stringliteral">&quot;Token inválido&quot;</span>);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-form&quot;</span>;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        model.addAttribute(<span class="stringliteral">&quot;token&quot;</span>, token);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-form&quot;</span>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">if</span> (!StringUtils.hasText(token)) {</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            logger.warn(<span class="stringliteral">&quot;Token inválido recibido en /qr-login-form&quot;</span>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            model.addAttribute(<span class="stringliteral">&quot;error&quot;</span>, <span class="stringliteral">&quot;Token inválido&quot;</span>);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-form&quot;</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        }</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        model.addAttribute(<span class="stringliteral">&quot;token&quot;</span>, token);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-form&quot;</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    }</div>
 </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    @PostMapping(<span class="stringliteral">&quot;/qr-login-submit&quot;</span>)</div>
-<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b">   48</a></span>    public String <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b">procesarLoginQr</a>(@RequestParam(&quot;token&quot;) String token,</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            @RequestParam(&quot;correo&quot;) String correo,</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            @RequestParam(&quot;contrasenya&quot;) String contrasenya,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            Model model) {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        logger.info(<span class="stringliteral">&quot;Procesando login QR para token: {}, correo: {}&quot;</span>, token, correo);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">if</span> (usuario == <span class="keyword">null</span>) {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            logger.warn(<span class="stringliteral">&quot;Credenciales inválidas para correo: {}&quot;</span>, correo);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            model.addAttribute(<span class="stringliteral">&quot;error&quot;</span>, <span class="stringliteral">&quot;Credenciales inválidas&quot;</span>);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            model.addAttribute(<span class="stringliteral">&quot;token&quot;</span>, token);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-form&quot;</span>;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="comment">// Asociar el usuario con el token para que la sesión del PC pueda recuperarlo</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        qrLoginService.marcarAutorizado(token, usuario);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        logger.info(<span class="stringliteral">&quot;Login QR autorizado para usuario: {}&quot;</span>, correo);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        model.addAttribute(<span class="stringliteral">&quot;mensaje&quot;</span>, <span class="stringliteral">&quot;Inicio de sesión autorizado correctamente. Puedes cerrar esta ventana.&quot;</span>);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-success&quot;</span>; <span class="comment">// Nueva página de éxito</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    @PostMapping(<span class="stringliteral">&quot;/qr-login-submit&quot;</span>)</div>
+<div class="foldopen" id="foldopen00047" data-start="{" data-end="}">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b">   47</a></span>    public String <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b">procesarLoginQr</a>(@RequestParam(&quot;token&quot;) String token,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            @RequestParam(&quot;correo&quot;) String correo,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            @RequestParam(&quot;contrasenya&quot;) String contrasenya,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            Model model) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">if</span> (usuario == <span class="keyword">null</span>) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            logger.warn(<span class="stringliteral">&quot;Credenciales inválidas para correo: {}&quot;</span>, correo);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            model.addAttribute(<span class="stringliteral">&quot;error&quot;</span>, <span class="stringliteral">&quot;Credenciales inválidas&quot;</span>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            model.addAttribute(<span class="stringliteral">&quot;token&quot;</span>, token);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-form&quot;</span>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        }</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="comment">// Asociar el usuario con el token para que la sesión del PC pueda recuperarlo</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        qrLoginService.marcarAutorizado(token, usuario);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        model.addAttribute(<span class="stringliteral">&quot;mensaje&quot;</span>, <span class="stringliteral">&quot;Inicio de sesión autorizado correctamente. Puedes cerrar esta ventana.&quot;</span>);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;qr-login-success&quot;</span>; <span class="comment">// Nueva página de éxito</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
 </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="comment">// Genera y muestra el código QR (accedido desde /qr-login)</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    @GetMapping(value = <span class="stringliteral">&quot;/qr-login&quot;</span>, produces = MediaType.IMAGE_PNG_VALUE)</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    @ResponseBody</div>
-<div class="foldopen" id="foldopen00071" data-start="{" data-end="}">
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#acb0161f86323919600267c42ede5771d">   71</a></span>    <span class="keyword">public</span> <span class="keywordtype">byte</span>[] <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#acb0161f86323919600267c42ede5771d">mostrarCodigoQr</a>(HttpSession session) <span class="keywordflow">throws</span> Exception {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        String token = (String) session.getAttribute(<span class="stringliteral">&quot;qr-token&quot;</span>);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> (token == <span class="keyword">null</span>) {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            token = UUID.randomUUID().toString();</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            session.setAttribute(<span class="stringliteral">&quot;qr-token&quot;</span>, token);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            qrLoginService.registrarToken(token);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        String url = <span class="stringliteral">&quot;https://fleet-thoroughly-oryx.ngrok-free.app/qr-login-form?token=&quot;</span> + token;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">return</span> qrLoginService.generarCodigoQR(url);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="comment">// Genera y muestra el código QR (accedido desde /qr-login)</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    @GetMapping(value = <span class="stringliteral">&quot;/qr-login&quot;</span>, produces = MediaType.IMAGE_PNG_VALUE)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    @ResponseBody</div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#acb0161f86323919600267c42ede5771d">   69</a></span>    <span class="keyword">public</span> <span class="keywordtype">byte</span>[] <a class="code hl_function" href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#acb0161f86323919600267c42ede5771d">mostrarCodigoQr</a>(HttpSession session) <span class="keywordflow">throws</span> Exception {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        String token = (String) session.getAttribute(<span class="stringliteral">&quot;qr-token&quot;</span>);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">if</span> (token == <span class="keyword">null</span>) {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            token = UUID.randomUUID().toString();</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            session.setAttribute(<span class="stringliteral">&quot;qr-token&quot;</span>, token);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            qrLoginService.registrarToken(token);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        String url = <span class="stringliteral">&quot;https://fleet-thoroughly-oryx.ngrok-free.app/qr-login-form?token=&quot;</span> + token;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">return</span> qrLoginService.generarCodigoQR(url);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
 </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
 </div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html">com.example.restapi.controller.QrLoginController</a></div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00021">QrLoginController.java:21</a></div></div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html_a630e211177dbc429dde9707e429c134a"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a630e211177dbc429dde9707e429c134a">com.example.restapi.controller.QrLoginController.QrLoginController</a></div><div class="ttdeci">QrLoginController(QrLoginService qrLoginService, UsuarioRepository usuarioRepository)</div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00029">QrLoginController.java:29</a></div></div>
-<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html_a916425f5737eb816cbbfc4543071011b"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b">com.example.restapi.controller.QrLoginController.procesarLoginQr</a></div><div class="ttdeci">String procesarLoginQr(@RequestParam(&quot;token&quot;) String token, @RequestParam(&quot;correo&quot;) String correo, @RequestParam(&quot;contrasenya&quot;) String contrasenya, Model model)</div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00048">QrLoginController.java:48</a></div></div>
-<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html_acb0161f86323919600267c42ede5771d"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#acb0161f86323919600267c42ede5771d">com.example.restapi.controller.QrLoginController.mostrarCodigoQr</a></div><div class="ttdeci">byte[] mostrarCodigoQr(HttpSession session)</div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00071">QrLoginController.java:71</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html_a916425f5737eb816cbbfc4543071011b"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#a916425f5737eb816cbbfc4543071011b">com.example.restapi.controller.QrLoginController.procesarLoginQr</a></div><div class="ttdeci">String procesarLoginQr(@RequestParam(&quot;token&quot;) String token, @RequestParam(&quot;correo&quot;) String correo, @RequestParam(&quot;contrasenya&quot;) String contrasenya, Model model)</div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00047">QrLoginController.java:47</a></div></div>
+<div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html_acb0161f86323919600267c42ede5771d"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#acb0161f86323919600267c42ede5771d">com.example.restapi.controller.QrLoginController.mostrarCodigoQr</a></div><div class="ttdeci">byte[] mostrarCodigoQr(HttpSession session)</div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00069">QrLoginController.java:69</a></div></div>
 <div class="ttc" id="aclasscom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller_html_afd01bd433371533d35382c8856d78d6c"><div class="ttname"><a href="classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html#afd01bd433371533d35382c8856d78d6c">com.example.restapi.controller.QrLoginController.mostrarFormularioLogin</a></div><div class="ttdeci">String mostrarFormularioLogin(@RequestParam(&quot;token&quot;) String token, Model model)</div><div class="ttdef"><b>Definition</b> <a href="_qr_login_controller_8java_source.html#l00036">QrLoginController.java:36</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
@@ -201,7 +199,7 @@ $(document).ready(function(){initNavTree('_qr_login_controller_8java_source.html
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_5eb159725f84c66aafd839904a4acdd0.html">main</a></li><li class="navelem"><a class="el" href="dir_fd3f6763802dee1ad875f6c80eac0bda.html">java</a></li><li class="navelem"><a class="el" href="dir_d8517d8b842053dc3dd7dde525dd9163.html">com</a></li><li class="navelem"><a class="el" href="dir_ada4f439cdb25ec987d0b7526884b52b.html">example</a></li><li class="navelem"><a class="el" href="dir_188469e1adf35605c71a0c9e111ef0fe.html">restapi</a></li><li class="navelem"><a class="el" href="dir_ee83e09d0b031ec7793e5a8f4a886891.html">controller</a></li><li class="navelem"><a class="el" href="_qr_login_controller_8java.html">QrLoginController.java</a></li>
-    <li class="footer">Generated on Mon May 19 2025 08:27:21 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+    <li class="footer">Generated on Mon May 19 2025 08:41:07 for DeustoStream by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
 </body>
