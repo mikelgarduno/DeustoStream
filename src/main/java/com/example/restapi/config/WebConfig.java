@@ -12,16 +12,21 @@ public class WebConfig implements WebMvcConfigurer {
         if(!"test".equals(System.getProperty("spring.profiles.active"))) {
             // Si no estamos en el perfil de test, añadimos el interceptor
             registry.addInterceptor(new LoginInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                    "/",   
-                    "/index",           
-                    "/login", 
-                    "/registro", 
-                    "/css/**", 
-                    "/js/**", 
-                    "/images/**"
-                );
+                    .addPathPatterns("/**")
+                    .excludePathPatterns(
+                            "/",
+                            "/index",
+                            "/login",
+                            "/registro",
+                            "/qr-login", // Asegúrate de que esta también esté excluida si la accedes sin sesión
+                            "/qr-login-form", // También podría ser necesario excluirla
+                            "/qr-login-submit", // También podría ser necesario excluirla
+                            "/qr-status", // ¡Añade esta línea!
+                            "/css/**",
+                            "/js/**",
+                            "/images/**",
+                            "/styles.css"
+                    );
         }
     }
 }

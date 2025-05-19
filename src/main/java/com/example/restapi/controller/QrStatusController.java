@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController // Asegúrate de usar @RestController (combina @Controller y @ResponseBody)
 public class QrStatusController {
 
     private final QrLoginService qrLoginService;
@@ -24,7 +24,7 @@ public class QrStatusController {
     }
 
     @GetMapping("/qr-status")
-    @ResponseBody
+    @ResponseBody // Asegúrate de que esta anotación esté presente
     public Map<String, Object> verificarEstadoToken(@RequestParam String token, HttpSession session) {
         Logger logger = LoggerFactory.getLogger(getClass());
         logger.info("Verificando estado del token QR: {}", token);
@@ -35,12 +35,9 @@ public class QrStatusController {
             Usuario usuario = qrLoginService.getUsuarioAutorizado(token);
             if (usuario != null) {
                 logger.info("Token autorizado para usuario: {}", usuario.getCorreo());
-
-                // Guardar usuario en sesión para login persistente
                 session.setAttribute("usuarioId", usuario.getId());
                 session.setAttribute("usuario", usuario);
                 session.setAttribute("usuarioAutenticado", true);
-
                 response.put("autorizado", true);
                 response.put("usuario", usuario.getCorreo());
                 return response;
@@ -54,5 +51,4 @@ public class QrStatusController {
         response.put("autorizado", false);
         return response;
     }
-
 }
