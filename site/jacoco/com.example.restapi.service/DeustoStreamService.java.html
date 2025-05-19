@@ -380,40 +380,40 @@ public class DeustoStreamService {
 
     @Transactional
     public void crearPerfil(Perfil perfil, Long idUsuario) {
-<span class="nc" id="L383">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(idUsuario);</span>
-<span class="nc bnc" id="L384" title="All 2 branches missed.">        if (optionalUsuario.isPresent()) {</span>
-<span class="nc" id="L385">            Usuario usuario = optionalUsuario.get();</span>
-<span class="nc" id="L386">            perfil.setUsuario(usuario);</span>
-<span class="nc" id="L387">            usuario.getPerfiles().add(perfil);</span>
-<span class="nc" id="L388">            perfilRepository.save(perfil);</span>
-<span class="nc" id="L389">        } else {</span>
-<span class="nc" id="L390">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + idUsuario);</span>
+<span class="fc" id="L383">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(idUsuario);</span>
+<span class="fc bfc" id="L384" title="All 2 branches covered.">        if (optionalUsuario.isPresent()) {</span>
+<span class="fc" id="L385">            Usuario usuario = optionalUsuario.get();</span>
+<span class="fc" id="L386">            perfil.setUsuario(usuario);</span>
+<span class="fc" id="L387">            usuario.getPerfiles().add(perfil);</span>
+<span class="fc" id="L388">            perfilRepository.save(perfil);</span>
+<span class="fc" id="L389">        } else {</span>
+<span class="fc" id="L390">            throw new EntityNotFoundException(&quot;Usuario not found with id: &quot; + idUsuario);</span>
         }
-<span class="nc" id="L392">    }</span>
+<span class="fc" id="L392">    }</span>
 
     @Transactional
     public void eliminarPerfil(Long idPerfil, Long idUsuario) {
-<span class="nc" id="L396">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(idUsuario);</span>
-<span class="nc" id="L397">        Optional&lt;Perfil&gt; optionalPerfil = perfilRepository.findById(idPerfil);</span>
-<span class="nc bnc" id="L398" title="All 2 branches missed.">        if (optionalPerfil.isPresent()) {</span>
-<span class="nc" id="L399">            Perfil perfil = optionalPerfil.get();</span>
+<span class="fc" id="L396">        Optional&lt;Usuario&gt; optionalUsuario = usuarioRepository.findById(idUsuario);</span>
+<span class="fc" id="L397">        Optional&lt;Perfil&gt; optionalPerfil = perfilRepository.findById(idPerfil);</span>
+<span class="fc bfc" id="L398" title="All 2 branches covered.">        if (optionalPerfil.isPresent()) {</span>
+<span class="fc" id="L399">            Perfil perfil = optionalPerfil.get();</span>
 
-<span class="nc" id="L401">            valoracionRepository.deleteByPerfil_Id(idPerfil);</span>
+<span class="fc" id="L401">            valoracionRepository.deleteByPerfil_Id(idPerfil);</span>
 
             // Eliminar la relación entre perfil y usuario
-<span class="nc bnc" id="L404" title="All 2 branches missed.">            if (optionalUsuario.isPresent()) {</span>
-<span class="nc" id="L405">                Usuario usuario = optionalUsuario.get();</span>
-<span class="nc" id="L406">                usuario.getPerfiles().remove(perfil);</span>
-<span class="nc" id="L407">                usuarioRepository.save(usuario);</span>
+<span class="fc bfc" id="L404" title="All 2 branches covered.">            if (optionalUsuario.isPresent()) {</span>
+<span class="fc" id="L405">                Usuario usuario = optionalUsuario.get();</span>
+<span class="fc" id="L406">                usuario.getPerfiles().remove(perfil);</span>
+<span class="fc" id="L407">                usuarioRepository.save(usuario);</span>
             }
             
     
             // Finalmente, eliminar el perfil
-<span class="nc" id="L412">            perfilRepository.delete(perfil);</span>
-<span class="nc" id="L413">        } else {</span>
-<span class="nc" id="L414">            throw new EntityNotFoundException(&quot;Perfil not found with id: &quot; + idPerfil);</span>
+<span class="fc" id="L412">            perfilRepository.delete(perfil);</span>
+<span class="fc" id="L413">        } else {</span>
+<span class="fc" id="L414">            throw new EntityNotFoundException(&quot;Perfil not found with id: &quot; + idPerfil);</span>
         }
-<span class="nc" id="L416">    }</span>
+<span class="fc" id="L416">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
