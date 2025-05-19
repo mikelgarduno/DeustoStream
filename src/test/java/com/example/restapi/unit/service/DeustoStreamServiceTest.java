@@ -1276,4 +1276,76 @@ public class DeustoStreamServiceTest {
         assertEquals("SUPERGOLD", resultado.getTipoSuscripcion());
     }
 
+    @Test
+    void testCrearPerfil_Success() {
+        Usuario usuario = new Usuario();
+        usuario.setId(1L);
+        Perfil perfil = new Perfil();
+
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        when(perfilRepository.save(perfil)).thenReturn(perfil);
+
+        deustoStreamService.crearPerfil(perfil, 1L);
+
+        assertEquals(usuario, perfil.getUsuario());
+        assertTrue(usuario.getPerfiles().contains(perfil));
+        verify(perfilRepository).save(perfil);
+    }
+
+    @Test
+    void testCrearPerfil_UserNotFound() {
+        Perfil perfil = new Perfil();
+        when(usuarioRepository.findById(2L)).thenReturn(Optional.empty());
+
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class,
+            () -> deustoStreamService.crearPerfil(perfil, 2L));
+        assertTrue(ex.getMessage().contains("Usuario not found with id: 2"));
+        verify(perfilRepository, never()).save(any(Perfil.class));
+    }
+
+    @Test
+    void testEliminarPerfil_Success_UserPresent() {
+        Usuario usuario = new Usuario();
+        usuario.setId(3L);
+        Perfil perfil = new Perfil();
+        perfil.setId(5L);
+        usuario.getPerfiles().add(perfil);
+
+        when(perfilRepository.findById(5L)).thenReturn(Optional.of(perfil));
+        when(usuarioRepository.findById(3L)).thenReturn(Optional.of(usuario));
+
+        deustoStreamService.eliminarPerfil(5L, 3L);
+
+        verify(valoracionRepository).deleteByPerfil_Id(5L);
+        assertFalse(usuario.getPerfiles().contains(perfil));
+        verify(usuarioRepository).save(usuario);
+        verify(perfilRepository).delete(perfil);
+    }
+
+    @Test
+    void testEliminarPerfil_Success_UserAbsent() {
+        Perfil perfil = new Perfil();
+        perfil.setId(6L);
+
+        when(perfilRepository.findById(6L)).thenReturn(Optional.of(perfil));
+        when(usuarioRepository.findById(4L)).thenReturn(Optional.empty());
+
+        deustoStreamService.eliminarPerfil(6L, 4L);
+
+        verify(valoracionRepository).deleteByPerfil_Id(6L);
+        verify(usuarioRepository, never()).save(any(Usuario.class));
+        verify(perfilRepository).delete(perfil);
+    }
+
+    @Test
+    void testEliminarPerfil_PerfilNotFound() {
+        when(perfilRepository.findById(7L)).thenReturn(Optional.empty());
+
+        EntityNotFoundException ex = assertThrows(EntityNotFoundException.class,
+            () -> deustoStreamService.eliminarPerfil(7L, 1L));
+        assertTrue(ex.getMessage().contains("Perfil not found with id: 7"));
+        verify(valoracionRepository, never()).deleteByPerfil_Id(anyLong());
+        verify(perfilRepository, never()).delete(any(Perfil.class));
+    }
+
 }
