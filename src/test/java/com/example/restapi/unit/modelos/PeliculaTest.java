@@ -26,8 +26,8 @@ class PeliculaTest {
         assertNotNull(pelicula.getId());
         assertNotNull(pelicula.getTitulo());
         assertNotNull(pelicula.getGenero());
-        assertNotNull(pelicula.getDuracion());
-        assertNotNull(pelicula.getAnio());
+        assertEquals(148, pelicula.getDuracion());
+        assertEquals(2010, pelicula.getAnio());
         assertNotNull(pelicula.getSinopsis());
         assertNotNull(pelicula.getImagenUrl());
     }
@@ -37,8 +37,8 @@ class PeliculaTest {
         assertNotNull(pelicula);
         assertNotNull(pelicula.getTitulo());
         assertNotNull(pelicula.getGenero());
-        assertNotNull(pelicula.getDuracion());
-        assertNotNull(pelicula.getAnio());
+        assertEquals(148, pelicula.getDuracion());
+        assertEquals(2010, pelicula.getAnio());
         assertNotNull(pelicula.getSinopsis());
         assertNotNull(pelicula.getImagenUrl());
     }

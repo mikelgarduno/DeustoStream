@@ -41,7 +41,7 @@ class SerieTest {
         serie.setId(1L);
         assertNotNull(serie.getId());
         assertNotNull(serie.getTitulo());
-        assertNotNull(serie.getAnio());
+        assertEquals(2008, serie.getAnio());
         assertNotNull(serie.getDescripcion());
         assertNotNull(serie.getGenero());
         assertNotNull(serie.getCapitulos());
