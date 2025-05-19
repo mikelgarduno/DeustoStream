@@ -18,10 +18,10 @@ public class WebConfig implements WebMvcConfigurer {
                             "/index",
                             "/login",
                             "/registro",
-                            "/qr-login", // Asegúrate de que esta también esté excluida si la accedes sin sesión
-                            "/qr-login-form", // También podría ser necesario excluirla
-                            "/qr-login-submit", // También podría ser necesario excluirla
-                            "/qr-status", // ¡Añade esta línea!
+                            "/qr-login",
+                            "/qr-login-form", 
+                            "/qr-login-submit", 
+                            "/qr-status",
                             "/css/**",
                             "/js/**",
                             "/images/**",

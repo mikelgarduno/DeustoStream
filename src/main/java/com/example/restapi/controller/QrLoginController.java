@@ -34,7 +34,6 @@ public class QrLoginController {
     // Vista del formulario de login QR cuando se escanea el código
     @GetMapping("/qr-login-form")
     public String mostrarFormularioLogin(@RequestParam("token") String token, Model model) {
-        logger.info("Mostrar formulario de login QR para token: {}", token);
         if (!StringUtils.hasText(token)) {
             logger.warn("Token inválido recibido en /qr-login-form");
             model.addAttribute("error", "Token inválido");
@@ -49,7 +48,7 @@ public class QrLoginController {
             @RequestParam("correo") String correo,
             @RequestParam("contrasenya") String contrasenya,
             Model model) {
-        logger.info("Procesando login QR para token: {}, correo: {}", token, correo);
+
         Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);
         if (usuario == null) {
             logger.warn("Credenciales inválidas para correo: {}", correo);
@@ -60,7 +59,6 @@ public class QrLoginController {
 
         // Asociar el usuario con el token para que la sesión del PC pueda recuperarlo
         qrLoginService.marcarAutorizado(token, usuario);
-        logger.info("Login QR autorizado para usuario: {}", correo);
         model.addAttribute("mensaje", "Inicio de sesión autorizado correctamente. Puedes cerrar esta ventana.");
         return "qr-login-success"; // Nueva página de éxito
     }
