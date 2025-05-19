@@ -10,6 +10,7 @@ import static org.mockito.Mockito.*;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -1326,4 +1327,101 @@ class WebControllerUnitTest {
         assertEquals("Usuario no encontrado: 1", ex.getMessage());
     }
 
+        @Test
+    void testGuardarPerfil_NoUserInSession() {
+        when(session.getAttribute("usuario")).thenReturn(null);
+        Perfil nuevoPerfil = new Perfil();
+
+        String viewName = webController.guardarPerfil(nuevoPerfil, session);
+
+        verify(deustoStreamService, never()).crearPerfil(any(Perfil.class), anyLong());
+        assertEquals("redirect:/login", viewName, "Should redirect to login when no user in session");
+    }
+
+    @Test
+    void testGuardarPerfil_WithUser() {
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setId(1L);
+        when(session.getAttribute("usuario")).thenReturn(mockUsuario);
+
+        Usuario updatedUsuario = new Usuario();
+        updatedUsuario.setId(1L);
+        when(deustoStreamService.getUsuarioById(1L)).thenReturn(Optional.of(updatedUsuario));
+
+        Perfil nuevoPerfil = new Perfil();
+
+        String viewName = webController.guardarPerfil(nuevoPerfil, session);
+
+        verify(deustoStreamService).crearPerfil(nuevoPerfil, 1L);
+        verify(deustoStreamService).getUsuarioById(1L);
+        verify(session).setAttribute("usuario", updatedUsuario);
+        assertEquals("redirect:/perfil", viewName, "Should redirect to perfil after creating profile");
+    }
+
+    @Test
+    void testEliminarPerfil_NoUserInSession() {
+        when(session.getAttribute("usuario")).thenReturn(null);
+        Long perfilId = 5L;
+
+        String viewName = webController.eliminarPerfil(perfilId, session);
+
+        verify(deustoStreamService, never()).eliminarPerfil(anyLong(), anyLong());
+        assertEquals("redirect:/login", viewName, "Should redirect to login when no user in session");
+    }
+
+    @Test
+    void testEliminarPerfil_WithUser() {
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setId(2L);
+        when(session.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(session.getAttribute("perfil")).thenReturn(null);
+
+        Long perfilId = 5L;
+        String viewName = webController.eliminarPerfil(perfilId, session);
+
+        verify(deustoStreamService).eliminarPerfil(perfilId, 2L);
+        verify(session).setAttribute("usuario", mockUsuario);
+        assertEquals("redirect:/perfil", viewName, "Should redirect to perfil after deleting profile");
+    }
+
+    @Test
+    void testEliminarPerfil_ActiveProfileSwitched() {
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setId(3L);
+        Perfil activePerfil = new Perfil();
+        activePerfil.setId(10L);
+        Perfil otherPerfil = new Perfil();
+        otherPerfil.setId(11L);
+        mockUsuario.setPerfiles(new ArrayList<>(List.of(activePerfil, otherPerfil)));
+
+        when(session.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(session.getAttribute("perfil")).thenReturn(activePerfil);
+
+        Long perfilId = 10L;
+        String viewName = webController.eliminarPerfil(perfilId, session);
+
+        verify(deustoStreamService).eliminarPerfil(perfilId, 3L);
+        verify(session).setAttribute("perfil", otherPerfil);
+        assertEquals("redirect:/perfil", viewName, "Should redirect to perfil after switching active profile");
+    }
+
+    @Test
+    void testEliminarPerfil_ActiveProfileRemovedNoOthers() {
+        Usuario mockUsuario = new Usuario();
+        mockUsuario.setId(4L);
+        Perfil onlyPerfil = new Perfil();
+        onlyPerfil.setId(20L);
+        // Use mutable list with single perfil
+        mockUsuario.setPerfiles(new ArrayList<>(List.of(onlyPerfil)));
+
+        when(session.getAttribute("usuario")).thenReturn(mockUsuario);
+        when(session.getAttribute("perfil")).thenReturn(onlyPerfil);
+
+        Long perfilId = 20L;
+        String viewName = webController.eliminarPerfil(perfilId, session);
+
+        verify(deustoStreamService).eliminarPerfil(perfilId, 4L);
+        verify(session).removeAttribute("perfil");
+        assertEquals("redirect:/perfil", viewName, "Should redirect to perfil after removing last profile");
+    }
 }
