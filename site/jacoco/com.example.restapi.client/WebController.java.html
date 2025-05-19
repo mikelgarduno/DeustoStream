@@ -513,41 +513,41 @@ public class WebController {
 
     @PostMapping(&quot;/crearPerfil&quot;)
     public String guardarPerfil(@ModelAttribute Perfil nuevoPerfil, HttpSession session) {
-<span class="nc" id="L516">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
-<span class="nc bnc" id="L517" title="All 2 branches missed.">        if (usuario != null) {</span>
-<span class="nc" id="L518">            deustoStreamService.crearPerfil(nuevoPerfil, usuario.getId());</span>
+<span class="fc" id="L516">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="fc bfc" id="L517" title="All 2 branches covered.">        if (usuario != null) {</span>
+<span class="fc" id="L518">            deustoStreamService.crearPerfil(nuevoPerfil, usuario.getId());</span>
             // Recargar y actualizar el usuario en sesión para que incluya el nuevo perfil
-<span class="nc" id="L520">            usuario = deustoStreamService.getUsuarioById(usuario.getId()).orElse(usuario);</span>
-<span class="nc" id="L521">            session.setAttribute(USUARIO_STRING, usuario);</span>
-<span class="nc" id="L522">            return &quot;redirect:/perfil&quot;;</span>
+<span class="fc" id="L520">            usuario = deustoStreamService.getUsuarioById(usuario.getId()).orElse(usuario);</span>
+<span class="fc" id="L521">            session.setAttribute(USUARIO_STRING, usuario);</span>
+<span class="fc" id="L522">            return &quot;redirect:/perfil&quot;;</span>
         } else {
-<span class="nc" id="L524">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
+<span class="fc" id="L524">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
         }
     }
     @GetMapping(&quot;/eliminarPerfil/{id}&quot;)
     public String eliminarPerfil(@PathVariable Long id, HttpSession session) {
-<span class="nc" id="L529">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
-<span class="nc bnc" id="L530" title="All 2 branches missed.">        if (usuario != null) {</span>
-<span class="nc" id="L531">            deustoStreamService.eliminarPerfil(id, usuario.getId());</span>
+<span class="fc" id="L529">        Usuario usuario = (Usuario) session.getAttribute(USUARIO_STRING);</span>
+<span class="fc bfc" id="L530" title="All 2 branches covered.">        if (usuario != null) {</span>
+<span class="fc" id="L531">            deustoStreamService.eliminarPerfil(id, usuario.getId());</span>
             // Recargar y actualizar el usuario en sesión para que elimine el perfil
-<span class="nc" id="L533">            usuario.getPerfiles().removeIf(perfil -&gt; perfil.getId().equals(id));</span>
-<span class="nc" id="L534">            session.setAttribute(USUARIO_STRING, usuario);</span>
+<span class="fc" id="L533">            usuario.getPerfiles().removeIf(perfil -&gt; perfil.getId().equals(id));</span>
+<span class="fc" id="L534">            session.setAttribute(USUARIO_STRING, usuario);</span>
 
             // Si el perfil eliminado es el que está activo, redirigir a otro perfil
-<span class="nc bnc" id="L537" title="All 2 branches missed.">            if (session.getAttribute(PERFIL_STRING) != null) {</span>
-<span class="nc" id="L538">                Perfil perfilActivo = (Perfil) session.getAttribute(PERFIL_STRING);</span>
-<span class="nc bnc" id="L539" title="All 2 branches missed.">                if (perfilActivo.getId().equals(id)) {</span>
+<span class="fc bfc" id="L537" title="All 2 branches covered.">            if (session.getAttribute(PERFIL_STRING) != null) {</span>
+<span class="fc" id="L538">                Perfil perfilActivo = (Perfil) session.getAttribute(PERFIL_STRING);</span>
+<span class="pc bpc" id="L539" title="1 of 2 branches missed.">                if (perfilActivo.getId().equals(id)) {</span>
                     // Cambiar al primer perfil disponible
-<span class="nc bnc" id="L541" title="All 2 branches missed.">                    if (!usuario.getPerfiles().isEmpty()) {</span>
-<span class="nc" id="L542">                        session.setAttribute(PERFIL_STRING, usuario.getPerfiles().get(0));</span>
+<span class="fc bfc" id="L541" title="All 2 branches covered.">                    if (!usuario.getPerfiles().isEmpty()) {</span>
+<span class="fc" id="L542">                        session.setAttribute(PERFIL_STRING, usuario.getPerfiles().get(0));</span>
                     } else {
-<span class="nc" id="L544">                        session.removeAttribute(PERFIL_STRING); // No hay perfiles disponibles</span>
+<span class="fc" id="L544">                        session.removeAttribute(PERFIL_STRING); // No hay perfiles disponibles</span>
                     }
                 }
             }
-<span class="nc" id="L548">            return &quot;redirect:/perfil&quot;;</span>
+<span class="fc" id="L548">            return &quot;redirect:/perfil&quot;;</span>
         } else {
-<span class="nc" id="L550">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
+<span class="fc" id="L550">            return &quot;redirect:/login&quot;; // Si no hay sesión, redirigir a login</span>
         }
     }
 
