@@ -51,7 +51,7 @@ public class QrLoginController {
 
         Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);
         if (usuario == null) {
-            logger.warn("Credenciales inválidas para correo: {}", correo);
+            
             model.addAttribute("error", "Credenciales inválidas");
             model.addAttribute("token", token);
             return "qr-login-form";
