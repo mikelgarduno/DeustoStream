@@ -51,7 +51,7 @@ public class QrLoginController {
 
 <span class="fc" id="L52">        Usuario usuario = usuarioRepository.findByCorreoAndContrasenya(correo, contrasenya);</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">        if (usuario == null) {</span>
-<span class="fc" id="L54">            logger.warn(&quot;Credenciales inválidas para correo: {}&quot;, correo);</span>
+            
 <span class="fc" id="L55">            model.addAttribute(&quot;error&quot;, &quot;Credenciales inválidas&quot;);</span>
 <span class="fc" id="L56">            model.addAttribute(&quot;token&quot;, token);</span>
 <span class="fc" id="L57">            return &quot;qr-login-form&quot;;</span>
