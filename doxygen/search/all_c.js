@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['pelicula_0',['pelicula',['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html',1,'com.example.restapi.model.Pelicula'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a74b1361362e41f9e5ecaf155cb67d55a',1,'com.example.restapi.model.Pelicula.Pelicula()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a45c8a55fdf0275c2acd43b1c4a299a65',1,'com.example.restapi.model.Pelicula.Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl)']]],
+  ['pelicula_0',['Pelicula',['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html',1,'com.example.restapi.model.Pelicula'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a74b1361362e41f9e5ecaf155cb67d55a',1,'com.example.restapi.model.Pelicula.Pelicula()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_pelicula.html#a45c8a55fdf0275c2acd43b1c4a299a65',1,'com.example.restapi.model.Pelicula.Pelicula(String titulo, Generos genero, int duracion, int anio, String sinopsis, String imagenUrl)']]],
   ['pelicula_2ejava_1',['Pelicula.java',['../_pelicula_8java.html',1,'']]],
   ['pelicularepository_2',['PeliculaRepository',['../interfacecom_1_1example_1_1restapi_1_1repository_1_1_pelicula_repository.html',1,'com::example::restapi::repository']]],
   ['pelicularepository_2ejava_3',['PeliculaRepository.java',['../_pelicula_repository_8java.html',1,'']]],
   ['peliculatest_2ejava_4',['PeliculaTest.java',['../_pelicula_test_8java.html',1,'']]],
-  ['perfil_5',['perfil',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html',1,'com.example.restapi.model.Perfil'],['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a73a9c504d42fd551e0b63e59a6eedd19',1,'com.example.restapi.model.Perfil.Perfil()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#ad276537695a37a8d68f721d1698a1ed2',1,'com.example.restapi.model.Perfil.Perfil(String nombre, String avatar)']]],
+  ['perfil_5',['Perfil',['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html',1,'com.example.restapi.model.Perfil'],['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#a73a9c504d42fd551e0b63e59a6eedd19',1,'com.example.restapi.model.Perfil.Perfil()'],['../classcom_1_1example_1_1restapi_1_1model_1_1_perfil.html#ad276537695a37a8d68f721d1698a1ed2',1,'com.example.restapi.model.Perfil.Perfil(String nombre, String avatar)']]],
   ['perfil_2ejava_6',['Perfil.java',['../_perfil_8java.html',1,'']]],
   ['perfilrepository_7',['PerfilRepository',['../interfacecom_1_1example_1_1restapi_1_1repository_1_1_perfil_repository.html',1,'com::example::restapi::repository']]],
   ['perfilrepository_2ejava_8',['PerfilRepository.java',['../_perfil_repository_8java.html',1,'']]],

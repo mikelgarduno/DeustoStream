@@ -17,9 +17,6 @@ var annotated_dup =
             [ "QrLoginController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_login_controller" ],
             [ "QrStatusController", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller.html", "classcom_1_1example_1_1restapi_1_1controller_1_1_qr_status_controller" ]
           ] ],
-          [ "integration", "namespacecom_1_1example_1_1restapi_1_1integration.html", [
-            [ "QrLoginControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_qr_login_controller_i_t.html", null ]
-          ] ],
           [ "model", "namespacecom_1_1example_1_1restapi_1_1model.html", [
             [ "Capitulo", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html", "classcom_1_1example_1_1restapi_1_1model_1_1_capitulo" ],
             [ "Generos", "enumcom_1_1example_1_1restapi_1_1model_1_1_generos.html", "enumcom_1_1example_1_1restapi_1_1model_1_1_generos" ],
@@ -28,9 +25,6 @@ var annotated_dup =
             [ "Series", "classcom_1_1example_1_1restapi_1_1model_1_1_series.html", "classcom_1_1example_1_1restapi_1_1model_1_1_series" ],
             [ "Usuario", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html", "classcom_1_1example_1_1restapi_1_1model_1_1_usuario" ],
             [ "Valoracion", "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion.html", "classcom_1_1example_1_1restapi_1_1model_1_1_valoracion" ]
-          ] ],
-          [ "performance", "namespacecom_1_1example_1_1restapi_1_1performance.html", [
-            [ "RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ]
           ] ],
           [ "repository", "namespacecom_1_1example_1_1restapi_1_1repository.html", [
             [ "CapituloRepository", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_capitulo_repository.html", "interfacecom_1_1example_1_1restapi_1_1repository_1_1_capitulo_repository" ],
@@ -44,6 +38,12 @@ var annotated_dup =
             [ "AuthService", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_auth_service" ],
             [ "DeustoStreamService", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_deusto_stream_service" ],
             [ "QrLoginService", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service.html", "classcom_1_1example_1_1restapi_1_1service_1_1_qr_login_service" ]
+          ] ],
+          [ "integration", "namespacecom_1_1example_1_1restapi_1_1integration.html", [
+            [ "QrLoginControllerIT", "classcom_1_1example_1_1restapi_1_1integration_1_1_qr_login_controller_i_t.html", null ]
+          ] ],
+          [ "performance", "namespacecom_1_1example_1_1restapi_1_1performance.html", [
+            [ "RendimientoApiTest", "classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html", null ]
           ] ],
           [ "unit", null, [
             [ "controller", "namespacecom_1_1example_1_1restapi_1_1unit_1_1controller.html", [

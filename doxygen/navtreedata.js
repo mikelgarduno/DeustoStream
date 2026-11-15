@@ -26,7 +26,7 @@ var NAVTREE =
 [
   [ "DeustoStream", "index.html", [
     [ "Packages", "namespaces.html", [
-      [ "Package List", "namespaces.html", null ]
+      [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -47,8 +47,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_auth_controller_i_t_8java.html",
-"classcom_1_1example_1_1restapi_1_1model_1_1_usuario.html#a00441e2cc06c5649b4132a787929d3c0"
+"classcom_1_1example_1_1restapi_1_1model_1_1_capitulo.html",
+"classcom_1_1example_1_1restapi_1_1performance_1_1_rendimiento_api_test.html",
+"interfacecom_1_1example_1_1restapi_1_1repository_1_1_usuario_repository.html#aa20f38f66951dd9bf1ba1bb215fc8e10"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+var SYNCONMSG = 'click to disable panel synchronization';
+var SYNCOFFMSG = 'click to enable panel synchronization';
+var LISTOFALLMEMBERS = 'List of all members';
